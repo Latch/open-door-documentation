@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-  implementation('com.door.opendoor.android:${versionName}')
+  implementation('com.door.opendoor.android:2.0.0')
   //(...)
 }
 ```
