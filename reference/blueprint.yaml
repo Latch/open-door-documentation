@@ -1,0 +1,1370 @@
+openapi: 3.1.0
+info:
+  title: api-blueprint
+  description: Backend for Frontend for Blueprint and RBAC
+  version: 0.1.2-SNAPSHOT
+servers:
+  - url: /
+    description: api-blueprint
+security:
+  - oauth2: []
+    x-door-auth: []
+paths:
+  /mvp/{scopeId}/team:
+    put:
+      tags:
+        - mvp-controller
+      operationId: putTeam
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamTemplateRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PolicyTemplateDTO'
+  /mvp/{scopeId}/policy:
+    put:
+      tags:
+        - mvp-controller
+      operationId: putPolicy
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/LitePolicyDTO'
+  /mvp/{scopeId}/access-paths:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getAccessPaths
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessPathExpandedDTO'
+    put:
+      tags:
+        - mvp-controller
+      operationId: createAccessPaths
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AccessPathDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessPathExpandedDTO'
+  /mvp/{scopeId}/templates:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getTemplates
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyTemplateDTO'
+    post:
+      tags:
+        - mvp-controller
+      operationId: createTemplate
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePolicyTemplateDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: uuid
+  /mvp/{scopeId}/template:
+    post:
+      tags:
+        - mvp-controller
+      operationId: addTemplateToScope
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: templateId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyTemplateDTO'
+  /mvp/{scopeId}/migrate/{buildingId}:
+    post:
+      tags:
+        - mvp-controller
+      operationId: triggerBlueprintMigrationV2
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: buildingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DirectoryItemDTO'
+  /initialize:
+    post:
+      tags:
+        - dev-initializer
+      operationId: initializeDev
+      responses:
+        '200':
+          description: OK
+  /initialize/flush:
+    post:
+      tags:
+        - dev-initializer
+      operationId: flush
+      responses:
+        '200':
+          description: OK
+  /api/blueprint-wizard/{buildingId}/blueprint-migration-reset:
+    post:
+      tags:
+        - wizard-controller
+      operationId: resetBlueprintMigration
+      parameters:
+        - name: buildingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/blueprint-wizard/v2/{buildingId}/blueprint-migration:
+    post:
+      tags:
+        - wizard-controller
+      operationId: triggerBlueprintMigrationV2_1
+      parameters:
+        - name: buildingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DirectoryItemDTO'
+  /role:
+    get:
+      tags:
+        - role-controller
+      operationId: home
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /policy:
+    get:
+      tags:
+        - policy-controller
+      operationId: home_1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyDTO'
+  /policy/{policyUuid}/permission-assignments:
+    get:
+      tags:
+        - policy-controller
+      operationId: getPermissionAssignments
+      parameters:
+        - name: policyUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionAssignmentDTO'
+  /mvp/{scopeId}/template/{templateId}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getTemplate
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PolicyTemplateDTO'
+  /mvp/{scopeId}/template/{templateId}/available-scope:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getApplicability
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AvailableScopesForPolicyDto'
+  /mvp/{scopeId}/template-library:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getTemplateLibrary
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyTemplateDTO'
+  /mvp/{scopeId}/policy/{policyId}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getPolicy
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FullPolicyDTO'
+    delete:
+      tags:
+        - mvp-controller
+      operationId: revokePolicy
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FullPolicyDTO'
+  /mvp/{scopeId}/directory:
+    get:
+      tags:
+        - mvp-controller
+      operationId: directory
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DirectoryItemDTO'
+  /mvp/{scopeId}/directory/{directoryItemUuid}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: directoryItem
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: directoryItemUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DirectoryItemDTO'
+  /mvp/{scopeId}/access:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getAccesses
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessDTO'
+  /mvp/user/{userUuid}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: userByUuid
+      parameters:
+        - name: userUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDto'
+  /mvp/user/search/{filter}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: userByEmail
+      parameters:
+        - name: filter
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDto'
+  /mvp/tags:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getTags
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DirectoryTagDTO'
+  /mvp/scope:
+    get:
+      tags:
+        - mvp-controller
+      operationId: scopes
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DirectoryItemDTO'
+  /mvp/scope/{scopeId}/role:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getRoles
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDTO'
+  /mvp/scope/{scopeId}/role/{roleId}:
+    get:
+      tags:
+        - mvp-controller
+      operationId: getRole
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: roleId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RoleDTO'
+  /me:
+    get:
+      tags:
+        - user-controller
+      operationId: getMe
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MeDTO'
+  /invite/templates/{directoryItemUUID}:
+    get:
+      tags:
+        - invite-controller
+      operationId: getInviteTemplates
+      parameters:
+        - name: directoryItemUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PolicyTemplateDTO'
+  /api/blueprint-wizard/{buildingId}/preview:
+    get:
+      tags:
+        - wizard-controller
+      operationId: loadBuilding
+      parameters:
+        - name: buildingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SpaceTreeDto'
+  /access/{lockUuid}/user-lists:
+    get:
+      tags:
+        - access-controller
+      operationId: userLists
+      parameters:
+        - name: lockUuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserListDTO'
+  /access/locks:
+    get:
+      tags:
+        - access-controller
+      operationId: getLocks
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+  /mvp/{scopeId}/policy/{policyId}/clause/{clauseId}:
+    delete:
+      tags:
+        - mvp-controller
+      operationId: revokePolicyClause
+      parameters:
+        - name: scopeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: clauseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FullPolicyDTO'
+components:
+  schemas:
+    ScopeItemDTO:
+      type: object
+      properties:
+        clauseId:
+          type: string
+        directoryScopeId:
+          type: string
+    TeamTemplateRequestDTO:
+      type: object
+      properties:
+        templateId:
+          type: string
+          format: uuid
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeItemDTO'
+    ConditionDTO:
+      type: object
+      properties:
+        dateIntervalCondition:
+          $ref: '#/components/schemas/DateIntervalConditionDTO'
+        weekdayTimeIntervalCondition:
+          $ref: '#/components/schemas/WeekdayTimeIntervalConditionDTO'
+        directoryItemTagCondition:
+          $ref: '#/components/schemas/DirectoryItemTagConditionDTO'
+    DateIntervalConditionDTO:
+      type: object
+      properties:
+        startDate:
+          type: integer
+          format: int64
+        endDate:
+          type: integer
+          format: int64
+    DirectoryItemTagConditionDTO:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryTagDTO'
+    DirectoryTagDTO:
+      type: object
+      properties:
+        itemType:
+          type: string
+          enum:
+            - ROOT
+            - PORTFOLIO
+            - VIRTUAL
+            - SPACE
+            - DEVICE
+            - DOOR
+            - ELEVATOR
+            - FLOOR_GROUP
+            - CONTROL
+            - CONTENT
+            - INVENTORY_ITEM
+            - COMPLIANCE_ITEM
+        spaceType:
+          type: string
+          enum:
+            - BUILDING_GROUP
+            - BUILDING
+            - FLOOR
+            - COMMUNAL_AREA
+            - UNIT
+            - ROOM
+            - ENTRY
+            - SERVICE
+        featureFlag:
+          type: string
+          enum:
+            - BLUEPRINT_ENABLED
+        vacancy:
+          type: string
+          enum:
+            - VACANT
+            - OCCUPIED
+    LitePolicyDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserDto'
+        policyUuid:
+          type: string
+          format: uuid
+        policyName:
+          type: string
+        active:
+          type: boolean
+      required:
+        - id
+    PolicyTemplateClauseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/RoleDTO'
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionDTO'
+        directoryScopeSelectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateDirectoryScopeSelectorDTO'
+        staticallyScoped:
+          type: boolean
+      required:
+        - id
+    PolicyTemplateDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - TEMPLATE_TYPE_UNSPECIFIED
+            - TEMPLATE_TYPE_RESIDENT
+            - TEMPLATE_TYPE_RESIDENT_GUEST
+            - TEMPLATE_TYPE_STAFF
+            - TEMPLATE_TYPE_STAFF_GUEST
+            - TEMPLATE_TYPE_PROSPECT
+            - TEMPLATE_TYPE_EXTERNAL
+            - TEMPLATE_TYPE_AUTOMATION
+            - TEMPLATE_TYPE_ROOT
+        clauses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyTemplateClauseDTO'
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/LitePolicyDTO'
+        staticallyScoped:
+          type: boolean
+      required:
+        - id
+    RoleDTO:
+      type: object
+      properties:
+        role_uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        directoryLocationUuid:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+            enum:
+              - MANAGE_DIRECTORY
+              - OCCUPY
+              - ENTER_SPACE
+              - ACCESS_SPACE
+              - INVITE_GUEST
+              - INVITE_RESIDENT
+              - REACH_SPACE
+              - VIEW_DIRECTORY
+              - INVITE_STAFF
+              - INVITE_STAFF_GUEST
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionDTO'
+      required:
+        - role_uuid
+    TemplateDirectoryScopeSelectorDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        directoryTag:
+          $ref: '#/components/schemas/DirectoryTagDTO'
+        staticallyScoped:
+          type: boolean
+        dynamicScopedByTag:
+          type: boolean
+    UserDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        name:
+          type: string
+      required:
+        - uuid
+    WeekdayTimeIntervalConditionDTO:
+      type: object
+      properties:
+        intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeekdayTimeIntervalDTO'
+    WeekdayTimeIntervalDTO:
+      type: object
+      properties:
+        weekday:
+          type: integer
+          format: int32
+        startTime:
+          type: string
+        endTime:
+          type: string
+    PolicyRequestDTO:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        templateId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeItemDTO'
+      required:
+        - templateId
+        - userId
+    AccessPathDTO:
+      type: object
+      properties:
+        target:
+          type: string
+          format: uuid
+        requires:
+          type: string
+          format: uuid
+    AccessItemDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+        - id
+        - name
+    AccessPathExpandedDTO:
+      type: object
+      properties:
+        target:
+          $ref: '#/components/schemas/AccessItemDTO'
+        requires:
+          $ref: '#/components/schemas/AccessItemDTO'
+      required:
+        - requires
+        - target
+    CreatePolicyTemplateClauseDTO:
+      type: object
+      properties:
+        roleUuid:
+          type: string
+          format: uuid
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionDTO'
+        directoryScopeSelectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTemplateDirectoryScopeSelectorDTO'
+    CreatePolicyTemplateDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - TEMPLATE_TYPE_UNSPECIFIED
+            - TEMPLATE_TYPE_RESIDENT
+            - TEMPLATE_TYPE_RESIDENT_GUEST
+            - TEMPLATE_TYPE_STAFF
+            - TEMPLATE_TYPE_STAFF_GUEST
+            - TEMPLATE_TYPE_PROSPECT
+            - TEMPLATE_TYPE_EXTERNAL
+            - TEMPLATE_TYPE_AUTOMATION
+            - TEMPLATE_TYPE_ROOT
+        clauses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePolicyTemplateClauseDTO'
+    CreateTemplateDirectoryScopeSelectorDTO:
+      type: object
+      properties:
+        directoryScopeUuid:
+          type: string
+          format: uuid
+        directoryTag:
+          $ref: '#/components/schemas/DirectoryTagDTO'
+    DirectoryItemDTO:
+      type: object
+      properties:
+        directoryItemUuid:
+          type: string
+          format: uuid
+        path:
+          type: string
+        name:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - directoryItemUuid
+        - path
+    PolicyChangesetDTO:
+      type: object
+      properties:
+        policyChangesetUuid:
+          type: string
+          format: uuid
+        clauses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyClauseDTO'
+        status:
+          type: string
+          enum:
+            - PROVISIONING_STATUS_UNSPECIFIED
+            - PROVISIONING_STATUS_PENDING
+            - PROVISIONING_STATUS_SUCCESS
+            - PROVISIONING_STATUS_FAILURE
+            - UNRECOGNIZED
+    PolicyClauseDTO:
+      type: object
+      properties:
+        clauseUuid:
+          type: string
+          format: uuid
+        grant:
+          $ref: '#/components/schemas/PolicyGrantingClauseDTO'
+        revoke:
+          $ref: '#/components/schemas/PolicyRevokingClauseDTO'
+        status:
+          type: string
+          enum:
+            - PROVISIONING_STATUS_UNSPECIFIED
+            - PROVISIONING_STATUS_PENDING
+            - PROVISIONING_STATUS_SUCCESS
+            - PROVISIONING_STATUS_FAILURE
+            - UNRECOGNIZED
+    PolicyDTO:
+      type: object
+      properties:
+        policyUuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        subject:
+          $ref: '#/components/schemas/PolicySubjectDTO'
+        changesets:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyChangesetDTO'
+        draftChangeset:
+          $ref: '#/components/schemas/PolicyChangesetDTO'
+        status:
+          type: string
+          enum:
+            - PROVISIONING_STATUS_UNSPECIFIED
+            - PROVISIONING_STATUS_PENDING
+            - PROVISIONING_STATUS_SUCCESS
+            - PROVISIONING_STATUS_FAILURE
+            - UNRECOGNIZED
+        policyTemplateUuid:
+          type: string
+          format: uuid
+        revoked:
+          type: boolean
+    PolicyGrantingClauseDTO:
+      type: object
+      properties:
+        clauseUuid:
+          type: string
+          format: uuid
+        directoryScopeUuid:
+          type: string
+          format: uuid
+        roleUuid:
+          type: string
+          format: uuid
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionDTO'
+        revoked:
+          type: boolean
+    PolicyRevokingClauseDTO:
+      type: object
+      properties:
+        clauseUuid:
+          type: string
+          format: uuid
+        revokesClauseUuid:
+          type: string
+          format: uuid
+    PolicySubjectDTO:
+      type: object
+      properties:
+        identitySource:
+          type: string
+          enum:
+            - DOOR_USER_IDP
+            - DOOR_SERVICE
+            - UNRECOGNIZED
+        principal:
+          type: string
+          format: uuid
+    PermissionAssignmentDTO:
+      type: object
+      properties:
+        permissionAssignmentUuid:
+          type: string
+          format: uuid
+        subject:
+          $ref: '#/components/schemas/PolicySubjectDTO'
+        directoryScopeUuid:
+          type: string
+          format: uuid
+        permission:
+          type: string
+          enum:
+            - MANAGE_DIRECTORY
+            - OCCUPY
+            - ENTER_SPACE
+            - ACCESS_SPACE
+            - INVITE_GUEST
+            - INVITE_RESIDENT
+            - REACH_SPACE
+            - VIEW_DIRECTORY
+            - INVITE_STAFF
+            - INVITE_STAFF_GUEST
+            - UNRECOGNIZED
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionDTO'
+        active:
+          type: boolean
+        status:
+          type: string
+          enum:
+            - PROVISIONING_STATUS_UNSPECIFIED
+            - PROVISIONING_STATUS_PENDING
+            - PROVISIONING_STATUS_SUCCESS
+            - PROVISIONING_STATUS_FAILURE
+            - UNRECOGNIZED
+        policyClauseUuid:
+          type: string
+          format: uuid
+    AvailableScopesForPolicyDto:
+      type: object
+      properties:
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClauseScopeDto'
+    ClauseScopeDto:
+      type: object
+      properties:
+        clauseId:
+          type: string
+          format: uuid
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScopeDto'
+      required:
+        - clauseId
+    ScopeDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        path:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+    FullPolicyDTO:
+      type: object
+      properties:
+        policyDTO:
+          $ref: '#/components/schemas/PolicyDTO'
+        templateName:
+          type: string
+        userName:
+          type: string
+        roles:
+          type: object
+          additionalProperties:
+            type: string
+        directoryItemNames:
+          type: object
+          additionalProperties:
+            type: string
+    AccessDTO:
+      type: object
+      properties:
+        directoryItemName:
+          type: string
+        directoryItemUuid:
+          type: string
+          format: uuid
+        userName:
+          type: string
+        userUuid:
+          type: string
+          format: uuid
+      required:
+        - directoryItemUuid
+        - userUuid
+    MeDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        accessToken:
+          type: string
+        claims:
+          type: object
+          additionalProperties: {}
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - ROOT
+            - SPACE
+            - DOOR
+            - ELEVATOR
+            - FLOOR_GROUP
+            - CONTROL
+            - CONTENT
+            - INVENTORY_ITEM
+            - COMPLIANCE_ITEM
+            - VIRTUAL
+        name:
+          type: string
+        children:
+          type: array
+          items: {}
+    SpaceTreeDto:
+      type: object
+      properties:
+        root:
+          $ref: '#/components/schemas/Node'
+    UserListDTO:
+      type: object
+      properties:
+        rowId:
+          type: integer
+          format: int32
+        unencryptedDoorcode:
+          type: string
+        unencryptedBleCode:
+          type: string
+        unencryptedNfcCode:
+          type: string
+        unencryptedNfcDesfireAuthenticationKey:
+          type: string
+        credentialUuid:
+          type: string
+        accessStartTimestamp:
+          type: integer
+          format: int64
+        accessEndTimestamp:
+          type: integer
+          format: int64
+        windowStartTimeMinuteOffset:
+          type: integer
+          format: int32
+        windowEndTimeMinuteOffset:
+          type: integer
+          format: int32
+        wiegandCode:
+          type: integer
+          format: int32
+        nfcTechnologyType:
+          type: string
+          enum:
+            - MIFARE_CLASSIC
+            - DESFIRE_V1
+            - UNRECOGNIZED
+        qualifyDays:
+          type: array
+          items:
+            type: string
+            enum:
+              - DAY_OF_WEEK_UNSPECIFIED
+              - MONDAY
+              - TUESDAY
+              - WEDNESDAY
+              - THURSDAY
+              - FRIDAY
+              - SATURDAY
+              - SUNDAY
+              - UNRECOGNIZED
