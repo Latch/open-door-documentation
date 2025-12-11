@@ -8,6 +8,12 @@ hidden: false
 metadata:
   robots: index
 ---
+# OpenDOOR Android SDK
+
+# Android Tutorial
+
+The Android SDK allows you to initialize and unlock a DOOR-supported lock. This tutorial corresponds with version 2.0.0 of the SDK.
+
 ## Setup
 
 1. Declare SDK as a dependency
@@ -35,6 +41,8 @@ dependencies {
 Use your Auth0 token retrieved from DOOR's Auth endpoint, call `setupWithToken()`.
 
 The OpenDOOR SDK uses Kotlin Coroutines to perform actions asynchronously. All SDK functions are `suspend` functions that can be called from a coroutine scope, or you can use Flow-based streams for reactive updates.
+
+**Important:** `setupWithToken()` must be called from the main thread because it takes a Context parameter.
 
 Note that `context` here must not be the `applicationContext`.
 
@@ -67,15 +75,39 @@ CoroutineScope(Dispatchers.Main).launch {
 ```
 
 The `includeAllLocks` parameter determines whether to show:
+- `true`: All locks that user can access (partner and non-partner)
+- `false`: Only partner-managed locks
 
-* `true`: All locks that user can access (partner and non-partner)
-* `false`: Only partner-managed locks
+### Thread Requirements
+
+The SDK has specific thread requirements for different operations:
+
+**Must be called from the main thread:**
+- `unlock()`
+- `sync()`
+- `startProximityUnlock()`
+- `stopProximityUnlock()`
+
+All BLE operations must be called from the main thread.
+
+**Can be called from any thread:**
+- `fetchLocks()`
+- `getAccessLogs()`
+- `inviteGuests()`
+- `guests()`
+- `setupWithToken()`
+
+All examples in this tutorial use `Dispatchers.Main`.
 
 ### View the locks and select one to unlock
 
-You can retrieve locks in two ways: get them once with `getLocks()`, or listen for continuous updates with `listenForLocks()`. Both approaches use the same implementation underneath - choose the one that fits your use case.
+You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`. These methods have different behaviors:
 
-**Option 1: Get locks once**
+- **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
+
+- **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
+
+**Option 1: Fetch locks once**
 
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.SDKException
@@ -83,8 +115,8 @@ import com.door.opendoor.android.core.api.exceptions.NetworkException
 
 CoroutineScope(Dispatchers.Main).launch {
     try {
-        val locks = client.getLocks()
-        // Use locks list
+        val locks = client.fetchLocks()
+        // Use locks list - this will only return after server call completes
     } catch (e: SDKException) {
         // Handle SDK errors
     } catch (e: NetworkException) {
@@ -102,6 +134,7 @@ CoroutineScope(Dispatchers.Main).launch {
     try {
         client.listenForLocks().collect { locks ->
             // This will be called whenever locks are updated
+            // First call will have cached data immediately, then updated data when server refresh completes
             // Use locks list
         }
     } catch (e: SDKException) {
@@ -129,6 +162,8 @@ With the locks retrieved, we can now call `unlock()` to unlock a DOOR lock.
 ## Unlock
 
 To unlock a lock, call `unlock()` and listen for unlock events to track the progress and result.
+
+**Important:** `unlock()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
 import kotlinx.coroutines.flow.collect
@@ -215,6 +250,8 @@ Your DOOR lock should be unlocked now!
 ## Unlock the closest lock that's available
 
 Another way to unlock the door is through "Proximity Unlock". It will continuously unlock the closest lock that's available.
+
+**Important:** `startProximityUnlock()` and `stopProximityUnlock()` must be called from the main thread as they perform BLE operations.
 
 First, set up a listener for unlock events. Then start proximity unlock, and stop it when needed.
 
@@ -324,6 +361,8 @@ Note: After stopping proximity unlock, you can set up a new listener and start i
 Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
 
 After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
+
+**Important:** `sync()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.BluetoothException
