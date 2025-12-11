@@ -1,5 +1,5 @@
 ---
-title: Android
+title: OpenDOOR Android SDK
 excerpt: >-
   The Android SDK allows you to initialize and unlock a DOOR-supported lock.
   This tutorial corresponds with version 2.0.0 of the SDK.
@@ -8,12 +8,6 @@ hidden: false
 metadata:
   robots: index
 ---
-# OpenDOOR Android SDK
-
-# Android Tutorial
-
-The Android SDK allows you to initialize and unlock a DOOR-supported lock. This tutorial corresponds with version 2.0.0 of the SDK.
-
 ## Setup
 
 1. Declare SDK as a dependency
