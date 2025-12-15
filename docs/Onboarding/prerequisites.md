@@ -8,3 +8,12 @@ link:
 metadata:
   robots: index
 ---
+[ACCOUNT] node in the Directory;
+
+
+
+Admin Role Assignment on the account node to the client's
+
+
+
+## Machine User (incl client ID & secret) - MVP
