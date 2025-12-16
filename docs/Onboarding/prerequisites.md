@@ -16,7 +16,7 @@ Link
 
 #### We'll set up OpenDOOR Client Directory tree root
 
-A Door Administrator will create the Directory tree root associated with the Door Client Account. This is the starting point for the tree that represents
+A Door Administrator will create the Directory tree root associated with your organization's Door Client Account. This is the starting point for configuring and managing access for your Properties.
 
 #### Assign Administrator Role on the Client Directory tree
 
