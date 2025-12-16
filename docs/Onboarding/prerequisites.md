@@ -20,11 +20,11 @@ An OpenDOOR Administrator Role will be assigned to you based on your existing Do
 
 ## What we'll do?
 
-#### OpenDOOR Client Directory tree root
+#### Set up OpenDOOR Client Directory tree root
 
 A Door Admin will create the Directory tree root associated with the Door Client Account. This is the starting point for the tree that represents
 
-#### Administrator Role Assignment on the account node to the client's
+#### Assign Administrator Role on the Client Directory tree
 
 A Door Admin will assign to you an OpenDOOR Administrator Role that grants management permissions to your Client Directory tree root, and subsequently to the subtree.
 
