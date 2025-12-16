@@ -1,5 +1,5 @@
 ---
-title: Migrate from Legacy Property
+title: Import Legacy DOOR Property Data
 excerpt: Import CSV.
 deprecated: false
 hidden: false
