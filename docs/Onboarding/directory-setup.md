@@ -1,5 +1,5 @@
 ---
-title: Directory setup
+title: Directory Setup
 deprecated: false
 hidden: false
 metadata:
