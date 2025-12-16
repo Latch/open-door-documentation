@@ -8,17 +8,23 @@ link:
 metadata:
   robots: index
 ---
-<br />
+## What we need from you?
 
-### Door/Latch Client Portfolio
+### Door Client Account
 
-OpenDOOR needs to be integrated with an existing Door/Latch Client Portfolio defined as a collection of Properties, Units, Door, Devices and so on.
+OpenDOOR needs to be integrated with an existing Door Client Account defined as a collection of Properties, Units, Doors, Devices and so on.
 
-### Directory tree root for your
+### Door Client Administrator
 
-A Door Admin will create the Directory tree root associated with the Client you work for. This is the starting point for the tree that represents 
+An OpenDOOR Administrator Role will be assigned to you based on your existing Door Client Administrator, identified through email or UUID.
 
-### Admin Role Assignment on the account node to the client's
+## What we'll do?
+
+### OpenDOOR Client Directory tree root
+
+A Door Admin will create the Directory tree root associated with the Client you work for. This is the starting point for the tree that represents
+
+### Administrator Role Assignment on the account node to the client's
 
 A Door Admin will assign you an Administrator Role that offers management permissions for your Client's Directory tree, starting from its root.
 
