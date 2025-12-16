@@ -1,5 +1,5 @@
 ---
-title: Copy of Prerequisites
+title: Prerequisites - improvements from AI
 excerpt: Everything needed before you can use OpenDOOR.
 deprecated: false
 hidden: false
