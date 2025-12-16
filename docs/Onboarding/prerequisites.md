@@ -10,7 +10,7 @@ metadata:
 ---
 ### What you need?
 
-#### OpenDOOR documentation and how to set up your Property
+#### OpenDOOR Property Configuration Guide
 
 Link
 
