@@ -1,5 +1,5 @@
 ---
-title: Import Legacy DOOR Property Data
+title: Bulk Import Property Data
 excerpt: 'Overview: Why migrate and what to expect'
 deprecated: false
 hidden: false
