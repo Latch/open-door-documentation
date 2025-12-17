@@ -6,9 +6,21 @@ excerpt: >-
   can skip this page.**
 deprecated: false
 hidden: false
+icon: ✅
 metadata:
   robots: index
 ---
-**It can be done either by DOOR, or the Client organization; the decision belongs to the Client.**
+**DOOR Client Account can be created either by DOOR, or the Client organization; the decision belongs to the Client.**
+
+Your DOOR Client Account includes the following information:
+
+1. ✅ Portfolio
+2. ✅ Properties
+3. ✅ Administrators:
+   1. ✅ Portfolio Managers
+   2. ✅ Property Managers
+4. ✅ Units
+5. ✅ Doors/Locks (can be configured later on)
+6. ✅ Other Devices/Smart Devices (can be configured later on)
 
 <br />
