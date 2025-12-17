@@ -5,6 +5,10 @@ hidden: false
 metadata:
   robots: index
 ---
+### Prepare a visual representation of your desired OpenDOOR Client Directory tree
+
+This will help a lot in visualizing the Directory tree and following hierarchy, structure and grouping.
+
 ### Can be done in two ways:
 
 * **Bulk Import Property Data:** This is the more user-friendly approach. DOOR Client Account data detailing the Properties hierarchy and structure is organized into a templated CSV file that will be passed as input to a dedicated API endpoint.
