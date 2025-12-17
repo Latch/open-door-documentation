@@ -10,9 +10,7 @@ metadata:
 ---
 ### What you need?
 
-#### [OpenDOOR Property Configuration Guide](doc:directory-setup) 
-
-<Card title="How to set up your Property" href="doc:directory-setup" icon="folder-tree" />
+#### [OpenDOOR Property Configuration Guide](doc:directory-setup)
 
 #### We'll set up OpenDOOR Client Directory tree root
 
