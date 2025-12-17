@@ -23,5 +23,3 @@ metadata:
 </Callout>
 
 <br />
-
-Create your import data
