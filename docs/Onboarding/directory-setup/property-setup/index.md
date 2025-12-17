@@ -9,6 +9,10 @@ metadata:
 
 This will help a lot in visualizing the Directory tree and following hierarchy, structure and grouping.
 
+<Callout icon="📝" theme="default">
+  **Tip:** You can use draw.io App.
+</Callout>
+
 ### Can be done in two ways:
 
 * **Bulk Import Property Data:** This is the more user-friendly approach. DOOR Client Account data detailing the Properties hierarchy and structure is organized into a templated CSV file that will be passed as input to a dedicated API endpoint.
