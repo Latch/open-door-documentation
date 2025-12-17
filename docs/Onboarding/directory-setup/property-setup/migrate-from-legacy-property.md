@@ -18,26 +18,20 @@ metadata:
 
 <br />
 
-<Cards columns={2}>
-  <Card title="SPACE TYPE" icon="fa-building">
-    Type of Space represented by the row (future Directory Item) in the Client Directory tree. Should match the DOOR Client Account type.
+<Accordion title="Column Specifications" icon="fa-table">
+  **SPACE TYPE** - Type of Space represented by the row (future Directory Item)
 
-    **Values:** `ROOT`, `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA`, `ENTRANCE`
-  </Card>
+  * **Values:** `ROOT`, `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA`, `ENTRANCE`
 
-  <Card title="BP SPACE NAME" icon="fa-tag">
-    Directory Item name. Should match the DOOR Client Account entity name.
-  </Card>
+  **BP SPACE NAME** - Directory Item name (matches DOOR Client Account entity name)
 
-  <Card title="BP SPACE PARENT NAME" icon="fa-sitemap">
-    Name of the Parent Directory Item. Must be from a previous row and be a perfect String match.
-  </Card>
+  **BP SPACE PARENT NAME** - Parent Directory Item name (must match previous row exactly)
 
-  <Card title="LATCH UUID / ID" icon="fa-key">
-    Latch UUID of the entity (Portfolio, Property, Unit, Door/Lock, etc.). Available from DoorOS or AdminTool.
-  </Card>
-</Cards>
+  **LATCH UUID / ID** - Entity UUID from DoorOS or AdminTool
+</Accordion>
+
+<br />
 
 #### TIP: You can use Google Sheets to create the import table, populate it and then export it as CSV following options File → Download → Comma Separated Values (.csv)
 
-Create your import data 
+Create your import data
