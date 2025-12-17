@@ -10,6 +10,8 @@ metadata:
 ---
 ### What you need?
 
+<br />
+
 #### OpenDOOR Property Configuration Guide
 
 <Card title="How to set up your Property" href="doc:directory-setup" icon="folder-tree" />
