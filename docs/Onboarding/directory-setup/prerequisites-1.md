@@ -1,9 +1,9 @@
 ---
 title: Before you begin
 excerpt: >-
-  This part reffers to preparing your organization's Door Client Account, that
-  will be integrated with OpenDOOR. **It can be done either by DOOR, or by the
-  Client organization; the decision belongs to the Client**. 
+  **This part can be done either by DOOR, or the Client organization; the
+  decision belongs to the Client**. It reffers to preparing your organization's
+  Door Client Account, that will be integrated with OpenDOOR.
 deprecated: false
 hidden: false
 metadata:
