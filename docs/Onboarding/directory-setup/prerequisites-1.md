@@ -11,7 +11,7 @@ metadata:
 ---
 **DOOR Client Account can be created either by DOOR, or the Client organization; the decision belongs to the Client.**
 
-Your DOOR Client Account includes the following information:
+Your DOOR Client Account includes the following data:
 
 1. ✅ Portfolio
 2. ✅ Properties
