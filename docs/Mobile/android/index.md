@@ -13,6 +13,7 @@ metadata:
 1. Declare SDK as a dependency
 2. Initialize the library
 3. View the locks and select one to unlock
+4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
 
 ### Declare SDK as a dependency
 
