@@ -6,7 +6,6 @@ excerpt: >-
   can skip this page.**
 deprecated: false
 hidden: false
-icon: ✅
 metadata:
   robots: index
 ---
