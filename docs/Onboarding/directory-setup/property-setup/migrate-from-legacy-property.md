@@ -5,7 +5,7 @@ hidden: false
 metadata:
   robots: index
 ---
-## Step 1: Organize DOOR Client Account data in a CSV file
+### Step 1: Organize DOOR Client Account data in a CSV file
 
 1. `SPACE TYPE`
 2. `BP SPACE NAME`
