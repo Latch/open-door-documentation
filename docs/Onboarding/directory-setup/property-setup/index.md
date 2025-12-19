@@ -10,44 +10,43 @@ metadata:
 #### NOTE: This Directory tree will be used as example throughout this guide
 
 ```plaintext
-OpenDOOR Client Account
-├── ODC Portfolio 1
-│   ├── ODCP1 Property 1
-│   │   ├── Parking Lot
-│   │   │   ├── Parking Lot Entrance
-│   │   │   ├── Staff
-│   │   │   │   └── Slot 01 - 10
-│   │   │   └── Residents
-│   │   │       └── Slot 101 - 310
-│   │   ├── Residential Building
-│   │   │   ├── Residential Building Entrance
-│   │   │   ├── Common Areas
-│   │   │   │   ├── Lobby
-│   │   │   │   ├── Package Room
-│   │   │   │   │   └── Lockbox 101 - 310
-│   │   │   │   │       └── Lockbox 101 - 310 Door
-│   │   │   │   ├── Elevator 1
-│   │   │   │   ├── Elevator 2
-│   │   │   │   └── Amenities
-│   │   │   │       ├── Amenities Entrance
-│   │   │   │       ├── Spa
-│   │   │   │       │   └── Spa Door
-│   │   │   │       ├── Gym
-│   │   │   │       │   └── Gym Door
-│   │   │   │       └── Meeting Rooms
-│   │   │   │           ├── Meeting Rooms Door
-│   │   │   │           └── Room 1 - 6
-│   │   │   ├── Floor 1
-│   │   │   │   └── Unit 101 - 109
-│   │   │   │       └── Unit 101 - 109 Door
-│   │   │   ├── Floor 2
-│   │   │   │   └── Unit 201 - 210
-│   │   │   │       └── Unit 201 - 210 Door
-│   │   │   └── Floor 3
-│   │   │       └── Unit 301 - 310
-│   │   │           └── Unit 301 - 310 Door
-│   └── ODCP1 Property 2 - X
-└── ODC Portfolio 2 - X
+[ACCOUNT] OpenDOOR Client Account
+├── [PORTFOLIO] ODC Portfolio 1
+│   ├── [PROPERTY] ODCP1 Property 1
+│   │   ├── [BUILDING] Parking Lot
+│   │   │   ├── [ENTRANCE] Parking Lot Entrance
+│   │   │   ├── [PARKING_GROUP] Staff
+│   │   │   │   └── [PARKING_SLOT] Slot 01 - 10
+│   │   │   └── [PARKING_GROUP] Residents
+│   │   │       └── [PARKING_SLOT]Slot 101 - 310
+│   │   ├── [BUILDING] Residential Building
+│   │   │   ├── [ENTRANCE] Residential Building Entrance
+│   │   │   ├── [COMMON_GROUP] Common Areas
+│   │   │   │   ├── [COMMON_AREA] Lobby
+│   │   │   │   ├── [STORAGE_GROUP] Package Room
+│   │   │   │   │   └── [STORAGE_SLOT] Lockbox 101 - 310
+│   │   │   │   ├── [COMMON_AREA] Elevator 1
+│   │   │   │   ├── [COMMON_AREA] Elevator 2
+│   │   │   │   └── [COMMON_GROUP] Amenities
+│   │   │   │       ├── [ENTRANCE] Amenities Entrance
+│   │   │   │       ├── [COMMON_AREA] Spa
+│   │   │   │       │   └── [ENTRANCE] Spa Door
+│   │   │   │       ├── [COMMON_AREA] Gym
+│   │   │   │       │   └── [ENTRANCE] Gym Door
+│   │   │   │       └── [COMMON_AREA] Meeting Rooms
+│   │   │   │           ├── [ENTRANCE] Meeting Rooms Door
+│   │   │   │           └── [ROOM] Room 1 - 6
+│   │   │   ├── [FLOOR] Floor 1
+│   │   │   │   └── [UNIT] Unit 101 - 109
+│   │   │   │       └── [ENTRANCE] Unit 101 - 109 Door
+│   │   │   ├── [FLOOR] Floor 2
+│   │   │   │   └── [UNIT] Unit 201 - 210
+│   │   │   │       └── [ENTRANCE] Unit 201 - 210 Door
+│   │   │   └── [FLOOR] Floor 3
+│   │   │       └── [UNIT] Unit 301 - 310
+│   │   │           └── [ENTRANCE] Unit 301 - 310 Door
+│   └── [PROPERTY] ODCP1 Property 2 - X
+└── [PORTFOLIO] ODC Portfolio 2 - X
 ```
 
 <br />
