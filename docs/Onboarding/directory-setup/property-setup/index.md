@@ -14,12 +14,13 @@ OpenDOOR Client Account
 ├── ODC Portfolio 1
 │   ├── ODCP1 Property 1
 │   │   ├── Parking Lot
+│   │   │   ├── Parking Lot Entrance
 │   │   │   ├── Staff
 │   │   │   │   └── Slot 01 - 10
 │   │   │   └── Residents
 │   │   │       └── Slot 101 - 310
 │   │   ├── Residential Building
-│   │   │   ├── Entrance
+│   │   │   ├── Residential Building Entrance
 │   │   │   ├── Common Areas
 │   │   │   │   ├── Lobby
 │   │   │   │   ├── Package Room
@@ -37,7 +38,7 @@ OpenDOOR Client Account
 │   │   │       └── Unit 301 - 310
 │   │   │           └── Unit 301 - 310 Door
 │   │   └── Amenities
-│   │       ├── Entrance
+│   │       ├── Amenities Entrance
 │   │       ├── Spa
 │   │       │   └── Spa Door
 │   │       ├── Gym
