@@ -15,43 +15,27 @@ OpenDOOR Client Account
 │   ├── ODCP1 Property 1
 │   │   ├── Parking Lot
 │   │   │   ├── Staff
-│   │   │   │   ├── Slot 01
-│   │   │   │   ├── ...
-│   │   │   │   └── Slot 10
+│   │   │   │   └── Slot 01 - 10
 │   │   │   └── Residents
-│   │   │       ├── Slot 101
-│   │   │       ├── ...
-│   │   │       └── Slot 310
+│   │   │       └── Slot 101 - 310
 │   │   ├── Residential Building
 │   │   │   ├── Entrance
 │   │   │   ├── Common Areas
 │   │   │   │   ├── Lobby
 │   │   │   │   ├── Package Room
-│   │   │   │   │   ├── Lockbox 101
-│   │   │   │   │   │   └── Lockbox 101 Door
-│   │   │   │   │   ├── ...
-│   │   │   │   │   └── Lockbox 310
-│   │   │   │   │       └── Lockbox 310 Door
+│   │   │   │   │   └── Lockbox 101 - 310
+│   │   │   │   │       └── Lockbox 101 - 310 Door
 │   │   │   │   ├── Elevator 1
 │   │   │   │   └── Elevator 2
 │   │   │   ├── Floor 1
-│   │   │   │   ├── Unit 101
-│   │   │   │   │   └── Unit 101 Door
-│   │   │   │   ├── ...
-│   │   │   │   └── Unit 109
-│   │   │   │       └── Unit 109 Door
+│   │   │   │   └── Unit 101 - 109
+│   │   │   │       └── Unit 101 - 109 Door
 │   │   │   ├── Floor 2
-│   │   │   │   ├── Unit 201
-│   │   │   │   │   └── Unit 201 Door
-│   │   │   │   ├── ...
-│   │   │   │   └── Unit 210
-│   │   │   │       └── Unit 210 Door
+│   │   │   │   └── Unit 201 - 210
+│   │   │   │       └── Unit 201 - 210 Door
 │   │   │   └── Floor 3
-│   │   │       ├── Unit 301
-│   │   │       │   └── Unit 301 Door
-│   │   │       ├── ...
-│   │   │       └── Unit 310
-│   │   │           └── Unit 310 Door
+│   │   │       └── Unit 301 - 310
+│   │   │           └── Unit 301 - 310 Door
 │   │   └── Amenities
 │   │       ├── Entrance
 │   │       ├── Spa
@@ -60,15 +44,9 @@ OpenDOOR Client Account
 │   │       │   └── Gym Door
 │   │       └── Meeting Rooms
 │   │           ├── Meeting Rooms Door
-│   │           ├── Room 1
-│   │           ├── ...
-│   │           └── Room 6
-│   ├── ODCP1 Property 2
-│   ├── ...
-│   └── ODCP1 Property X
-├── ODC Portfolio 2
-├── ...
-└── ODC Portfolio X
+│   │           └── Room 1 - 6
+│   └── ODCP1 Property 2 - X
+└── ODC Portfolio 2 - X
 ```
 
 <br />
