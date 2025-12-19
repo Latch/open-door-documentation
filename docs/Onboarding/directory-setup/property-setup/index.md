@@ -18,7 +18,7 @@ metadata:
 │   │   │   ├── [PARKING_GROUP] Staff
 │   │   │   │   └── [PARKING_SLOT] Slot 01 - 10
 │   │   │   └── [PARKING_GROUP] Residents
-│   │   │       └── [PARKING_SLOT]Slot 101 - 310
+│   │   │       └── [PARKING_SLOT] Slot 101 - 310
 │   │   ├── [BUILDING] Residential Building
 │   │   │   ├── [ENTRANCE] Residential Building Entrance
 │   │   │   ├── [COMMON_GROUP] Common Areas
