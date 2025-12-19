@@ -27,7 +27,16 @@ OpenDOOR Client Account
 │   │   │   │   │   └── Lockbox 101 - 310
 │   │   │   │   │       └── Lockbox 101 - 310 Door
 │   │   │   │   ├── Elevator 1
-│   │   │   │   └── Elevator 2
+│   │   │   │   ├── Elevator 2
+│   │   │   │   └── Amenities
+│   │   │   │       ├── Amenities Entrance
+│   │   │   │       ├── Spa
+│   │   │   │       │   └── Spa Door
+│   │   │   │       ├── Gym
+│   │   │   │       │   └── Gym Door
+│   │   │   │       └── Meeting Rooms
+│   │   │   │           ├── Meeting Rooms Door
+│   │   │   │           └── Room 1 - 6
 │   │   │   ├── Floor 1
 │   │   │   │   └── Unit 101 - 109
 │   │   │   │       └── Unit 101 - 109 Door
@@ -37,15 +46,6 @@ OpenDOOR Client Account
 │   │   │   └── Floor 3
 │   │   │       └── Unit 301 - 310
 │   │   │           └── Unit 301 - 310 Door
-│   │   └── Amenities
-│   │       ├── Amenities Entrance
-│   │       ├── Spa
-│   │       │   └── Spa Door
-│   │       ├── Gym
-│   │       │   └── Gym Door
-│   │       └── Meeting Rooms
-│   │           ├── Meeting Rooms Door
-│   │           └── Room 1 - 6
 │   └── ODCP1 Property 2 - X
 └── ODC Portfolio 2 - X
 ```
