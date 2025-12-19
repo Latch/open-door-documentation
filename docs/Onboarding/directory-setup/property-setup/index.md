@@ -7,7 +7,7 @@ metadata:
 ---
 ### Directory Tree Structure
 
-#### NOTE: This Directory tree will be used as example throughout this guide
+#### NOTE: This Directory tree will be used as example throughout this guide and has Space Type specified for each node
 
 ```plaintext
 [ACCOUNT] OpenDOOR Client Account
