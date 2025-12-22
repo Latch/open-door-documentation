@@ -9,7 +9,7 @@ metadata:
 
 #### NOTE: This Directory tree will be used as example throughout the guide
 
-```plaintext
+```plaintext Directory Structure and Hierarchy
 [ACCOUNT] OpenDOOR Client Account
 ├── [PORTFOLIO] ODC Portfolio 1
 │   ├── [PROPERTY] ODCP1 Property 1
