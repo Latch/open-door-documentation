@@ -82,6 +82,22 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 ### Step 2: Prepare and Send Request!
 
-OpenDOOR API Request to import 
+Request definition:
+
+* Method: POST
+* Host: https://api.prod.door.com
+* Path: `blueprint-internal/v1/items/import-csv`
+* Headers:
+  * Authorization TBD
+* File: 
+
+```curl
+curl -X 'POST' \
+  'https://api.prod.door.com/blueprint-internal/v1/items/import-csv' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@import-into-OpenDOOR.csv;type=text/csv'
+```
 
 ### Step 3: Validate Response
