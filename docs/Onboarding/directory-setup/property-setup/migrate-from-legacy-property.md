@@ -26,7 +26,7 @@ CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PA
 
 #### Example CSV File
 
-To help you get started, we've provided an example CSV file. This file contains sample data that will be used in the subsequent guide pages.
+To help you get started, we've provided an example CSV file, based on structure from [Property Setup](doc:property-setup) . This file contains sample data that will be used in the subsequent guide pages.
 
 ```Text import-into-OpenDOOR.csv
 `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
