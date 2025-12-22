@@ -7,6 +7,8 @@ metadata:
 ---
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
+CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID`.
+
 <Accordion title="CSV Format Guidelines" icon="list">
   1. `SPACE TYPE`:
      1. Type of Space represented by the row (future Directory Item) in the Client Directory tree. It should be the same type as in the DOOR Client Account.
@@ -22,13 +24,11 @@ metadata:
   **Tip:** You can use Google Sheets to create your import data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**. Google Sheets makes it easy to validate your data format before importing.
 </Callout>
 
-CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID` and the next lines will represent contents.
-
 #### Example CSV File
 
 To help you get started, we've provided an example CSV file. This file contains sample data that will be used in the subsequent guide pages.
 
-```
+```Text import-into-OpenDOOR.csv
 `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
 ACCOUNT,OpenDOOR Client Account,,
 PORTFOLIO,ODC Portfolio 1,OpenDOOR Client Account,936037B4-9250-4778-BC81-57660C3A011B
@@ -80,9 +80,9 @@ PROPERTY,ODCP1 Property 2,ODC Portfolio 1,251FEC1A-8B28-487C-9D57-E2B843AC51FF
 PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021CB328B3
 ```
 
-<br />
-
 ### Step 2: Prepare Request
+
+<br />
 
 ### Step 3: Send it!
 
