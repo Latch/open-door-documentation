@@ -5,9 +5,9 @@ hidden: false
 metadata:
   robots: index
 ---
-### Directory Tree Structure
+### Directory Structure
 
-#### NOTE: This Directory tree will be used as example throughout this guide and has Space Type specified for each node
+#### NOTE: This Directory tree will be used as example throughout the guide
 
 ```plaintext
 [ACCOUNT] OpenDOOR Client Account
