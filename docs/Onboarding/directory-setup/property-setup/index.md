@@ -50,8 +50,6 @@ metadata:
 └── [PORTFOLIO] ODC Portfolio 2 -> X
 ```
 
-<br />
-
 ### Can be done in two ways:
 
 * **[Bulk Import Property Data](doc:migrate-from-legacy-property) :** This is the more user-friendly approach. DOOR Client Account data detailing the Properties hierarchy and structure is organized into a templated CSV file that will be passed as input to a dedicated API endpoint.
