@@ -28,8 +28,15 @@ CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PA
 
 To help you get started, we've provided an example CSV file, based on structure from [Property Setup](doc:property-setup) . This file contains sample data that will be used in the subsequent guide pages.
 
+##### NOTE: Door Client Data that can be associated with OpenDoor data entities
+
+* DOOR data type `ACCOUNT` (PORTFOLIO) → OpenDOOR data type `PORTFOLIO`
+* DOOR data type `BUILDING` → OpenDOOR data type `PROPERTY`
+* DOOR data type `UNIT` → OpenDOOR data type `UNIT`
+* DOOR data type `DOOR` → OpenDOOR data type `ENTRANCE`
+
 ```Text import-into-OpenDOOR.csv
-`SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
+SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
 ACCOUNT,OpenDOOR Client Account,,
 PORTFOLIO,ODC Portfolio 1,OpenDOOR Client Account,936037B4-9250-4778-BC81-57660C3A011B
 PROPERTY,ODCP1 Property 1,ODC Portfolio 1,1765CB13-36D6-461A-9ACB-59D1A2CE9BF6
@@ -803,10 +810,3 @@ Expected response is HTTP 200 and body containing the entire Directory tree stru
   }
 ]
 ```
-
-#### **NOTE:** Door Client Data that can be associated with OpenDoor data entities:
-
-* Door `ACCOUNT` (PORTFOLIO) → OpenDOOR `PORTFOLIO`
-* Door `BUILDING` → OpenDOOR `PROPERTY`
-* Door `UNIT` → OpenDOOR `UNIT`
-* Door `DOOR` → OpenDOOR `ENTRANCE`
