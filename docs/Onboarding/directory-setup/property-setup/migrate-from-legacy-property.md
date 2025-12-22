@@ -22,4 +22,8 @@ metadata:
   **Tip:** You can use Google Sheets to create your import data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**. Google Sheets makes it easy to validate your data format before importing.
 </Callout>
 
-<br />
+### Step 2: Prepare Request
+
+### Step 3: Send it!
+
+### Step 4: Validate Response
