@@ -89,7 +89,7 @@ Request definition:
 * Path: `blueprint-internal/v1/items/import-csv`
 * Headers:
   * Authorization TBD
-* File: name of your CSV file. For this example we've used `import-into-OpenDOOR.csv`from https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file
+* File: name of your CSV file. For this example we've used `import-into-OpenDOOR.csv`from [Example CSV File](https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file)
 
 ```curl
 curl -X 'POST' \
