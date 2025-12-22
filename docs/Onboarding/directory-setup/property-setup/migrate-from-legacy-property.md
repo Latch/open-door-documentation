@@ -7,7 +7,7 @@ metadata:
 ---
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
-#### Column specifications:
+<Accordion title="Column specifications" icon="list">
 
 1. `SPACE TYPE`:
    1. Type of Space represented by the row (future Directory Item) in the Client Directory tree. It should be the same type as in the DOOR Client Account.
@@ -15,6 +15,8 @@ metadata:
 2. `BP SPACE NAME`: Directory Item name. It should be the same as the DOOR Client Account entity name.
 3. `BP SPACE PARENT NAME`: Name of the Parent Directory Item. It should be from a previous row and should be a perfect String match.
 4. `LATCH UUID / ID`: Latch UUID of the entity, be it Portfolio, Property, Unit, Door/Lock, and so on. It can be obtained from DoorOS or AdminTool.
+
+</Accordion>
 
 #### Create your CSV file and populate it with import data
 
