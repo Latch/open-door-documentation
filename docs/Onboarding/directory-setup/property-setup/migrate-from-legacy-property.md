@@ -80,10 +80,8 @@ PROPERTY,ODCP1 Property 2,ODC Portfolio 1,251FEC1A-8B28-487C-9D57-E2B843AC51FF
 PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021CB328B3
 ```
 
-### Step 2: Prepare Request
+### Step 2: Prepare and Send Request!
 
-<br />
+OpenDOOR API Request to import 
 
-### Step 3: Send it!
-
-### Step 4: Validate Response
+### Step 3: Validate Response
