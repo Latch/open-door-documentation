@@ -40,7 +40,7 @@ metadata:
 │   │   │   │   └── [UNIT] Unit 101 -> 109
 │   │   │   │       └── [ENTRANCE] Unit 101 -> 109 Door
 │   │   │   ├── [FLOOR] Floor 2
-│   │   │   │   └── [UNIT] Unit 201 - 210
+│   │   │   │   └── [UNIT] Unit 201 -> 210
 │   │   │   │       └── [ENTRANCE] Unit 201 -> 210 Door
 │   │   │   └── [FLOOR] Floor 3
 │   │   │       └── [UNIT] Unit 301 -> 310
