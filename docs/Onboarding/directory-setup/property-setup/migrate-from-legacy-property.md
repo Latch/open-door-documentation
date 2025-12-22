@@ -803,3 +803,10 @@ Expected response is HTTP 200 and body containing the entire Directory tree stru
   }
 ]
 ```
+
+#### **NOTE:** Door Client Data that can be associated with OpenDoor data entities:
+
+* Door `ACCOUNT` (PORTFOLIO) → OpenDOOR `PORTFOLIO`
+* Door `BUILDING` → OpenDOOR `PROPERTY`
+* Door `UNIT` → OpenDOOR `UNIT`
+* Door `DOOR` → OpenDOOR `ENTRANCE`
