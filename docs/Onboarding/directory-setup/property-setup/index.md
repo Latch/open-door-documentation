@@ -15,15 +15,16 @@ metadata:
 │   ├── [PROPERTY] ODCP1 Property 1
 │   │   ├── [BUILDING] Parking Lot
 │   │   │   ├── [ENTRANCE] Parking Lot Entrance
-│   │   │   ├── [PARKING_GROUP] Staff
-│   │   │   │   └── [PARKING_SLOT] Slot 01 -> 10
-│   │   │   └── [PARKING_GROUP] Residents
-│   │   │       └── [PARKING_SLOT] Slot 101 -> 310
+│   │   │   ├── [PARKING_GROUP] Staff Parking
+│   │   │   │   └── [PARKING_SLOT] Staff Slot 1 -> 10
+│   │   │   └── [PARKING_GROUP] Residents Parking
+│   │   │       └── [PARKING_SLOT] Residents Slot 101 -> 310
 │   │   ├── [BUILDING] Residential Building
 │   │   │   ├── [ENTRANCE] Residential Building Entrance
 │   │   │   ├── [COMMON_GROUP] Common Areas
 │   │   │   │   ├── [COMMON_AREA] Lobby
 │   │   │   │   ├── [STORAGE_GROUP] Package Room
+│   │   │   │   │   └── [SERVICE] Delivery Service Door
 │   │   │   │   │   └── [STORAGE_SLOT] Lockbox 101 -> 310
 │   │   │   │   ├── [COMMON_AREA] Elevator 1
 │   │   │   │   ├── [COMMON_AREA] Elevator 2
@@ -37,8 +38,8 @@ metadata:
 │   │   │   │           ├── [ENTRANCE] Meeting Rooms Door
 │   │   │   │           └── [ROOM] Room 1 -> 6
 │   │   │   ├── [FLOOR] Floor 1
-│   │   │   │   └── [UNIT] Unit 101 -> 109
-│   │   │   │       └── [ENTRANCE] Unit 101 -> 109 Door
+│   │   │   │   └── [UNIT] Unit 101 -> 110
+│   │   │   │       └── [ENTRANCE] Unit 101 -> 110 Door
 │   │   │   ├── [FLOOR] Floor 2
 │   │   │   │   └── [UNIT] Unit 201 -> 210
 │   │   │   │       └── [ENTRANCE] Unit 201 -> 210 Door
