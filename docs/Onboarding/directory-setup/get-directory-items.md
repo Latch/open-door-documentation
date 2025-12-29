@@ -20,7 +20,7 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 ### Example Usages
 
-We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Portfolio 1` Directory Item) from [Bulk Import Property Data → Step 3. Validate Response Body](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
+We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Portfolio 1` Directory Item) from [Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
 #### `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
 
