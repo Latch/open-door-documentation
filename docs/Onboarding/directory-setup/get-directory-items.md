@@ -5,17 +5,7 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
-## GET Directory Operations
-
-In this section, we'll explore various GET operations available for interacting with the Directory. These operations allow you to retrieve information about different entities within the Directory.
-
-### Overview
-
-The GET Directory operations provide endpoints to access data related to accounts, portfolios, properties, and more. These operations are essential for fetching existing data and understanding the current structure of your Directory.
-
-### Available Endpoints
+Below you can find endpoints for retrieving existing Directory data and understanding the current structure of your Directory:
 
 <Accordion title="GET Directory Endpoints" icon="network-wired">
   1. **GET /directory/accounts**: Retrieve a list of all accounts in the Directory.
