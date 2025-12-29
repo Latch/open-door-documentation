@@ -34,3 +34,5 @@ next:
 * **`Content-Type`**: `multipart/form-data`
 
 <br />
+
+### Step 1: Create Directory structure as Request Body
