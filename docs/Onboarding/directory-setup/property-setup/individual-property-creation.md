@@ -14,10 +14,10 @@ next:
 <br />
 
 <Callout icon="📝" theme="default">
-  **It's best to use below endpoints as follows:**
+  **How to use below endpoints:**
 
-  1. `/directory/v1/items` to create the initial Directory structure.
-  2. `/directory/v1/items/{scope}` to create additional Directory Items and append them to existing Item, targeted by `scope`.
+  1. `/directory/v1/items` to create the initial Directory structure, can even be complete at the moment.
+  2. `/directory/v1/items/{scope}` to create additional Directory Items and append them to an existing Item, identified by `scope`.  Can be used to bring additions or complete existing Directory.
 </Callout>
 
 **Request Definitions:**
