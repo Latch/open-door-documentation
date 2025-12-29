@@ -4,11 +4,6 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
-next:
-  pages:
-    - slug: assign-locks-to-directories
-      title: 2. Assign Locks to Directories
-      type: basic
 ---
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
