@@ -95,10 +95,6 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 ### Step 2: Prepare and Send Request!
 
-<Callout icon="📋" theme="info">
-  Here's how to structure your API request for importing CSV data.
-</Callout>
-
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**                                  |
