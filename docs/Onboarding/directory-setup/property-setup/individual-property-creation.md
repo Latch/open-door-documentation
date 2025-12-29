@@ -49,15 +49,27 @@ next:
 }
 ```
 
-### Step 1: Create Initial Directory Structure
+### Create Entire Directory Structure in One Request
 
-#### Step 1.1: Prepare JSON Request Body
+#### Step 1: Prepare JSON Request Body
 
 We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages. We're leaving out some Lock Assignments/Associations to Directories and some Directory items, that will be used in later Steps.
 
 ```json Request Body
 ```
 
-#### Step 1.2: Send Request!
+#### Step 2: Send Request!
 
-#### Step 1.3: Validate Response:
+#### Step 3: Validate Response
+
+### Create Directory Structure in Batches
+
+#### Step 1: Break it into JSON batches
+
+#### Step 2: Send Request!
+
+#### Step 3: Validate Response
+
+#### Step 4: Repeat until there are no more batches
+
+<br />
