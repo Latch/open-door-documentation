@@ -35,7 +35,7 @@ next:
 
 * **`accept`**: `*/*`
 * **`Authorization`**: TBD
-* **`Content-Type`**: `multipart/form-data`
+* **`Content-Type`**: `application/json`
 
 **Request Body:** uses below structure . `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
 
@@ -458,9 +458,39 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
 
 #### Step 2: Send Request!
 
-<br />
+Using JSON from https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body:
+
+```curl
+curl -X 'POST' \
+  'https://api.prod.door.com/directory/v1/items' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+		...
+  }'
+
+
+```
 
 #### Step 3: Validate Response
+
+```json Response
+{
+  "id": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "name": "OpenDOOR Client Account",
+  "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "tags": {
+    "space:ACCOUNT": "",
+    "item:SPACE": ""
+  },
+  "createdAt": "2025-12-29T16:38:44Z",
+  "createdBy": {
+    "authorType": "USER",
+    "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+  }
+}
+```
 
 ### Create Directory Structure in Batches
 
