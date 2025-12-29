@@ -1,5 +1,6 @@
 - prerequisites-1
 - property-setup
 - get-directory-items
+- update-directory-items
 - assign-locks-to-directories
 - create-access-paths
