@@ -458,6 +458,8 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
 
 #### Step 2: Send Request!
 
+<br />
+
 #### Step 3: Validate Response
 
 ### Create Directory Structure in Batches
