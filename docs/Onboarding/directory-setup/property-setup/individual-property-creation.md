@@ -35,6 +35,8 @@ next:
 
 <br />
 
-### Step 1: Prepare Request Body
+### Step 1: Prepare JSON Request Body
 
-<br />
+We'll be using Directory structure from [Property Setup](doc:property-setup) as an example.
+
+### Step 2:
