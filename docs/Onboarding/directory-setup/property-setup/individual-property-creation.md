@@ -33,7 +33,7 @@ next:
 * **`Authorization`**: TBD
 * **`Content-Type`**: `multipart/form-data`
 
-**Request Body:** `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
+**Request Body:** uses below structure . `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
 
 ```json Request Body Structure
 {
