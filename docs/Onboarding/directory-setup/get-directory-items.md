@@ -27,7 +27,7 @@ We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Po
 **Request:**
 
 ```bash
-curl -X GET 'https://api.prod.door.com/directory/v1/items/{uuid}' \
+curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
   -H 'Authorization: Bearer {token}' \
   -H 'Accept: application/json'
 ```
@@ -42,7 +42,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/{uuid}' \
 **Request:**
 
 ```bash
-curl -X GET 'https://api.prod.door.com/directory/v1/subtree/{scope}' \
+curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
   -H 'Authorization: Bearer {token}' \
   -H 'Accept: application/json'
 ```
