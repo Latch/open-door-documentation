@@ -17,7 +17,7 @@ next:
   **How to use below endpoints:**
 
   1. `/directory/v1/items` to create the initial Directory structure, can even be complete at the moment.
-  2. `/directory/v1/items/{scope}` to create additional Directory Items and link them to an existing Item, identified by `scope`. 
+  2. `/directory/v1/items/{scope}` to create additional Directory Items and link them to an existing Item, identified by `scope`.
 </Callout>
 
 **Request Definitions:**
@@ -35,4 +35,6 @@ next:
 
 <br />
 
-### Step 1: Create Directory structure as Request Body
+### Step 1: Prepare Request Body
+
+<br />
