@@ -151,11 +151,11 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
       "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::17cde9b1-0
 ```
 
-<Callout icon="📋" theme="info">
-  **`nextPageToken`:** You can find it at the end of the above response body. Using it in a request
-</Callout>
-
 ##### 2.3. Navigate through response pages:
+
+<Callout icon="📋" theme="info">
+  `pageSize` and `nextPageToken`: You can find it at the end of the above response body. Using it in a request
+</Callout>
 
 Using `nextPageToken` from the above response body will retrieve you the next page. Here's how to use it:
 
