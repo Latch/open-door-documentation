@@ -164,7 +164,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
   curl -X 'GET' \
     'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageToken=eyJTSyI6Ik1FVEFEQVRBIiwiR1NJNVBLIjoiREkjOjoiLCJQSyI6IjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyIsIkdTSTVTSyI6Ijo6OjoyMDE4Yjk0Yi05ZGY1LTQ0NTYtOWM1ZC05ZTk4NDk5M2FmZWU6Ojk3MmU0MTUxLTBmNzMtNGNkNS05MTNlLTcwZGQ1ZmM4YWQ0NTo6ZWE0MWFkMTQtM2UyYi00OTViLWI3NmEtYTE5NDIxNzk2MWNjOjo2MmY1ZjdmMy0wYzAzLTRlNWYtODI5OS0yNWM2ZTNhNGZmZjk6OjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyJ9&pageSize=10' \
     -H 'accept: */*' \
-    -H 'x-door-auth: Bearer {token}'
+    -H 'Authorization: Bearer {token}'
   ```
 </Callout>
 
