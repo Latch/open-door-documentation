@@ -1188,6 +1188,8 @@ Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-direc
 
 #### Step 1: Break it into JSON batches
 
+For this minimalistic example, we're going to create a new Floor with an Unit.
+
 #### Step 2: Send Request!
 
 #### Step 3: Validate Response
