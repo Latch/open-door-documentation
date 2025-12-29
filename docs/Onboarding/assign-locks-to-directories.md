@@ -1,6 +1,6 @@
 ---
 title: 2. Directory Locks Setup
-excerpt: Assign Locks to Directories.
+excerpt: POST Assign Locks to Directories.
 deprecated: false
 hidden: false
 metadata:
