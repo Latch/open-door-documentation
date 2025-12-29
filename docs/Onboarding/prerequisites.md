@@ -1,5 +1,5 @@
 ---
-title: 0. Prerequisites
+title: Prerequisites
 excerpt: Everything needed before you can use OpenDOOR.
 deprecated: false
 hidden: false
