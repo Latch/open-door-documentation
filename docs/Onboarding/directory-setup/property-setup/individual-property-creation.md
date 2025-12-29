@@ -33,10 +33,28 @@ next:
 * **`Authorization`**: TBD
 * **`Content-Type`**: `multipart/form-data`
 
-<br />
+**Request Body:** `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
 
-### Step 1: Prepare JSON Request Body
+```json Request Body Structure
+{
+  "name": "string",
+  "tags": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "children": [
+    "string"
+  ]
+}
+```
 
-We'll be using Directory structure from [Property Setup](doc:property-setup) as an example.
+### Step 1: Create Initial Directory Structure
 
-### Step 2:
+#### Step 1.1: Prepare JSON Request Body
+
+We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages. We're leaving out some Lock Assignments/Associations to Directories and some Directory items, that will be used in later Steps.
+
+#### Step 1.2: Send Request!
+
+#### Step 1.3: Validate Response:
