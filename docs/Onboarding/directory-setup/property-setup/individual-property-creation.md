@@ -13,4 +13,8 @@ Below you can find endpoints for creating Directory Item(s):
 | POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items`         | Create a Directory Item and its subtree.                        |
 | POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{scope}` | Create a Directory Item under the given `scope` Directory Item. |
 
-<br />
+**Headers:**
+
+* **`accept`**: `*/*`
+* **`Authorization`**: TBD
+* **`Content-Type`**: `multipart/form-data`
