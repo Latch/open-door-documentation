@@ -1,5 +1,5 @@
 ---
-title: 2. Individual Property Creation
+title: Individual Property Creation
 deprecated: false
 hidden: false
 metadata:
