@@ -1,11 +1,14 @@
 ---
 title: Retrieve Directory Data
+excerpt: >-
+  Below you can find endpoints for retrieving existing Directory data and
+  understanding the current structure of your Directory.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
-Below you can find endpoints for retrieving existing Directory data and understanding the current structure of your Directory:
+<br />
 
 | **Method** | **Host**                                               | **Path**                        | Details                                                       |
 | :--------- | :----------------------------------------------------- | :------------------------------ | :------------------------------------------------------------ |
