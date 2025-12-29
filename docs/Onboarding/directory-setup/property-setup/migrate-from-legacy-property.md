@@ -8,7 +8,7 @@ metadata:
 <br />
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've used this page's method, you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories)  anymore.
+  **Important Note:** If you've used this page's Directory setup method, you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories)  anymore, it's already handled.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
