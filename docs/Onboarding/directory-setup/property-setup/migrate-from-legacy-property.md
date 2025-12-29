@@ -4,6 +4,11 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  pages:
+    - slug: assign-locks-to-directories
+      title: 2. Directory Locks Setup
+      type: basic
 ---
 <br />
 
