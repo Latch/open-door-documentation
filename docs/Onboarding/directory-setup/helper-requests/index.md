@@ -5,4 +5,13 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  description: 'See '
+  pages:
+    - slug: get-directory-items
+      title: Retrieve Directory Data
+      type: basic
+    - slug: update-directory-items
+      title: Update Directory Items
+      type: basic
 ---
