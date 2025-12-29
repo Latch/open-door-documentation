@@ -492,7 +492,7 @@ Response should successful, HTTP 200 and body containing the root Directory Item
 }
 ```
 
-If you send a GET Directo
+If you send a `GET /directory/v1/subtree/{scope}` request ([Retrieve Directory Data]() )
 
 ### Create Directory Structure in Batches
 
