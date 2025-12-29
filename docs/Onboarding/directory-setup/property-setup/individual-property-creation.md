@@ -55,6 +55,9 @@ next:
 
 We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages. We're leaving out some Lock Assignments/Associations to Directories and some Directory items, that will be used in later Steps.
 
+```json Request Body
+```
+
 #### Step 1.2: Send Request!
 
 #### Step 1.3: Validate Response:
