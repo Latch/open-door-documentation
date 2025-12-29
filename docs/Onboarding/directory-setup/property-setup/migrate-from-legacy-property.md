@@ -101,8 +101,9 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 **Headers:**
 
-* **Authorization**: TBD
-* **Content-Type**: `multipart/form-data`
+* **`accept`**: `*/*`
+* **`Authorization`**: TBD
+* **`Content-Type`**: `multipart/form-data`
 
 **File:**
 
