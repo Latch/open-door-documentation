@@ -492,7 +492,7 @@ Response should successful, HTTP 200 and body containing the root Directory Item
 }
 ```
 
-If you send a `GET /directory/v1/subtree/{scope}` request ([Retrieve Directory Data](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) )
+Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = e43f4017-da92-4c4a-87ff-5c5f418c3cf6` should get you the entire Directory starting from Root Item from above Response.
 
 ### Create Directory Structure in Batches
 
