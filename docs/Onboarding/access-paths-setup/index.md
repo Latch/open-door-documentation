@@ -1,5 +1,5 @@
 ---
-title: Access Paths Setup
+title: 3. Access Paths Setup
 deprecated: false
 hidden: false
 metadata:
