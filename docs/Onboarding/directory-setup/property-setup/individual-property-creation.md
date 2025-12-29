@@ -458,7 +458,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
 
 #### Step 2: Send Request!
 
-Using JSON from https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body:
+Using JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body):
 
 ```curl
 curl -X 'POST' \
@@ -469,11 +469,11 @@ curl -X 'POST' \
   -d '{
 		...
   }'
-
-
 ```
 
 #### Step 3: Validate Response
+
+Response should successful, HTTP 200 and body containing the root Directory Item.
 
 ```json Response
 {
