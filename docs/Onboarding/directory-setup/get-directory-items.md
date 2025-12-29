@@ -15,9 +15,10 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 **URL parameters:**
 
-* **This is applicable only for listing endpoints: `/directory/v1/subtree` and `/directory/v1/subtree/{scope}`**
+* **This is applicable only for listing endpoints `/directory/v1/subtree` and `/directory/v1/subtree/{scope}`. See usage example in [`GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-a-known-directory-item-1).**
 * `pageSize`: Specify the number of items to be returned in a single page of results when listing Directory Items. It helps control the amount of data retrieved in one request, allowing for efficient data handling and navigation through large datasets.
 * `pageToken`: Specify the starting point (ID/UUID) for the next page of data in a paginated list. When combined with pageSize, it allows for efficient navigation through large datasets by fetching subsequent pages of results.
+* <br />
 
 **Headers:**
 
