@@ -6,6 +6,8 @@ hidden: false
 metadata:
   robots: index
 ---
+Below you can find endpoints for creating Directory Item(s):
+
 <br />
 
 ### Can be done in multiple ways:
