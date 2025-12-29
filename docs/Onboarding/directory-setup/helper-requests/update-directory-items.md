@@ -30,7 +30,7 @@ We'll be using as example `uuid = ca461e44-715b-46ce-8056-a68693584a07` (`Floor 
 curl -X 'PATCH' \
   'https://api.prod.door.com/directory/v1/items/ca461e44-715b-46ce-8056-a68693584a07' \
   -H 'accept: */*' \
-  -H 'x-door-auth: Bearer {token}' \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
   "name": "[UPDATED] Floor 2 - Unit 201",
