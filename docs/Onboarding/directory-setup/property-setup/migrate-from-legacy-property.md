@@ -5,6 +5,12 @@ hidden: false
 metadata:
   robots: index
 ---
+<br />
+
+<Callout icon="📝" theme="default">
+  **NOTE:** If you're using this Directory setup method, you don't need to go through []() anymore, it's already handled.
+</Callout>
+
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
 CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID`.
