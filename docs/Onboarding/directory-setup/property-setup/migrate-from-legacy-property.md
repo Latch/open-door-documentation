@@ -28,7 +28,7 @@ CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PA
 
 To help you get started, we've provided an example CSV file, based on structure from [Property Setup](doc:property-setup) . This file contains sample data that will be used in the subsequent guide pages.
 
-##### NOTE: Door Client Data that can be associated with OpenDoor data entities
+##### Door Client Data that can be associated with OpenDoor data entities
 
 * DOOR data type `ACCOUNT` (PORTFOLIO) → OpenDOOR data type `PORTFOLIO`
 * DOOR data type `BUILDING` → OpenDOOR data type `PROPERTY`
@@ -89,11 +89,11 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 ### Step 2: Prepare and Send Request!
 
-#### Request definition:
-
 <Callout icon="📋" theme="info">
   Here's how to structure your API request for importing CSV data.
 </Callout>
+
+#### Request definition:
 
 | **Method** | **Host**                                               | **Path**                                  |
 | ---------- | ------------------------------------------------------ | ----------------------------------------- |
