@@ -1188,9 +1188,44 @@ Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-direc
 
 #### Step 1: Break it into JSON batches
 
-For this minimalistic example, we're going to create a new Floor with an Unit.
+This allows for more granular operations, clearer and easier to manage request bodies than a single large one.
+
+For this minimalistic example, we're going to create a Floor with an Unit and link it to `uuid = 02ab66db-d4cb-4148-905f-e6545259db41` (`Residential Building` Directory Item) as child.
 
 #### Step 2: Send Request!
+
+```curl
+curl -X 'POST' \
+  'https://api.prod.door.com/directory/v1/items/02ab66db-d4cb-4148-905f-e6545259db41' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Floor 4",
+    "tags": {
+        "space:FLOOR": "",
+        "item:SPACE": ""
+    },
+    "children": [
+        {
+            "name": "Floor 4 - Unit 401",
+            "tags": {
+                "space:UNIT": "",
+                "item:SPACE": ""
+            },
+            "children": [
+                {
+                    "name": "Floor 4 - Unit 401 Door",
+                    "tags": {
+                        "space:ENTRANCE": "",
+                        "item:SPACE": ""
+                    }
+                }
+            ]
+        }
+    ]
+}'
+```
 
 #### Step 3: Validate Response
 
