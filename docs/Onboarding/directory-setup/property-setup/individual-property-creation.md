@@ -1186,6 +1186,8 @@ Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-direc
 
 ### Create Directory Structure in Batches
 
+Repeat below steps until the desired Directory is complete.
+
 #### Step 1: Break it into JSON batches
 
 This allows for more granular operations, clearer and easier to manage request bodies than a single large one.
@@ -1229,6 +1231,79 @@ curl -X 'POST' \
 
 #### Step 3: Validate Response
 
-#### Step 4: Repeat until there are no more batches
+Response should successful, HTTP 200 and body containing the created 1st level Directory Item (without the children).
+
+```json Response Body
+{
+  "id": "0cca28fc-a9fe-4451-9c9b-f1c9b51eea20",
+  "name": "Floor 4",
+  "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::02ab66db-d4cb-4148-905f-e6545259db41::0cca28fc-a9fe-4451-9c9b-f1c9b51eea20",
+  "tags": {
+    "space:FLOOR": "",
+    "item:SPACE": ""
+  },
+  "createdAt": "2025-12-29T18:54:30Z",
+  "createdBy": {
+    "authorType": "USER",
+    "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+  }
+}
+```
+
+<br />
+
+#### Step 4: Retrieve the newly created Directory Subtree
+
+Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = 02ab66db-d4cb-4148-905f-e6545259db41` should get you the Directory Subtree starting from newly created Item from above Response.
+
+```json Response Body
+{
+  "items": [
+    {
+      "id": "0cca28fc-a9fe-4451-9c9b-f1c9b51eea20",
+      "name": "Floor 4",
+      "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::02ab66db-d4cb-4148-905f-e6545259db41::0cca28fc-a9fe-4451-9c9b-f1c9b51eea20",
+      "tags": {
+        "space:FLOOR": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-29T18:54:30Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "0493c300-ab6d-4547-b0fc-a588c39f1e06",
+      "name": "Floor 4 - Unit 401",
+      "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::02ab66db-d4cb-4148-905f-e6545259db41::0cca28fc-a9fe-4451-9c9b-f1c9b51eea20::0493c300-ab6d-4547-b0fc-a588c39f1e06",
+      "tags": {
+        "space:UNIT": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-29T18:54:31Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "48cff386-a9ec-4b0d-8c03-396b4290fa6d",
+      "name": "Floor 4 - Unit 401 Door",
+      "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::02ab66db-d4cb-4148-905f-e6545259db41::0cca28fc-a9fe-4451-9c9b-f1c9b51eea20::0493c300-ab6d-4547-b0fc-a588c39f1e06::48cff386-a9ec-4b0d-8c03-396b4290fa6d",
+      "tags": {
+        "space:ENTRANCE": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-29T18:54:31Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    }
+  ],
+  "nextPageToken": null
+}
+```
 
 <br />
