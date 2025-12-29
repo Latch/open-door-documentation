@@ -23,7 +23,6 @@ Below you can find endpoints for retrieving existing Directory data and understa
 **Headers:**
 
 * **Authorization**: TBD
-* **Content-Type**: `multipart/form-data`
 
 ### Example Usages
 
@@ -31,15 +30,15 @@ We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Po
 
 #### 1. `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
 
-**1.1. Request:**
+##### 1.1. Request:
 
-```bash
+```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
   -H 'Authorization: Bearer {token}' \
   -H 'Accept: */*'
 ```
 
-**1.2. Response Body:**
+##### 1.2. Response Body:
 
 ```json Response Body
 {
@@ -61,15 +60,15 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 
 #### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item:
 
-**2.1. Request:**
+##### 2.1. Request:
 
-```bash
+```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageSize=10' \
   -H 'Authorization: Bearer {token}' \
   -H 'Accept: */*'
 ```
 
-**2.2. Response Body:**
+##### 2.2. Response Body:
 
 ```json Response Body
 {
@@ -154,5 +153,18 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
 ```
 
 <Callout icon="📋" theme="info">
-  **`nextPageToken`** At the end of the above response body
+  **`nextPageToken`:** You can find it at the end of the above response body. Using it in a request
 </Callout>
+
+##### 2.3. Navigate through response pages:
+
+Using `nextPageToken` from the above response body will retrieve you the next page. Here's how to use it:
+
+```curl
+curl -X 'GET' \
+  'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageToken=eyJTSyI6Ik1FVEFEQVRBIiwiR1NJNVBLIjoiREkjOjoiLCJQSyI6IjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyIsIkdTSTVTSyI6Ijo6OjoyMDE4Yjk0Yi05ZGY1LTQ0NTYtOWM1ZC05ZTk4NDk5M2FmZWU6Ojk3MmU0MTUxLTBmNzMtNGNkNS05MTNlLTcwZGQ1ZmM4YWQ0NTo6ZWE0MWFkMTQtM2UyYi00OTViLWI3NmEtYTE5NDIxNzk2MWNjOjo2MmY1ZjdmMy0wYzAzLTRlNWYtODI5OS0yNWM2ZTNhNGZmZjk6OjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyJ9&pageSize=10' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}'
+```
+
+<br />
