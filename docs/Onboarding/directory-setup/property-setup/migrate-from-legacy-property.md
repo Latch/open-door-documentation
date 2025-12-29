@@ -4,6 +4,11 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  pages:
+    - slug: assign-locks-to-directories
+      title: 2. Assign Locks to Directories
+      type: basic
 ---
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
@@ -113,7 +118,7 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 curl -X 'POST' \
   'https://api.prod.door.com/blueprint-internal/v1/items/import-csv' \
   -H 'accept: */*' \
-  -H 'x-door-auth: Bearer {token}' \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@import-into-OpenDOOR.csv;type=text/csv'
 ```
