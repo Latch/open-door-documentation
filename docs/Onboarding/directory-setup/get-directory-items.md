@@ -21,7 +21,8 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 **Headers:**
 
-* **Authorization**: TBD
+* **`accept`**: `*/*`
+* **`Authorization`**: TBD
 
 <br />
 
@@ -36,7 +37,7 @@ We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Po
 ```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
   -H 'Authorization: Bearer {token}' \
-  -H 'Accept: */*'
+  -H 'accept: */*'
 ```
 
 ##### 1.2. Response Body:
@@ -66,7 +67,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 ```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageSize=10' \
   -H 'Authorization: Bearer {token}' \
-  -H 'Accept: */*'
+  -H 'accept: */*'
 ```
 
 ##### 2.2. Response Body:
