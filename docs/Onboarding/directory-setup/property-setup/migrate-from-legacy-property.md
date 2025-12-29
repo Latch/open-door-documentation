@@ -95,8 +95,6 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
   Here's how to structure your API request for importing CSV data.
 </Callout>
 
-<br />
-
 | **Method** | **Host**                                               | **Path**                                  |
 | ---------- | ------------------------------------------------------ | ----------------------------------------- |
 | POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/blueprint-internal/v1/items/import-csv` |
@@ -105,7 +103,7 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 * **Authorization**: TBD
 * **Content-Type**: `multipart/form-data`
-* **Authorization** TBD
+* **Authorization**: TBD
 
 **File:**
 
