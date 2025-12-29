@@ -13,7 +13,7 @@ next:
 <br />
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've provided Lock ID/UUIDs and they appear in response body (end of this page), you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) for them anymore, the Lock is assigned to the created Directory.
+  **Important Note:** If you've provided Lock ID/UUIDs and they appear in successful responses body (end of this page), you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) for them anymore, the Lock is assigned to the created Directory.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
