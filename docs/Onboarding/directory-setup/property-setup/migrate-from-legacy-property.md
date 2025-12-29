@@ -91,12 +91,25 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 
 #### Request definition:
 
-* Method: POST
-* Host: [https://api.prod.door.com](https://api.prod.door.com)
-* Path: `blueprint-internal/v1/items/import-csv`
-* Headers:
-  * Authorization TBD
-* File: name of your CSV file. For this example we've used `import-into-OpenDOOR.csv`from [Example CSV File](https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file)
+<Callout icon="📋" theme="info">
+  Here's how to structure your API request for importing CSV data.
+</Callout>
+
+<br />
+
+| **Method** | **Host**                                               | **Path**                                  |
+| ---------- | ------------------------------------------------------ | ----------------------------------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/blueprint-internal/v1/items/import-csv` |
+
+**Headers:**
+
+* **Authorization**: TBD
+* **Content-Type**: `multipart/form-data`
+* **Authorization** TBD
+
+**File:**
+
+* Name of your CSV file. For this example, we've used `import-into-OpenDOOR.csv` [Example CSV File](https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file).
 
 ```curl
 curl -X 'POST' \
