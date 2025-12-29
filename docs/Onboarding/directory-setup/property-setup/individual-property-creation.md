@@ -492,7 +492,7 @@ Response should successful, HTTP 200 and body containing the root Directory Item
 }
 ```
 
-If you send a `GET /directory/v1/subtree/{scope}` request ([Retrieve Directory Data]() )
+If you send a `GET /directory/v1/subtree/{scope}` request ([Retrieve Directory Data](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) )
 
 ### Create Directory Structure in Batches
 
