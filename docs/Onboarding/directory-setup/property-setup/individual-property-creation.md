@@ -492,6 +492,8 @@ Response should successful, HTTP 200 and body containing the root Directory Item
 }
 ```
 
+If you send a GET Directo
+
 ### Create Directory Structure in Batches
 
 #### Step 1: Break it into JSON batches
