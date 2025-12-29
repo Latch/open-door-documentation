@@ -1,5 +1,5 @@
 ---
-title: Get Directory Item(s)
+title: Retrieve Directory Data
 deprecated: false
 hidden: false
 metadata:
