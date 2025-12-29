@@ -8,12 +8,9 @@ metadata:
 ---
 Below you can find endpoints for creating Directory Item(s):
 
+| **Method** | **Host**                                               | **Path**                      | Details                                                         |
+| :--------- | :----------------------------------------------------- | :---------------------------- | :-------------------------------------------------------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items`         | Create a Directory Item and its subtree.                        |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{scope}` | Create a Directory Item under the given `scope` Directory Item. |
+
 <br />
-
-### Can be done in multiple ways:
-
-#### 1. A single request
-
-#### 2. Subsequent requests
-
-#### 2. Individually
