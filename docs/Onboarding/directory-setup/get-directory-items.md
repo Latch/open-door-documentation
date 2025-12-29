@@ -153,12 +153,12 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
       "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::17cde9b1-0
 ```
 
-##### 2.3. Navigate through response pages:
+##### 2.3. Navigate through Response pages:
 
 <Callout icon="📋" theme="info">
-  `pageSize` and `nextPageToken`: Can be used to efficiently navigate through paginated responses.  `nextPageToken` can be obtained from the above response body and will retrieve you the next page. Here's how to use it. **Usage example:**
+  `pageSize` and `nextPageToken` can be used to efficiently navigate through paginated response pages.  `nextPageToken` can be obtained from the above response body and will retrieve you the next page. **Here's how to use it:**
 
-  ```
+  ```curl
   curl -X 'GET' \
     'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageToken=eyJTSyI6Ik1FVEFEQVRBIiwiR1NJNVBLIjoiREkjOjoiLCJQSyI6IjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyIsIkdTSTVTSyI6Ijo6OjoyMDE4Yjk0Yi05ZGY1LTQ0NTYtOWM1ZC05ZTk4NDk5M2FmZWU6Ojk3MmU0MTUxLTBmNzMtNGNkNS05MTNlLTcwZGQ1ZmM4YWQ0NTo6ZWE0MWFkMTQtM2UyYi00OTViLWI3NmEtYTE5NDIxNzk2MWNjOjo2MmY1ZjdmMy0wYzAzLTRlNWYtODI5OS0yNWM2ZTNhNGZmZjk6OjRlNWE1YjEwLTBlZDUtNGFjYS1hZmFlLTJhOTRmZDNkMTI3NyJ9&pageSize=10' \
     -H 'accept: */*' \
