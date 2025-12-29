@@ -28,9 +28,9 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Portfolio 1` Directory Item) from [Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
-#### `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
+#### 1. `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
 
-**Request:**
+**1.1. Request:**
 
 ```bash
 curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
@@ -38,7 +38,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
   -H 'Accept: */*'
 ```
 
-**Response:**
+**1.2. Response Body:**
 
 ```json Response Body
 {
@@ -58,9 +58,9 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 }
 ```
 
-#### `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item:
+#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item:
 
-**Request:**
+**2.1. Request:**
 
 ```bash
 curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageSize=10' \
@@ -68,7 +68,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
   -H 'Accept: */*'
 ```
 
-**Response:**
+**2.2. Response Body:**
 
 ```json Response Body
 {
@@ -152,4 +152,6 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
       "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::17cde9b1-0
 ```
 
-<br />
+<Callout icon="📋" theme="info">
+  **`nextPageToken`** At the end of the above response body
+</Callout>
