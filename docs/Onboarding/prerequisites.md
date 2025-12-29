@@ -7,11 +7,6 @@ link:
   new_tab: false
 metadata:
   robots: index
-next:
-  pages:
-    - slug: directory-setup
-      title: 1. Directory Setup
-      type: basic
 ---
 ### What you need?
 
