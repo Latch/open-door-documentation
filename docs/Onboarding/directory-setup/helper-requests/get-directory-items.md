@@ -61,7 +61,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 }
 ```
 
-#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item:
+#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about Directory Items from a known subtree:
 
 ##### 2.1. Request:
 
