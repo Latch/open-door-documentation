@@ -13,6 +13,11 @@ Below you can find endpoints for retrieving existing Directory data and understa
 | GET        | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/subtree`         | Retrieves all Directory Items starting from the root.         |
 | GET        | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/subtree/{scope}` | Retrieves all Directory Items starting from the `scope` root. |
 
+**Headers:**
+
+* **Authorization**: TBD
+* **Content-Type**: `multipart/form-data`
+
 ### Example Usages
 
 #### `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
