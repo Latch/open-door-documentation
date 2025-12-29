@@ -7,13 +7,12 @@ metadata:
 ---
 Below you can find endpoints for retrieving existing Directory data and understanding the current structure of your Directory:
 
-<Accordion title="GET Directory Endpoints" icon="network-wired">
+
   1. **GET /directory/accounts**: Retrieve a list of all accounts in the Directory.
   2. **GET /directory/portfolios**: Access information about all portfolios.
   3. **GET /directory/properties**: Fetch details of properties within a portfolio.
   4. **GET /directory/buildings**: Obtain data on buildings associated with a property.
   5. **GET /directory/units**: Get information on individual units within a building.
-</Accordion>
 
 ### Example Usage
 
