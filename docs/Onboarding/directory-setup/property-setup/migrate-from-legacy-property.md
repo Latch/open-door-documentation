@@ -1,5 +1,5 @@
 ---
-title: 1. Bulk Import Property Data
+title: Bulk Import Property Data
 deprecated: false
 hidden: false
 metadata:
