@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Request for when you need to update a Directory Item's data:
+Request for when you need to update a Directory Item's data, `name` and `tags`:
 
 | **Method** | **Host**                                               | **Path**                     | Details                                               |
 | :--------- | :----------------------------------------------------- | :--------------------------- | :---------------------------------------------------- |
@@ -17,7 +17,7 @@ Request for when you need to update a Directory Item's data:
 * **`accept`**: `*/*`
 * **`Authorization`**: TBD
 
-**Request Body:** 
+**Request Body:**
 
 ### Example Usage
 
