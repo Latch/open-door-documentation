@@ -176,7 +176,55 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
       "createdAt": "2025-12-22T17:26:20Z",
       "createdBy": {
         "authorType": "USER",
-  
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "c3e9f3be-99d3-426e-8678-623da8e28e95",
+      "name": "Package Room",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::b3f10a8b-3cce-49ca-b470-92d0c6e4c656::c3e9f3be-99d3-426e-8678-623da8e28e95",
+      "tags": {
+        "space:STORAGE_GROUP": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "1af9dff9-1d1e-4b9e-bcda-ffac894e69c4",
+      "name": "Delivery Service Door",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::b3f10a8b-3cce-49ca-b470-92d0c6e4c656::c3e9f3be-99d3-426e-8678-623da8e28e95::1af9dff9-1d1e-4b9e-bcda-ffac894e69c4",
+      "tags": {
+        "space:ENTRANCE": "",
+        "item:SPACE": "",
+        "cortex:DOOR": "C44B0BA4-F048-44EF-85FF-97CDFC7106EF"
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "2bdcdc74-f531-4c78-a4f8-8726c35b05e7",
+      "name": "Lockbox 310",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::b3f10a8b-3cce-49ca-b470-92d0c6e4c656::c3e9f3be-99d3-426e-8678-623da8e28e95::2bdcdc74-f531-4c78-a4f8-8726c35b05e7",
+      "tags": {
+        "space:STORAGE_SLOT": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    }
+  ],
+  "nextPageToken": "eyJTSyI6Ik1FVEFEQVRBIiwiR1NJNVBLIjoiREkjOjoiLCJQSyI6IjJiZGNkYzc0LWY1MzEtNGM3OC1hNGY4LTg3MjZjMzViMDVlNyIsIkdTSTVTSyI6Ijo6OjoyMDE4Yjk0Yi05ZGY1LTQ0NTYtOWM1ZC05ZTk4NDk5M2FmZWU6Ojk3MmU0MTUxLTBmNzMtNGNkNS05MTNlLTcwZGQ1ZmM4YWQ0NTo6ZWE0MWFkMTQtM2UyYi00OTViLWI3NmEtYTE5NDIxNzk2MWNjOjo2MmY1ZjdmMy0wYzAzLTRlNWYtODI5OS0yNWM2ZTNhNGZmZjk6OmIzZjEwYThiLTNjY2UtNDljYS1iNDcwLTkyZDBjNmU0YzY1Njo6YzNlOWYzYmUtOTlkMy00MjZlLTg2NzgtNjIzZGE4ZTI4ZTk1OjoyYmRjZGM3NC1mNTMxLTRjNzgtYTRmOC04NzI2YzM1YjA1ZTcifQ=="
+}
 ```
 
 ##### 2.3. Navigate through Response pages:
