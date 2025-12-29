@@ -11,6 +11,15 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
+<br />
+
+<Callout icon="📝" theme="default">
+  **It's best to use below endpoints as follows:**
+
+  1. `/directory/v1/items` to create the initial Directory structure.
+  2. `/directory/v1/items/{scope}` to create additional Directory Items and append them to existing Item, targeted by `scope`.
+</Callout>
+
 **Request Definitions:**
 
 | **Method** | **Host**                                               | **Path**                      | Details                                                           |
