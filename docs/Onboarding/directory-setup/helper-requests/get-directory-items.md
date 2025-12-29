@@ -77,68 +77,9 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
 {
   "items": [
     {
-      "id": "972e4151-0f73-4cd5-913e-70dd5fc8ad45",
-      "name": "ODC Portfolio 1",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45",
-      "tags": {
-        "space:PORTFOLIO": "",
-        "item:SPACE": "",
-        "cortex:ACCOUNT": "936037B4-9250-4778-BC81-57660C3A011B"
-      },
-      "createdAt": "2025-12-22T17:26:19Z",
-      "createdBy": {
-        "authorType": "USER",
-        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
-      }
-    },
-    {
-      "id": "2e4a1982-3f4f-4227-8932-77b42a0c524f",
-      "name": "ODCP1 Property 2",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::2e4a1982-3f4f-4227-8932-77b42a0c524f",
-      "tags": {
-        "space:PROPERTY": "",
-        "item:SPACE": "",
-        "cortex:BUILDING": "251FEC1A-8B28-487C-9D57-E2B843AC51FF"
-      },
-      "createdAt": "2025-12-22T17:26:19Z",
-      "createdBy": {
-        "authorType": "USER",
-        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
-      }
-    },
-    {
-      "id": "ea41ad14-3e2b-495b-b76a-a194217961cc",
-      "name": "ODCP1 Property 1",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc",
-      "tags": {
-        "space:PROPERTY": "",
-        "item:SPACE": "",
-        "cortex:BUILDING": "1765CB13-36D6-461A-9ACB-59D1A2CE9BF6"
-      },
-      "createdAt": "2025-12-22T17:26:19Z",
-      "createdBy": {
-        "authorType": "USER",
-        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
-      }
-    },
-    {
-      "id": "62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9",
-      "name": "Residential Building",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9",
-      "tags": {
-        "space:BUILDING": "",
-        "item:SPACE": ""
-      },
-      "createdAt": "2025-12-22T17:26:19Z",
-      "createdBy": {
-        "authorType": "USER",
-        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
-      }
-    },
-    {
-      "id": "17cde9b1-0986-4869-a81b-5797cc7480ef",
-      "name": "Floor 3",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::17cde9b1-0986-4869-a81b-5797cc7480ef",
+      "id": "75fbca56-8160-475c-9cac-46d06f1091ba",
+      "name": "Floor 2",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::75fbca56-8160-475c-9cac-46d06f1091ba",
       "tags": {
         "space:FLOOR": "",
         "item:SPACE": ""
@@ -150,9 +91,92 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
       }
     },
     {
-      "id": "86a4196a-c754-4531-8532-21c2c0854edc",
-      "name": "Floor 3 - Unit 301",
-      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::17cde9b1-0
+      "id": "ca461e44-715b-46ce-8056-a68693584a07",
+      "name": "[UPDATED] Floor 2 - Unit 201",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::75fbca56-8160-475c-9cac-46d06f1091ba::ca461e44-715b-46ce-8056-a68693584a07",
+      "tags": {
+        "space:UNIT": "",
+        "item:SPACE": "",
+        "cortex:UNIT": "831440",
+        "vacancy:OCCUPIED": "Indefinitely occupied"
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "fa16cef9-ca45-43cf-ba08-0d305764f412",
+      "name": "Floor 2 - Unit 201 Door",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::75fbca56-8160-475c-9cac-46d06f1091ba::ca461e44-715b-46ce-8056-a68693584a07::fa16cef9-ca45-43cf-ba08-0d305764f412",
+      "tags": {
+        "space:ENTRANCE": "",
+        "item:SPACE": "",
+        "cortex:DOOR": "7E8CC077-B07E-4A44-AAA1-1DB05F6D48D2"
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "f8f46e51-1804-4342-b649-5054753e284e",
+      "name": "Floor 2 - Unit 210",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::75fbca56-8160-475c-9cac-46d06f1091ba::f8f46e51-1804-4342-b649-5054753e284e",
+      "tags": {
+        "space:UNIT": "",
+        "item:SPACE": "",
+        "cortex:UNIT": "831442"
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "bc4ef7ac-c042-4c7a-922a-9909a5a0a25f",
+      "name": "Floor 2 - Unit 210 Door",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::75fbca56-8160-475c-9cac-46d06f1091ba::f8f46e51-1804-4342-b649-5054753e284e::bc4ef7ac-c042-4c7a-922a-9909a5a0a25f",
+      "tags": {
+        "space:ENTRANCE": "",
+        "item:SPACE": "",
+        "cortex:DOOR": "1DFAC8E4-1192-48C9-B6CD-243C21C47265"
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "b3f10a8b-3cce-49ca-b470-92d0c6e4c656",
+      "name": "Common Areas",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::b3f10a8b-3cce-49ca-b470-92d0c6e4c656",
+      "tags": {
+        "space:COMMON_GROUP": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+        "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+      }
+    },
+    {
+      "id": "76b3cfc1-91b5-483b-b7c3-0daf78a4c7d1",
+      "name": "Elevator 2",
+      "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45::ea41ad14-3e2b-495b-b76a-a194217961cc::62f5f7f3-0c03-4e5f-8299-25c6e3a4fff9::b3f10a8b-3cce-49ca-b470-92d0c6e4c656::76b3cfc1-91b5-483b-b7c3-0daf78a4c7d1",
+      "tags": {
+        "space:COMMON_AREA": "",
+        "item:SPACE": ""
+      },
+      "createdAt": "2025-12-22T17:26:20Z",
+      "createdBy": {
+        "authorType": "USER",
+  
 ```
 
 ##### 2.3. Navigate through Response pages:
