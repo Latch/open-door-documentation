@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-Associate a Cortex Lock to an OpenDOOR Directory Item.
-
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**                     |
