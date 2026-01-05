@@ -28,7 +28,7 @@ Should contain the two JSON properties:
 * `lockId`: the Cortex Lock ID.
 
 <Callout icon="📝" theme="default">
-  `lockId` must not be used in another Lock → Directory Item association for a successful request.
+  `lockId` must not be used in another Lock → Directory Item association already, for a successful current request.
 </Callout>
 
 ```json Request Body
