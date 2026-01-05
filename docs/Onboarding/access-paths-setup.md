@@ -42,7 +42,7 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
 }
 ```
 
-### Example Usages
+### Example Usage
 
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments as `Ancestor → Descendant` associations:
 
