@@ -1,12 +1,12 @@
 ---
 title: 2. Directory Locks Setup
-excerpt: POST Lock to Directory Assignments.
+excerpt: POST Lock to Directory Associations.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
-This request assigns a Cortex Lock to an OpenDOOR Directory Item.
+This request associates a Cortex Lock to an OpenDOOR Directory Item.
 
 #### Request definition:
 
@@ -24,11 +24,11 @@ This request assigns a Cortex Lock to an OpenDOOR Directory Item.
 
 Should contain the two JSON properties:
 
-* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to
-* `lockId`: the Cortex Lock ID
+* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be associated to.
+* `lockId`: the Cortex Lock ID.
 
 <Callout icon="📝" theme="default">
-  `lockId` must not be used in another Lock → Directory Item assignment for a successful request.
+  `lockId` must not be used in another Lock → Directory Item association for a successful request.
 </Callout>
 
 ### Example Usages
