@@ -31,6 +31,13 @@ Should contain the two JSON properties:
   `lockId` must not be used in another Lock → Directory Item association for a successful request.
 </Callout>
 
+```json Request Body
+{
+  "directoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "lockId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+```
+
 ### Example Usages
 
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1):
