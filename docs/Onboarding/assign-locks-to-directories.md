@@ -36,7 +36,7 @@ Should contain the two JSON properties:
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1):
 
 * `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
-* `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
+* `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (an arbitrary Cortex Lock)
 
 #### Request:
 
