@@ -1,6 +1,6 @@
 ---
 title: 3. Access Paths Setup
-excerpt: POST Access Paths.
+excerpt: POST Access Path(s).
 deprecated: false
 hidden: false
 metadata:
