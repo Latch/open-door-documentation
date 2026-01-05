@@ -1,6 +1,6 @@
 ---
 title: Bulk Import Property Data
-excerpt: Import from CSV file.
+excerpt: POST Import from CSV file.
 deprecated: false
 hidden: false
 metadata:
