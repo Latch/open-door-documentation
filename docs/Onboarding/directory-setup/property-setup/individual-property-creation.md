@@ -1250,8 +1250,6 @@ Response should successful, HTTP 200 and body containing the created 1st level D
 }
 ```
 
-<br />
-
 #### Step 4: Retrieve the newly created Directory Subtree
 
 Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = 02ab66db-d4cb-4148-905f-e6545259db41` should get you the Directory Subtree starting from newly created Item from above Response.
