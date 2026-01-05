@@ -46,9 +46,9 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
 
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments:
 
-1. Segment 1:
-   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
-   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (`z`)
+1. **`Parking Lot Entrance` (Ancestor) → `Residential Building Entrance` (Descendant):**
+   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5`
+   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
 2. Segment 2:
    1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
    2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (`z`)
