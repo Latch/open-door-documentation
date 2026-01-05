@@ -24,7 +24,7 @@ Request for when you need to update a Directory Item's data, `name` and `tags`:
 
 We'll be using as example `uuid = ca461e44-715b-46ce-8056-a68693584a07` (`Floor 2 - Unit 201` Directory Item) from [Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
-#### 1. Request:
+#### 1. Request
 
 ```curl
 curl -X 'PATCH' \
@@ -40,7 +40,9 @@ curl -X 'PATCH' \
 }'
 ```
 
-#### 2. Response:
+#### 2. Response
+
+Status code should be HTTP 200 and Response Body from below:
 
 ```json Response Body
 {
