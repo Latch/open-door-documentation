@@ -31,9 +31,9 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 We'll be using as example `uuid = 972e4151-0f73-4cd5-913e-70dd5fc8ad45` (`ODC Portfolio 1` Directory Item) from [Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
-#### 1. `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item:
+#### 1. `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item
 
-##### 1.1. Request:
+##### 1.1. Request
 
 ```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
@@ -41,7 +41,9 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
   -H 'accept: */*'
 ```
 
-##### 1.2. Response Body:
+##### 1.2. Response
+
+Status code should be HTTP 200 and Response Body from below:
 
 ```json Response Body
 {
@@ -61,9 +63,9 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 }
 ```
 
-#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about Directory Items from a known subtree:
+#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about Directory Items from a known subtree
 
-##### 2.1. Request:
+##### 2.1. Request
 
 ```curl
 curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageSize=10' \
@@ -71,7 +73,9 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
   -H 'accept: */*'
 ```
 
-##### 2.2. Response Body:
+##### 2.2. Response
+
+Status code should be HTTP 200 and Response Body from below:
 
 ```json Response Body
 {
@@ -227,7 +231,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
 }
 ```
 
-##### 2.3. Navigate through Response pages:
+#### 3. Navigate through Response pages
 
 <Callout icon="📋" theme="info">
   `pageSize` and `nextPageToken` can be used to efficiently navigate through paginated response pages.  `nextPageToken` can be obtained from the above response body and will retrieve you the next page. **Here's how to use it:**
