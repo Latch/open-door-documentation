@@ -46,10 +46,6 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
 
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments as `Ancestor → Descendant` associations:
 
-1. **`Parking Lot Entrance` (Ancestor) → `Residential Building Entrance` (Descendant):**
-   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5`
-   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
-
 <Accordion title="Segment 1: Parking Lot Entrance → Residential Building Entrance" icon="angle-down">
   <ul>
     <li>ancestorI = 640cb5fe-8d15-4cf0-a632-8f40e11db7f5</li>
@@ -71,7 +67,56 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
   </ul>
 </Accordion>
 
-<Accordion title="Segment 4: Residential Building Entrance → Elevator 1" icon="angle-down">
+<Accordion title="Segment 4: Residential Building Entrance → Elevator 2" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 5: Residential Building Entrance → Floor 1" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 6: Floor 1 → Floor 1 - Unit 101" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 7: Floor 1 - Unit 101 → Parking Lot Residents Slot 101" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 8: Floor 1 - Unit 101 → Package Room Lockbox 101" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 9: Floor 1 - Unit 101 → Amenities Entrance" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 10: Floor 1 - Unit 101 → Gym Door" icon="angle-down">
+  <ul>
+    <li>ancestorId = </li>
+    <li>descendantId = </li>
+  </ul>
+</Accordion>
+
+<Accordion title="Segment 11: Delivery Service Door → Package Room" icon="angle-down">
   <ul>
     <li>ancestorId = </li>
     <li>descendantId = </li>
