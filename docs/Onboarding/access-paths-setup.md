@@ -123,7 +123,7 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
   </ul>
 </Accordion>
 
-#### Request:
+#### Request
 
 ```curl
 curl -X 'POST' \
@@ -181,7 +181,7 @@ curl -X 'POST' \
 }'
 ```
 
-#### Response:
+#### Response
 
 Status code should be HTTP 200 and Response Body should be the same as the Request Body.
 
