@@ -40,7 +40,7 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 
 #### Request:
 
-```
+```curl
 curl -X 'POST' \
   'https://api.blueprint.qa.door.com/access/v1/directory-locks' \
   -H 'accept: */*' \
@@ -56,7 +56,7 @@ curl -X 'POST' \
 
 Status code should be HTTP 200 and Response Body should be the same as the Request Body.
 
-```
+```json Response Body
 {
   "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
   "lockId": "af2d7307-377c-416f-94bd-c81db311de19"
