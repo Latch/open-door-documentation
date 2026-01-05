@@ -52,9 +52,36 @@ We'll be creating a Staff level Permission Set with Permissions for:
 * View & Manage Locks
 * Manage Roles
 
-<br />
-
 #### Request
+
+```curl
+curl -X 'POST' \
+  'https://api.blueprint.qa.door.com/rbac/v1/permission-sets' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "name": "OpenDOOR Property Manager Permission Set",
+  "permissions": [
+    "MANAGE_DIRECTORY",
+    "VIEW_DIRECTORY",
+    "CONFIGURE_ACCESS",
+    "INVITE_REVOKE_GUEST",
+    "INVITE_REVOKE_RESIDENT",
+    "INVITE_REVOKE_VENDOR",
+    "VIEW_GUEST_ROLE_ASSIGNMENTS",
+    "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+    "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+    "REVOKE_ANY_GUEST",
+    "REVOKE_ANY_RESIDENT",
+    "REVOKE_ANY_VENDOR",
+    "VIEW_LOCKS",
+    "MANAGE_LOCKS",
+    "MANAGE_ROLES"
+  ]
+}'
+```
 
 #### Response
 
