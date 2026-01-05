@@ -127,13 +127,57 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 
 ```curl
 curl -X 'POST' \
-  'https://api.blueprint.qa.door.com/access/v1/directory-locks' \
+  'https://api.blueprint.qa.door.com/access/v1/paths/segments' \
   -H 'accept: */*' \
-  -H 'x-door-auth: Bearer {token}' \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
-  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
-  "lockId": "AF2D7307-377C-416F-94BD-C81DB311DE19"
+  "segments": [
+    {
+      "ancestorId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+      "descendantId": "3a6f60c4-278c-442c-91c7-1731a2482a71"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "6996ddfc-4e47-4dd0-bbc2-5a42ddd4597a"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "ec2677fa-b3b4-4f33-ad55-f39cabc63ed8"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "064fd175-31a0-4611-8269-2ef43f725a2f"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "7cd7cd3c-08f8-4688-8ec8-ea36c9c06082"
+    },
+    {
+      "ancestorId": "7cd7cd3c-08f8-4688-8ec8-ea36c9c06082",
+      "descendantId": "6056d246-1cde-46ce-9933-c612a01198b4"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "244e5691-acbb-40df-9014-053886e4a97b"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "06245e70-ed58-4bcf-ad70-77286313b70f"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "049313c6-d483-491d-8429-19129dfb181f"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "5af43e29-cd9a-4a74-a815-c8d1ff0b6384"
+    },
+    {
+      "ancestorId": "701d9dea-e1d2-4784-9fe7-3577f3e8b628",
+      "descendantId": "4b15f3d0-83c5-41dc-a0dc-fed33afba6c4"
+    }
+  ]
 }'
 ```
 
@@ -143,7 +187,51 @@ Status code should be HTTP 200 and Response Body should be the same as the Reque
 
 ```json Response Body
 {
-  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
-  "lockId": "af2d7307-377c-416f-94bd-c81db311de19"
+  "segments": [
+    {
+      "ancestorId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+      "descendantId": "3a6f60c4-278c-442c-91c7-1731a2482a71"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "6996ddfc-4e47-4dd0-bbc2-5a42ddd4597a"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "ec2677fa-b3b4-4f33-ad55-f39cabc63ed8"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "064fd175-31a0-4611-8269-2ef43f725a2f"
+    },
+    {
+      "ancestorId": "3a6f60c4-278c-442c-91c7-1731a2482a71",
+      "descendantId": "7cd7cd3c-08f8-4688-8ec8-ea36c9c06082"
+    },
+    {
+      "ancestorId": "7cd7cd3c-08f8-4688-8ec8-ea36c9c06082",
+      "descendantId": "6056d246-1cde-46ce-9933-c612a01198b4"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "244e5691-acbb-40df-9014-053886e4a97b"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "06245e70-ed58-4bcf-ad70-77286313b70f"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "049313c6-d483-491d-8429-19129dfb181f"
+    },
+    {
+      "ancestorId": "6056d246-1cde-46ce-9933-c612a01198b4",
+      "descendantId": "5af43e29-cd9a-4a74-a815-c8d1ff0b6384"
+    },
+    {
+      "ancestorId": "701d9dea-e1d2-4784-9fe7-3577f3e8b628",
+      "descendantId": "4b15f3d0-83c5-41dc-a0dc-fed33afba6c4"
+    }
+  ]
 }
 ```
