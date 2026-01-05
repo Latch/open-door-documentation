@@ -20,3 +20,17 @@ Creates custom Permission Sets.
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
+
+<br />
+
+sd
+
+```json Request Body
+{
+  "locationDirectoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string",
+  "permissions": [
+    "MANAGE_DIRECTORY"
+  ]
+}
+```
