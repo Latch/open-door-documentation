@@ -91,35 +91,35 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 <Accordion title="Segment 7: Floor 1 - Unit 101 → Parking Lot Residents Slot 101" icon="angle-down">
   <ul>
     <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
-    <li>descendantId = </li>
+    <li>descendantId = 244e5691-acbb-40df-9014-053886e4a97b</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 8: Floor 1 - Unit 101 → Package Room Lockbox 101" icon="angle-down">
   <ul>
     <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
-    <li>descendantId = </li>
+    <li>descendantId = 06245e70-ed58-4bcf-ad70-77286313b70f</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 9: Floor 1 - Unit 101 → Amenities Entrance" icon="angle-down">
   <ul>
     <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
-    <li>descendantId = </li>
+    <li>descendantId = 049313c6-d483-491d-8429-19129dfb181f</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 10: Floor 1 - Unit 101 → Gym Door" icon="angle-down">
   <ul>
     <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
-    <li>descendantId = </li>
+    <li>descendantId = 5af43e29-cd9a-4a74-a815-c8d1ff0b6384</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 11: Delivery Service Door → Package Room" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 701d9dea-e1d2-4784-9fe7-3577f3e8b628</li>
+    <li>descendantId = 4b15f3d0-83c5-41dc-a0dc-fed33afba6c4</li>
   </ul>
 </Accordion>
 
