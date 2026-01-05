@@ -27,6 +27,10 @@ Should contain the two JSON properties:
 * `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to
 * `lockId`: the Cortex Lock ID
 
+<Callout icon="📝" theme="default">
+  `lockId` must not be used in another Lock → Directory Item assignment for a successful request.
+</Callout>
+
 ### Example Usages
 
 We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1):
