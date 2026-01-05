@@ -18,7 +18,7 @@ This request assigns a Cortex Lock to an OpenDOOR Directory Item.
 
 * **`accept`**: `*/*`
 * **`Authorization`**: TBD
-* **`Content-Type`**: `multipart/form-data`
+* **`Content-Type`**: `application/json`
 
 **Request Body:**
 
@@ -26,3 +26,32 @@ Should contain the two JSON properties:
 
 * `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to
 * `lockId`: the Cortex Lock ID
+
+### Example Usages
+
+We'll be using data from 
+
+#### Request
+
+```
+curl -X 'POST' \
+  'https://api.blueprint.qa.door.com/access/v1/directory-locks' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+  "lockId": "AF2D7307-377C-416F-94BD-C81DB311DE19"
+}'
+```
+
+#### Response
+
+Status code should be HTTP 200 and Response Body should be the same as the Request Body.
+
+```
+{
+  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+  "lockId": "af2d7307-377c-416f-94bd-c81db311de19"
+}
+```
