@@ -128,14 +128,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                     },
                                     "children": [
                                         {
-                                            "name": "Residents Slot 1",
+                                            "name": "Residents Slot 101",
                                             "tags": {
                                                 "space:PARKING_SLOT": "",
                                                 "item:SPACE": ""
                                             }
                                         },
                                         {
-                                            "name": "Residents Slot 10",
+                                            "name": "Residents Slot 310",
                                             "tags": {
                                                 "space:PARKING_SLOT": "",
                                                 "item:SPACE": ""
@@ -1096,7 +1096,7 @@ Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-direc
     },
     {
       "id": "244e5691-acbb-40df-9014-053886e4a97b",
-      "name": "Residents Slot 1",
+      "name": "Residents Slot 101",
       "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::ab263393-a28a-4300-bb10-cbd97c87ce6b::c18ec18b-0ae2-41d5-9690-626b34c601a8::244e5691-acbb-40df-9014-053886e4a97b",
       "tags": {
         "space:PARKING_SLOT": "",
@@ -1110,7 +1110,7 @@ Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-direc
     },
     {
       "id": "6a8d0738-ead3-416a-837e-f4d443791c81",
-      "name": "Residents Slot 10",
+      "name": "Residents Slot 310",
       "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1::ab263393-a28a-4300-bb10-cbd97c87ce6b::c18ec18b-0ae2-41d5-9690-626b34c601a8::6a8d0738-ead3-416a-837e-f4d443791c81",
       "tags": {
         "space:PARKING_SLOT": "",
