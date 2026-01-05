@@ -48,70 +48,70 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 
 <Accordion title="Segment 1: Parking Lot Entrance → Residential Building Entrance" icon="angle-down">
   <ul>
-    <li>ancestorI = 640cb5fe-8d15-4cf0-a632-8f40e11db7f5</li>
-    <li>descendantId = AF2D7307-377C-416F-94BD-C81DB311DE19</li>
+    <li>ancestorId = 640cb5fe-8d15-4cf0-a632-8f40e11db7f5</li>
+    <li>descendantId = 3a6f60c4-278c-442c-91c7-1731a2482a71</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 2: Residential Building Entrance → Lobby" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 3a6f60c4-278c-442c-91c7-1731a2482a71</li>
+    <li>descendantId = 6996ddfc-4e47-4dd0-bbc2-5a42ddd4597a</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 3: Residential Building Entrance → Elevator 1" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 3a6f60c4-278c-442c-91c7-1731a2482a71</li>
+    <li>descendantId = ec2677fa-b3b4-4f33-ad55-f39cabc63ed8</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 4: Residential Building Entrance → Elevator 2" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 3a6f60c4-278c-442c-91c7-1731a2482a71</li>
+    <li>descendantId = 064fd175-31a0-4611-8269-2ef43f725a2f</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 5: Residential Building Entrance → Floor 1" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 3a6f60c4-278c-442c-91c7-1731a2482a71</li>
+    <li>descendantId = 7cd7cd3c-08f8-4688-8ec8-ea36c9c06082</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 6: Floor 1 → Floor 1 - Unit 101" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
-    <li>descendantId = </li>
+    <li>ancestorId = 7cd7cd3c-08f8-4688-8ec8-ea36c9c06082</li>
+    <li>descendantId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 7: Floor 1 - Unit 101 → Parking Lot Residents Slot 101" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
+    <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
     <li>descendantId = </li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 8: Floor 1 - Unit 101 → Package Room Lockbox 101" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
+    <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
     <li>descendantId = </li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 9: Floor 1 - Unit 101 → Amenities Entrance" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
+    <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
     <li>descendantId = </li>
   </ul>
 </Accordion>
 
 <Accordion title="Segment 10: Floor 1 - Unit 101 → Gym Door" icon="angle-down">
   <ul>
-    <li>ancestorId = </li>
+    <li>ancestorId = 6056d246-1cde-46ce-9933-c612a01198b4</li>
     <li>descendantId = </li>
   </ul>
 </Accordion>
