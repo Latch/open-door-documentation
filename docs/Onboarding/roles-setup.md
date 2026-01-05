@@ -31,7 +31,7 @@ Create custom Roles.
     * `weekdayTimeIntervalCondition`
     * `directoryItemTagCondition`:  Contains `tags` array that can specify to what Directory Items Condition applies based on tag filtering. It can take one or multiple of these Directory Item Tag properties: `itemType`, `spaceType`, `featureFlag`, `vacancy` and `cortex`.
     * `accessPermissionTypeCondition`: It specifies if Directory Item access Permission type is `REACH` or `ACCESS`.
-    * `accessShowDoorCodesCondition`: Boolean
+    * `accessShowDoorCodesCondition`: Boolean specifying if Door Codes should be shown for the Directory Item.
   * `directoryScopeSelector`: Object where we decide if the Clause is **Statically** or **Dynamically Scoped**
     * `directoryItemId`: ID of a Directory Item. It shows the Clause is defined as **Statically Scoped**. Role can be assigned to Users only on the Directory Item itself or its sub-Directory.
     * `directoryItemTag`: Object that can take one or multiple of these Directory Item Tag properties: `itemType`, `spaceType`, `featureFlag`, `vacancy` and `cortex`. It shows the Clause is defined as **Dynamically Scoped**, filtering possible Directory Items on Role Assignment based on the tags.
