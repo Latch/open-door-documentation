@@ -22,21 +22,39 @@ Creates Access Paths segments/connections between Directory Items.
 
 **Request Body:**
 
-Should contain the two JSON properties:
+Should contain a JSON array, `segments`, made of Objects with two properties:
 
-* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be associated to.
-* `lockId`: the Cortex Lock ID.
+* `ancestorId`: Ancestor OpenDOOR Directory Item, identified through OpenDOOR ID
+* `descendantId`: Descendant OpenDOOR Directory Item, identified through OpenDOOR ID
 
 <Callout icon="📝" theme="default">
-  `lockId` must not be used in another Lock → Directory Item association for a successful request.
+  **Note:** While setting up Access Path Segments, be aware that creating cyclic dependencies is not allowed by the system. For instance, attempting to connect `Directory 1000` to `Directory 1010` and then back from `1010` to `1000` will be prevented. Ensure your configurations are free of such loops to comply with system constraints.
 </Callout>
+
+```json Request Body
+{
+  "segments": [
+    {
+      "ancestorId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "descendantId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  ]
+}
+```
 
 ### Example Usages
 
-We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1):
+We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments:
 
-* `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
-* `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (an arbitrary Cortex Lock)
+1. Segment 1:
+   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
+   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (`z`)
+2. Segment 2:
+   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
+   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (`z`)
+3. Segment 1:
+   1. `ancestorId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
+   2. `descendantId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (`z`)
 
 #### Request:
 
