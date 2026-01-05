@@ -40,10 +40,22 @@ Should have the following three JSON properties:
 
 <br />
 
-### Example Usage:
+### Example Usage
 
 We'll be using Root Directory Item `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) as `locationDirectoryItemId`.
 
+We'll be creating a Staff level Permission Set with Permissions for:
+
+* Viewing & Managing Directory
+* Configuring Access
+* Inviting, Viewing and Revoking Guests, Residents and Vendors
+* View & Manage Locks
+* Manage Roles
+
 <br />
+
+#### Request
+
+#### Response
 
 <br />
