@@ -38,7 +38,7 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 * `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
 * `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
 
-#### Request
+##### Request:
 
 ```
 curl -X 'POST' \
@@ -52,7 +52,7 @@ curl -X 'POST' \
 }'
 ```
 
-#### Response
+##### Response:
 
 Status code should be HTTP 200 and Response Body should be the same as the Request Body.
 
