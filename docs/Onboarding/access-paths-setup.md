@@ -1,7 +1,64 @@
 ---
 title: 3. Access Paths Setup
+excerpt: POST Access Paths.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
+Creates Access Paths segments/connections between Directory Items.
+
+#### Request definition:
+
+| **Method** | **Host**                                               | **Path**                    |
+| ---------- | ------------------------------------------------------ | --------------------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/access/v1/paths/segments` |
+
+**Headers:**
+
+* **`accept`**: `*/*`
+* **`Authorization`**: TBD
+* **`Content-Type`**: `application/json`
+
+**Request Body:**
+
+Should contain the two JSON properties:
+
+* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be associated to.
+* `lockId`: the Cortex Lock ID.
+
+<Callout icon="📝" theme="default">
+  `lockId` must not be used in another Lock → Directory Item association for a successful request.
+</Callout>
+
+### Example Usages
+
+We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1):
+
+* `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (`Parking Lot Entrance`)
+* `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19` (an arbitrary Cortex Lock)
+
+#### Request:
+
+```curl
+curl -X 'POST' \
+  'https://api.blueprint.qa.door.com/access/v1/directory-locks' \
+  -H 'accept: */*' \
+  -H 'x-door-auth: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+  "lockId": "AF2D7307-377C-416F-94BD-C81DB311DE19"
+}'
+```
+
+#### Response:
+
+Status code should be HTTP 200 and Response Body should be the same as the Request Body.
+
+```json Response Body
+{
+  "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
+  "lockId": "af2d7307-377c-416f-94bd-c81db311de19"
+}
+```
