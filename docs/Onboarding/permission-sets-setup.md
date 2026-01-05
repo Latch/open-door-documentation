@@ -10,9 +10,9 @@ Creates custom Permission Sets.
 
 #### Request definition:
 
-| **Method** | **Host**                                               | **Path**                    |
-| ---------- | ------------------------------------------------------ | --------------------------- |
-| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/access/v1/paths/segments` |
+| **Method** | **Host**                                               | **Path**                   |
+| ---------- | ------------------------------------------------------ | -------------------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/permission-sets` |
 
 **Headers:**
 
@@ -37,8 +37,6 @@ Should have the following three JSON properties:
   ]
 }
 ```
-
-<br />
 
 ### Example Usage
 
