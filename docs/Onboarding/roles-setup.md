@@ -43,8 +43,6 @@ The request body should include the following properties:
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
 
-<br />
-
 ```json Request Body
 {
   "name": "string",
@@ -98,3 +96,9 @@ The request body should include the following properties:
   "scopeDirectoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
+
+### Example Usage
+
+#### Request
+
+#### Response
