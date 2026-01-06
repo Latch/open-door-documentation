@@ -22,20 +22,26 @@ Create custom Roles.
 
 **Request Body:**
 
-* `name`: Name of the Role
-* `type`: Value should be one of the predefined Role types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`)
-* `clauses`:  An array of Clause Objects that define different behaviors a Role can have. A Clause is made of:
-  * `permissionSetId`: ID of the Permission Set
-  * `conditions`: An optional array of Condition Objects defining how the Clause applies. A Condition is made of:
-    * `dateIntervalCondition`: Date Clause Condition.
-    * `weekdayTimeIntervalCondition`: Weekday Clause Condition.
-    * `directoryItemTagCondition`:  Contains `tags` array that can specify to what Directory Items Condition applies based on tag filtering. It can take one or multiple of these Directory Item Tag properties: `itemType`, `spaceType`, `featureFlag`, `vacancy` and `cortex`.
-    * `accessPermissionTypeCondition`: It specifies if Directory Item access Permission type is `REACH` or `ACCESS`.
-    * `accessShowDoorCodesCondition`: Boolean specifying if Door Codes should be shown for the Directory Item.
-  * `directoryScopeSelector`: Object where we decide if the Clause is **Statically** or **Dynamically Scoped**
-    * `directoryItemId`: ID of a Directory Item. It shows the Clause is defined as **Statically Scoped**. Role can be assigned to Users only on the Directory Item itself or its sub-Directory.
-    * `directoryItemTag`: Object that can take one or multiple of these Directory Item Tag properties: `itemType`, `spaceType`, `featureFlag`, `vacancy` and `cortex`. It shows the Clause is defined as **Dynamically Scoped**, filtering possible Directory Items on Role Assignment based on the tags.
-    * `staticallyScoped`: Optional Boolean property that shows if the Clause is static or not. It's automatically determined at creation time, regardless of what value it might have in the Request Body.
+The request body should include the following properties:
+
+* **`name`**: The name of the Role.
+* **`type`**: Must be one of the five predefined Role Types.
+
+<Accordion title="Clauses" icon="angle-down">
+  * **`permissionSetId`**: ID of the Permission Set.
+  * **`conditions`**: An optional array of Condition Objects.
+    * **`dateIntervalCondition`**: Specifies the date range.
+    * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
+    * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
+    * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
+    * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
+  * **`directoryScopeSelector`**: Determines if the Clause is statically or dynamically scoped.
+    * **`directoryItemId`**: ID for static scoping.
+    * **`directoryItemTag`**: Tags for dynamic scoping.
+    * **`staticallyScoped`**: Boolean indicating static scope.
+</Accordion>
+
+* **`scopeDirectoryItemId`**: ID for the scope directory item.
 
 <br />
 
