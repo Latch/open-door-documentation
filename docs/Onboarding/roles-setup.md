@@ -25,9 +25,9 @@ Create custom Roles.
 The request body should include the following properties:
 
 * **`name`**: The name of the Role.
-* **`type`**: Must be one of the five predefined Role Types.
+* **`type`**: Must be one of the five predefined Role Types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`).
 
-<Accordion title="Clauses" icon="angle-down">
+<Accordion title="`clauses`: An array of Clause Objects that define different behaviors a Role can have." icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
   * **`conditions`**: An optional array of Condition Objects.
     * **`dateIntervalCondition`**: Specifies the date range.
