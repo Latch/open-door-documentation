@@ -10,9 +10,9 @@ Create custom Roles.
 
 #### Request definition:
 
-| **Method** | **Host**                                               | **Path**                   |
-| ---------- | ------------------------------------------------------ | -------------------------- |
-| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/permission-sets` |
+| **Method** | **Host**                                               | **Path**         |
+| ---------- | ------------------------------------------------------ | ---------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/roles` |
 
 **Headers:**
 
@@ -27,8 +27,8 @@ Create custom Roles.
 * `clauses`:  An array of Clause Objects that define different behaviors a Role can have. A Clause is made of:
   * `permissionSetId`: ID of the Permission Set
   * `conditions`: An optional array of Condition Objects defining how the Clause applies. A Condition is made of:
-    * `dateIntervalCondition`
-    * `weekdayTimeIntervalCondition`
+    * `dateIntervalCondition`: Date Clause Condition.
+    * `weekdayTimeIntervalCondition`: Weekday Clause Condition.
     * `directoryItemTagCondition`:  Contains `tags` array that can specify to what Directory Items Condition applies based on tag filtering. It can take one or multiple of these Directory Item Tag properties: `itemType`, `spaceType`, `featureFlag`, `vacancy` and `cortex`.
     * `accessPermissionTypeCondition`: It specifies if Directory Item access Permission type is `REACH` or `ACCESS`.
     * `accessShowDoorCodesCondition`: Boolean specifying if Door Codes should be shown for the Directory Item.
