@@ -100,6 +100,16 @@ The request body should include the following properties:
 
 ### Example Usage
 
+We'll be using Permission Set from 4. Permission Sets Setup ->
+
 #### Request
 
+```curl
+```
+
 #### Response
+
+Status code should be HTTP 200 and Response Body like below example:
+
+```json Response Body
+```
