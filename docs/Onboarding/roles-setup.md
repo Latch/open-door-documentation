@@ -22,6 +22,10 @@ Create custom Roles.
 
 **Request Body:**
 
+<Callout icon="⚠️" theme="warning">
+  **Important Note:** Role Clauses are allowed to be either **Static Scoped**, indicated through `directoryItemId` JSON property or **Dynamic Scoped**, indicated by `directoryItemTag` 
+</Callout>
+
 The request body should include the following properties:
 
 * **`name`**: The name of the Role.
@@ -36,10 +40,10 @@ The request body should include the following properties:
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
     * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
-  * **`directoryScopeSelector`**: Determines if the Clause is statically or dynamically scoped.
+  * **`directoryScopeSelector`**: Determines the Scope and if the Clause is statically or dynamically scoped.
     * **`directoryItemId`**: ID for static scoping.
     * **`directoryItemTag`**: Tags for dynamic scoping.
-    * **`staticallyScoped`**: Boolean indicating static scope.
+    * **`staticallyScoped`**: Optional Boolean indicating static scope.
 </Accordion>
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
