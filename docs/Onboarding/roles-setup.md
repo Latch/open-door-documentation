@@ -108,11 +108,10 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create a Role for Staff employees with the following Clauses, that will grant selective permissions through the Permission Sets:
+We'll create a Role for Staff employees with the following Clause, that will grant access on any `PROPERTY` Directory item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR taff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
 
-1. **Manage a Property:**
-   1. Allows the manager to oversee and administer property operations.
-   2. Will be granted access on any `PROPERTY` Directory item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Property Manager Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response).
+1. **Manage a Property:** This capability allows the manager to oversee and administer property operations. The associated Permission Set includes data that grants access to property management tools and resources.
+2. Be a Resident in that Property: As an on-site manager, this role includes residential privileges within the property. The Permission Set for this capability provides access to residential services and facilities.
 
 <br />
 
