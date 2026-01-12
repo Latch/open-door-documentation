@@ -150,7 +150,12 @@ We'll create a Role for an On-Site Property Manager with the following Clauses, 
 #### Request
 
 ```curl
-{
+curl -X 'POST' \
+  'https://api.prod.door.com/rbac/v1/roles' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "name": "On Site Property Manager Role",
     "type": "ROLE_TYPE_STAFF",
     "clauses": [
@@ -160,38 +165,31 @@ We'll create a Role for an On-Site Property Manager with the following Clauses, 
             "directoryScopeSelector": {
                 "directoryItemTag": {
                     "spaceType": "PROPERTY"
-                },
-                "staticallyScoped": false
+                }
             }
         },
         {
             "permissionSetId": "604334f0-ac54-4d32-b1ab-2f25143713ed",
-            "conditions": [
-                "directoryItemTagCondition": {
-                    "tags": [
-                        {
-                            "vacancy": "VACANT"
-                        }
-                    ]
-                }
-            ],
+            "conditions": [],
             "directoryScopeSelector": {
                 "directoryItemTag": {
-                    "spaceType": "UNIT"
-                },
-                "staticallyScoped": false
+                    "spaceType": "UNIT",
+                    "vacancy": "VACANT"
+                }
             }
         },
         {
-            "permissionSetId": "520f04b-583e-4b57-a1ba-7a3e7f3cc688",
+            "permissionSetId": "4520f04b-583e-4b57-a1ba-7a3e7f3cc688",
             "conditions": [],
             "directoryScopeSelector": {
-                "directoryItemId": "1dcdccde-fe58-4887-b6c7-5929de1d4b29"
+                "directoryItemTag": {
+                    "spaceType": "COMMON_AREA"
+                }
             }
         }
     ],
     "scopeDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6"
-}
+}'
 ```
 
 #### Response
