@@ -125,7 +125,7 @@ We'll create a Role for an On-Site Property Manager with the following Clauses, 
    {
        "id": "4520f04b-583e-4b57-a1ba-7a3e7f3cc688",
        "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-       "name": "OpenDOOR Amenities User Permission Set",
+       "name": "OpenDOOR All Amenities User Permission Set",
        "permissions": [
          "ENTER_SPACE",
          "ACCESS_SPACE",
