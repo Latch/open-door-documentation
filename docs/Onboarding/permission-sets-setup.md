@@ -60,7 +60,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-  "name": "OpenDOOR Property Manager Permission Set",
+  "name": "OpenDOOR Portfolio Manager Permission Set",
   "permissions": [
     "MANAGE_DIRECTORY",
     "VIEW_DIRECTORY",
@@ -89,7 +89,7 @@ Status code should be HTTP 200 and Response Body should be the same as the Reque
 {
   "id": "d67d8a3e-4f10-4e4d-86ae-031c0ee2229e",
   "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-  "name": "OpenDOOR Property Manager Permission Set",
+  "name": "OpenDOOR Portfolio Manager Permission Set",
   "permissions": [
     "MANAGE_DIRECTORY",
     "VIEW_DIRECTORY",
