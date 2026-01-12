@@ -28,6 +28,10 @@ The request body should include the following properties:
 * **`type`**: Must be one of the five predefined Role Types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`).
 * **`clauses`**: An array of Clause Objects that define the specific behaviors and permissions a Role can have. Each Clause includes a `permissionSetId` and optional conditions that specify constraints such as date ranges, time intervals, and directory item tags. The `directoryScopeSelector` determines whether the Clause is statically or dynamically scoped, allowing for flexible role configurations.
 
+<Callout icon="⚠️" theme="warning">
+  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
+</Callout>
+
 <Accordion title="Clauses Details" icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
   * **`conditions`**: An optional array of Condition Objects.
@@ -99,10 +103,6 @@ The request body should include the following properties:
 ```
 
 <br />
-
-<Callout icon="⚠️" theme="warning">
-  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
-</Callout>
 
 ### Example Usage
 
