@@ -108,42 +108,11 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create a Role for an On-Site Property Manager with the following Clauses, that will grant selective permissions through the Permission Sets:
+We'll create a Role for Staff employees with the following Clauses, that will grant selective permissions through the Permission Sets:
 
 1. **Manage a Property:**
    1. Allows the manager to oversee and administer property operations.
    2. Will be granted access on any `PROPERTY` Directory item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Property Manager Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response).
-2. **Be a Resident in that Property:** As an on-site manager, this role includes residential privileges within the property, for vacant `UNIT` spaces. Will be granted through **dynamic** Clause associated with:
-   ```json OpenDOOR Resident Permission Set
-   {
-       "id": "604334f0-ac54-4d32-b1ab-2f25143713ed",
-       "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-       "name": "OpenDOOR Resident Permission Set",
-       "permissions": [
-         "OCCUPY",
-         "ENTER_SPACE",
-         "ACCESS_SPACE",
-         "ACCESS",
-         "REACH_SPACE",
-         "VIEW_UNIT",
-         "INVITE_REVOKE_GUEST"
-       ]
-   }
-   ```
-3. **Access Amenities outside work hours:** This grants the manager access to amenities outside working hours through **static** Clause associated with:
-   ```json OpenDOOR Amenities User Permission Set
-   {
-       "id": "4520f04b-583e-4b57-a1ba-7a3e7f3cc688",
-       "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-       "name": "OpenDOOR All Amenities User Permission Set",
-       "permissions": [
-         "ENTER_SPACE",
-         "ACCESS_SPACE",
-         "ACCESS",
-         "REACH_SPACE"
-       ]
-   }
-   ```
 
 <br />
 
@@ -156,7 +125,7 @@ curl -X 'POST' \
   -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "On Site Property Manager Role",
+    "name": "OpenDOOR Staff Role",
     "type": "ROLE_TYPE_STAFF",
     "clauses": [
         {
@@ -164,28 +133,10 @@ curl -X 'POST' \
             "conditions": [],
             "directoryScopeSelector": {
                 "directoryItemTag": {
-                    "spaceType": "PROPERTY"
+                    "spaceType": "SPACE_PROPERTY"
                 }
-            }
-        },
-        {
-            "permissionSetId": "604334f0-ac54-4d32-b1ab-2f25143713ed",
-            "conditions": [],
-            "directoryScopeSelector": {
-                "directoryItemTag": {
-                    "spaceType": "UNIT",
-                    "vacancy": "VACANT"
-                }
-            }
-        },
-        {
-            "permissionSetId": "4520f04b-583e-4b57-a1ba-7a3e7f3cc688",
-            "conditions": [],
-            "directoryScopeSelector": {
-                "directoryItemTag": {
-                    "spaceType": "COMMON_AREA"
-                }
-            }
+            },
+            "staticallyScoped": false
         }
     ],
     "scopeDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6"
@@ -197,4 +148,31 @@ curl -X 'POST' \
 Status code should be HTTP 200 and Response Body like below example:
 
 ```json Response Body
+{
+  "id": "cd748a08-52aa-4768-9f9b-fff08c5336f2",
+  "name": "OpenDOOR Staff Role",
+  "type": "ROLE_TYPE_STAFF",
+  "clauses": [
+    {
+      "id": "6594cc24-eba6-4c39-8bd3-cca7ba71a3f3",
+      "permissionSetId": "d67d8a3e-4f10-4e4d-86ae-031c0ee2229e",
+      "conditions": [],
+      "directoryScopeSelector": {
+        "directoryItemTag": {
+          "spaceType": "SPACE_PROPERTY"
+        },
+        "staticallyScoped": false
+      },
+      "staticallyScoped": false
+    }
+  ],
+  "scopeDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "scopeDirectoryPath": "00000000-0000-0000-0000-000000000000/e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "createdAt": 1768248694721,
+  "createdBy": {
+    "idSource": "DOOR_USER_IDP",
+    "id": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+  },
+  "staticallyScoped": false
+}
 ```
