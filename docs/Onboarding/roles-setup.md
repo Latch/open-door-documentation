@@ -22,10 +22,6 @@ Create custom Roles.
 
 **Request Body:**
 
-<Callout icon="⚠️" theme="warning">
-  **Important Note:** Role Clauses are allowed to be either **Static Scoped**, indicated through `directoryItemId` JSON property or **Dynamic Scoped**, indicated by `directoryItemTag` 
-</Callout>
-
 The request body should include the following properties:
 
 * **`name`**: The name of the Role.
@@ -101,6 +97,12 @@ The request body should include the following properties:
   "scopeDirectoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
+
+<br />
+
+<Callout icon="⚠️" theme="warning">
+  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
+</Callout>
 
 ### Example Usage
 
