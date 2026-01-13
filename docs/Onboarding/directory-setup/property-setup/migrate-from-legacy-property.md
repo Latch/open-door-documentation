@@ -111,9 +111,7 @@ PORTFOLIO,ODC Portfolio 2,OpenDOOR Client Account,0517C840-086B-4423-BE9E-2F021C
 * **`Authorization`**: TBD
 * **`Content-Type`**: `multipart/form-data`
 
-**File:**
-
-* Name of your CSV file. For this example, we've used `import-into-OpenDOOR.csv` ([Example CSV File](https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file)).
+**File:** Name of your CSV file. For this example, we've used `import-into-OpenDOOR.csv` ([Example CSV File](https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#example-csv-file)).
 
 ```curl
 curl -X 'POST' \
