@@ -6,6 +6,8 @@ hidden: false
 metadata:
   robots: index
 ---
+Create Roles that will specify in Clauses what Permission Sets the Role can grant and on what Scopes (Directory Items) these Permissions will apply.
+
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**         |
