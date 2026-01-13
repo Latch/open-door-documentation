@@ -104,7 +104,7 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create a Role for Staff employees that will selectively grant access on any `PROPERTY` Directory Item in `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
+We'll create a Role for Staff employees that selectively grants access on any `PROPERTY` Directory Item in `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
 
 1. **Enter and Access Spaces:** Staff are authorized to enter and access various spaces within the property, ensuring they can perform their duties effectively.
 2. **Reach Spaces:** Staff can navigate through different areas, ensuring they can reach any part of the property as needed.
@@ -139,7 +139,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and the Response Body like in below example:
+The status code should be HTTP 200 with the following Response Body:
 
 ```json Response Body
 {
