@@ -22,25 +22,22 @@ metadata:
 
 The request body should include the following properties:
 
-* **`name`**: The name of the Role.
-* **`type`**: Must be one of the five predefined Role Types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`).
-* **`clauses`**: An array of Clause Objects that define the specific behaviors and permissions a Role can have. Each Clause includes a `permissionSetId` and optional conditions that specify constraints such as date ranges, time intervals, and directory item tags. The `directoryScopeSelector` determines whether the Clause is statically or dynamically scoped, allowing for flexible role configurations.
+* **`name`**: The name of the Role Assignment.
+* **`locationDirectoryItemId`**: Directory Item ID under which the Role Assignment Scope is located. Can be 1st or nth level Parent.
+* **`scopeDefinitions`**: An array of Scope Definition Objects that specifies what behavior is assigned to a User and what Scopes (Directory Items) it applies to. Each Scope Definition includes a `roleClauseId`, `scopeDirectoryItemId` and optional conditions that specify constraints such as date ranges, time intervals, and directory item tags.
 
-<Accordion title="Clauses Details" icon="angle-down">
-  * **`permissionSetId`**: ID of the Permission Set.
+<Accordion title="Scope Definitions Details" icon="angle-down">
+  * **`roleClauseId`**: ID of the Role Clause.
+	* **`scopeDirectoryItemId`**: ID of the Scope Directory Item where the Assignment is created on.
   * **`conditions`**: An optional array of Condition Objects.
     * **`dateIntervalCondition`**: Specifies the date range.
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
     * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
-  * **`directoryScopeSelector`**: Determines the Scope and if the Clause is statically or dynamically scoped.
-    * **`directoryItemId`**: ID for static scoping.
-    * **`directoryItemTag`**: Tags for dynamic scoping.
-    * **`staticallyScoped`**: Optional Boolean indicating static scope.
 </Accordion>
 
-* **`scopeDirectoryItemId`**: ID for the scope directory item.
+* **`subject`**: ID for the scope directory item.
 
 <br />
 
@@ -93,11 +90,7 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create a Role for Staff employees that will selectively grant access on any `PROPERTY` Directory Item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
-
-1. **Enter and Access Spaces:** Staff are authorized to enter and access various spaces within the property, ensuring they can perform their duties effectively.
-2. **Reach Spaces:** Staff can navigate through different areas, ensuring they can reach any part of the property as needed.
-3. **Revoke Any Guest:** Staff have the authority to revoke access for any guest, ensuring security and compliance with property policies.
+We'll create 
 
 #### Request
 
