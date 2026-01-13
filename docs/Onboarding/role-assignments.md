@@ -47,3 +47,89 @@ The request body should include the following properties:
 </Accordion>
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
+
+<br />
+
+### Example Usage
+
+We'll create a Role for Staff employees that will selectively grant access on any `PROPERTY` Directory Item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
+
+1. **Enter and Access Spaces:** Staff are authorized to enter and access various spaces within the property, ensuring they can perform their duties effectively.
+2. **Reach Spaces:** Staff can navigate through different areas, ensuring they can reach any part of the property as needed.
+3. **Revoke Any Guest:** Staff have the authority to revoke access for any guest, ensuring security and compliance with property policies.
+
+#### Request
+
+```curl
+curl -X 'POST' \
+  'https://api.prod.door.com/rbac/v1/roles/cd748a08-52aa-4768-9f9b-fff08c5336f2/assign' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "OpenDOOR Staff Role Assignment",
+  "locationDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "scopeDefinitions": [
+    {
+      "roleClauseId": "6594cc24-eba6-4c39-8bd3-cca7ba71a3f3",
+      "scopeDirectoryItemId": "8ae57cb5-206e-4f2b-9f71-879024309ea1"
+    }
+  ],
+  "subject": {
+    "idSource": "DOOR_USER_IDP",
+    "id": "ED1BBEB6-5563-4AB3-87DA-5E1A0FB2FC33"
+  }
+}'
+```
+
+#### Response
+
+Status code should be HTTP 200 and Response Body like in below example:
+
+```json Response Body
+{
+  "roleAssignmentId": "000db09b-dc36-48ed-8f9e-e921247b488f",
+  "name": "OpenDOOR Staff Role Assignment",
+  "subject": {
+    "idSource": "DOOR_USER_IDP",
+    "id": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+  },
+  "clauses": [
+    {
+      "id": "6594cc24-eba6-4c39-8bd3-cca7ba71a3f3",
+      "permissionSet": {
+        "id": "d67d8a3e-4f10-4e4d-86ae-031c0ee2229e",
+        "locationDirectoryItemId": null,
+        "name": "OpenDOOR Staff Permission Set",
+        "permissions": [
+          "ENTER_SPACE",
+          "ACCESS_SPACE",
+          "REACH_SPACE",
+          "ACCESS",
+          "VIEW_DIRECTORY",
+          "VIEW_UNIT",
+          "INVITE_REVOKE_GUEST",
+          "VIEW_GUEST_ROLE_ASSIGNMENTS",
+          "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+          "REVOKE_ANY_GUEST"
+        ]
+      },
+      "directoryItemIdScope": "8ae57cb5-206e-4f2b-9f71-879024309ea1",
+      "conditions": [],
+      "active": true,
+      "provisioningStatus": null
+    }
+  ],
+  "roleId": "cd748a08-52aa-4768-9f9b-fff08c5336f2",
+  "scopeDirectoryItemPath": "00000000-0000-0000-0000-000000000000/e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "scopeDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "active": true,
+  "createdBy": {
+    "idSource": "DOOR_USER_IDP",
+    "id": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
+  },
+  "createdAt": 1768250078291,
+  "provisioningStatus": "PROVISIONING_STATUS_SUCCESS",
+  "type": "ROLE_TYPE_STAFF"
+}
+```
