@@ -31,7 +31,7 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
   **Note:** While setting up Access Path, be aware that creating cyclic dependencies is not allowed by the system. For instance, attempting to connect `Directory 1000` to `Directory 1010` and then back from `1010` to `1000` will be prevented. Ensure your configurations are free of such loops to comply with system constraints.
 </Callout>
 
-```json Request Body
+```json Request Body Structure
 {
   "segments": [
     {
