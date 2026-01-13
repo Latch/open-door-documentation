@@ -127,7 +127,7 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 
 ```curl
 curl -X 'POST' \
-  'https://api.blueprint.qa.door.com/access/v1/paths/segments' \
+  'https://api.prod.door.com/access/v1/paths/segments' \
   -H 'accept: */*' \
   -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
