@@ -1,13 +1,11 @@
 ---
 title: 6. Role Assignments
-excerpt: POST Role Assignment.
+excerpt: POST Role To User Assignment.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
-Assign Role to User.
-
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**                         |
