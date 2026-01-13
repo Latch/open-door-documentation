@@ -11,8 +11,6 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
-<br />
-
 <Callout icon="⚠️" theme="warning">
   **Important Note:** If you've provided Lock ID/UUIDs and they appear in successful responses body (end of this page), you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) for them anymore, the Locks are assigned to the created Directories.
 </Callout>
