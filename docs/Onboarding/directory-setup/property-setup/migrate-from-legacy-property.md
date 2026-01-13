@@ -124,7 +124,7 @@ curl -X 'POST' \
 
 ### Step 3: Validate Response
 
-Expected response is HTTP 200 and body containing the entire Directory tree structure and data from the input file.
+Expected response is HTTP 200 and body should contain the entire Directory tree structure and data from the input file.
 
 ```json Response
 [
