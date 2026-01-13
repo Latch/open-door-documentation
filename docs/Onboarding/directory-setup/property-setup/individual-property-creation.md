@@ -11,12 +11,6 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
-<br />
-
-<Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've provided Lock ID/UUIDs and they appear in successful responses body (end of this page), you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) for them anymore, the Lock is assigned to the created Directory.
-</Callout>
-
 <Callout icon="📝" theme="default">
   **How to use below endpoints:**
 
@@ -37,7 +31,7 @@ next:
 * **`Authorization`**: TBD
 * **`Content-Type`**: `application/json`
 
-**Request Body:** uses below structure . `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
+**Request Body:** Uses below structure . `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
 
 ```json Request Body Structure
 {
@@ -57,7 +51,7 @@ next:
 
 #### Step 1: Prepare JSON Request Body
 
-We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages. We're leaving out some Lock Assignments/Associations to Directories and some Directory items, that will be used in later Steps.
+We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages.
 
 ```json Request Body
 {
@@ -1192,7 +1186,7 @@ Repeat below steps until the desired Directory is complete.
 
 This allows for more granular operations, clearer and easier to manage request bodies than a single large one.
 
-For this minimalistic example, we're going to create a Floor with an Unit and link it to `uuid = 02ab66db-d4cb-4148-905f-e6545259db41` (`Residential Building` Directory Item) as child.
+For this minimalistic example, we're going to create a Floor with an Unit and link it to `Residential Building` Directory Item (ID `02ab66db-d4cb-4148-905f-e6545259db41`) as child.
 
 #### Step 2: Send Request!
 
@@ -1200,7 +1194,7 @@ For this minimalistic example, we're going to create a Floor with an Unit and li
 curl -X 'POST' \
   'https://api.prod.door.com/directory/v1/items/02ab66db-d4cb-4148-905f-e6545259db41' \
   -H 'accept: */*' \
-  -H 'x-door-auth: Bearer {token}' \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Floor 4",
