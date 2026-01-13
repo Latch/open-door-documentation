@@ -28,7 +28,7 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
 * `descendantId`: Descendant OpenDOOR Directory Item, identified through OpenDOOR ID
 
 <Callout icon="📝" theme="default">
-  **Note:** While setting up Access Paths, be aware that creating cyclic dependencies is not allowed by the system. For instance, attempting to connect `Directory 1000` to `Directory 1010` and then back from `1010` to `1000` will be prevented. Ensure your configurations are free of such loops to comply with system constraints.
+  **Note:** The system prevents the creation of cyclic dependencies when setting up Access Path Segments. For example, connecting `Directory 1000` to `Directory 1010` and then back from `1010` to `1000` will be blocked. Ensure configurations are free of loops to comply with system constraints.
 </Callout>
 
 ```json Request Body Structure
@@ -183,7 +183,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and Response Body should be the same as the Request Body.
+The status code should be HTTP 200 and Response Body should match the Request Body.
 
 ```json Response Body
 {
