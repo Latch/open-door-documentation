@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-Create custom Roles.
-
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**         |
