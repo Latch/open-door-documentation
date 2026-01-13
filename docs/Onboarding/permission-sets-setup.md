@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Create Permission Sets that will later be used in Roles to will specify what that Role can do.
+Create Permission Sets to define the actions a Role can perform.
 
 #### Request definition:
 
@@ -22,9 +22,9 @@ Create Permission Sets that will later be used in Roles to will specify what tha
 
 **Request Body:**
 
-Should have the following three JSON properties:
+Include the following JSON properties:
 
-* `locationDirectoryItemId`: Directory Item ID the Permission Set will be usable in. It can your Root Directory Item, so Permission Set can be applied to the sub-Directories.
+* `locationDirectoryItemId`: Directory Item ID where the Permission Set is applicable. It can be your Root Directory Item, allowing application to sub-Directories.
 * `name`: Name of the Permission Set.
 * `permissions`: A String array containing OpenDOOR Permissions.
 
@@ -40,9 +40,7 @@ Should have the following three JSON properties:
 
 ### Example Usage
 
-We'll be using Root Directory Item `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) as `locationDirectoryItemId`.
-
-We'll be creating a Staff level Permission Set with Permissions for:
+Using Root Directory Item `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) as `locationDirectoryItemId`, we'll create a Staff level Permission Set with Permissions for:
 
 * Reaching, Entering and Accessing Spaces
 * Viewing Units
@@ -78,7 +76,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and Response Body should be the same as the Request Body, but with an additional JSON property, `id`.
+The status code should be HTTP 200 and Response Body match the Request Body, but with an additional `id` property.
 
 ```json Response Body
 {
