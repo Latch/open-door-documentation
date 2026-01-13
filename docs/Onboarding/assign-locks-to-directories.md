@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Associates a Latch Cortex Lock to an OpenDOOR Directory Item. Access to the Lock will be granted based on permissions and access to the associated Directory Item.
+Associate a Latch Cortex Lock to an OpenDOOR Directory Item. Access to the Lock will be granted based on permissions and access to the associated Directory Item.
 
 #### Request definition:
 
