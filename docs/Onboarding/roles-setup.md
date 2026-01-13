@@ -48,7 +48,7 @@ The request body should include the following properties:
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
 
-```json Request Body
+```json Request Body Structure
 {
   "name": "string",
   "type": "ROLE_TYPE_GUEST",
@@ -139,7 +139,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and Response Body like in below example:
+Status code should be HTTP 200 and the Response Body like in below example:
 
 ```json Response Body
 {
