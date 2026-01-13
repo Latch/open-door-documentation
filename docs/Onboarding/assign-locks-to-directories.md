@@ -24,14 +24,14 @@ Associate a Cortex Lock to an OpenDOOR Directory Item.
 
 Should have the following two JSON properties:
 
-* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to
-* `lockId`: the Cortex Lock ID
+* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to.
+* `lockId`: the Cortex Lock ID.
 
 <Callout icon="📝" theme="default">
   **Note:** `lockId` must not be used in another Lock → Directory Item association already, for a successful current request.
 </Callout>
 
-```json Request Body
+```json Request Body Structure
 {
   "directoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "lockId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
@@ -49,9 +49,9 @@ We'll be using data from [1. Directory Setup → Property Setup → Individual P
 
 ```curl cURL
 curl -X 'POST' \
-  'https://api.blueprint.qa.door.com/access/v1/directory-locks' \
+  'https://api.prod.door.com/access/v1/directory-locks' \
   -H 'accept: */*' \
-  -H 'x-door-auth: Bearer {token}' \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
   "directoryItemId": "640cb5fe-8d15-4cf0-a632-8f40e11db7f5",
