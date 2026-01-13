@@ -17,11 +17,11 @@ Below you can find endpoints for retrieving existing Directory data and understa
 **URL parameters:**
 
 <Callout icon="📝" theme="default">
-  **Note:** These parameters are applicable only for listing endpoints `/directory/v1/subtree` and `/directory/v1/subtree/{scope}`**. See usage example in [`GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-a-known-directory-item-1).
+  **Note:** These parameters apply only to the listing endpoints `/directory/v1/subtree` and `/directory/v1/subtree/{scope}`**. See usage examples in [`GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-a-known-directory-item-1).
 </Callout>
 
-* `pageSize`: Specify the number of items to be returned in a single page of results when listing Directory Items. It helps control the amount of data retrieved in one request, allowing for efficient data handling and navigation through large datasets.
-* `pageToken`: Specify the starting point (ID/UUID) for the next page of data in a paginated list. When combined with pageSize, it allows for efficient navigation through large datasets by fetching subsequent pages of results.
+* `pageSize`: Specifies the number of Directory Items to be returned in a single page of results. This helps control the amount of data retrieved in one request, allowing for efficient data handling and navigation through large datasets.
+* `pageToken`: Specifies the starting point (ID/UUID) for the next page of data in a paginated list. When combined with pageSize, it allows for efficient navigation through large datasets by fetching subsequent pages of results.
 
 **Headers:**
 
@@ -30,9 +30,9 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 ### Example Usages
 
-We'll be using as example `ODC Portfolio 1` Directory Item (ID `972e4151-0f73-4cd5-913e-70dd5fc8ad45`) from [1. Directory Setup → Property Setup → Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
+We'll use as an example `ODC Portfolio 1` Directory Item (ID `972e4151-0f73-4cd5-913e-70dd5fc8ad45`) from [1. Directory Setup → Property Setup → Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
-#### 1. `GET /directory/v1/items/{uuid}` endpoint to retrieve information about a known Directory Item
+#### 1. `GET /directory/v1/items/{uuid}` Endpoint to Retrieve Information About a Known Directory Item
 
 ##### Request
 
@@ -44,7 +44,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913
 
 ##### Response
 
-Status code should be HTTP 200 and have the Response Body from below:
+The status code should be HTTP 200, with the following Response Body:
 
 ```json Response Body
 {
@@ -64,7 +64,7 @@ Status code should be HTTP 200 and have the Response Body from below:
 }
 ```
 
-#### 2. `GET /directory/v1/subtree/{scope}` endpoint to retrieve information about Directory Items from a known subtree
+#### 2. `GET /directory/v1/subtree/{scope}` Endpoint to Retrieve Information About Directory Items from a Known Subtree
 
 ##### Request
 
@@ -76,7 +76,7 @@ curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-9
 
 ##### Response
 
-Status code should be HTTP 200 and have the Response Body from below:
+The status code should be HTTP 200, with the following Response Body:
 
 ```json Response Body
 {
@@ -235,7 +235,7 @@ Status code should be HTTP 200 and have the Response Body from below:
 #### 3. Navigate through Response pages
 
 <Callout icon="📋" theme="info">
-  `pageSize` and `nextPageToken` can be used to efficiently navigate through paginated response pages.  `nextPageToken` can be obtained from the above response body and will retrieve you the next page. **Here's how to use it:**
+  Use `pageSize` and `nextPageToken` to efficiently navigate through paginated response pages. The  `nextPageToken` can be obtained from the above response body and will retrieve you the next page. **Here's how to use it:**
 
   ```curl
   curl -X 'GET' \
