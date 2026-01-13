@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Associate a Latch Cortex Lock to an OpenDOOR Directory Item. Access to the Lock will be granted based on permissions and access to the associated Directory Item.
+Associate a Latch Cortex Lock with an OpenDOOR Directory Item. Access to the Lock will be granted based on permissions and access to the associated Directory Item.
 
 #### Request definition:
 
@@ -22,13 +22,13 @@ Associate a Latch Cortex Lock to an OpenDOOR Directory Item. Access to the Lock 
 
 **Request Body:**
 
-Should have the following two JSON properties:
+The Request Body should include the following JSON properties:
 
-* `directoryItemId`: the target OpenDOOR Directory Item, identified through OpenDOOR ID, the Lock will be assigned to.
-* `lockId`: the Cortex Lock ID.
+* `directoryItemId`: The target OpenDOOR Directory Item, identified through OpenDOOR ID, to which the Lock will be assigned.
+* `lockId`: The Latch Cortex Lock ID.
 
 <Callout icon="📝" theme="default">
-  **Note:** `lockId` must not be used in another Lock → Directory Item association already, for a successful current request.
+  **Note:** The `lockId` must not be used in another Lock → Directory Item associationfor the current request to be successful.
 </Callout>
 
 ```json Request Body Structure
@@ -40,7 +40,7 @@ Should have the following two JSON properties:
 
 ### Example Usage
 
-We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree):
+We'll use as an example data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree):
 
 * `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (Parking Lot Entrance)
 * `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
@@ -61,7 +61,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and Response Body should be the same as the Request Body.
+The status code should be HTTP 200, and the Response Body should match the Request Body.
 
 ```json Response Body
 {
