@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Creates Permission Sets that will later be used in Roles to will specify what that Role can do.
+Create Permission Sets that will later be used in Roles to will specify what that Role can do.
 
 #### Request definition:
 
