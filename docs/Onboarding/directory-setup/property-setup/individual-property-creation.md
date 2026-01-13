@@ -14,8 +14,8 @@ next:
 <Callout icon="📝" theme="default">
   **How to use below endpoints:**
 
-  1. `/directory/v1/items` to create the initial Directory structure, can even be complete at the moment.
-  2. `/directory/v1/items/{scope}` to create additional Directory Items and link them to an existing Item, identified by `scope`.
+  1. `/directory/v1/items` to create the initial or complete Directory structure.
+  2. `/directory/v1/items/{scope}` to add items under an existing Directory Item identified by `scope`.
 </Callout>
 
 **Request Definitions:**
@@ -31,7 +31,7 @@ next:
 * **`Authorization`**: TBD
 * **`Content-Type`**: `application/json`
 
-**Request Body:** Uses below structure . `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
+**Request Body:** The `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
 
 ```json Request Body Structure
 {
@@ -452,7 +452,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
 
 #### Step 2: Send Request!
 
-Using JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body):
+Use the JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body) to send a POST request:
 
 ```curl
 curl -X 'POST' \
@@ -467,9 +467,9 @@ curl -X 'POST' \
 
 #### Step 3: Validate Response
 
-Response should be successful, HTTP 200 and body should contain the root Directory Item.
+Ensure the response is successful (HTTP 200) and contains the Root Directory Item.
 
-```json Response
+```json Response Body
 {
   "id": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
   "name": "OpenDOOR Client Account",
@@ -488,7 +488,7 @@ Response should be successful, HTTP 200 and body should contain the root Directo
 
 #### Step 4: Retrieve the entire Directory Subtree
 
-Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = e43f4017-da92-4c4a-87ff-5c5f418c3cf6` should get you the entire Directory starting from Root Item from above Response.
+Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = e43f4017-da92-4c4a-87ff-5c5f418c3cf6` to retrieve the entire Directory starting from Root Item (from above Response).
 
 ```json Directory Subtree JSON
 {
@@ -1184,7 +1184,7 @@ Repeat below steps until the desired Directory is complete.
 
 #### Step 1: Break it into JSON batches
 
-This allows for more granular operations, clearer and easier to manage request bodies than a single large one.
+Create smaller JSON batches for more manageable requests.
 
 For this minimalistic example, we're going to create a Floor with an Unit and link it to `Residential Building` Directory Item (ID `02ab66db-d4cb-4148-905f-e6545259db41`) as child.
 
@@ -1225,7 +1225,7 @@ curl -X 'POST' \
 
 #### Step 3: Validate Response
 
-Response should be successful, HTTP 200 and body should contain the created 1st level Directory Item (without the children).
+Ensure the response is successful (HTTP 200) and contains the Root Directory Item.
 
 ```json Response Body
 {
@@ -1246,7 +1246,7 @@ Response should be successful, HTTP 200 and body should contain the created 1st 
 
 #### Step 4: Retrieve the newly created Directory Subtree
 
-Sending a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = 02ab66db-d4cb-4148-905f-e6545259db41` should get you the Directory Subtree starting from newly created Item from above Response.
+Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = 02ab66db-d4cb-4148-905f-e6545259db41` to retrieve the entire Directory starting from Root Item (from above Response).
 
 ```json Response Body
 {
