@@ -18,11 +18,11 @@ Request for when you need to update a Directory Item's data, `name` and `tags`:
 * **`Authorization`**: TBD
 * **`Content-Type`**: `application/json`
 
-**Request Body:** Specify what data you want to update: `name`, `tags` or both, in JSON format.
+**Request Body:** Specify the data you want to update: `name`, `tags` or both, in JSON format.
 
 ### Example Usage
 
-We'll be using as example `Floor 2 - Unit 201` Directory Item (ID `ca461e44-715b-46ce-8056-a68693584a07`) from [1 Directory Setup → Property Setup → Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
+We'll be using as an example `Floor 2 - Unit 201` Directory Item (ID `ca461e44-715b-46ce-8056-a68693584a07`) from [1 Directory Setup → Property Setup → Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
 #### 1. Request
 
@@ -42,7 +42,7 @@ curl -X 'PATCH' \
 
 #### 2. Response
 
-Status code should be HTTP 200 and have the Response Body from below:
+The status code should be HTTP 200, with the following Response Body:
 
 ```json Response Body
 {
