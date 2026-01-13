@@ -8,7 +8,7 @@ metadata:
 ### Directory Structure
 
 <Callout icon="📝" theme="default">
-  **NOTE:** This Directory will be used as example throughout the guide.
+  **NOTE:** This Directory will be used as an example throughout the guide.
 </Callout>
 
 ```plaintext Directory Structure and Hierarchy
@@ -56,7 +56,7 @@ metadata:
 
 ### Can be done in two ways:
 
-* **[Bulk Import Property Data](doc:migrate-from-legacy-property) :** This is the more user-friendly approach. DOOR Client Account data detailing the Properties hierarchy and structure is organized into a templated CSV file that will be passed as input to a dedicated API endpoint.
-* **[Individual Property Creation](doc:individual-property-creation) :** Requires making individual API requests to define the Directory tree hierarchy and structure. DOOR Client Account data must be structured and passed in the request body of each API call. This method offers granular control but requires more development effort and API knowledge.
+* **[Bulk Import Property Data](doc:migrate-from-legacy-property) :** This user-friendly approach involves organizing DOOR Client Account data into a templated CSV file, which is then submitted to a dedicated API endpoint to define the properties hierarchy and structure.
+* **[Individual Property Creation](doc:individual-property-creation) :** This method requires making individual API requests to define the Directory tree hierarchy and structure. DOOR Client Account data must be structured and passed in the request body of each API call. While offering granular control, it demands more development effort and API expertise.
 
 Choose what suits you best!
