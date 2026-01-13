@@ -467,7 +467,7 @@ curl -X 'POST' \
 
 #### Step 3: Validate Response
 
-Response should successful, HTTP 200 and body containing the root Directory Item.
+Response should be successful, HTTP 200 and body should contain the root Directory Item.
 
 ```json Response
 {
@@ -1225,7 +1225,7 @@ curl -X 'POST' \
 
 #### Step 3: Validate Response
 
-Response should successful, HTTP 200 and body containing the created 1st level Directory Item (without the children).
+Response should be successful, HTTP 200 and body should contain the created 1st level Directory Item (without the children).
 
 ```json Response Body
 {
