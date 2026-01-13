@@ -44,6 +44,53 @@ The request body should include the following properties:
 
 <br />
 
+```json Request Body
+{
+  "name": "string",
+  "locationDirectoryItemId": "string",
+  "scopeDefinitions": [
+    {
+      "roleClauseId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "scopeDirectoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "conditions": [
+        {
+          "dateIntervalCondition": {
+            "startDate": 0,
+            "endDate": 0
+          },
+          "weekdayTimeIntervalCondition": {
+            "intervals": [
+              {
+                "weekday": 0,
+                "startTime": "string",
+                "endTime": "string"
+              }
+            ]
+          },
+          "directoryItemTagCondition": {
+            "tags": [
+              {
+                "itemType": "ROOT",
+                "spaceType": "BUILDING_GROUP",
+                "featureFlag": "BLUEPRINT_ENABLED",
+                "vacancy": "VACANT",
+                "cortex": "ACCOUNT"
+              }
+            ]
+          },
+          "accessPermissionTypeCondition": "REACH",
+          "accessAssignDoorCodesCondition": true
+        }
+      ]
+    }
+  ],
+  "subject": {
+    "idSource": "DOOR_USER_IDP",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  }
+}
+```
+
 ### Example Usage
 
 We'll create a Role for Staff employees that will selectively grant access on any `PROPERTY` Directory Item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
