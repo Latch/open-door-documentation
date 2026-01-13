@@ -7,7 +7,9 @@ metadata:
 ---
 ### Directory Structure
 
-#### NOTE: This Directory tree will be used as example throughout the guide.
+<Callout icon="📝" theme="default">
+  **NOTE:** This Directory will be used as example throughout the guide.
+</Callout>
 
 ```plaintext Directory Structure and Hierarchy
 [ACCOUNT] OpenDOOR Client Account
