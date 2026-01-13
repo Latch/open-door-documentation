@@ -28,7 +28,7 @@ Should have the following three JSON properties:
 * `name`: Name of the Permission Set.
 * `permissions`: A String array containing OpenDOOR Permissions.
 
-```json Request Body
+```json Request Body Structure
 {
   "locationDirectoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "name": "string",
@@ -44,10 +44,10 @@ We'll be using Root Directory Item `OpenDOOR Client Account` (ID `e43f4017-da92-
 
 We'll be creating a Staff level Permission Set with Permissions for:
 
-* Reaching, Entering and Access Spaces
+* Reaching, Entering and Accessing Spaces
 * Viewing Units
 * Viewing Directories
-* Inviting, Viewing and Revoking Guests
+* Inviting, Viewing and Revoking Guest Access
 * Viewing Resident Assignments
 
 #### Request
