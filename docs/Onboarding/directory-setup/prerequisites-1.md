@@ -21,5 +21,6 @@ Your DOOR Client Account includes the following data:
 4. ✅ Units
 5. ✅ Doors/Locks (can be configured later on)
 6. ✅ Other Devices/Smart Devices (can be configured later on)
+7. ✅ Residents
 
 <br />
