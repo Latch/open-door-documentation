@@ -6,6 +6,8 @@ hidden: false
 metadata:
   robots: index
 ---
+This is the final Step in granting a User permissions to Directory Items by assigning a Role to it.
+
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**                         |
@@ -88,7 +90,7 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll assign Role `OpenDOOR Staff Role` (ID ) to User
+We'll assign Role `OpenDOOR Staff Role` (ID `cd748a08-52aa-4768-9f9b-fff08c5336f2`) from [5. Roles Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/roles-setup#response) to User identified through Latch Cortex UUID `ED1BBEB6-5563-4AB3-87DA-5E1A0FB2FC33`, thus granting Staff Employee permissions to the User.
 
 #### Request
 
