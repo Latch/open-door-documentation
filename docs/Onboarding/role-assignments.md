@@ -37,7 +37,7 @@ The request body should include the following properties:
     * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
 </Accordion>
 
-* **`subject`**: ID for the scope directory item.
+* **`subject`**: Identify the User we assign the Role to through `idSource` and `id` (User's UUID from Latch Cortex).
 
 <br />
 
