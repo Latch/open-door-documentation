@@ -12,26 +12,26 @@ next:
       type: basic
 ---
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've provided Lock ID/UUIDs and they appear in successful responses body (end of this page), you don't have to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) for them anymore, the Locks are already assigned to the created Directories.
+  **Important Note:** If you've used this page's method, you don't need to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) anymore. The locks are already assigned to the created Directories.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
 
-CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID`.
+The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID`.
 
 <Accordion title="CSV Structure Guidelines" icon="list">
   1. `SPACE TYPE`:
-     1. Type of Space represented by the row (future Directory Item) in the Client Directory tree. It should be the same type as in the DOOR Client Account.
+     1. Represents the type of Space in the Client Directory tree. It should match the type in the DOOR Client Account.
      2. **Possible values:** `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA` and `ENTRANCE`
-  2. `BP SPACE NAME`: Directory Item name. It should be the same as the DOOR Client Account entity name.
-  3. `BP SPACE PARENT NAME`: Name of the Parent Directory Item. It should be from a previous row and should be a perfect String match.
-  4. `LATCH UUID / ID`: Latch Cortex UUID of the entity, be it Portfolio, Property, Unit, Door/Lock, and so on. It can be obtained from DoorOS or AdminTool.
+  2. `BP SPACE NAME`: The name of the Directory Item, matching the DOOR Client Account entity name.
+  3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which should perfectly match a previous row.
+  4. `LATCH UUID / ID`: The Latch Cortex UUID of the entity, obtainable from DoorOS or AdminTool.
 </Accordion>
 
 #### Create your CSV file and populate it with import data
 
 <Callout icon="📝" theme="default">
-  **Tip:** You can use Google Sheets to create your import data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**. Google Sheets makes it easy to validate your data format before importing.
+  **Tip:** Use Google Sheets to create your import data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**. Google Sheets makes it easy to validate your data format before importing.
 </Callout>
 
 #### Example CSV File
@@ -124,7 +124,7 @@ curl -X 'POST' \
 
 ### Step 3: Validate Response
 
-Expected response is HTTP 200 and body should contain the entire Directory tree structure and data from the input file.
+The expected response is HTTP 200 and the body should contain the entire Directory tree structure and data from the input file.
 
 ```json Response
 [
