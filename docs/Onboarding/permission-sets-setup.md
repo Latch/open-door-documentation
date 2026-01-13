@@ -1,12 +1,12 @@
 ---
 title: 4. Permission Sets Setup
-excerpt: POST Custom Permission Set.
+excerpt: POST Permission Set.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
-Creates custom Permission Sets.
+Creates Permission Sets that will later be used in Roles and will specify what that Role can do.
 
 #### Request definition:
 
