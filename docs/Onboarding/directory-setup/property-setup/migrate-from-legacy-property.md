@@ -25,7 +25,7 @@ CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PA
      2. **Possible values:** `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA` and `ENTRANCE`
   2. `BP SPACE NAME`: Directory Item name. It should be the same as the DOOR Client Account entity name.
   3. `BP SPACE PARENT NAME`: Name of the Parent Directory Item. It should be from a previous row and should be a perfect String match.
-  4. `LATCH UUID / ID`: Latch UUID of the entity, be it Portfolio, Property, Unit, Door/Lock, and so on. It can be obtained from DoorOS or AdminTool.
+  4. `LATCH UUID / ID`: Latch Cortex UUID of the entity, be it Portfolio, Property, Unit, Door/Lock, and so on. It can be obtained from DoorOS or AdminTool.
 </Accordion>
 
 #### Create your CSV file and populate it with import data
