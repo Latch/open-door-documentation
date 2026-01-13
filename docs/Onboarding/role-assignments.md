@@ -39,7 +39,7 @@ The request body should include the following JSON properties:
     * **`accessAssignDoorCodesCondition`**: Boolean to show/assign Door Codes.
 </Accordion>
 
-* **`subject`**: Identify the User we assign the Role to through `idSource` and `id` (User's UUID from Latch Cortex).
+* **`subject`**: This identifies the User we assign the Role to through `idSource` and `id` (User's UUID from Latch Cortex).
 
 ```json Request Body Structure
 {
@@ -90,7 +90,7 @@ The request body should include the following JSON properties:
 
 ### Example Usage
 
-We'll assign Role `OpenDOOR Staff Role` (ID `cd748a08-52aa-4768-9f9b-fff08c5336f2`) from [5. Roles Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/roles-setup#response) to User identified through Latch Cortex UUID `ED1BBEB6-5563-4AB3-87DA-5E1A0FB2FC33`, thus granting it Staff Employee permissions.
+We'll assign Role `OpenDOOR Staff Role` (ID `cd748a08-52aa-4768-9f9b-fff08c5336f2`) from [5. Roles Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/roles-setup#response) to a User identified through Latch Cortex UUID `ED1BBEB6-5563-4AB3-87DA-5E1A0FB2FC33`, thus granting it Staff Employee permissions.
 
 #### Request
 
@@ -118,7 +118,7 @@ curl -X 'POST' \
 
 #### Response
 
-Status code should be HTTP 200 and the Response Body like in below example:
+The status code should be HTTP 200 with the following Response Body:
 
 ```json Response Body
 {
