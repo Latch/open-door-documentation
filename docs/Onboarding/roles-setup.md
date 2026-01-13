@@ -39,7 +39,7 @@ The request body should include the following properties:
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
-    * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
+    * **`accessAssignDoorCodesCondition`**: Boolean to show/assign Door Codes.
   * **`directoryScopeSelector`**: Determines the Scope and if the Clause is statically or dynamically scoped.
     * **`directoryItemId`**: ID for static scoping.
     * **`directoryItemTag`**: Tags for dynamic scoping.
