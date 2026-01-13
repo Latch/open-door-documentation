@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-Creates Access Paths (segments/connections) between Directory Items and specify Entrance Routes in a Property.
+Create Access Paths (segments/connections) between Directory Items and specify Entrance Routes in a Property.
 
 #### Request definition:
 
