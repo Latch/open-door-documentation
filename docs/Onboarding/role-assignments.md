@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-This is the final Step in granting a User permissions to Directory Items by assigning a Role to it.
+This is the final Step in granting a User permissions to Directory Items by assigning a Role to it and specifying the behavior and where the Role is usable.
 
 #### Request definition:
 
@@ -22,7 +22,7 @@ This is the final Step in granting a User permissions to Directory Items by assi
 
 **Request Body:**
 
-The request body should include the following properties:
+The request body should include the following JSON properties:
 
 * **`name`**: The name of the Role Assignment.
 * **`locationDirectoryItemId`**: Directory Item ID under which the Role Assignment Scope is located. Can be 1st or nth level Parent.
@@ -41,7 +41,7 @@ The request body should include the following properties:
 
 * **`subject`**: Identify the User we assign the Role to through `idSource` and `id` (User's UUID from Latch Cortex).
 
-```json Request Body
+```json Request Body Structure
 {
   "name": "string",
   "locationDirectoryItemId": "string",
