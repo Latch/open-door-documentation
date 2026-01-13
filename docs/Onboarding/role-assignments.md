@@ -28,7 +28,7 @@ The request body should include the following properties:
 
 <Accordion title="Scope Definitions Details" icon="angle-down">
   * **`roleClauseId`**: ID of the Role Clause.
-	* **`scopeDirectoryItemId`**: ID of the Scope Directory Item where the Assignment is created on.
+    * **`scopeDirectoryItemId`**: ID of the Scope Directory Item where the Assignment is created on.
   * **`conditions`**: An optional array of Condition Objects.
     * **`dateIntervalCondition`**: Specifies the date range.
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
@@ -38,8 +38,6 @@ The request body should include the following properties:
 </Accordion>
 
 * **`subject`**: Identify the User we assign the Role to through `idSource` and `id` (User's UUID from Latch Cortex).
-
-<br />
 
 ```json Request Body
 {
@@ -90,7 +88,7 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create 
+We'll assign Role `OpenDOOR Staff Role` (ID ) to User
 
 #### Request
 
