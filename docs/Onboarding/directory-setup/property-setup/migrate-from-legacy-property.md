@@ -38,12 +38,12 @@ The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPAC
 
 To help you get started, we've provided an example CSV file, based on structure from [Property Setup](doc:property-setup) . This file contains sample data that will be used in the subsequent guide pages.
 
-##### Door Client Data that can be associated with OpenDoor data entities
+##### Door Client data (Latch Cortex) that can be associated with OpenDoor data entities
 
-* DOOR data type `ACCOUNT` (PORTFOLIO) → OpenDOOR data type `PORTFOLIO`
-* DOOR data type `BUILDING` → OpenDOOR data type `PROPERTY`
-* DOOR data type `UNIT` → OpenDOOR data type `UNIT`
-* DOOR data type `DOOR` → OpenDOOR data type `ENTRANCE`
+* Latch Cortex data type `ACCOUNT` (PORTFOLIO) → OpenDOOR data type `PORTFOLIO`
+* Latch Cortex data type `BUILDING` → OpenDOOR data type `PROPERTY`
+* Latch Cortex data type `UNIT` → OpenDOOR data type `UNIT`
+* Latch Cortex data type `DOOR` → OpenDOOR data type `ENTRANCE`
 
 ```Text import-into-OpenDOOR.csv
 SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
