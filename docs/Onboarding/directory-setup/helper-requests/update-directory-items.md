@@ -15,7 +15,7 @@ Request for when you need to update a Directory Item's data, `name` and `tags`:
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:** Specify the data you want to update: `name`, `tags` or both, in JSON format.
