@@ -17,7 +17,7 @@ This is the final Step in granting a User permissions to Directory Items by assi
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
