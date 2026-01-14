@@ -1,1 +1,4 @@
-[]
+- addlockmapping
+- removelockmapping
+- getlockmappingsinscope
+- getlockmappingsassignedtoitem

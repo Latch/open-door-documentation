@@ -1,0 +1,3024 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "api-blueprint",
+    "description": "Backend for Frontend for Blueprint and RBAC",
+    "version": "0.12.1-SNAPSHOT"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "api-blueprint"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Role Assignments",
+      "description": "Role Assignments are roles assigned to a user. They have clauses which define permissions on scopes."
+    },
+    {
+      "name": "Permission Assignments",
+      "description": "Assigning a role to a user ultimately results in granting them permissions."
+    },
+    {
+      "name": "Directory Locks",
+      "description": "Locks must be mapped to directory items so that access permissions can apply to them."
+    },
+    {
+      "name": "Access Paths",
+      "description": "Access to inner spaces depends on access to one or more outer spaces, such as entrances or lobbies."
+    },
+    {
+      "name": "Scopes",
+      "description": "Scopes are directory items where the user has some permissions, which also cascade below."
+    },
+    {
+      "name": "Permission Sets",
+      "description": "Permissions are very granular. Permission sets group them together, improving role maintainability."
+    },
+    {
+      "name": "Roles",
+      "description": "Roles are collections of clause templates. They can be assigned to users to grant them permissions."
+    },
+    {
+      "name": "Directory",
+      "description": "Operations related to directory management"
+    }
+  ],
+  "paths": {
+    "/rbac/v1/roles": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "createRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/{roleId}/assign": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "assignRole",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleAssignmentCreationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleAssignmentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-sets": {
+      "post": {
+        "tags": [
+          "Permission Sets"
+        ],
+        "operationId": "createPermissionSet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermissionSetCreationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionSetDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/items": {
+      "post": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Create a directory item and its subtree.",
+        "operationId": "createTopDirectoryItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportDirectoryItemDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created the subtree.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/items/{scope}": {
+      "post": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Create a directory item under the given directory item",
+        "operationId": "createDirectoryItem",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportDirectoryItemDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created the subtree.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/paths/segments": {
+      "post": {
+        "tags": [
+          "Access Paths"
+        ],
+        "summary": "Add access path segments/connections.",
+        "operationId": "addPathSegments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessPathSegmentsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully added the access-paths segments.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathSegmentsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathSegmentsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathSegmentsDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathSegmentsDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathSegmentsDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Access Paths"
+        ],
+        "summary": "Remove access path segments.",
+        "operationId": "removePathSegments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessPathSegmentsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully removed the access-paths segments."
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters."
+          },
+          "401": {
+            "description": "Missing or invalid credentials."
+          },
+          "403": {
+            "description": "No privileges to access the resource."
+          },
+          "500": {
+            "description": "Internal error."
+          }
+        }
+      }
+    },
+    "/access/v1/directory-locks": {
+      "post": {
+        "tags": [
+          "Directory Locks"
+        ],
+        "summary": "Associate a smart lock with a directory item.",
+        "operationId": "addLockMapping",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectoryItemLockDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully associated lock with directory item.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemLockDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Directory Locks"
+        ],
+        "summary": "Remove the association between a smart lock and a directory item.",
+        "operationId": "removeLockMapping",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectoryItemLockDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully removed lock association."
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/items/{uuid}": {
+      "get": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Get a single directory item by its UUID",
+        "operationId": "getDirectoryItem",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the item.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Update a directory item",
+        "operationId": "updateDirectoryItem",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDirectoryItemRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the directory item",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/scopes": {
+      "get": {
+        "tags": [
+          "Scopes"
+        ],
+        "operationId": "getScopePermissions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScopeResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/{roleId}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "getRoleById",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/{roleId}/clause/{clauseId}/selectable-scopes": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "getSelectableScopesForClause",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "clauseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleScopeOptionsResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/in/{directoryLocationId}/type/{roleType}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "getRolesInScope",
+        "parameters": [
+          {
+            "name": "directoryLocationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roleType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ROLE_TYPE_GUEST",
+                "ROLE_TYPE_RESIDENT",
+                "ROLE_TYPE_VENDOR",
+                "ROLE_TYPE_STAFF",
+                "ROLE_TYPE_ADMIN"
+              ]
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePageResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/guest/{directoryLocationId}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "getGuestRolesForLocation",
+        "parameters": [
+          {
+            "name": "directoryLocationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePageResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/role-assignments": {
+      "get": {
+        "tags": [
+          "Role Assignments"
+        ],
+        "operationId": "listRoleAssignments",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "subjectId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "creatorId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ROLE_TYPE_GUEST",
+                "ROLE_TYPE_RESIDENT",
+                "ROLE_TYPE_VENDOR",
+                "ROLE_TYPE_STAFF",
+                "ROLE_TYPE_ADMIN"
+              ]
+            }
+          },
+          {
+            "name": "roleId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultRoleAssignmentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/role-assignments/{roleAssignmentId}": {
+      "get": {
+        "tags": [
+          "Role Assignments"
+        ],
+        "operationId": "getRoleAssignmentById",
+        "parameters": [
+          {
+            "name": "roleAssignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleAssignmentDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role Assignments"
+        ],
+        "operationId": "revokeRoleAssignmentById",
+        "parameters": [
+          {
+            "name": "roleAssignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rbac/v1/role-assignments/{roleAssignmentId}/permission-assignments": {
+      "get": {
+        "tags": [
+          "Role Assignments"
+        ],
+        "operationId": "getPermissionAssignmentsForRoleAssignment",
+        "parameters": [
+          {
+            "name": "roleAssignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionQueryResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-sets/{permissionSetId}": {
+      "get": {
+        "tags": [
+          "Permission Sets"
+        ],
+        "operationId": "getPermissionSet",
+        "parameters": [
+          {
+            "name": "permissionSetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionSetDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-sets/in/{directoryItemId}/deep": {
+      "get": {
+        "tags": [
+          "Permission Sets"
+        ],
+        "operationId": "listPermissionSetsInScope",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "path",
+            "description": "Note: this parameter is ignored for now and so all permissionSets are always returned.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermissionSetDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-assignments/permission/{permission}/in/{scopeDirectoryItemId}": {
+      "get": {
+        "tags": [
+          "Permission Assignments"
+        ],
+        "operationId": "listPermissionsOnScope",
+        "parameters": [
+          {
+            "name": "scopeDirectoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionQueryResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-assignments/permission/{permission}/for/user/{userId}/in/{scopeDirectoryItemId}": {
+      "get": {
+        "tags": [
+          "Permission Assignments"
+        ],
+        "operationId": "listUserPermissionsOnScope",
+        "parameters": [
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scopeDirectoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionQueryResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/permission-assignments/permission/{permission}/for/user/{userId}/in/{scopeDirectoryItemId}/deep": {
+      "get": {
+        "tags": [
+          "Permission Assignments"
+        ],
+        "operationId": "listUserPermissionsOnScopeOrBelow",
+        "parameters": [
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scopeDirectoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermissionQueryResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/user/scopes/{root}": {
+      "get": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Gets all the accessible scopes for the user",
+        "operationId": "getUserScopes",
+        "parameters": [
+          {
+            "name": "root",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the scopes.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DirectoryItemDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/subtree": {
+      "get": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Gets all the nodes starting from the root item recursively.",
+        "operationId": "getSubtree",
+        "parameters": [
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The page token for pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The page size for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "The tags to filter the subtree by",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the subtree.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoDirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/subtree/{scope}": {
+      "get": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Gets all the nodes under the given directory item recursively.",
+        "operationId": "getSubtree_1",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "path",
+            "description": "The UUID of the directory item to retrieve the subtree for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The page token for pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The page size for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "The tags to filter the subtree by",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the subtree.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoDirectoryItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/paths/{directoryItemId}/descendants": {
+      "get": {
+        "tags": [
+          "Access Paths"
+        ],
+        "summary": "Get direct descendants of the given directory item.",
+        "operationId": "getDirectDescendants",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DescendantsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/paths/to/{directoryItemId}": {
+      "get": {
+        "tags": [
+          "Access Paths"
+        ],
+        "summary": "Get access paths leading to the specified node.",
+        "operationId": "getPathsToDirectoryItem",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully computed the access-paths to the directory item.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/directory-locks/in-scope/{directoryItemScopeId}": {
+      "get": {
+        "tags": [
+          "Directory Locks"
+        ],
+        "summary": "Get all locks in a directory item scope.",
+        "operationId": "getLockMappingsInScope",
+        "parameters": [
+          {
+            "name": "directoryItemScopeId",
+            "in": "path",
+            "description": "The UUID of the directory item to retrieve the subtree for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The page token for pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The page size for pagination (must be greater than 0, defaults to 10",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the locks.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoDirectoryItemLockDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/directory-locks/assigned-to/{directoryItemId}": {
+      "get": {
+        "tags": [
+          "Directory Locks"
+        ],
+        "summary": "Get all locks associated with a directory item.",
+        "operationId": "getLockMappingsAssignedToItem",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved lock.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItemLocksDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConditionDTO": {
+        "type": "object",
+        "properties": {
+          "dateIntervalCondition": {
+            "$ref": "#/components/schemas/DateIntervalConditionDTO"
+          },
+          "weekdayTimeIntervalCondition": {
+            "$ref": "#/components/schemas/WeekdayTimeIntervalConditionDTO"
+          },
+          "directoryItemTagCondition": {
+            "$ref": "#/components/schemas/DirectoryItemTagConditionDTO"
+          },
+          "accessPermissionTypeCondition": {
+            "type": "string",
+            "enum": [
+              "REACH",
+              "ENTER"
+            ]
+          },
+          "accessAssignDoorCodesCondition": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DateIntervalConditionDTO": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "endDate": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DirectoryItemTagConditionDTO": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RbacDirectoryItemTagDTO"
+            }
+          }
+        }
+      },
+      "RbacDirectoryItemTagDTO": {
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "enum": [
+              "ROOT",
+              "PORTFOLIO",
+              "VIRTUAL",
+              "SPACE",
+              "DEVICE",
+              "DOOR",
+              "ELEVATOR",
+              "FLOOR_GROUP",
+              "CONTROL",
+              "CONTENT",
+              "INVENTORY_ITEM",
+              "COMPLIANCE_ITEM"
+            ]
+          },
+          "spaceType": {
+            "enum": [
+              "BUILDING_GROUP",
+              "BUILDING",
+              "FLOOR",
+              "COMMUNAL_AREA",
+              "UNIT",
+              "ROOM",
+              "ENTRY",
+              "SERVICE",
+              "SPACE_ROOT",
+              "SPACE_ACCOUNT",
+              "SPACE_PORTFOLIO",
+              "SPACE_PROPERTY",
+              "SPACE_BUILDING",
+              "SPACE_FLOOR",
+              "SPACE_UNIT",
+              "SPACE_ROOM",
+              "SPACE_PARKING_GROUP",
+              "SPACE_PARKING_SLOT",
+              "SPACE_STORAGE_GROUP",
+              "SPACE_STORAGE_SLOT",
+              "SPACE_COMMON_GROUP",
+              "SPACE_COMMON_AREA",
+              "SPACE_PRIVATE_GROUP",
+              "SPACE_PRIVATE_AREA",
+              "SPACE_ENTRANCE"
+            ]
+          },
+          "featureFlag": {
+            "enum": [
+              "BLUEPRINT_ENABLED"
+            ]
+          },
+          "vacancy": {
+            "enum": [
+              "VACANT",
+              "OCCUPIED"
+            ]
+          },
+          "cortex": {
+            "enum": [
+              "ACCOUNT",
+              "BUILDING",
+              "UNIT",
+              "DOOR"
+            ]
+          }
+        }
+      },
+      "RoleClauseDirectoryScopeSelectorDTO": {
+        "type": "object",
+        "properties": {
+          "directoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "directoryItemTag": {
+            "$ref": "#/components/schemas/RbacDirectoryItemTagDTO"
+          },
+          "staticallyScoped": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RoleCreationRequestClauseDTO": {
+        "type": "object",
+        "properties": {
+          "permissionSetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          },
+          "directoryScopeSelector": {
+            "$ref": "#/components/schemas/RoleClauseDirectoryScopeSelectorDTO"
+          }
+        }
+      },
+      "RoleCreationRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "ROLE_TYPE_GUEST",
+              "ROLE_TYPE_RESIDENT",
+              "ROLE_TYPE_VENDOR",
+              "ROLE_TYPE_STAFF",
+              "ROLE_TYPE_ADMIN"
+            ]
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleCreationRequestClauseDTO"
+            }
+          },
+          "scopeDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "WeekdayTimeIntervalConditionDTO": {
+        "type": "object",
+        "properties": {
+          "intervals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeekdayTimeIntervalDTO"
+            }
+          }
+        }
+      },
+      "WeekdayTimeIntervalDTO": {
+        "type": "object",
+        "properties": {
+          "weekday": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        }
+      },
+      "PrincipalDTO": {
+        "type": "object",
+        "properties": {
+          "idSource": {
+            "enum": [
+              "DOOR_USER_IDP",
+              "DOOR_SERVICE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "RoleClauseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "permissionSetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          },
+          "directoryScopeSelector": {
+            "$ref": "#/components/schemas/RoleClauseDirectoryScopeSelectorDTO"
+          },
+          "staticallyScoped": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RoleDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "ROLE_TYPE_GUEST",
+              "ROLE_TYPE_RESIDENT",
+              "ROLE_TYPE_VENDOR",
+              "ROLE_TYPE_STAFF",
+              "ROLE_TYPE_ADMIN"
+            ]
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleClauseDTO"
+            }
+          },
+          "scopeDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scopeDirectoryPath": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/PrincipalDTO"
+          },
+          "staticallyScoped": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ClauseScopeDefinitionDTO": {
+        "type": "object",
+        "properties": {
+          "roleClauseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scopeDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          }
+        }
+      },
+      "RoleAssignmentCreationRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "locationDirectoryItemId": {
+            "type": "string"
+          },
+          "scopeDefinitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClauseScopeDefinitionDTO"
+            }
+          },
+          "subject": {
+            "$ref": "#/components/schemas/PrincipalDTO"
+          }
+        }
+      },
+      "PermissionSetDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          }
+        }
+      },
+      "RoleAssignmentClauseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "permissionSet": {
+            "$ref": "#/components/schemas/PermissionSetDTO"
+          },
+          "directoryItemIdScope": {
+            "type": "string"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "provisioningStatus": {
+            "enum": [
+              "PROVISIONING_STATUS_PENDING",
+              "PROVISIONING_STATUS_SUCCESS",
+              "PROVISIONING_STATUS_FAILURE"
+            ]
+          }
+        }
+      },
+      "RoleAssignmentDTO": {
+        "type": "object",
+        "properties": {
+          "roleAssignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/PrincipalDTO"
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleAssignmentClauseDTO"
+            }
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scopeDirectoryItemPath": {
+            "type": "string"
+          },
+          "scopeDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/PrincipalDTO"
+          },
+          "createdAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "provisioningStatus": {
+            "enum": [
+              "PROVISIONING_STATUS_PENDING",
+              "PROVISIONING_STATUS_SUCCESS",
+              "PROVISIONING_STATUS_FAILURE"
+            ]
+          },
+          "type": {
+            "enum": [
+              "ROLE_TYPE_GUEST",
+              "ROLE_TYPE_RESIDENT",
+              "ROLE_TYPE_VENDOR",
+              "ROLE_TYPE_STAFF",
+              "ROLE_TYPE_ADMIN"
+            ]
+          }
+        }
+      },
+      "PermissionSetCreationRequestDTO": {
+        "type": "object",
+        "properties": {
+          "locationDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          }
+        }
+      },
+      "ImportDirectoryItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImportDirectoryItemDto"
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "exception": {
+            "type": "string"
+          },
+          "trace": {
+            "type": "string"
+          }
+        }
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "authorType": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "USER",
+              "CLIENT",
+              "UNKNOWN"
+            ]
+          },
+          "authorId": {
+            "type": "string"
+          }
+        }
+      },
+      "DirectoryItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/Author"
+          }
+        }
+      },
+      "ImportBuildingRequest": {
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "directoryItemId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AccessPathSegmentDto": {
+        "type": "object",
+        "properties": {
+          "ancestorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "descendantId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "ancestorId",
+          "descendantId"
+        ]
+      },
+      "AccessPathSegmentsDto": {
+        "type": "object",
+        "properties": {
+          "segments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccessPathSegmentDto"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "segments"
+        ]
+      },
+      "DirectoryItemLockDto": {
+        "type": "object",
+        "properties": {
+          "directoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lockId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "directoryItemId",
+          "lockId"
+        ]
+      },
+      "UpdateDirectoryItemRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "removeMissingTags": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ScopeDirectoryItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parent": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ScopePermissionSetDto": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          }
+        }
+      },
+      "ScopePermissionsDto": {
+        "type": "object",
+        "properties": {
+          "directoryItem": {
+            "$ref": "#/components/schemas/ScopeDirectoryItemDto"
+          },
+          "permissionSets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScopePermissionSetDto"
+            }
+          }
+        }
+      },
+      "ScopeResponseDto": {
+        "type": "object",
+        "properties": {
+          "scopes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScopePermissionsDto"
+            }
+          }
+        }
+      },
+      "RbacDirectoryItemDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RoleScopeOptionsResponseDTO": {
+        "type": "object",
+        "properties": {
+          "roleId": {
+            "type": "string"
+          },
+          "roleClauseId": {
+            "type": "string"
+          },
+          "directoryItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RbacDirectoryItemDTO"
+            }
+          }
+        }
+      },
+      "RolePageResponseDTO": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleDTO"
+            }
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "PagedResultRoleAssignmentDTO": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleAssignmentDTO"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "PermissionAssignmentDTO": {
+        "type": "object",
+        "properties": {
+          "permissionAssignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/PrincipalDTO"
+          },
+          "scopeDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "permission": {
+            "enum": [
+              "MANAGE_DIRECTORY",
+              "OCCUPY",
+              "ENTER_SPACE",
+              "ACCESS_SPACE",
+              "ACCESS",
+              "REACH_SPACE",
+              "VIEW_DIRECTORY",
+              "VIEW_UNIT",
+              "CONFIGURE_ACCESS",
+              "INVITE_REVOKE_GUEST",
+              "INVITE_REVOKE_RESIDENT",
+              "INVITE_REVOKE_STAFF",
+              "INVITE_REVOKE_VENDOR",
+              "INVITE_REVOKE_ADMIN",
+              "VIEW_GUEST_ROLE_ASSIGNMENTS",
+              "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+              "VIEW_STAFF_ROLE_ASSIGNMENTS",
+              "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+              "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+              "REVOKE_ANY_GUEST",
+              "REVOKE_ANY_RESIDENT",
+              "REVOKE_ANY_STAFF",
+              "REVOKE_ANY_VENDOR",
+              "REVOKE_ANY_ADMIN",
+              "MANAGE_ROLES",
+              "MANAGE_LOCKS",
+              "VIEW_LOCKS"
+            ]
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionDTO"
+            }
+          },
+          "status": {
+            "enum": [
+              "PROVISIONING_STATUS_PENDING",
+              "PROVISIONING_STATUS_SUCCESS",
+              "PROVISIONING_STATUS_FAILURE"
+            ]
+          },
+          "roleAssignmentClauseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleAssignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PermissionQueryResponseDTO": {
+        "type": "object",
+        "properties": {
+          "assignedPermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionAssignmentDTO"
+            }
+          },
+          "pageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "PageDtoDirectoryItemDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryItemDto"
+            }
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "MeDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "claims": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "UserListDTO": {
+        "type": "object",
+        "properties": {
+          "rowId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unencryptedDoorcode": {
+            "type": "string"
+          },
+          "unencryptedBleCode": {
+            "type": "string"
+          },
+          "unencryptedNfcCode": {
+            "type": "string"
+          },
+          "unencryptedNfcDesfireAuthenticationKey": {
+            "type": "string"
+          },
+          "credentialUuid": {
+            "type": "string"
+          },
+          "accessStartTimestamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "accessEndTimestamp": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "windowStartTimeMinuteOffset": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "windowEndTimeMinuteOffset": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wiegandCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nfcTechnologyType": {
+            "enum": [
+              "MIFARE_CLASSIC",
+              "DESFIRE_V1"
+            ]
+          },
+          "qualifyDays": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "DAY_OF_WEEK_UNSPECIFIED",
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY",
+                "SUNDAY"
+              ]
+            }
+          }
+        }
+      },
+      "DescendantsDto": {
+        "type": "object",
+        "properties": {
+          "directoryItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "AccessPathDto": {
+        "type": "object",
+        "properties": {
+          "directoryItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "AccessPathsToItem": {
+        "type": "object",
+        "properties": {
+          "targetDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccessPathDto"
+            }
+          }
+        }
+      },
+      "PageDtoDirectoryItemLockDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryItemLockDto"
+            }
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "DirectoryItemLocksDto": {
+        "type": "object",
+        "properties": {
+          "directoryItemLocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryItemLockDto"
+            }
+          }
+        }
+      }
+    }
+  }
+}

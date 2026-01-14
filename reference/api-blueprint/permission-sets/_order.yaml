@@ -1,1 +1,3 @@
-[]
+- createpermissionset
+- getpermissionset
+- listpermissionsetsinscope
