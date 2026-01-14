@@ -1,8 +1,8 @@
 - directory
 - role-assignments
 - permission-assignments
-- directory-locks
 - access-paths
+- directory-locks
 - scopes
 - permission-sets
 - roles
