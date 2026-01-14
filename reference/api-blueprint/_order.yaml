@@ -1,1 +1,11 @@
-[]
+- role-assignments
+- permission-assignments
+- directory-locks
+- access-paths
+- scopes
+- internal
+- lock-debugging
+- permission-sets
+- roles
+- directory
+- users
