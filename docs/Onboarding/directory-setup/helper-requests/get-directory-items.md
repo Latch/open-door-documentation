@@ -26,7 +26,7 @@ Below you can find endpoints for retrieving existing Directory data and understa
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 
 ### Example Usages
 
