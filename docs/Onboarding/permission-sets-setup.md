@@ -17,7 +17,7 @@ Create Permission Sets to define the actions a Role can perform.
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
