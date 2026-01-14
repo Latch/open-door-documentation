@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-Create Roles that will specify in Clauses what Permission Sets the Role can grant and on what Scopes (Directory Items) these Permissions will be usable.
-
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**         |
@@ -17,7 +15,7 @@ Create Roles that will specify in Clauses what Permission Sets the Role can gran
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
@@ -29,7 +27,7 @@ The request body should include the following properties:
 * **`clauses`**: An array of Clause Objects that define the specific behaviors and permissions a Role can have. Each Clause includes a `permissionSetId` and optional conditions that specify constraints such as date ranges, time intervals, and directory item tags. The `directoryScopeSelector` determines whether the Clause is statically or dynamically scoped, allowing for flexible role configurations.
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object.
+  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
 </Callout>
 
 <Accordion title="Clauses Details" icon="angle-down">
@@ -39,7 +37,7 @@ The request body should include the following properties:
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
-    * **`accessAssignDoorCodesCondition`**: Boolean to show/assign Door Codes.
+    * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
   * **`directoryScopeSelector`**: Determines the Scope and if the Clause is statically or dynamically scoped.
     * **`directoryItemId`**: ID for static scoping.
     * **`directoryItemTag`**: Tags for dynamic scoping.
@@ -48,7 +46,7 @@ The request body should include the following properties:
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
 
-```json Request Body Structure
+```json Request Body
 {
   "name": "string",
   "type": "ROLE_TYPE_GUEST",
@@ -104,7 +102,7 @@ The request body should include the following properties:
 
 ### Example Usage
 
-We'll create a Role for Staff employees that selectively grants access on any `PROPERTY` Directory Item in `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
+We'll create a Role for Staff employees that will selectively grant access on any `PROPERTY` Directory Item from `OpenDOOR Client Account` (ID `e43f4017-da92-4c4a-87ff-5c5f418c3cf6`) from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) through **dynamic** Clause associated with `OpenDOOR Staff Permission Set` (ID `d67d8a3e-4f10-4e4d-86ae-031c0ee2229e`) from [4. Permission Sets Setup → Example Usage → Response](https://opendoor-uwel.readme.io/docs/permission-sets-setup#response):
 
 1. **Enter and Access Spaces:** Staff are authorized to enter and access various spaces within the property, ensuring they can perform their duties effectively.
 2. **Reach Spaces:** Staff can navigate through different areas, ensuring they can reach any part of the property as needed.
@@ -139,7 +137,7 @@ curl -X 'POST' \
 
 #### Response
 
-The status code should be HTTP 200 with the following Response Body:
+Status code should be HTTP 200 and Response Body like in below example:
 
 ```json Response Body
 {
