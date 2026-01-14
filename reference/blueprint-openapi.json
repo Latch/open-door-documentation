@@ -3,7 +3,7 @@
   "info": {
     "title": "api-blueprint",
     "description": "Backend for Frontend for Blueprint and RBAC",
-    "version": "0.12.1-SNAPSHOT"
+    "version": "0.12.0"
   },
   "servers": [
     {
