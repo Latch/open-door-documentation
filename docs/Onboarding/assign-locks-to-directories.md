@@ -17,7 +17,7 @@ Associate a Latch Cortex Lock with an OpenDOOR Directory Item. Access to the Loc
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
