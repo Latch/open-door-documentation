@@ -28,7 +28,7 @@ next:
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:** The `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
