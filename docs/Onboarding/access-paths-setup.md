@@ -17,7 +17,7 @@ Create Access Paths (segments/connections) between Directory Items and specify E
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: TBD
+* **`Authorization`**: Bearer Token
 * **`Content-Type`**: `application/json`
 
 **Request Body:**
