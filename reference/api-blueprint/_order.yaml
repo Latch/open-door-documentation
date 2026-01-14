@@ -3,7 +3,6 @@
 - directory-locks
 - access-paths
 - scopes
-- lock-debugging
 - permission-sets
 - roles
 - directory
