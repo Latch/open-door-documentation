@@ -1,5 +1,5 @@
 ---
-title: 2. How To Grant Access For Users To Open Doors
+title: 2. How to Enable Users to Open Doors
 deprecated: false
 hidden: false
 metadata:
