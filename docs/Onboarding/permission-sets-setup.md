@@ -6,7 +6,13 @@ hidden: false
 metadata:
   robots: index
 ---
-Create Permission Sets to define the actions a Role can perform.
+<br />
+
+<Callout icon="📝" theme="default">
+  **Step 3/5 of Granting User Access To Doors:** This step is part of the process to grant users access to open doors. User access is determined by Permission Sets, access to the associated Directory Item,  Access Paths, Roles and Role Assignments.
+</Callout>
+
+Create Sets of Permissions that define the capabilities Roles will have.
 
 #### Request definition:
 
