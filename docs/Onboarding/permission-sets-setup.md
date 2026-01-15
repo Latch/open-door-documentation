@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
 <Callout icon="📝" theme="default">
   **Step 3/5 of Granting User Access To Doors:** This step is part of the process to grant users access to open doors. User access is determined by Permission Sets, access to the associated Directory Item,  Access Paths, Roles and Role Assignments.
 </Callout>
