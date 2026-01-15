@@ -6,6 +6,12 @@ hidden: false
 metadata:
   robots: index
 ---
+<Callout icon="📝" theme="default">
+  **Step 4/5 of Granting User Access To Doors:** This step is part of the process to grant users access to open doors. User access is determined by Permission Sets, access to the associated Directory Item,  Access Paths, Roles and Role Assignments.
+</Callout>
+
+Specify the Roles and their types available in the building, what actions can they do (based on Permission Sets) and where they are applicable (Scopes).
+
 #### Request definition:
 
 | **Method** | **Host**                                               | **Path**         |
