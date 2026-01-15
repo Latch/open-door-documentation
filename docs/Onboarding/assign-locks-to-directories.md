@@ -8,7 +8,9 @@ metadata:
 ---
 Associate a Latch Cortex Lock with an OpenDOOR Directory Item. Access to the Lock will be granted based on permissions, access to the associated Directory Item and Access Paths.
 
-<br />
+<Callout icon="📝" theme="default">
+  **Note:** Setting up Directory Lock associations is only a step in granting Users access to Doors.
+</Callout>
 
 #### Request definition:
 
