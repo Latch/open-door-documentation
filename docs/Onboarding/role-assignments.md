@@ -6,8 +6,8 @@ hidden: false
 metadata:
   robots: index
 ---
-<Callout icon="📝" theme="default">
-  **Step 5/5 of Granting User Access To Doors:** This step is part of the process to grant users access to open doors. User access is determined by Permission Sets, access to the associated Directory Item,  Access Paths, Roles and Role Assignments.
+<Callout icon="📝" theme="info">
+  **Step 5/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
 </Callout>
 
 This is the final Step in granting a User permissions to Directory Items by assigning a Role to it and specifying the behavior and where the Role is usable.
