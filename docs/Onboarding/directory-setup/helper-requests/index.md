@@ -1,5 +1,5 @@
 ---
-title: Supportive Request Mentions
+title: Helper Requests
 excerpt: >-
   Will not do any actual setup, but will assist you or it's worth mentioning
   them.
