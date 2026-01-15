@@ -12,7 +12,7 @@ next:
       type: basic
 ---
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've used this page's method, you don't need to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) anymore. The locks are already assigned to the created Directories.
+  **Important Note:** If you've used this page's method, you don't need to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) anymore. The Locks are already assigned to the created Directories.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
