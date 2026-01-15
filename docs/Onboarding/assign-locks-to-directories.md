@@ -1,5 +1,5 @@
 ---
-title: 2. Directory Locks Setup
+title: 3. Directory Locks Setup
 excerpt: POST Lock to Directory Associations.
 deprecated: false
 hidden: false
