@@ -7,7 +7,7 @@ metadata:
   robots: index
 ---
 <Callout icon="📝" theme="default">
-  **Enable Users To Open Doors - Step 1/5:** User Access to Doors is granted based on permissions, access to the associated Directory Item, Access Paths.
+  **Step 1/5 of Granting Users Access To Doors:** This step is part of the process to grant users access to open doors. User access is determined by Permission Sets, access to the associated Directory Item,  Access Paths, Roles and Role Assignments.
 </Callout>
 
 Associate physical Latch Cortex Locks with OpenDoor Directory Items of `ENTRANCE` type.
