@@ -1,5 +1,5 @@
 ---
-title: 5. Permission Sets Setup
+title: 4. Permission Sets Setup
 excerpt: POST Permission Set.
 deprecated: false
 hidden: false
