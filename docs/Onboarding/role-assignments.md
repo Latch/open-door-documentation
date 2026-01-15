@@ -1,5 +1,5 @@
 ---
-title: 7. Role Assignments
+title: 6. Role Assignments
 excerpt: POST Role To User Assignment.
 deprecated: false
 hidden: false
