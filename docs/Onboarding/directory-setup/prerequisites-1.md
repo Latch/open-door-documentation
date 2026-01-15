@@ -9,7 +9,7 @@ hidden: false
 metadata:
   robots: index
 ---
-**DOOR Client Account can be created either by either the DOOR team, or the Client organization; the decision rests with the Client.**
+**DOOR Client Account can be created either by the DOOR team, or the Client organization; the decision rests with the Client.**
 
 Your DOOR Client Account includes the following components:
 
