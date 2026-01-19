@@ -5,15 +5,17 @@ excerpt: >-
   functionality.
 deprecated: false
 hidden: false
+link:
+  new_tab: false
 metadata:
   robots: index
 ---
 ## Minimum Permission Set Requirements for Each Role Type
 
-| **Role Type** | **Permissions**                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Guest**     | Reach Space, Enter Space, Access Space, Access, View Unit                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **Resident**  | Occupy, Enter Space, Access, Access Space, Reach Space, View Directory, View Unit, Invite/Revoke Guest, View Guest Role Assignments, View Resident Role Assignments, Revoke Any Guest                                                                                                                                                                                                                                                                                         |
-| **Staff**     | Enter Space, Access Space, Reach Space, Access, View Directory, View Unit, Invite/Revoke Guest, View Guest Role Assignments, View Resident Role Assignments, Revoke Any Guest                                                                                                                                                                                                                                                                                                 |
-| **Vendor**    | Enter Space, Access Space, Reach Space, Access, View Directory, View Unit                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **Admin**     | Reach Space, Enter Space, Access Space, Access, View Unit, View Directory, Manage Directory, Configure Access, Invite/Revoke Guest, Invite/Revoke Resident, Invite/Revoke Staff, Invite/Revoke Vendor, Invite/Revoke Admin, View Guest Role Assignments, View Resident Role Assignments, View Staff Role Assignments, View Vendor Role Assignments, View Admin Role Assignments, Revoke Any Guest, Revoke Any Resident, Revoke Any Staff, Revoke Any Vendor, Revoke Any Admin |
+| **Role Type** | **Permissions** |
+| ------------- | --------------- |
+| **Guest**     | `REACH_SPACE`, `ENTER_SPACE`, `ACCESS_SPACE`, `ACCESS`, `VIEW_UNIT` |
+| **Resident**  | `OCCUPY`, `ENTER_SPACE`, `ACCESS`, `ACCESS_SPACE`, `REACH_SPACE`, `VIEW_DIRECTORY`, `VIEW_UNIT`, `INVITE/REVOKE_GUEST`, `VIEW_GUEST_ROLE_ASSIGNMENTS`, `VIEW_RESIDENT_ROLE_ASSIGNMENTS`, `REVOKE_ANY_GUEST` |
+| **Staff**     | `ENTER_SPACE`, `ACCESS_SPACE`, `REACH_SPACE`, `ACCESS`, `VIEW_DIRECTORY`, `VIEW_UNIT`, `INVITE/REVOKE_GUEST`, `VIEW_GUEST_ROLE_ASSIGNMENTS`, `VIEW_RESIDENT_ROLE_ASSIGNMENTS`, `REVOKE_ANY_GUEST` |
+| **Vendor**    | `ENTER_SPACE`, `ACCESS_SPACE`, `REACH_SPACE`, `ACCESS`, `VIEW_DIRECTORY`, `VIEW_UNIT` |
+| **Admin**     | `REACH_SPACE`, `ENTER_SPACE`, `ACCESS_SPACE`, `ACCESS`, `VIEW_UNIT`, `VIEW_DIRECTORY`, `MANAGE_DIRECTORY`, `CONFIGURE_ACCESS`, `INVITE/REVOKE_GUEST`, `INVITE/REVOKE_RESIDENT`, `INVITE/REVOKE_STAFF`, `INVITE/REVOKE_VENDOR`, `INVITE/REVOKE_ADMIN`, `VIEW_GUEST_ROLE_ASSIGNMENTS`, `VIEW_RESIDENT_ROLE_ASSIGNMENTS`, `VIEW_STAFF_ROLE_ASSIGNMENTS`, `VIEW_VENDOR_ROLE_ASSIGNMENTS`, `VIEW_ADMIN_ROLE_ASSIGNMENTS`, `REVOKE_ANY_GUEST`, `REVOKE_ANY_RESIDENT`, `REVOKE_ANY_STAFF`, `REVOKE_ANY_VENDOR`, `REVOKE_ANY_ADMIN` |
