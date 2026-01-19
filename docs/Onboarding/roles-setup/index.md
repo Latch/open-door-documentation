@@ -52,6 +52,8 @@ The request body should include the following properties:
   Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
 </Callout>
 
+<br />
+
 ```json Request Body
 {
   "name": "string",
