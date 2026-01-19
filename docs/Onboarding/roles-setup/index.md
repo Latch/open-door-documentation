@@ -53,7 +53,7 @@ The request body should include the following properties:
 </Callout>
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** System will prevent creating Roles that do not satisfy the minimum Permissions for that type. Check [5. Roles Setup → Essential Permissions for Each Role Type]() 
+  **Important Note:** System will prevent creating Roles that do not satisfy the minimum Permissions for that type. Check [5. Roles Setup → Essential Permissions for Each Role Type](https://opendoor-uwel.readme.io/update/docs/essential-permissions-for-each-role-type).
 </Callout>
 
 <br />
