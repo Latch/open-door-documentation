@@ -44,10 +44,10 @@ The request body should include the following properties:
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
     * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
-  * **`directoryScopeSelector`**: Determines the Scope and if the Clause is statically or dynamically scoped.
+  * **`directoryScopeSelector`**: Defines the Scope. The system will determine if the Clause is statically or dynamically scoped based on this.
     * **`directoryItemId`**: ID for static scoping.
     * **`directoryItemTag`**: Tags for dynamic scoping.
-    * **`staticallyScoped`**: Optional Boolean indicating static scope.
+    * **`staticallyScoped`**: Read Only Optional Boolean indicating static scope.
 </Accordion>
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
