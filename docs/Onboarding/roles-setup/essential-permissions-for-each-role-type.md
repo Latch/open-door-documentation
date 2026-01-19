@@ -8,3 +8,4 @@ hidden: false
 metadata:
   robots: index
 ---
+## Minimum Permission Set Requirements for Each Role Type
