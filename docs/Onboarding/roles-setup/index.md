@@ -36,6 +36,10 @@ The request body should include the following properties:
   **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
 </Callout>
 
+<Callout icon="📝" theme="info">
+  **Important Note:** Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
+</Callout>
+
 <Accordion title="Clauses Details" icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
   * **`conditions`**: An optional array of Condition Objects.
