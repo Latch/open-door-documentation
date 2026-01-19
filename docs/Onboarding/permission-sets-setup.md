@@ -33,7 +33,7 @@ Include the following JSON properties:
 * `permissions`: A String array containing OpenDOOR Permissions.
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** The system enforces minimum permission requirements for each role type. Ensure that all roles meet these essential permissions to function correctly. For more details, refer to [5. Roles Setup → Essential Permissions for Each Role Type](https://opendoor-uwel.readme.io/update/docs/essential-permissions-for-each-role-type).
+  **Important Note:** When creating a Permission Set, ensure you meet the minimum permission requirements for the Role Type you intend to use. You can add additional permissions beyond the essential ones to tailor the Role's capabilities. For more details, refer to [5. Roles Setup → Essential Permissions for Each Role Type](https://opendoor-uwel.readme.io/update/docs/essential-permissions-for-each-role-type).
 </Callout>
 
 ```json Request Body Structure
