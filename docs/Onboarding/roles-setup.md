@@ -133,8 +133,7 @@ curl -X 'POST' \
                 "directoryItemTag": {
                     "spaceType": "SPACE_PROPERTY"
                 }
-            },
-            "staticallyScoped": false
+            }
         }
     ],
     "scopeDirectoryItemId": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6"
