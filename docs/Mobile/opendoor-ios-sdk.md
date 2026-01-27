@@ -26,13 +26,15 @@ metadata:
 
 or you can add the following dependency to your Package.swift:
 
-```swift
+```swift iOS
 .package(url: " https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
+```
+```
 ```
 
 and add it to your target like this:
 
-```swift
+```swift iOS
 dependencies: [
   .product(name: "OpenDOORCore", package: "OpenDOORSDK")
 ]
@@ -46,7 +48,7 @@ token - Auth0 token
 
 includeAllLocks - determines whether we should load all locks that user can access (partner and non-partner) or only partner-managed locks.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let client = await OpenDOOR.getInstance()
@@ -69,7 +71,7 @@ Trying to call any function on OpenDOOR will throw SDKError.sdkNotInitialized er
 To clear all cached data and remove authentication token call `clear()`.
 After calling `clear()`, the client must be set up again with setupWithToken().
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let client = await OpenDOOR.getInstance()
@@ -96,7 +98,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 
 **Option 1: Fetch locks**
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -110,7 +112,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 
 **Option 2: Listen for locks updates (AsyncStream)**
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -125,7 +127,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 
 **Option 3: Listen for locks updates (Combine Publisher)**
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -146,7 +148,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 Note:
 The listner is weakly retained by the SDK. If you explitcly want to stop listening to locks updates, call `stopListenForLocks`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let listener = LockStreamListener()
@@ -171,7 +173,7 @@ Unlock events can be tracked using different variants for publishing them.
 
 ### Explicit unlock
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let lockID = lock.id
@@ -191,7 +193,7 @@ Unlock events can be tracked using different variants for publishing them.
 
 Once it is started, it will continuously scan for nearby locks and will automatically unlock the first eligible lock found within range.
 
-```swift
+```swift iOS
  import OpenDOORCore
  
  do {
@@ -205,7 +207,7 @@ Once it is started, it will continuously scan for nearby locks and will automati
 
 Proximity unlock scanning can be stopped when needed by calling `stopProximityUnlock`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -221,7 +223,7 @@ Unlock events from both explicit unlocks and proximity are published through the
 
 **Option 1: Listen for unlock events (AsyncStream)**
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -236,7 +238,7 @@ Unlock events from both explicit unlocks and proximity are published through the
 
 **Option 2: Listen for unlock events (Combine Publisher)**
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -256,7 +258,7 @@ Unlock events from both explicit unlocks and proximity are published through the
 Note:
 The listner is weakly retained by the SDK. If you explitcly want to stop listening to unlock events updates, call `stopListenForUnlockEvents`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let listener = UnlockEventListener()
@@ -281,7 +283,7 @@ Sync allows your mobile client to act as a bridge to the DOOR backend for uplink
 
 After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let lockID = lock.id
@@ -302,7 +304,7 @@ After each unlock, the SDK will passively sync data with the DOOR ecosystem to k
 
 Retrieve access logs for a lock.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let lockID = lock.id
@@ -323,7 +325,7 @@ To shares access to the selected list of elligible locks (sharable) and to the e
 A guest invitation can be created with temporary doorcode access or
 in-app access with time-based restrictions.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let lockIDs: [UUID] = <array of lock's ids with isSharable = true>
@@ -349,7 +351,7 @@ in-app access with time-based restrictions.
 
 To remove access to a single lock, without affecting other locks the guest may have access to, call `revokeGuestAccess`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let guestID = guest.id
@@ -369,7 +371,7 @@ To remove access to a single lock, without affecting other locks the guest may h
 
 To remove a guest's ability to unlock any Door lock call `revokeGuestAllAccesses`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  let guestID = guest.id
@@ -388,7 +390,7 @@ To remove a guest's ability to unlock any Door lock call `revokeGuestAllAccesses
 
 To get information for all guests with shared access call `guests`.
 
-```swift
+```swift iOS
  import OpenDOORCore
 
  do {
@@ -410,7 +412,7 @@ It supports two levels:
 
 Default log level is error.
 
-```swift
+```swift iOS
  import OpenDOORCore
  
  let logLevel = LogLevel.debug
