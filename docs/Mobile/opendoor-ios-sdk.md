@@ -168,10 +168,11 @@ The listner is weakly retained by the SDK. If you explitcly want to stop listeni
 
 ## Unlock
 
-Unlocking a door can be done in two ways: explicitly (by calling `unlock()`) or using proximity unlock. 
+Unlocking a door can be done in two ways: explicitly (by calling `unlock()`) or using proximity unlock.
 
 One unlock at a time can be done, with mention that explicit unlock has precedence over proximity unlock.
-Unlock events can be tracked using different variants for publishing them.
+
+Unlock events can be tracked using different variants for publishing them, described later in this section.
 
 ### Explicit unlock
 
@@ -283,7 +284,7 @@ The listner is weakly retained by the SDK. If you explitcly want to stop listeni
 
 Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
 
-After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. 
+After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data.
 
 The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
 
