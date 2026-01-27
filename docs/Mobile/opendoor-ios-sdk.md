@@ -21,13 +21,13 @@ metadata:
 ### Add OpenDOOR SDK as a dependency
 
 1. In Xcode, select “File” → “Add Packages...”
-2. Enter [https://github.com/Latch/opendoor-sdk-spm.git](https://github.com/Latch/opendoor-sdk-spm.git) or [git@github.com](mailto:git@github.com):Latch/opendoor-sdk-spm.git
+2. Enter https://github.com/Latch/opendoor-sdk-spm.git or git@github.com:Latch/opendoor-sdk-spm.git
 3. Select OpenDOORCore library product
 
-or you can add the following dependency to your Package.swift:
+Or you can add the following dependency to your Package.swift:
 
 ```swift iOS
-.package(url: " https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
+.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
 ```
 ```
 ```
@@ -42,7 +42,7 @@ dependencies: [
 
 ### Initialize the library
 
-Use your Auth0 token retrieved from DOOR's Auth endpoint, get an instance of OpenDOOR and call `setupWithToken()` with parameters:
+Use your Auth0 token retrieved from DOOR's Auth endpoint, get an instance of OpenDOOR, and call `setupWithToken()` with parameters:
 
 token - Auth0 token
 
@@ -64,11 +64,13 @@ includeAllLocks - determines whether we should load all locks that user can acce
 
 Note:
 
-Attempting to call any OpenDOOR SDK function before initialization will throw
+1. Attempting to call any OpenDOOR SDK function before initialization will throw
 SDKError.sdkNotInitialized.
 
-All OpenDOOR SDK APIs are not guaranteed to return on the main thread.
+2. All OpenDOOR SDK APIs are not guaranteed to return on the main thread.
 If you use the result to update UI, you are responsible for dispatching back to the main thread.
+
+3. Ensure your app declares the required Bluetooth permissions in Info.plist and enables Bluetooth backgrounds modes.
 
 ### Sign out
 
@@ -92,13 +94,13 @@ After calling `clear()`, the client must be set up again with setupWithToken().
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()` variants. These methods have different behaviors:
 
 * **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails.
-  If API request fails with token expired, a error will be thrown even if there is cached data.
+ If the API request fails with token expired, an error will be thrown even if there is cached data.
 
-* **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. First are emitted cached locks, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants don't emit errors. They can be used to work offline.
+* **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. Cached locks are emitted first, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants do not emit errors from the stream, but the call itself can throw (e.g., SDK not initialized). They can be used to work offline.
 
 Note:
 
-Whenever the locks are retrieved from the server, also sync config data is synchronized in the background with the server.
+Whenever locks are retrieved from the server, configuration data is also synchronized in the background.
 
 **Option 1: Fetch locks**
 
@@ -135,6 +137,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
  import OpenDOORCore
 
  do {
+    // Keep a strong reference to the subscription.
     locksSubscription = try client.listenForLocksPublisher()
                 .receive(on: DispatchQueue.main)
                 .sink(
@@ -151,7 +154,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 
 Note:
 
-The listner is weakly retained by the SDK. If you explitcly want to stop listening to locks updates, call `stopListenForLocks`.
+The listener is weakly retained by the SDK. Keep a strong reference (for example, a stored property) or it may be deallocated. If you explicitly want to stop listening to locks updates, call `stopListenForLocks`.
 
 ```swift iOS
  import OpenDOORCore
@@ -250,6 +253,7 @@ Unlock events from both explicit unlocks and proximity are published through the
  import OpenDOORCore
 
  do {
+     // Keep a strong reference to the subscription.
       unlockEventsSubscription = try client.unlockEventsPublisher()
                 .receive(on: DispatchQueue.main)
                 .sink { event in
@@ -265,7 +269,7 @@ Unlock events from both explicit unlocks and proximity are published through the
 
 Note:
 
-The listner is weakly retained by the SDK. If you explitcly want to stop listening to unlock events, call `stopListenForUnlockEvents`.
+The listener is weakly retained by the SDK. Keep a strong reference (for example, a stored property) or it may be deallocated. If you explicitly want to stop listening to unlock events, call `stopListenForUnlockEvents`.
 
 ```swift iOS
  import OpenDOORCore
@@ -332,7 +336,7 @@ Retrieve access logs for a lock.
 
 ### Invite guests
 
-To shares access to the selected list of elligible locks (sharable) and to the entire path if building support this feature, with a guest, use `inviteGuest`.
+To share access to the selected list of eligible locks (`isSharable == true`) and to the entire path if the building supports this feature, use `inviteGuest`.
 
 A guest invitation can be created with temporary door code access or
 in-app access with time-based restrictions.
@@ -340,11 +344,11 @@ in-app access with time-based restrictions.
 ```swift iOS
  import OpenDOORCore
 
- let lockIDs: [UUID] = <array of lock's ids with isSharable = true>
+ let lockIDs: [UUID] = <array of lock IDs where isSharable == true>
  do {
     try await client.inviteGuest(
                     firstName: "John",
-                    lastName: Doe",
+                    lastName: "Doe",
                     email: "john@example.com",
                     phone: "+1234567890",
                     lockIDs: lockIDs,
