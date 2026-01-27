@@ -6,7 +6,7 @@ hidden: false
 metadata:
   robots: index
 ---
-##Setup
+## Setup
 
 1. Add OpenDOOR SDK as a dependency
 2. Initialize the library
