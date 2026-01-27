@@ -9,14 +9,14 @@ metadata:
 ## Setup
 
 1. [Add OpenDOOR SDK as a dependency](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#add-opendoor-sdk-as-a-dependency)
-2. Initialize the library
-3. Sign out
-4. Get locks
-5. Unlock
-6. Sync
-7. Access logs
-8. Guest Access
-9. Log level
+2. [Initialize the library](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#initialize-the-library)
+3. [Sign out](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sign-out)
+4. [Get locks](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#get-locks)
+5. [Unlock](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#unlock)
+6. [Sync](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sync)
+7. [Access logs](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#access-logs)
+8. [Guest Access](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#guest-access)
+9. [Log level](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#log-level)
 
 ### Add OpenDOOR SDK as a dependency
 
