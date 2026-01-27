@@ -64,7 +64,11 @@ includeAllLocks - determines whether we should load all locks that user can acce
 
 Note:
 
-Trying to call any function on OpenDOOR will throw SDKError.sdkNotInitialized error if this step is not done.
+Attempting to call any OpenDOOR SDK function before initialization will throw
+SDKError.sdkNotInitialized.
+
+All OpenDOOR SDK APIs are not guaranteed to return on the main thread.
+If you use the result to update UI, you are responsible for dispatching back to the main thread.
 
 ### Sign out
 
@@ -146,6 +150,7 @@ Whenever the locks are retrieved from the server, also sync config data is synch
 **Option 4: Listen for locks updates (Callback listener)**
 
 Note:
+
 The listner is weakly retained by the SDK. If you explitcly want to stop listening to locks updates, call `stopListenForLocks`.
 
 ```swift iOS
@@ -259,6 +264,7 @@ Unlock events from both explicit unlocks and proximity are published through the
 **Option 3: Listen for unlock events (Callback listener)**
 
 Note:
+
 The listner is weakly retained by the SDK. If you explitcly want to stop listening to unlock events, call `stopListenForUnlockEvents`.
 
 ```swift iOS
