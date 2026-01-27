@@ -11,17 +11,17 @@ metadata:
 1. Add OpenDOOR SDK as a dependency
 2. Initialize the library
 3. Sign out
-4. Get locks
-5. Unlock
-6. Sync
-7. Access logs
-8. Guest Access
-9. SDK log level
+3. Get locks
+4. Unlock 
+5. Sync 
+6. Access logs
+7. Guest Access
+https://github.com/Latch/opendoor-sdk-spm
 
 ### Add OpenDOOR SDK as a dependency
 
 1. In Xcode, select “File” → “Add Packages...”
-2. Enter [https://github.com/Latch/opendoor-sdk-spm.git](https://github.com/Latch/opendoor-sdk-spm.git) or [git@github.com](mailto:git@github.com):Latch/opendoor-sdk-spm.git
+2. Enter https://github.com/Latch/opendoor-sdk-spm.git or git@github.com:Latch/opendoor-sdk-spm.git
 3. Select OpenDOORCore library product
 
 or you can add the following dependency to your Package.swift:
@@ -29,7 +29,6 @@ or you can add the following dependency to your Package.swift:
 ```
 .package(url: " https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
 ```
-
 and add it to your target like this:
 
 ```
@@ -86,7 +85,7 @@ After calling `clear()`, the client must be set up again with setupWithToken().
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()` variants. These methods have different behaviors:
 
 * **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails.
-  If API request fails with token expired, a error will be thrown even if there is cached data.
+If API request fails with token expired, a error will be thrown even if there is cached data.
 
 * **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. First are emitted cached locks, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants don't emit errors. They can be used to work offline.
 
@@ -319,9 +318,14 @@ Retrieve access logs for a lock.
 
 ### Invite guests
 
+To shares access to the selected list of elligible locks (sharable) and to the entire path if building support this feature, with a guest, use `inviteGuest`. 
+A guest invitation can be created with temporary doorcode access or
+in-app access with time-based restrictions.
+
 ```iOS
  import OpenDOORCore
 
+ let lockIDs: [UUID] = <array of lock's ids with isSharable = true>
  do {
     try await client.inviteGuest(
                     firstName: "John",
@@ -342,6 +346,8 @@ Retrieve access logs for a lock.
 
 ### Revoke a guest's access
 
+To remove access to a single lock, without affecting other locks the guest may have access to, call `revokeGuestAccess`.
+
 ```iOS
  import OpenDOORCore
 
@@ -360,7 +366,9 @@ Retrieve access logs for a lock.
 
 ### Revoke all guest's accesses
 
-```swift
+To remove a guest's ability to unlock any Door lock call `revokeGuestAllAccesses`.
+
+```iOS
  import OpenDOORCore
 
  let guestID = guest.id
@@ -377,6 +385,8 @@ Retrieve access logs for a lock.
 
 ### Retrieve guest list
 
+To get information for all guests with shared access call `guests`.
+
 ```iOS
  import OpenDOORCore
 
@@ -391,10 +401,12 @@ Retrieve access logs for a lock.
 
 ## SDK log level
 
-`setLogLevel` can be used  to control how much diagnostic information the SDK logs. It supports two levels:
+ To control how much diagnostic information the SDK logs, call `setLogLevel`. 
+ It supports two levels: 
+  1. `debug` - produce more detailed output.
+  2. `error` - restrict logs to important issues only.
 
-1. `.debug` - produce more detailed output.
-2. `.error` - restrict logs to important issues only.
+Default log level is error.
 
 ```iOS
  import OpenDOORCore
