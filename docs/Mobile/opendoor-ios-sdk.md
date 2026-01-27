@@ -8,7 +8,7 @@ metadata:
 ---
 ## Setup
 
-1. Add OpenDOOR SDK as a dependency
+1. [Add OpenDOOR SDK as a dependency](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#add-opendoor-sdk-as-a-dependency)
 2. Initialize the library
 3. Sign out
 4. Get locks
@@ -16,7 +16,7 @@ metadata:
 6. Sync
 7. Access logs
 8. Guest Access
-   [https://github.com/Latch/opendoor-sdk-spm](https://github.com/Latch/opendoor-sdk-spm)
+9. Log level
 
 ### Add OpenDOOR SDK as a dependency
 
@@ -402,7 +402,7 @@ To get information for all guests with shared access call `guests`.
  }
 ```
 
-## SDK log level
+## Log level
 
 To control how much diagnostic information the SDK logs, call `setLogLevel`.
 It supports two levels:
