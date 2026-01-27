@@ -16,7 +16,7 @@ metadata:
 6. Sync
 7. Access logs
 8. Guest Access
-   [https://github.com/Latch/opendoor-sdk-spm](https://github.com/Latch/opendoor-sdk-spm)
+9. SDK log level
 
 ### Add OpenDOOR SDK as a dependency
 
