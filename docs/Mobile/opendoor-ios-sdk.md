@@ -322,7 +322,7 @@ Retrieve access logs for a lock.
 ### Invite guests
 
 To shares access to the selected list of elligible locks (sharable) and to the entire path if building support this feature, with a guest, use `inviteGuest`.
-A guest invitation can be created with temporary doorcode access or
+A guest invitation can be created with temporary door code access or
 in-app access with time-based restrictions.
 
 ```swift iOS
