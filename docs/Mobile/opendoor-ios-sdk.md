@@ -252,7 +252,7 @@ Unlock events from both explicit unlocks and proximity are published through the
                 }
 
  } catch let error as SDKError {
-        self.error = error
+        // Handle SDK errors
  }
 ```
 
