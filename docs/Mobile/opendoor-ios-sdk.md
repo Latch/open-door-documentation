@@ -405,7 +405,7 @@ To remove access to a single lock, without affecting other locks the guest may h
 
 ### Revoke all guest's accesses
 
-To remove a guest's ability to unlock any Door lock call `revokeGuestAllAccesses`.
+To remove a guest's ability to unlock any DOOR lock call `revokeGuestAllAccesses`.
 
 ```swift iOS
  import OpenDOORCore
