@@ -361,6 +361,8 @@ To share access to the selected list of eligible locks (`isSharable == true`) an
 A guest invitation can be created with temporary door code access or
 in-app access with time-based restrictions.
 
+This operation may partially succeed. See GuestInvitesError for details about any locks that failed.
+
 ```swift iOS
  import OpenDOORCore
 
@@ -378,8 +380,11 @@ in-app access with time-based restrictions.
     // Handle SDK errors
  } catch let error as NetworkError {
     // Handle network errors
- } catch let error as InviteGuestError {
-    // Handle invite guest errors
+ } catch let error as GuestInvitesError {
+   // Handle invites guest errors: 
+   // error.successfulLockIDs - ids of locks with successful invite.
+   // error.failedLockIDs - ids of locks with failed invite.
+   // error.failedLockErrors - errors encountered for each lock that failed. 
  }
 ```
 
@@ -406,6 +411,8 @@ To remove access to a single lock, without affecting other locks the guest may h
 ### Revoke all guest's accesses
 
 To remove a guest's ability to unlock any DOOR lock call `revokeGuestAllAccesses`.
+
+This method performs a best-effort operation. If some revocations fail, the operation may partially succeed and throws the first error encountered.
 
 ```swift iOS
  import OpenDOORCore
