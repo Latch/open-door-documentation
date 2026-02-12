@@ -1,7 +1,7 @@
 - directory
 - scopes
-- roles
 - permission-sets
+- roles
 - role-assignments
 - permission-assignments
 - directory-locks
