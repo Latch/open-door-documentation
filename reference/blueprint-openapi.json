@@ -1,14 +1,14 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "api-blueprint",
-    "description": "Backend for Frontend for Blueprint and RBAC",
+    "title": "OpenDOOR API",
+    "description": "The OpenDOOR API provides access to the core features of the OpenDOOR platform. It allows developers to build custom applications and integrations on top of the OpenDOOR platform.",
     "version": "0.24.0"
   },
   "servers": [
     {
-      "url": "/",
-      "description": "api-blueprint"
+      "url": "https://api.prod.door.com/",
+      "description": "OpenDOOR API"
     }
   ],
   "tags": [
