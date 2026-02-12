@@ -1,3 +1,4 @@
+- directory
 - role-assignments
 - permission-assignments
 - directory-locks
@@ -5,4 +6,3 @@
 - scopes
 - permission-sets
 - roles
-- directory
