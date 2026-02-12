@@ -3,11 +3,11 @@
   "info": {
     "title": "api-blueprint",
     "description": "Backend for Frontend for Blueprint and RBAC",
-    "version": "0.12.0"
+    "version": "0.24.0"
   },
   "servers": [
     {
-      "url": "https://api.prod.door.com",
+      "url": "/",
       "description": "api-blueprint"
     }
   ],
@@ -97,6 +97,46 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RoleAssignmentCreationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleAssignmentDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rbac/v1/roles/{roleId}/assign/by-email": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "assignRoleByEmail",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleAssignmentCreationByEmailRequestDTO"
               }
             }
           },
@@ -2053,9 +2093,6 @@
           },
           "directoryItemTag": {
             "$ref": "#/components/schemas/RbacDirectoryItemTagDTO"
-          },
-          "staticallyScoped": {
-            "type": "boolean"
           }
         }
       },
@@ -2067,10 +2104,7 @@
             "format": "uuid"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           },
           "directoryScopeSelector": {
             "$ref": "#/components/schemas/RoleClauseDirectoryScopeSelectorDTO"
@@ -2157,16 +2191,14 @@
             "format": "uuid"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           },
           "directoryScopeSelector": {
             "$ref": "#/components/schemas/RoleClauseDirectoryScopeSelectorDTO"
           },
           "staticallyScoped": {
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           }
         }
       },
@@ -2210,7 +2242,8 @@
             "$ref": "#/components/schemas/PrincipalDTO"
           },
           "staticallyScoped": {
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           }
         }
       },
@@ -2226,10 +2259,7 @@
             "format": "uuid"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           }
         }
       },
@@ -2250,17 +2280,21 @@
           },
           "subject": {
             "$ref": "#/components/schemas/PrincipalDTO"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "PermissionSetDTO": {
+      "PermissionSetReferenceDTO": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "locationDirectoryItemId": {
             "type": "string",
             "format": "uuid"
           },
@@ -2303,6 +2337,39 @@
           }
         }
       },
+      "PrincipalWithUserInfoDTO": {
+        "type": "object",
+        "properties": {
+          "idSource": {
+            "enum": [
+              "DOOR_USER_IDP",
+              "DOOR_SERVICE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the principal",
+            "example": "Jane",
+            "readOnly": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the principal",
+            "example": "Doe",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the principal",
+            "example": "jane.doe@example.com",
+            "readOnly": true
+          }
+        }
+      },
       "RoleAssignmentClauseDTO": {
         "type": "object",
         "properties": {
@@ -2311,16 +2378,13 @@
             "format": "uuid"
           },
           "permissionSet": {
-            "$ref": "#/components/schemas/PermissionSetDTO"
+            "$ref": "#/components/schemas/PermissionSetReferenceDTO"
           },
           "directoryItemIdScope": {
             "type": "string"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           },
           "active": {
             "type": "boolean"
@@ -2345,7 +2409,7 @@
             "type": "string"
           },
           "subject": {
-            "$ref": "#/components/schemas/PrincipalDTO"
+            "$ref": "#/components/schemas/PrincipalWithUserInfoDTO"
           },
           "clauses": {
             "type": "array",
@@ -2389,12 +2453,118 @@
               "ROLE_TYPE_STAFF",
               "ROLE_TYPE_ADMIN"
             ]
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PrincipalRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address (required if id not provided)",
+            "example": "jane.doe@gmail.com"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name (required if id not provided)",
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name (optional)",
+            "example": "Doe"
+          }
+        }
+      },
+      "RoleAssignmentCreationByEmailRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "locationDirectoryItemId": {
+            "type": "string"
+          },
+          "scopeDefinitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClauseScopeDefinitionDTO"
+            }
+          },
+          "subject": {
+            "$ref": "#/components/schemas/PrincipalRequestDTO"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
       "PermissionSetCreationRequestDTO": {
         "type": "object",
         "properties": {
+          "locationDirectoryItemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "MANAGE_DIRECTORY",
+                "OCCUPY",
+                "ENTER_SPACE",
+                "ACCESS_SPACE",
+                "ACCESS",
+                "REACH_SPACE",
+                "VIEW_DIRECTORY",
+                "VIEW_UNIT",
+                "CONFIGURE_ACCESS",
+                "INVITE_REVOKE_GUEST",
+                "INVITE_REVOKE_RESIDENT",
+                "INVITE_REVOKE_STAFF",
+                "INVITE_REVOKE_VENDOR",
+                "INVITE_REVOKE_ADMIN",
+                "VIEW_GUEST_ROLE_ASSIGNMENTS",
+                "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+                "VIEW_STAFF_ROLE_ASSIGNMENTS",
+                "VIEW_VENDOR_ROLE_ASSIGNMENTS",
+                "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+                "REVOKE_ANY_GUEST",
+                "REVOKE_ANY_RESIDENT",
+                "REVOKE_ANY_STAFF",
+                "REVOKE_ANY_VENDOR",
+                "REVOKE_ANY_ADMIN",
+                "MANAGE_ROLES",
+                "MANAGE_LOCKS",
+                "VIEW_LOCKS"
+              ]
+            }
+          }
+        }
+      },
+      "PermissionSetDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "locationDirectoryItemId": {
             "type": "string",
             "format": "uuid"
@@ -2674,10 +2844,7 @@
             }
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           }
         }
       },
@@ -2767,10 +2934,6 @@
               "$ref": "#/components/schemas/RoleAssignmentDTO"
             }
           },
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
           "nextPageToken": {
             "type": "string"
           }
@@ -2822,10 +2985,7 @@
             ]
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ConditionDTO"
-            }
+            "$ref": "#/components/schemas/ConditionDTO"
           },
           "status": {
             "enum": [
@@ -3019,7 +3179,38 @@
           }
         }
       }
+    },
+    "securitySchemes": {
+      "OAuth2-Client-Credentials": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
+            "scopes": {}
+          }
+        }
+      },
+      "OAuth2-Authorization-Code": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.prod.latch.com/authorize",
+            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
+            "scopes": {
+              "openid": "OpenID Connect scope",
+              "profile": "Access to the user's profile information",
+              "email": "Access to the user's email address",
+              "offline_access": "Access to refresh tokens for long-term access"
+            }
+          }
+        }
+      }
     }
   },
-  "x-readme": {}
+  "security": [
+    {
+      "OAuth2-Client-Credentials": [],
+      "OAuth2-Authorization-Code": []
+    }
+  ]
 }
