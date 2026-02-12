@@ -1,4 +1,0 @@
----
-title: Scopes
-hidden: false
----
