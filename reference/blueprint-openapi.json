@@ -3218,8 +3218,17 @@
   },
   "security": [
     {
-      "OAuth2-Client-Credentials": [],
-      "OAuth2-Authorization-Code": [],
+      "OAuth2-Client-Credentials": []
+    },
+    {
+      "OAuth2-Authorization-Code": [
+        "openid",
+        "profile",
+        "email",
+        "offline_access"
+      ]
+    },
+    {
       "Bearer-Token": []
     }
   ]
