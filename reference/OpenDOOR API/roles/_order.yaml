@@ -1,0 +1,7 @@
+- createrole
+- assignrole
+- assignrolebyemail
+- getrolebyid
+- getselectablescopesforclause
+- getrolesinscope
+- getguestrolesforlocation

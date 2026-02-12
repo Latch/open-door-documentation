@@ -1,0 +1,4 @@
+- listroleassignments
+- getroleassignmentbyid
+- revokeroleassignmentbyid
+- getpermissionassignmentsforroleassignment
