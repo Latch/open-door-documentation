@@ -3181,16 +3181,14 @@
       }
     },
     "securitySchemes": {
-      "OAuth2-Client-Credentials": {
-        "type": "oauth2",
-        "flows": {
-          "clientCredentials": {
-            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
-            "scopes": {}
-          }
-        }
+      "Bearer-Token": {
+        "description": "Use your own Bearer token",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       },
       "OAuth2-Authorization-Code": {
+        "description": "Authenticate as a user",
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
@@ -3203,6 +3201,17 @@
               "offline_access": "Access to refresh tokens for long-term access"
             }
           }
+        },
+        "x-pkce": true
+      },
+      "OAuth2-Client-Credentials": {
+        "description": "Authenticate as a service",
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
+            "scopes": {}
+          }
         }
       }
     }
@@ -3210,7 +3219,8 @@
   "security": [
     {
       "OAuth2-Client-Credentials": [],
-      "OAuth2-Authorization-Code": []
+      "OAuth2-Authorization-Code": [],
+      "Bearer-Token": []
     }
   ]
 }
