@@ -12,4 +12,8 @@ Your user must be authorized to perform any action within OpenDOOR; first, make 
 For initial integration and testing purposes, DOOR OS access tokens are compatible with the OpenDOOR API. To obtain a DOOR OS access token:
 
 1. Log in to DOOR OS: https://app.door.com
-2. <br />
+2. Open your browser's DevTools. Consult your browser's documentation for instructions. For example, for Google Chrome, press `⌘⌥I` on a Mac, or `F12` on other operating systems.
+3. Open the Network tab. Select an outgoing "Fetch/XHR" request.
+4. Scroll down to find the headers. Copy the token from the Authorization header; the access token is the string **after** the "Bearer" prefix.
+
+For programmatic 
