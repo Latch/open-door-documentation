@@ -26,6 +26,6 @@ Your DOOR Sales Representative will create the directory tree root associated wi
 
 Your DOOR Sales Representative will create a new user with your desired email address, and assign a role that grants management permissions to your own directory tree root, as well as to any items that you then create within your directory.
 
-#### 3. [OpenDOOR Property Configuration Guide](doc:directory-setup)
+#### 3. Follow the [OpenDOOR Property Configuration Guide](doc:directory-setup)
 
 Either your DOOR Sales Representative can create the directory items for your organization, including properties and their structure, or you can do so yourself using the OpenDOOR API.
