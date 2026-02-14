@@ -5,15 +5,11 @@ hidden: false
 metadata:
   robots: index
 ---
-You will be authenticating to the OpenDOOR API using OAuth2.
+An **access token** is required to make requests to the OpenDOOR API.
 
-If you are authenticating **on behalf of a user**, you will be using the Authorization Code grant.
+Your user must be authorized to perform any action within OpenDOOR; first, make sure that you are using the user email address that has been authorized by your DOOR Sales Representative.
 
-Use the following OAuth2 Identity Provider configuration:
+For initial integration and testing purposes, DOOR OS access tokens are compatible with the OpenDOOR API. To obtain a DOOR OS access token:
 
-Base URL: https://auth.prod.latch.com  
-IdP auto-configuration URL: https://auth.prod.latch.com/.well-known/openid-configuration  
-Authorization endpoint (for the Authorization Code grant): https://auth.prod.latch.com/authorize  
-Token endpoint: https://auth.prod.latch.com/oauth/token
-
-Request a **Client ID** and **Client Secret** from your DOOR Sales Representative.
+1. Log in to DOOR OS: https://app.door.com
+2. <br />
