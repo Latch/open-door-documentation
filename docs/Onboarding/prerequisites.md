@@ -7,17 +7,21 @@ link:
   new_tab: false
 metadata:
   robots: index
+next:
+  description: >-
+    Contact your DOOR Sales Representative to obtain access, then follow the
+    [OpenDOOR Property Configuration Guide](doc:directory-setup).
 ---
 ### What you need?
 
-#### 1. [OpenDOOR Property Configuration Guide](doc:directory-setup)
+#### 1. We will create a directory for your organization
 
-#### 2. We'll set up OpenDOOR Client Directory tree
+Your DOOR Sales Representative will create the directory tree root associated with your organization's DOOR Client Account. This is the starting point for configuring and managing access for your Properties.
 
-A Door Administrator will create the Directory tree root associated with your organization's Door Client Account. This is the starting point for configuring and managing access for your Properties.
+#### 2. We will create an Account Administrator user
 
-#### 3. We'll Assign Administrator Role on the Client Directory tree
+Your DOOR Sales Representative will create a new user with your desired email address, and assign a role that grants management permissions to your own directory tree root, as well as to any items that you then create within your directory.
 
-A Door Administrator will assign to you an OpenDOOR Administrator Role that grants management permissions to your Client Directory tree root, and subsequently to the subtree.
+#### 3. [OpenDOOR Property Configuration Guide](doc:directory-setup)
 
-<br />
+Either your DOOR Sales Representative can create the directory items for your organization, including properties and their structure, or you can do so yourself using the OpenDOOR API.
