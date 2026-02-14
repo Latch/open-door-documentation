@@ -12,11 +12,7 @@ next:
     can also create it for you, or create the directory items yourself using the
     API.
 ---
-### Directory Structure
-
-<Callout icon="📝" theme="default">
-  **Note:** This directory structure will be used as an **example** throughout the guide. It is designed to showcase some of the key features of OpenDOOR. Your own directory structure may be simpler or more complicated, depending on your requirements.
-</Callout>
+**Note:** This directory structure will be used as an **example** throughout the guide. It is designed to showcase some of the key features of OpenDOOR. Your own directory structure may be simpler or more complicated, depending on your requirements.
 
 ```toml Directory Structure and Hierarchy
 [ACCOUNT] OpenDOOR Client Account
