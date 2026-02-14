@@ -1,5 +1,5 @@
 ---
-title: Before you begin
+title: Before You Begin
 excerpt: >-
   To use OpenDOOR features, we must first define the **directory structure** of
   your organization and properties.
