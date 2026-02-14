@@ -11,6 +11,10 @@ next:
   description: >-
     Review the Example Directory Structure, which will be used throughout this
     guide. Then proceed to set up a new property.
+  pages:
+    - slug: example-directory-structure
+      title: Example Directory Structure
+      type: basic
 ---
 The **directory** is a hierarchical representation of the following information:
 
