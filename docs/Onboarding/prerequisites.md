@@ -1,6 +1,6 @@
 ---
 title: Prerequisites
-excerpt: Everything needed before you can use OpenDOOR.
+excerpt: Everything you need before you can use OpenDOOR.
 deprecated: false
 hidden: false
 link:
@@ -12,7 +12,7 @@ next:
     Contact your DOOR Sales Representative to obtain access, then follow the
     OpenDOOR Property Configuration Guide.
 ---
-### What you need?
+### What are the required steps?
 
 #### 1. We will create a directory for your organization
 
