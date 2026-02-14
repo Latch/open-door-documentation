@@ -13,13 +13,13 @@ recipe:
   color: '#018FF4'
   icon: 🦉
 ---
-```json JSON
+```shell Shell
 curl --request POST \
   --url https://api.prod.door.com/door-api/v1/auth/token \
   --header 'User-Agent: OpenDoor/1.0' \
   --header 'Content-Type: application/json' \
-  --data '{"email": "YOUR.EMAIL@EXAMPLE.COM", "password": "YOUR-PASSWORD"}'
-
+  --data '{"email": "YOUR.EMAIL@EXAMPLE.COM", "password": "YOUR-PASSWORD"}' |
+jq -r .accessToken
 ```
 
 ```json Response Example
@@ -37,15 +37,17 @@ curl --request POST \
   }
 }
 
+YOUR-ACCESS-TOKEN-HERE
 ```
 
 # Log In Programatically
 
-<!-- json@ -->
+<!-- shell@1-5 -->
 
 Run this command to log in to the OpenDOOR API. The response will include both an an access token and a refresh token.
 
 # Extract the Access Token using jq
 
-<!-- json@ -->
+<!-- shell@6 -->
 
+Install the jq command line tool to automatically extract the access token.
