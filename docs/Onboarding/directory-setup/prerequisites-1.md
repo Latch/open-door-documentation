@@ -7,6 +7,12 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  description: >-
+    With a directory structure in mind, set up your first property: either
+    provide information about the property to your DOOR Sales Representative,
+    who will review it and can also create it for you, or create the directory
+    items yourself using the API.
 ---
 The **directory** is a hierarchical representation of the following information:
 
