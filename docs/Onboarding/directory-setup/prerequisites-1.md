@@ -31,4 +31,4 @@ The directory items determine the **scope** of any roles assigned to your users;
 * Property Managers will be granted administrative permissions for one of your Property directory items;
 * Residents will be granted access and related permissions for one of your Unit directory items.
 
-Consequently, it is important to consider your organisational structure and business model when designing the layout of the directory.
+Consequently, it is important to consider your organisational structure and _business model_ when designing the layout of the directory. Your DOOR Sales Representative will assist you with this initial analysis.
