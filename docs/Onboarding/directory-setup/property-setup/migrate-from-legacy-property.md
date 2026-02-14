@@ -12,7 +12,7 @@ next:
       type: basic
 ---
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you've used this page's method, you don't need to complete [2. Directory Locks Setup](doc:assign-locks-to-directories) anymore. The Locks are already assigned to the created Directories.
+  **Important Note:** If you are using the method shown on this page, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already set up the Locks are already assigned to the created Directories.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
@@ -25,13 +25,12 @@ The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPAC
      2. **Possible values:** `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA` and `ENTRANCE`
   2. `BP SPACE NAME`: The name of the Directory Item, matching the DOOR Client Account entity name.
   3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which should perfectly match a previous row.
-  4. `LATCH UUID / ID`: The Latch Cortex UUID of the entity, obtainable from DoorOS or AdminTool.
 </Accordion>
 
 #### Create your CSV file and populate it with import data
 
 <Callout icon="📝" theme="default">
-  **Tip:** Use Google Sheets to create your import data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**. Google Sheets makes it easy to validate your data format before importing.
+  **Tip:** Use a spreadsheet software to create your data and export it as a CSV file by selecting **File → Download → Comma Separated Values (.csv)**.
 </Callout>
 
 #### Example CSV File
@@ -45,7 +44,7 @@ To help you get started, we've provided an example CSV file, based on structure 
 * Latch Cortex data type `UNIT` → OpenDOOR data type `UNIT`
 * Latch Cortex data type `DOOR` → OpenDOOR data type `ENTRANCE`
 
-```Text import-into-OpenDOOR.csv
+```less import-into-OpenDOOR.csv
 SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID
 ACCOUNT,OpenDOOR Client Account,,
 PORTFOLIO,ODC Portfolio 1,OpenDOOR Client Account,936037B4-9250-4778-BC81-57660C3A011B
