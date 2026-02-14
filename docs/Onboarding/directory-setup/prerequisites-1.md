@@ -9,10 +9,8 @@ metadata:
   robots: index
 next:
   description: >-
-    With a directory structure in mind, set up your first property: either
-    provide information about the property to your DOOR Sales Representative,
-    who will review it and can also create it for you, or create the directory
-    items yourself using the API.
+    Review the Example Directory Structure, which will be used throughout this
+    guide. Then proceed to set up a new property.
 ---
 The **directory** is a hierarchical representation of the following information:
 
