@@ -10,7 +10,7 @@ metadata:
 next:
   description: >-
     Contact your DOOR Sales Representative to obtain access, then follow the
-    [OpenDOOR Property Configuration Guide](doc:directory-setup).
+    OpenDOOR Property Configuration Guide.
 ---
 ### What you need?
 
