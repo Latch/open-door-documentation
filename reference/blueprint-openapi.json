@@ -11,6 +11,22 @@
       "description": "OpenDOOR API"
     }
   ],
+  "security": [
+    {
+      "OAuth2-Authorization-Code": [
+        "openid",
+        "profile",
+        "email",
+        "offline_access"
+      ]
+    },
+    {
+      "OAuth2-Client-Credentials": []
+    },
+    {
+      "Bearer-Token": []
+    }
+  ],
   "tags": [
     {
       "name": "Role Assignments",
@@ -3182,54 +3198,11 @@
     },
     "securitySchemes": {
       "Bearer-Token": {
-        "description": "Use your own Bearer token",
+        "description": "OpenDOOR Access Token",
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
-      },
-      "OAuth2-Authorization-Code": {
-        "description": "Authenticate as a user",
-        "type": "oauth2",
-        "flows": {
-          "authorizationCode": {
-            "authorizationUrl": "https://auth.prod.latch.com/authorize",
-            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
-            "scopes": {
-              "openid": "OpenID Connect scope",
-              "profile": "Access to the user's profile information",
-              "email": "Access to the user's email address",
-              "offline_access": "Access to refresh tokens for long-term access"
-            }
-          }
-        },
-        "x-pkce": true
-      },
-      "OAuth2-Client-Credentials": {
-        "description": "Authenticate as a service",
-        "type": "oauth2",
-        "flows": {
-          "clientCredentials": {
-            "tokenUrl": "https://auth.prod.latch.com/oauth/token",
-            "scopes": {}
-          }
-        }
       }
     }
-  },
-  "security": [
-    {
-      "OAuth2-Client-Credentials": []
-    },
-    {
-      "OAuth2-Authorization-Code": [
-        "openid",
-        "profile",
-        "email",
-        "offline_access"
-      ]
-    },
-    {
-      "Bearer-Token": []
-    }
-  ]
+  }
 }
