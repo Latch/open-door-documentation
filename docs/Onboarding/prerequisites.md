@@ -11,6 +11,10 @@ next:
   description: >-
     Contact your DOOR Sales Representative to obtain access, then follow the
     OpenDOOR Property Configuration Guide.
+  pages:
+    - slug: prerequisites-1
+      title: Before You Begin
+      type: basic
 ---
 ### What are the required steps?
 
