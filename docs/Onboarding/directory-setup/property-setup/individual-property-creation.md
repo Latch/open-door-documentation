@@ -6,6 +6,11 @@ hidden: false
 metadata:
   robots: index
 next:
+  description: >-
+    Consider verifying that the directory structure is indeed correct (using
+    instructions from "Retrieve Directory Data"), and rename any incorrectly
+    named items (using "Update Directory Items"). Once your directory structure
+    is confirmed to be correct and complete, proceed with the next step.
   pages:
     - slug: assign-locks-to-directories
       title: 2. Directory Locks Setup
