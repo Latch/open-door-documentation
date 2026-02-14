@@ -24,7 +24,7 @@ The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPAC
      1. Represents the type of Space in the Client Directory tree. It should match the type in the DOOR Client Account.
      2. **Possible values:** `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA` and `ENTRANCE`
   2. `BP SPACE NAME`: The name of the desired Directory Item.
-  3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which must _exactly_ match a previous row.
+  3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which must *exactly* match a previous row.
 </Accordion>
 
 #### Create your CSV file and populate it with import data
@@ -35,7 +35,7 @@ The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPAC
 
 #### Example CSV File
 
-To help you get started, we have provided an example CSV file, based on structure from [Property Setup](doc:property-setup) . This file contains sample data that will be used in the subsequent guide pages.
+The following example CSV file should help you get started. It is based on the [Example Directory Structure](doc:example-directory-structure). The subsequent guide pages will continue to refer to this directory structure, but you should define and submit your own directory structure instead.
 
 ```less import-into-OpenDOOR.csv
 SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME
