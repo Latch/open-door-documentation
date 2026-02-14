@@ -12,7 +12,7 @@ next:
       type: basic
 ---
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** If you are using the method shown on this page, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already set up the Locks are already assigned to the created Directories.
+  **Important Note:** If you are using the method shown on this page and your locks have already been installed, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already assigned your Locks to the provided Directory items.
 </Callout>
 
 ### Step 1: Organize DOOR Client Account data in a CSV file
