@@ -11,7 +11,7 @@ next:
     directly.
   pages:
     - slug: migrate-from-legacy-property
-      title: Bulk Import Property Data
+      title: Prepare and Submit Property Data
       type: basic
 ---
 ### Directory Structure
