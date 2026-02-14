@@ -1,5 +1,5 @@
 ---
-title: Individual Property Creation
+title: Automate Property Creation with the API
 excerpt: POST Directory Item(s).
 deprecated: false
 hidden: false
