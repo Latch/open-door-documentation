@@ -9,6 +9,10 @@ next:
     Choose one of the two options: prepare the information required by your DOOR
     Sales Representative (strongly recommended), or proceed with using the API
     directly.
+  pages:
+    - slug: migrate-from-legacy-property
+      title: Bulk Import Property Data
+      type: basic
 ---
 ### Directory Structure
 
