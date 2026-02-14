@@ -35,7 +35,7 @@ The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPAC
 
 #### Example CSV File
 
-The following example CSV file should help you get started. It is based on the [Example Directory Structure](doc:example-directory-structure). The subsequent guide pages will continue to refer to this directory structure, but you should define and submit your own directory structure instead.
+The following example CSV file should help you get started. It is based on the [Example Directory Structure](doc:example-directory-structure). The subsequent guide pages will continue to refer to this directory structure as an example, but you should define and submit your own directory structure instead.
 
 ```less import-into-OpenDOOR.csv
 SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME
