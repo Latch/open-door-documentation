@@ -6,7 +6,7 @@ recipe:
   color: '#018FF4'
   icon: 🦉
 ---
-```shell Shell
+```json JSON
 curl --request POST \
   --url https://api.prod.door.com/door-api/v1/auth/token \
   --header 'User-Agent: OpenDoor/1.0' \
@@ -32,8 +32,13 @@ curl --request POST \
 
 ```
 
-# Programatically Log In
+# Log In Programatically
 
-<!-- shell@ -->
+<!-- json@ -->
 
 Run this command to log in to the OpenDOOR API. The response will include both an an access token and a refresh token.
+
+# Extract the Access Token
+
+<!-- json@ -->
+
