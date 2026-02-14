@@ -1,5 +1,5 @@
 ---
-title: Bulk Import Property Data
+title: Prepare and Submit Property Data
 excerpt: Send a CSV file to your DOOR Sales Representative
 deprecated: false
 hidden: false
