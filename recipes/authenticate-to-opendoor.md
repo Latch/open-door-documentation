@@ -47,7 +47,7 @@ YOUR-ACCESS-TOKEN-HERE
 
 <!-- shell@1-5 -->
 
-Run this command to log in to the OpenDOOR API. The response will include both an an access token and a refresh token.
+Run this command to log in to the OpenDOOR API. The response will include your access token, as well as other information such as your user ID.
 
 # Extract the Access Token using jq
 
