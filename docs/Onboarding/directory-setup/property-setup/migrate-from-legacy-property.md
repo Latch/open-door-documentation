@@ -15,16 +15,16 @@ next:
   **Important Note:** If you are using the method shown on this page and your locks have already been installed, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already assigned your Locks to the provided Directory items.
 </Callout>
 
-### Step 1: Organize DOOR Client Account data in a CSV file
+### Step 1: Organize your Directory Structure in a CSV file
 
-The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME,LATCH UUID / ID`.
+The CSV file should have the following header: `SPACE TYPE,BP SPACE NAME,BP SPACE PARENT NAME`.
 
 <Accordion title="CSV Structure Guidelines" icon="list">
   1. `SPACE TYPE`:
      1. Represents the type of Space in the Client Directory tree. It should match the type in the DOOR Client Account.
      2. **Possible values:** `ACCOUNT`, `PORTFOLIO`, `PROPERTY`, `BUILDING`, `FLOOR`, `UNIT`, `ROOM`, `PARKING_GROUP`, `PARKING_SLOT`, `STORAGE_GROUP`, `STORAGE_SLOT`, `COMMON_GROUP`, `COMMON_AREA`, `PRIVATE_GROUP`, `PRIVATE_AREA` and `ENTRANCE`
-  2. `BP SPACE NAME`: The name of the Directory Item, matching the DOOR Client Account entity name.
-  3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which should perfectly match a previous row.
+  2. `BP SPACE NAME`: The name of the desired Directory Item.
+  3. `BP SPACE PARENT NAME`: The name of the Parent Directory Item, which must _exactly_ match a previous row.
 </Accordion>
 
 #### Create your CSV file and populate it with import data
