@@ -4,6 +4,10 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  description: >-
+    Once authenticated, you can make use of the OpenDOOR API. The following
+    sections will describe how to do so.
 ---
 An **access token** is required to make requests to the OpenDOOR API.
 
