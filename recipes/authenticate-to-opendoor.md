@@ -16,10 +16,24 @@ curl --request POST \
 ```
 
 ```json Response Example
-{"success":true}
+{
+  "accessToken": "YOUR-ACCESS-TOKEN-HERE",
+  "refreshToken": "YOUR-REFRESH-TOKEN-HERE",
+  "sessionUser": {
+    "uuid": "YOUR-USER-ID",
+    "email":"YOUR.EMAIL@EXAMPLE.COM",
+    "firstName": "FIRSTNAME",
+    "lastName": "LASTNAME",
+    "phoneNumber": "PHONE",
+    "isPhoneNumberVerified":true,
+    "profileUrl":""
+  }
+}
+
 ```
 
-# Obtain an Access Token
+# Programatically Log In
 
 <!-- shell@ -->
 
+Run this command to log in to the OpenDOOR API. The response will include both an an access token and a refresh token.
