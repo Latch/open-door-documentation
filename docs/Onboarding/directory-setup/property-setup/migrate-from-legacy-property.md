@@ -6,9 +6,12 @@ hidden: false
 metadata:
   robots: index
 next:
+  description: >-
+    Expect feedback from your Sales Representative. Once done, proceed with the
+    next step.
   pages:
-    - slug: assign-locks-to-directories
-      title: 2. Directory Locks Setup
+    - slug: access-paths-setup
+      title: 3. Access Paths Setup
       type: basic
 ---
 <Callout icon="⚠️" theme="warning">
