@@ -1,7 +1,7 @@
 ---
-title: Getting Started with README
+title: Getting Started with ReadMe
 excerpt: >-
-  This page will help you get started with README. You'll be up and running in a
+  This page will help you get started with ReadMe. You'll be up and running in a
   jiffy!
 hidden: true
 ---
