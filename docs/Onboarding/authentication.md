@@ -16,4 +16,4 @@ For initial integration and testing purposes, DOOR OS access tokens are compatib
 3. Open the Network tab. Select an outgoing "Fetch/XHR" request.
 4. Scroll down to find the headers. Copy the token from the Authorization header; the access token is the string **after** the "Bearer" prefix.
 
-After initial testing, to authenticate programatically, please consult the [Authenticate to OpenDOOR](https://opendoor-uwel.readme.io/authenticate-to-opendoor) recipe. 
+After initial testing, to authenticate programatically, please consult the [Authenticate to OpenDOOR](/guides/authenticate-to-opendoor) recipe.
