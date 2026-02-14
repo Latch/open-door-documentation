@@ -4,6 +4,13 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  description: >-
+    Use this example to consider your own directory structure. With this
+    structure in mind, set up your first property: either provide information
+    about the property to your DOOR Sales Representative, who will review it and
+    can also create it for you, or create the directory items yourself using the
+    API.
 ---
 ### Directory Structure
 
