@@ -4,11 +4,16 @@ deprecated: false
 hidden: false
 metadata:
   robots: index
+next:
+  description: >-
+    Choose one of the two options: prepare the information required by your DOOR
+    Sales Representative (strongly recommended), or proceed with using the API
+    directly.
 ---
 ### Directory Structure
 
 <Callout icon="📝" theme="default">
-  **NOTE:** This Directory will be used as an example throughout the guide.
+  **Note:** This directory structure will be used as an **example** throughout the guide. It is designed to showcase some of the key features of OpenDOOR. Your own directory structure may be simpler or more complicated, depending on your requirements.
 </Callout>
 
 ```plaintext Directory Structure and Hierarchy
@@ -52,11 +57,9 @@ metadata:
 └── [PORTFOLIO] ODC Portfolio 2 -> X
 ```
 
-<Image border={false} src="https://files.readme.io/e6f40ae787086fee60fcd3b890081359079630e2a66dd6957a02eaf7ab7b3724-221225_Directory_tree.drawio.png" />
+![](https://files.readme.io/e6f40ae787086fee60fcd3b890081359079630e2a66dd6957a02eaf7ab7b3724-221225_Directory_tree.drawio.png)
 
-### Can be done in two ways:
+#### Setting up this directory can be done in two ways:
 
-* **[Bulk Import Property Data](doc:migrate-from-legacy-property) :** This user-friendly approach involves organizing DOOR Client Account data into a templated CSV file, which is then submitted to a dedicated API endpoint to define the properties hierarchy and structure.
-* **[Individual Property Creation](doc:individual-property-creation) :** This method requires making individual API requests to define the Directory tree hierarchy and structure. DOOR Client Account data must be structured and passed in the request body of each API call. While offering granular control, it demands more development effort and API expertise.
-
-Choose what suits you best!
+* **[Bulk Import Property Data](doc:migrate-from-legacy-property) :** This user-friendly approach involves designing your preferred directory structure and adding it to a template CSV file, which you will then send to your DOOR Sales Representative. They will be reviewing and creating the directory structure you have submitted on your behalf.
+* **[Individual Property Creation](doc:individual-property-creation) :** Once you have established a clear use case and already have multiple OpenDOOR enabled buildings in active use, you may choose to use the OpenDOOR API to create the directory items for a new property, without relying on your DOOR Sales Representative. This provides you with full ownership of your directory structure, which does allow the possibility of automation, but with the significant downside of not receiving immediate assistance from your DOOR Sales Representative. Choosing this option means you are taking charge of the validity and fitness for purpose of your directory structure. We only recommend you do so once you already have an established and proven directory structure for your other properties.
