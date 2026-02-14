@@ -1,5 +1,5 @@
 ---
-title: 2. Directory Locks Setup
+title: 2. Add Locks to Your Entrances
 excerpt: POST Lock to Directory Associations.
 deprecated: false
 hidden: false
