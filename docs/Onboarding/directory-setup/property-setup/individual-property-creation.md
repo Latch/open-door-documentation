@@ -17,23 +17,23 @@ next:
       type: basic
 ---
 <Callout icon="📝" theme="default">
-  **How to use below endpoints:**
+  **How to use the endpoints:**
 
-  1. `/directory/v1/items` to create the initial or complete Directory structure.
-  2. `/directory/v1/items/{scope}` to add items under an existing Directory Item identified by `scope`.
+  1. `/rbac/v1/scopes` to find the ID of your Account directory item.
+  2. `/directory/v1/items/{scope}` to add items under this, or any other, directory item.
 </Callout>
 
 **Request Definitions:**
 
-| **Method** | **Host**                                               | **Path**                      | Details                                                           |
-| :--------- | :----------------------------------------------------- | :---------------------------- | :---------------------------------------------------------------- |
-| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items`         | Create a Directory Item and its subtree.                          |
-| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{scope}` | Create a Directory Item under the given `scope` (Directory Item). |
+| **Method** | **Host**                                               | **Path**                      | Details                                                                 |
+| :--------- | :----------------------------------------------------- | :---------------------------- | :---------------------------------------------------------------------- |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/scopes`             | Find the Directory Items that represent the scopes of your permissions. |
+| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{scope}` | Create a Directory Item under the given `scope` (Directory Item ID).    |
 
 **Headers:**
 
 * **`accept`**: `*/*`
-* **`Authorization`**: Bearer Token
+* **`Authorization`**: `Bearer <token>`, see [Authentication](doc:authentication)
 * **`Content-Type`**: `application/json`
 
 **Request Body:** The `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
