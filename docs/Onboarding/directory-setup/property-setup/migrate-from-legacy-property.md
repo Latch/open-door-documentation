@@ -14,6 +14,10 @@ next:
       title: 3. Access Paths Setup
       type: basic
 ---
+<Callout icon="🤝" theme="info">
+  **Important Note:** If you are using the method shown on this page and your locks have already been installed, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already assigned your Locks to the provided Directory items.
+</Callout>
+
 <Callout icon="⚠️" theme="warning">
   **Important Note:** If you are using the method shown on this page and your locks have already been installed, you may **skip** the next step: [2. Directory Locks Setup](doc:assign-locks-to-directories). Your DOOR Sales Representative will have already assigned your Locks to the provided Directory items.
 </Callout>
