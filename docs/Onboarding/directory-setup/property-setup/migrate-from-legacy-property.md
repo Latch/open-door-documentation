@@ -15,7 +15,7 @@ next:
       type: basic
 ---
 <Callout icon="🤝" theme="info">
-  This section shows a streamlined, CSV file-based approach to defining your directory structure. While this is the _fastest_ option, it is by no means your _only_ option. Your DOOR Sales Representative will be able to accommodate your requirements and create your directory structure based on building information provided in other formats as well. Even so, it is still a good idea to check this section to understand the _type of information_ that your Sales Representative will require in any case, irrespective of the actual data format.
+  This section shows a streamlined, CSV file-based approach to defining your directory structure. While this is the _fastest_ option, it is by no means your _only_ option. Your DOOR Sales Representative will be able to accommodate your requirements and create your directory structure based on building information provided in other formats as well. Even so, it is still a good idea to check the [Example Directory Structure](doc:example-directory-structure) to understand the _type of information_ that your Sales Representative will require in any case, irrespective of the actual data format.
 </Callout>
 
 <Callout icon="⚠️" theme="warning">
