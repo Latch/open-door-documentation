@@ -1,9 +1,9 @@
 ---
-title: Getting Started with OpenDOOR
+title: Getting Started with README
 excerpt: >-
-  This page will help you get started with OpenDOOR. You'll be up and running in
-  a jiffy!
-hidden: false
+  This page will help you get started with README. You'll be up and running in a
+  jiffy!
+hidden: true
 ---
 # Welcome to ReadMe
 
