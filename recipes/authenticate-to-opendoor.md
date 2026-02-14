@@ -23,6 +23,7 @@ jq -r .accessToken
 ```
 
 ```json Response Example
+# curl output:
 {
   "accessToken": "YOUR-ACCESS-TOKEN-HERE",
   "refreshToken": "YOUR-REFRESH-TOKEN-HERE",
@@ -37,7 +38,9 @@ jq -r .accessToken
   }
 }
 
+# jq output:
 YOUR-ACCESS-TOKEN-HERE
+
 ```
 
 # Log In Programatically
