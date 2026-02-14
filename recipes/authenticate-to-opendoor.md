@@ -1,6 +1,13 @@
 ---
 title: Authenticate to OpenDOOR
-description: Recipe Description
+description: >-
+  The easiest way to log in to the OpenDOOR API is to log in to Door OS and copy
+  the token from the "Authorization" header, using the Dev Tools in your
+  browser.
+
+
+  Once done with experimentation, however, it is important to automate this
+  step. This can be done by sending a request to the token endpoint.
 hidden: false
 recipe:
   color: '#018FF4'
@@ -38,7 +45,7 @@ curl --request POST \
 
 Run this command to log in to the OpenDOOR API. The response will include both an an access token and a refresh token.
 
-# Extract the Access Token
+# Extract the Access Token using jq
 
 <!-- json@ -->
 
