@@ -11,6 +11,10 @@ next:
     about the property to your DOOR Sales Representative, who will review it and
     can also create it for you, or create the directory items yourself using the
     API.
+  pages:
+    - slug: property-setup
+      title: Property Setup
+      type: basic
 ---
 **Note:** This directory structure will be used as an **example** throughout the guide. It is designed to showcase some of the key features of OpenDOOR. Your own directory structure may be simpler or more complicated, depending on your requirements.
 
