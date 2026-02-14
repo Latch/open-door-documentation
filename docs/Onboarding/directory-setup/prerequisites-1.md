@@ -19,7 +19,7 @@ The **directory** is a hierarchical representation of the following information:
     * 🏬 Properties
       * 🏢 Buildings (_optional_)
         * 1️⃣ Floors (_optional_)
-          * ✅ Units and communal spaces
+          * 🏠 Units
             * 🚪 **Entrances**
             * Rooms (_optional_)
 
@@ -31,8 +31,8 @@ The subsequent directory items should closely mirror **the physical layout** of 
 
 The directory items determine the **scope** of any roles assigned to your users; for example:
 
-* Portfolio Managers will be granted administrative permissions for one of your Portfolio directory items;
-* Property Managers will be granted administrative permissions for one of your Property directory items;
-* Residents will be granted access and related permissions for one of your Unit directory items.
+* Portfolio Managers will be granted administrative permissions for one of your 💼 Portfolio directory items;
+* Property Managers will be granted administrative permissions for one of your 🏬 Property directory items;
+* Residents will be granted access and related permissions for one of your 🏠 Unit directory items.
 
 Consequently, it is important to consider your organisational structure _and business model_ when designing the layout of the directory. Your DOOR Sales Representative will assist you with this initial analysis.
