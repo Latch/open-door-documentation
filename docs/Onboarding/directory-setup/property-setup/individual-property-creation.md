@@ -19,8 +19,8 @@ next:
 <Callout icon="📝" theme="default">
   **How to use the endpoints:**
 
-  1. `/rbac/v1/scopes` to find the ID of your Account directory item.
-  2. `/directory/v1/items/{scope}` to add items under this, or any other, directory item.
+  1. Call `/rbac/v1/scopes` to find the ID of your Account directory item.
+  2. Call `/directory/v1/items/{scope}` to add items under this, or any other, directory item.
 </Callout>
 
 **Request Definitions:**
