@@ -32,7 +32,7 @@ next:
 
 **Headers:**
 
-* **`accept`**: `*/*`
+* **`Accept`**: `*/*`
 * **`Authorization`**: `Bearer <token>`, see [Authentication](doc:authentication)
 * **`Content-Type`**: `application/json`
 
