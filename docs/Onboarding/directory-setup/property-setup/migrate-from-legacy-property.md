@@ -1,6 +1,6 @@
 ---
 title: Bulk Import Property Data
-excerpt: POST Import from CSV file.
+excerpt: Send a CSV file to your DOOR Sales Representative
 deprecated: false
 hidden: false
 metadata:
