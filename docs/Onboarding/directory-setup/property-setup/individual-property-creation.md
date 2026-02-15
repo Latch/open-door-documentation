@@ -95,8 +95,8 @@ Ensure the response is successful (HTTP 200) and contains the Account that you h
         "name": "OpenDOOR Client Account",
         "parent": "00000000-0000-0000-0000-000000000000",
         "tags": {
-		      "space:ACCOUNT": "",
-    		  "item:SPACE": ""
+          "space:ACCOUNT": "",
+          "item:SPACE": ""
         }
       },
       "permissionSets": [
