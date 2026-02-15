@@ -90,7 +90,7 @@ Ensure the response is successful (HTTP 200) and contains the Account that you h
     {
       "directoryItem": {
         "id": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-        "name": "Well-known root",
+        "name": "OpenDOOR Client Account",
         "parent": "00000000-0000-0000-0000-000000000000",
         "tags": {
 		      "space:ACCOUNT": "",
