@@ -80,16 +80,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
             "name": "ODC Portfolio 1",
             "tags": {
                 "space:PORTFOLIO": "",
-                "item:SPACE": "",
-                "cortex:ACCOUNT": "936037B4-9250-4778-BC81-57660C3A011B"
+                "item:SPACE": ""
             },
             "children": [
                 {
                     "name": "ODCP1 Property 1",
                     "tags": {
                         "space:PROPERTY": "",
-                        "item:SPACE": "",
-                        "cortex:BUILDING": "1765CB13-36D6-461A-9ACB-59D1A2CE9BF6"
+                        "item:SPACE": ""
                     },
                     "children": [
                         {
@@ -165,8 +163,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                     "name": "Residential Building Entrance",
                                     "tags": {
                                         "space:ENTRANCE": "",
-                                        "item:SPACE": "",
-                                        "cortex:DOOR": "D7EE4D4D-3991-4D76-AD8A-7C1FA9B52459"
+                                        "item:SPACE": ""
                                     }
                                 },
                                 {
@@ -194,8 +191,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                                     "name": "Delivery Service Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "C44B0BA4-F048-44EF-85FF-97CDFC7106EF"
+                                                        "item:SPACE": ""
                                                     }
                                                 },
                                                 {
@@ -239,8 +235,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                                     "name": "Amenities Entrance",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "FB7F93D5-514D-4B05-89FC-96F981788526"
+                                                        "item:SPACE": ""
                                                     }
                                                 },
                                                 {
@@ -254,8 +249,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                                             "name": "Spa Door",
                                                             "tags": {
                                                                 "space:ENTRANCE": "",
-                                                                "item:SPACE": "",
-                                                                "cortex:DOOR": "172D2A44-971D-4653-AE2F-4B2B2E7BF456"
+                                                                "item:SPACE": ""
                                                             }
                                                         }
                                                     ]
@@ -271,8 +265,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                                             "name": "Gym Door",
                                                             "tags": {
                                                                 "space:ENTRANCE": "",
-                                                                "item:SPACE": "",
-                                                                "cortex:DOOR": "CFBE6B75-4B9A-4FCC-939D-538B51FBCB58"
+                                                                "item:SPACE": ""
                                                             }
                                                         }
                                                     ]
@@ -288,8 +281,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                                             "name": "Meeting Rooms Door",
                                                             "tags": {
                                                                 "space:ENTRANCE": "",
-                                                                "item:SPACE": "",
-                                                                "cortex:DOOR": "FABE83D5-2A4F-48DA-8B1A-33779F9C79D8"
+                                                                "item:SPACE": ""
                                                             }
                                                         },
                                                         {
@@ -323,16 +315,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 1 - Unit 101",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831436"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 1 - Unit 101 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "AA58FE86-B93F-416B-B653-91ABE67C49B4"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
@@ -341,16 +331,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 1 - Unit 110",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831438"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 1 - Unit 110 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "20BF8AE3-0CAC-487C-928F-82A4F344D0FC"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
@@ -368,16 +356,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 2 - Unit 201",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831440"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 2 - Unit 201 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "7E8CC077-B07E-4A44-AAA1-1DB05F6D48D2"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
@@ -386,16 +372,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 2 - Unit 210",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831442"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 2 - Unit 210 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "1DFAC8E4-1192-48C9-B6CD-243C21C47265"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
@@ -413,16 +397,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 3 - Unit 301",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831444"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 3 - Unit 301 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "1E3ECFA4-18E2-4B17-9699-D262C2AC6A2B"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
@@ -431,16 +413,14 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                             "name": "Floor 3 - Unit 310",
                                             "tags": {
                                                 "space:UNIT": "",
-                                                "item:SPACE": "",
-                                                "cortex:UNIT": "831446"
+                                                "item:SPACE": ""
                                             },
                                             "children": [
                                                 {
                                                     "name": "Floor 3 - Unit 310 Door",
                                                     "tags": {
                                                         "space:ENTRANCE": "",
-                                                        "item:SPACE": "",
-                                                        "cortex:DOOR": "2FA9AA99-7C67-4EA7-889E-ED96F039C23D"
+                                                        "item:SPACE": ""
                                                     }
                                                 }
                                             ]
