@@ -250,7 +250,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                 {
                                     "name": "Package Room",
                                     "tags": {
-                                        "space:STORAGE_GROUP": "",
+                                        "space:COMMON_AREA": "",
                                         "item:SPACE": ""
                                     },
                                     "children": [
@@ -294,7 +294,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
                                 {
                                     "name": "Amenities",
                                     "tags": {
-                                        "space:COMMON_GROUP": "",
+                                        "space:COMMON_AREA": "",
                                         "item:SPACE": ""
                                     },
                                     "children": [
