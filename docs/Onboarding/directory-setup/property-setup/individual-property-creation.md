@@ -16,6 +16,8 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
+Throughout this section, 
+
 <Callout icon="📝" theme="default">
   **How to use the endpoints:**
 
