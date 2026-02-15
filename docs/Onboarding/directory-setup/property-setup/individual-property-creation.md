@@ -504,7 +504,9 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
 
 #### Step 2: Send Request!
 
-Use the JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body) to send a POST request. Use the **Account directory item ID** you determined above as the value of the `{scope}` variable in the request:
+It is recommended to do this from the command line, as shown below; this allows you to save the JSON file as you are working on it, and review it before sending the request.
+
+Use the JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body) to send a POST request. Save the data to `directory.json`. Then, use the **Account directory item ID** you determined above as the value of the `{scope}` variable in the request:
 
 ```curl
 curl -X 'POST' \
@@ -512,9 +514,7 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
-  -d '{
-		...
-  }'
+  -d '@directory.json'
 ```
 
 #### Step 3: Validate Response
