@@ -22,7 +22,7 @@ Below you can find endpoints for retrieving existing Directory data and understa
 </Callout>
 
 * `pageSize`: Specifies the number of Directory Items to be returned in a single page of results. This helps control the amount of data retrieved in one request, allowing for efficient data handling and navigation through large datasets.
-* `pageToken`: Specifies the starting point for the next page of data in a paginated list. When combined with pageSize, it allows for efficient navigation through large datasets by fetching subsequent pages of results.
+* `pageToken`: Specifies the starting point for the next page of data in a paginated list. When combined with pageSize, it allows for efficient navigation through large datasets by fetching subsequent pages of results. The `pageToken` must always be the value of the `nextPageToken` field returned by a previous request.
 
 **Headers:**
 
