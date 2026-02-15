@@ -16,7 +16,12 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
-Throughout this section, 
+Throughout this section, we will be making calls to the OpenDOOR API. Whenever attempting to make a request:
+
+* Use the [API Reference](/reference) section to see detailed API documentation.
+* Obtain a bearer token by following the instructions in the [Authentication](doc:authentication) section.
+* You can use the reference page to copy `curl` commands, as well as sample code for your preferred programming language.
+* You can also use the reference page to directly make the test requests, if you copy and paste your bearer token.
 
 <Callout icon="📝" theme="default">
   **How to use the endpoints:**
@@ -68,7 +73,66 @@ The request body is a JSON document and must contain:
 
 #### Step 1: Send the Request
 
-<br />
+```curl
+curl -X 'POST' \
+  'https://api.prod.door.com/rbac/v1/scopes' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer {token}'
+```
+
+#### Step 2: Validate Response
+
+Ensure the response is successful (HTTP 200) and contains the Account that you have permissions on. In particular, make sure that you have the `MANAGE_DIRECTORY` permission on the target account.
+
+```json
+{
+  "scopes": [
+    {
+      "directoryItem": {
+        "id": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+        "name": "Well-known root",
+        "parent": "00000000-0000-0000-0000-000000000000",
+        "tags": {
+		      "space:ACCOUNT": "",
+    		  "item:SPACE": ""
+        }
+      },
+      "permissionSets": [
+        {
+          "permissions": [
+            "CONFIGURE_ACCESS",
+            "INVITE_REVOKE_ADMIN",
+            "INVITE_REVOKE_GUEST",
+            "INVITE_REVOKE_RESIDENT",
+            "INVITE_REVOKE_STAFF",
+            "INVITE_REVOKE_VENDOR",
+            "MANAGE_DIRECTORY",
+            "MANAGE_LOCKS",
+            "MANAGE_ROLES",
+            "REVOKE_ANY_ADMIN",
+            "REVOKE_ANY_GUEST",
+            "REVOKE_ANY_RESIDENT",
+            "REVOKE_ANY_STAFF",
+            "REVOKE_ANY_VENDOR",
+            "VIEW_ADMIN_ROLE_ASSIGNMENTS",
+            "VIEW_DIRECTORY",
+            "VIEW_GUEST_ROLE_ASSIGNMENTS",
+            "VIEW_LOCKS",
+            "VIEW_RESIDENT_ROLE_ASSIGNMENTS",
+            "VIEW_STAFF_ROLE_ASSIGNMENTS",
+            "VIEW_VENDOR_ROLE_ASSIGNMENTS"
+          ],
+          "conditions": {}
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Step 3: Note Down the Account ID
+
+You will require the ID of your Account directory item later. Extract it from the response; it will be in `directoryItem.id` in one of your available scopes, which you can identify by name. If you have multiple permission assignments are are not sure which one applies, choose the Account where you have the `MANAGE_DIRECTORY` permission.
 
 ## Create Entire Directory Structure in One Request
 
