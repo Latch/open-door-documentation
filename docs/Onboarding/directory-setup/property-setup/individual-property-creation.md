@@ -67,6 +67,14 @@ The request body is a JSON document and must contain:
 }
 ```
 
+<br />
+
+<Callout icon="📘">
+  **Tip:**
+
+  If you are using **Postman**, you can download a Postman collection containing all of the requests you need to follow these steps.
+</Callout>
+
 ## Determine the Directory Item of Your Account
 
 #### Step 1: Send the Request
