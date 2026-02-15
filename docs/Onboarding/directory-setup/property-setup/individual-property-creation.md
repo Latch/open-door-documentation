@@ -140,7 +140,7 @@ You will require the ID of your Account directory item later. Extract it from th
 
 #### Step 1: Prepare JSON Request Body
 
-We'll be using Directory structure from [Property Setup](doc:property-setup) as an example. It contains sample data that will be used in the subsequent guide pages.
+We will be using Directory structure from [Example Directory Structure](doc:example-directory-structure) as an example. It contains sample data that will be used in the subsequent guide pages.
 
 ```json Request Body
 {
