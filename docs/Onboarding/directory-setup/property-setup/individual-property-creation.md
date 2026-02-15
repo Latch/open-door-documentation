@@ -437,8 +437,7 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
             "name": "ODC Portfolio 2",
             "tags": {
               "space:PORTFOLIO": "",
-              "item:SPACE": "",
-              "cortex:ACCOUNT": "0517C840-086B-4423-BE9E-2F021CB328B3"
+              "item:SPACE": ""
             }
         }  
     ]
