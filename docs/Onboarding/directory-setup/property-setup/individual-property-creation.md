@@ -541,7 +541,7 @@ Ensure the response is successful (HTTP 200) and contains the Root Directory Ite
   "name": "ODC Portfolio 1",
   "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91",
   "tags": {
-    "space:ACCOUNT": "",
+    "space:PORTFOLIO": "",
     "item:SPACE": ""
   },
   "createdAt": "2025-12-29T16:38:44Z",
