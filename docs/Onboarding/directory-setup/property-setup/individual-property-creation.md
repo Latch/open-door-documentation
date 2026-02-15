@@ -518,11 +518,11 @@ We'll be using Directory structure from [Property Setup](doc:property-setup) as 
 
 #### Step 2: Send Request!
 
-Use the JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body) to send a POST request:
+Use the JSON from [Step 1: Prepare JSON Request Body](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-1-prepare-json-request-body) to send a POST request. Use the **Account directory item ID** you determined above as the value of the `{scope}` variable in the request:
 
 ```curl
 curl -X 'POST' \
-  'https://api.prod.door.com/directory/v1/items' \
+  'https://api.prod.door.com/directory/v1/items/e43f4017-da92-4c4a-87ff-5c5f418c3cf6' \
   -H 'accept: */*' \
   -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
@@ -537,9 +537,9 @@ Ensure the response is successful (HTTP 200) and contains the Root Directory Ite
 
 ```json Response Body
 {
-  "id": "e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
-  "name": "OpenDOOR Client Account",
-  "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6",
+  "id": "4a9fc553-e920-499b-92b1-fd08e7507b91",
+  "name": "ODC Portfolio 1",
+  "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91",
   "tags": {
     "space:ACCOUNT": "",
     "item:SPACE": ""
@@ -554,7 +554,7 @@ Ensure the response is successful (HTTP 200) and contains the Root Directory Ite
 
 #### Step 4: Retrieve the entire Directory Subtree
 
-Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = e43f4017-da92-4c4a-87ff-5c5f418c3cf6` to retrieve the entire Directory starting from Root Item (from above Response).
+Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-directory-items-from-a-known-subtree) request with `pageSize = 50` and `scope = e43f4017-da92-4c4a-87ff-5c5f418c3cf6` (your Account directory item) to retrieve the entire Directory structure of your account.
 
 ```json Directory Subtree JSON
 {
