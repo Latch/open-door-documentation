@@ -13,10 +13,12 @@ Below you can find endpoints for retrieving existing Directory data and understa
 | GET        | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{uuid}`    | Retrieve a single Directory Item data using its `uuid`.       |
 | GET        | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/subtree/{scope}` | Retrieves all Directory Items starting from the `scope` root. |
 
+### Retrieve an Entire Directory Item Tree
+
 **URL parameters:**
 
 <Callout icon="📝" theme="default">
-  **Note:** These parameters apply only to the listing endpoint `/directory/v1/subtree/{scope}`. See usage examples in [`GET /directory/v1/subtree/{scope}` endpoint to retrieve information about a known Directory Item](https://opendoor-uwel.readme.io/docs/get-directory-items#2-get-directoryv1subtreescope-endpoint-to-retrieve-information-about-a-known-directory-item-1).
+  **Note:** This section describes the parameters of `/directory/v1/subtree/{scope}` endpoint.
 </Callout>
 
 * `pageSize`: Specifies the number of Directory Items to be returned in a single page of results. This helps control the amount of data retrieved in one request, allowing for efficient data handling and navigation through large datasets.
