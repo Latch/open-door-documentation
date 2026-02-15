@@ -23,36 +23,46 @@ next:
   2. Call `/directory/v1/items/{scope}` to add items under this, or any other, directory item.
 </Callout>
 
-**Request Definitions:**
+### Request Definitions
 
 | **Method** | **Host**                                               | **Path**                      | Details                                                                 |
 | :--------- | :----------------------------------------------------- | :---------------------------- | :---------------------------------------------------------------------- |
-| POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/scopes`             | Find the Directory Items that represent the scopes of your permissions. |
+| GET        | [https://api.prod.door.com](https://api.prod.door.com) | `/rbac/v1/scopes`             | Find the Directory Items that represent the scopes of your permissions. |
 | POST       | [https://api.prod.door.com](https://api.prod.door.com) | `/directory/v1/items/{scope}` | Create a Directory Item under the given `scope` (Directory Item ID).    |
 
-**Headers:**
+### Headers
 
 * **`Accept`**: `*/*`
 * **`Authorization`**: `Bearer <token>`, see [Authentication](doc:authentication)
 * **`Content-Type`**: `application/json`
 
-**Request Body:** The `children` JSON property can accommodate an entire nested Directory structure, so the Directory can be built in one request.
+### Request Bodies
+
+#### Get Scopes (`GET /rbac/v1/scopes`)
+
+This request has no body. It will simply return your current user's permissions, along with the **scopes** that they are available on. If you are an Account Manager, as you should be when following these instructions, the response will return the UUID of your Account directory item.
+
+#### Create Directory (`POST /directory/v1/items/{scope}`)
+
+The request body is a JSON document and must contain:
+
+* the `name` of your directory item;
+* the `tags` , which is primarily used at this point to define its space type;
+* the `children` property, which is a list of Directory Items. It can accommodate an entire nested Directory structure, so the directory structure can be built in one request. This is a **recursive** data structure; each child can have its own `name`, `tags`, and `children`.
 
 ```json Request Body Structure
 {
-  "name": "string",
+  "name": "parentName",
   "tags": {
-    "additionalProp1": "string",
-    "additionalProp2": "string",
-    "additionalProp3": "string"
+    "space:SPACE_TYPE": "",
   },
   "children": [
-    "string"
+    { "name": "childName", ... }
   ]
 }
 ```
 
-### Create Entire Directory Structure in One Request
+## Create Entire Directory Structure in One Request
 
 #### Step 1: Prepare JSON Request Body
 
@@ -1183,9 +1193,9 @@ Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-director
 }
 ```
 
-### Create Directory Structure in Batches
+## Create Directory Structure in Batches
 
-Repeat below steps until the desired Directory is complete.
+Repeat the steps below until the desired Directory is complete.
 
 #### Step 1: Break it into JSON batches
 
