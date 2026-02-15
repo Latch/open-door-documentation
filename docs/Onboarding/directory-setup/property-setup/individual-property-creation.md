@@ -62,6 +62,12 @@ The request body is a JSON document and must contain:
 }
 ```
 
+## Determine the Directory Item of Your Account
+
+#### Step 1: Send the Request
+
+<br />
+
 ## Create Entire Directory Structure in One Request
 
 #### Step 1: Prepare JSON Request Body
