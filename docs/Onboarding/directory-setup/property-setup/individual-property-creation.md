@@ -1230,11 +1230,13 @@ Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-director
 
 ## Create Directory Structure in Batches
 
+If you have already performed "Create Entire Directory Structure in One Request": congratulations, **you are done!** :white_check_mark:
+
 Repeat the steps below until the desired Directory is complete.
 
 #### Step 1: Break it into JSON batches
 
-Create smaller JSON batches for more manageable requests.
+If your directory structure is too large, you can split it into smaller JSON batches for more manageable requests.
 
 For this minimalistic example, we're going to create a Floor with an Unit and link it to `Residential Building` Directory Item (ID `02ab66db-d4cb-4148-905f-e6545259db41`) as child.
 
