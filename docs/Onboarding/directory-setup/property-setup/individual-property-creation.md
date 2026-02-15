@@ -507,8 +507,7 @@ Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-director
       "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91",
       "tags": {
         "space:PORTFOLIO": "",
-        "item:SPACE": "",
-        "cortex:ACCOUNT": "936037B4-9250-4778-BC81-57660C3A011B"
+        "item:SPACE": ""
       },
       "createdAt": "2025-12-29T16:38:44Z",
       "createdBy": {
@@ -522,8 +521,7 @@ Send a [GET Directory Subtree](https://opendoor-uwel.readme.io/docs/get-director
       "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91::8ae57cb5-206e-4f2b-9f71-879024309ea1",
       "tags": {
         "space:PROPERTY": "",
-        "item:SPACE": "",
-        "cortex:BUILDING": "1765CB13-36D6-461A-9ACB-59D1A2CE9BF6"
+        "item:SPACE": ""
       },
       "createdAt": "2025-12-29T16:38:44Z",
       "createdBy": {
