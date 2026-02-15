@@ -14,7 +14,7 @@ next:
       title: 2. Directory Locks Setup
       type: basic
 ---
-Please do not attempt to follow these instructions for your first few properties. Instead, rely on your DOOR Sales Representative to verify and create your directory structure, as described in [Prepare and Submit Property Data](doc:migrate-from-legacy-property). Only follow these instructions when the required directory structure is confirmed to be fully functional in other properties.
+Please do not attempt to follow these instructions for your first few properties. Instead, rely on your DOOR Sales Representative to verify and create your directory structure, as described in [Prepare and Submit Property Data](doc:migrate-from-legacy-property). Only follow these instructions when the required directory structure is confirmed to be working in other properties.
 
 Throughout this section, we will be making calls to the OpenDOOR API. Whenever attempting to make a request:
 
