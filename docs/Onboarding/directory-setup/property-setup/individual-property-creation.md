@@ -54,7 +54,7 @@ This request has no body. It will simply return your current user's permissions,
 The request body is a JSON document and must contain:
 
 * the `name` of your directory item;
-* the `tags` , which is primarily used at this point to define its space type;
+* the `tags`, which is primarily used at this point to define its space type;
 * the `children` property, which is a list of Directory Items. It can accommodate an entire nested Directory structure, so the directory structure can be built in one request. This is a **recursive** data structure; each child must also have its own `name`, `tags`, and `children`.
 
 ```json Request Body Structure
