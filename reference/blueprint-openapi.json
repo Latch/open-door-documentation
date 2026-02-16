@@ -3,7 +3,7 @@
   "info": {
     "title": "OpenDOOR API",
     "description": "The OpenDOOR API provides access to the core features of the OpenDOOR platform. It allows developers to build custom applications and integrations on top of the OpenDOOR platform.",
-    "version": "0.24.0"
+    "version": "0.26.0"
   },
   "servers": [
     {
@@ -12,17 +12,6 @@
     }
   ],
   "security": [
-    {
-      "OAuth2-Authorization-Code": [
-        "openid",
-        "profile",
-        "email",
-        "offline_access"
-      ]
-    },
-    {
-      "OAuth2-Client-Credentials": []
-    },
     {
       "Bearer-Token": []
     }
@@ -2624,6 +2613,213 @@
           }
         }
       },
+      "DirectoryTagCortexDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "ACCOUNT",
+                  "BUILDING",
+                  "UNIT",
+                  "DOOR"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "Internal tag used to map legacy entities",
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagDtoObject": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "ITEM": "#/components/schemas/DirectoryTagItemDto",
+            "SPACE": "#/components/schemas/DirectoryTagSpaceDto",
+            "FEATURE_FLAG": "#/components/schemas/DirectoryTagFeatureFlagDto",
+            "VACANCY": "#/components/schemas/DirectoryTagVacancyDto",
+            "CORTEX": "#/components/schemas/DirectoryTagCortexDto"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagItemDto"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagSpaceDto"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagFeatureFlagDto"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagVacancyDto"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagCortexDto"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ITEM",
+              "SPACE",
+              "FEATURE_FLAG",
+              "VACANCY",
+              "CORTEX"
+            ]
+          },
+          "name": {}
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagFeatureFlagDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "BLUEPRINT_ENABLED"
+                ]
+              }
+            }
+          }
+        ],
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagItemDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "ROOT",
+                  "PORTFOLIO",
+                  "VIRTUAL",
+                  "SPACE",
+                  "DEVICE",
+                  "DOOR",
+                  "ELEVATOR",
+                  "FLOOR_GROUP",
+                  "CONTROL",
+                  "CONTENT",
+                  "INVENTORY_ITEM",
+                  "COMPLIANCE_ITEM"
+                ]
+              }
+            }
+          }
+        ],
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagSpaceDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "BUILDING_GROUP",
+                  "BUILDING",
+                  "FLOOR",
+                  "COMMUNAL_AREA",
+                  "UNIT",
+                  "ROOM",
+                  "ENTRY",
+                  "SERVICE",
+                  "ROOT",
+                  "ACCOUNT",
+                  "PORTFOLIO",
+                  "PROPERTY",
+                  "PARKING_GROUP",
+                  "PARKING_SLOT",
+                  "STORAGE_GROUP",
+                  "STORAGE_SLOT",
+                  "COMMON_GROUP",
+                  "PRIVATE_GROUP",
+                  "PRIVATE_AREA",
+                  "ENTRANCE",
+                  "COMMON_AREA"
+                ]
+              }
+            }
+          }
+        ],
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagVacancyDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "VACANT",
+                  "OCCUPIED"
+                ]
+              }
+            }
+          }
+        ],
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagValueDto": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
       "ImportDirectoryItemDto": {
         "type": "object",
         "properties": {
@@ -2631,9 +2827,9 @@
             "type": "string"
           },
           "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValueDto"
             }
           },
           "children": {
@@ -2672,7 +2868,17 @@
           "trace": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "error",
+          "exception",
+          "message",
+          "path",
+          "requestId",
+          "status",
+          "timestamp",
+          "trace"
+        ]
       },
       "Author": {
         "type": "object",
@@ -2689,7 +2895,10 @@
           "authorId": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "authorType"
+        ]
       },
       "DirectoryItemDto": {
         "type": "object",
@@ -2705,9 +2914,9 @@
             "type": "string"
           },
           "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValueDto"
             }
           },
           "createdAt": {
@@ -2717,7 +2926,12 @@
           "createdBy": {
             "$ref": "#/components/schemas/Author"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "path"
+        ]
       },
       "ImportBuildingRequest": {
         "type": "object",
@@ -2732,7 +2946,11 @@
           "name": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "buildingId",
+          "directoryItemId"
+        ]
       },
       "AccessPathSegmentDto": {
         "type": "object",
@@ -2790,15 +3008,18 @@
             "type": "string"
           },
           "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValueDto"
             }
           },
           "removeMissingTags": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "removeMissingTags"
+        ]
       },
       "ScopeDirectoryItemDto": {
         "type": "object",
@@ -2815,12 +3036,17 @@
             "format": "uuid"
           },
           "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValueDto"
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "tags"
+        ]
       },
       "ScopePermissionSetDto": {
         "type": "object",
@@ -2862,7 +3088,11 @@
           "conditions": {
             "$ref": "#/components/schemas/ConditionDTO"
           }
-        }
+        },
+        "required": [
+          "conditions",
+          "permissions"
+        ]
       },
       "ScopePermissionsDto": {
         "type": "object",
@@ -2876,7 +3106,11 @@
               "$ref": "#/components/schemas/ScopePermissionSetDto"
             }
           }
-        }
+        },
+        "required": [
+          "directoryItem",
+          "permissionSets"
+        ]
       },
       "ScopeResponseDto": {
         "type": "object",
@@ -2887,7 +3121,10 @@
               "$ref": "#/components/schemas/ScopePermissionsDto"
             }
           }
-        }
+        },
+        "required": [
+          "scopes"
+        ]
       },
       "RbacDirectoryItemDTO": {
         "type": "object",
@@ -3049,7 +3286,10 @@
           "nextPageToken": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "items"
+        ]
       },
       "MeDTO": {
         "type": "object",
@@ -3141,7 +3381,10 @@
               "format": "uuid"
             }
           }
-        }
+        },
+        "required": [
+          "directoryItemIds"
+        ]
       },
       "AccessPathDto": {
         "type": "object",
@@ -3153,7 +3396,10 @@
               "format": "uuid"
             }
           }
-        }
+        },
+        "required": [
+          "directoryItemIds"
+        ]
       },
       "AccessPathsToItem": {
         "type": "object",
@@ -3168,7 +3414,11 @@
               "$ref": "#/components/schemas/AccessPathDto"
             }
           }
-        }
+        },
+        "required": [
+          "paths",
+          "targetDirectoryItemId"
+        ]
       },
       "PageDtoDirectoryItemLockDto": {
         "type": "object",
@@ -3182,7 +3432,10 @@
           "nextPageToken": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "items"
+        ]
       },
       "DirectoryItemLocksDto": {
         "type": "object",
@@ -3193,7 +3446,10 @@
               "$ref": "#/components/schemas/DirectoryItemLockDto"
             }
           }
-        }
+        },
+        "required": [
+          "directoryItemLocks"
+        ]
       }
     },
     "securitySchemes": {
