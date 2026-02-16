@@ -43,7 +43,6 @@ The request body should include the following properties:
   * **`directoryScopeSelector`**: Defines the Scope. The system will determine if the Clause is statically or dynamically scoped based on this.
     * **`directoryItemId`**: ID for static scoping.
     * **`directoryItemTag`**: Tags for dynamic scoping.
-    * **`staticallyScoped`**: Read only optional Boolean indicating scope type.
 </Accordion>
 
 * **`scopeDirectoryItemId`**: ID for the scope directory item.
