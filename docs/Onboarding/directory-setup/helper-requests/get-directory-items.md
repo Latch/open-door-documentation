@@ -38,7 +38,7 @@ We'll use as an example `ODC Portfolio 1` Directory Item (ID `972e4151-0f73-4cd5
 ##### Request
 
 ```curl
-curl -X GET 'https://api.prod.door.com/directory/v1/items/972e4151-0f73-4cd5-913e-70dd5fc8ad45' \
+curl -X GET 'https://api.prod.door.com/directory/v1/items/4a9fc553-e920-499b-92b1-fd08e7507b91' \
   -H 'Authorization: Bearer {token}' \
   -H 'accept: */*'
 ```
@@ -69,7 +69,7 @@ The status code should be HTTP 200, with the following Response Body:
 ##### Request
 
 ```curl
-curl -X GET 'https://api.prod.door.com/directory/v1/subtree/972e4151-0f73-4cd5-913e-70dd5fc8ad45?pageSize=10' \
+curl -X GET 'https://api.prod.door.com/directory/v1/subtree/4a9fc553-e920-499b-92b1-fd08e7507b91?pageSize=10' \
   -H 'Authorization: Bearer {token}' \
   -H 'accept: */*'
 ```
