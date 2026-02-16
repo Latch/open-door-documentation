@@ -1,7 +1,7 @@
 ---
-title: Essential Permissions for Each Role Type
+title: Maximum Allowed Permissions for Each Role Type
 excerpt: >-
-  Mapping of minimum required Permission Sets to Role Type for effective user
+  Mapping of maximum allowed Permission Sets to Role Type for effective user
   functionality.
 deprecated: false
 hidden: false
@@ -13,9 +13,9 @@ metadata:
     functionality.
   robots: index
 ---
-## Minimum Permission Set Requirements for Each Role Type
+## Maximum Permissions in a Permission Set for Each Role Type
 
-This section outlines the minimum required permission sets for each role type within the system. These permissions ensure that users can perform their designated functions effectively.
+This section outlines the maximum allowed Permissions in a Permission Set for each role type within the system. You can grant less Permissions to a Role Type, but not more. These permissions ensure that users can perform their designated functions effectively.
 
 ### Role Type and Permission Mapping
 
