@@ -64,36 +64,34 @@ The request body should include the following properties:
   "clauses": [
     {
       "permissionSetId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "conditions": [
-        {
-          "dateIntervalCondition": {
-            "startDate": 0,
-            "endDate": 0
-          },
-          "weekdayTimeIntervalCondition": {
-            "intervals": [
-              {
-                "weekday": 0,
-                "startTime": "string",
-                "endTime": "string"
-              }
-            ]
-          },
-          "directoryItemTagCondition": {
-            "tags": [
-              {
-                "itemType": "ROOT",
-                "spaceType": "BUILDING_GROUP",
-                "featureFlag": "BLUEPRINT_ENABLED",
-                "vacancy": "VACANT",
-                "cortex": "ACCOUNT"
-              }
-            ]
-          },
-          "accessPermissionTypeCondition": "REACH",
-          "accessShowDoorCodesCondition": true
-        }
-      ],
+      "conditions": {
+        "dateIntervalCondition": {
+          "startDate": 0,
+          "endDate": 0
+        },
+        "weekdayTimeIntervalCondition": {
+          "intervals": [
+            {
+              "weekday": 0,
+              "startTime": "string",
+              "endTime": "string"
+            }
+          ]
+        },
+        "directoryItemTagCondition": {
+          "tags": [
+            {
+              "itemType": "ROOT",
+              "spaceType": "BUILDING_GROUP",
+              "featureFlag": "BLUEPRINT_ENABLED",
+              "vacancy": "VACANT",
+              "cortex": "ACCOUNT"
+            }
+          ]
+        },
+        "accessPermissionTypeCondition": "REACH",
+        "accessAssignDoorCodesCondition": true
+      },
       "directoryScopeSelector": {
         "directoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "directoryItemTag": {
@@ -102,8 +100,7 @@ The request body should include the following properties:
           "featureFlag": "BLUEPRINT_ENABLED",
           "vacancy": "VACANT",
           "cortex": "ACCOUNT"
-        },
-        "staticallyScoped": true
+        }
       }
     }
   ],
