@@ -13,9 +13,9 @@ metadata:
     functionality.
   robots: index
 ---
-## Maximum Permissions in a Permission Set for Each Role Type
+## Overview
 
-This section outlines the maximum allowed Permissions in a Permission Set for each role type within the system. You can grant less Permissions to a Role Type, but not more. These permissions ensure that users can perform their designated functions effectively.
+Each Role Type has a maximum set of Permissions that can be assigned. You can grant fewer Permissions to a Role Type, but not more than the maximum listed below.
 
 ### Role Type and Permission Mapping
 
