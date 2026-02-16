@@ -44,7 +44,7 @@ The Request Body should include the following JSON properties:
 
 ### Example Usage
 
-We'll use as an example data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree):
+We'll use as an example data from [1. Directory Setup → Property Setup → Automate Property Creation with the API → Create Entire Directory Structure in One Request → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree):
 
 * `directoryItemId` = `640cb5fe-8d15-4cf0-a632-8f40e11db7f5` (Parking Lot Entrance)
 * `lockId` = `AF2D7307-377C-416F-94BD-C81DB311DE19`
