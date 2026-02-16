@@ -48,7 +48,7 @@ Should contain a JSON array, `segments`, made of Objects with two properties:
 
 ### Example Usage
 
-We'll be using data from [1. Directory Setup → Property Setup → Individual Property Creation → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments as `Ancestor → Descendant` associations:
+We'll be using data from [1. Directory Setup → Property Setup → Automate Property Creation with the API → Create Entire Directory Structure in One Request → Step 4: Retrieve the entire Directory Subtree](https://opendoor-uwel.readme.io/docs/individual-property-creation#step-4-retrieve-the-entire-directory-subtree-1) to set up Access Path Segments as `Ancestor → Descendant` associations:
 
 <Accordion title="Segment 1: Parking Lot Entrance → Residential Building Entrance" icon="angle-down">
   <ul>
