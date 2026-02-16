@@ -31,7 +31,7 @@ Below you can find endpoints for retrieving existing Directory data and understa
 
 ### Example Usages
 
-We'll use as an example `ODC Portfolio 1` Directory Item (ID `972e4151-0f73-4cd5-913e-70dd5fc8ad45`) from [1. Directory Setup → Property Setup → Bulk Import Property Data → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
+We'll use as an example `ODC Portfolio 1` Directory Item (ID `972e4151-0f73-4cd5-913e-70dd5fc8ad45`) from [1. Directory Setup → Property Setup → Automate Property Creation with the API → Create Entire Directory Structure in One Request → Step 3. Validate Response](doc:https://opendoor-uwel.readme.io/docs/migrate-from-legacy-property#step-3-validate-response).
 
 #### 1. `GET /directory/v1/items/{uuid}` Endpoint to Retrieve Information About a Known Directory Item
 
@@ -49,15 +49,14 @@ The status code should be HTTP 200, with the following Response Body:
 
 ```json Response Body
 {
-  "id": "972e4151-0f73-4cd5-913e-70dd5fc8ad45",
+  "id": "4a9fc553-e920-499b-92b1-fd08e7507b91",
   "name": "ODC Portfolio 1",
-  "path": "::2018b94b-9df5-4456-9c5d-9e984993afee::972e4151-0f73-4cd5-913e-70dd5fc8ad45",
+  "path": "::e43f4017-da92-4c4a-87ff-5c5f418c3cf6::4a9fc553-e920-499b-92b1-fd08e7507b91",
   "tags": {
     "space:PORTFOLIO": "",
-    "item:SPACE": "",
-    "cortex:ACCOUNT": "936037B4-9250-4778-BC81-57660C3A011B"
+    "item:SPACE": ""
   },
-  "createdAt": "2025-12-22T17:26:19Z",
+  "createdAt": "2025-12-29T16:38:44Z",
   "createdBy": {
     "authorType": "USER",
     "authorId": "ed1bbeb6-5563-4ab3-87da-5e1a0fb2fc33"
