@@ -32,7 +32,7 @@ The Request Body should include the following JSON properties:
 * `lockId`: The Latch Cortex Lock ID.
 
 <Callout icon="📝" theme="default">
-  **Note:** The `lockId` must not be used in another Lock → Directory Item associationfor the current request to be successful.
+  **Note:** The `lockId` must not be used in another Lock → Directory Item association for the current request to be successful.
 </Callout>
 
 ```json Request Body Structure
