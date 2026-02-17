@@ -4,4 +4,6 @@
 - updatedirectoryitem
 - getuserscopes
 - getsubtree
-- getsubtree_1
+- addtag
+- removetag
+- updatetag

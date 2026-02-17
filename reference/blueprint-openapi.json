@@ -3,7 +3,7 @@
   "info": {
     "title": "OpenDOOR API",
     "description": "The OpenDOOR API provides access to the core features of the OpenDOOR platform. It allows developers to build custom applications and integrations on top of the OpenDOOR platform.",
-    "version": "0.26.0"
+    "version": "0.27.0"
   },
   "servers": [
     {
@@ -202,7 +202,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ImportDirectoryItemDto"
+                "$ref": "#/components/schemas/ImportDirectoryItem"
               }
             }
           },
@@ -214,7 +214,308 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/DirectoryItemDto"
+                  "$ref": "#/components/schemas/DirectoryItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/v1/items/{uuid}/tag/{tagType}/name/{tagName}": {
+      "post": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Update a directory item tag",
+        "operationId": "addTag",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "tagType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ITEM",
+                "SPACE",
+                "FEATURE_FLAG",
+                "VACANCY",
+                "CORTEX"
+              ]
+            }
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagValue"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the directory item tag",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Update a directory item tag",
+        "operationId": "removeTag",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "tagType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ITEM",
+                "SPACE",
+                "FEATURE_FLAG",
+                "VACANCY",
+                "CORTEX"
+              ]
+            }
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully update the directory item tag",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request could not be processed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No privileges to access the resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Directory"
+        ],
+        "summary": "Update a directory item tag",
+        "operationId": "updateTag",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "tagType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ITEM",
+                "SPACE",
+                "FEATURE_FLAG",
+                "VACANCY",
+                "CORTEX"
+              ]
+            }
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagValue"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the directory item tag",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectoryItem"
                 }
               }
             }
@@ -284,7 +585,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ImportDirectoryItemDto"
+                "$ref": "#/components/schemas/ImportDirectoryItem"
               }
             }
           },
@@ -296,7 +597,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/DirectoryItemDto"
+                  "$ref": "#/components/schemas/DirectoryItem"
                 }
               }
             }
@@ -606,7 +907,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/DirectoryItemDto"
+                  "$ref": "#/components/schemas/DirectoryItem"
                 }
               }
             }
@@ -674,7 +975,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateDirectoryItemRequestDto"
+                "$ref": "#/components/schemas/UpdateDirectoryItemRequest"
               }
             }
           },
@@ -686,7 +987,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/DirectoryItemDto"
+                  "$ref": "#/components/schemas/DirectoryItem"
                 }
               }
             }
@@ -1450,7 +1751,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DirectoryItemDto"
+                    "$ref": "#/components/schemas/DirectoryItem"
                   }
                 }
               }
@@ -1499,111 +1800,17 @@
         }
       }
     },
-    "/directory/v1/subtree": {
-      "get": {
-        "tags": [
-          "Directory"
-        ],
-        "summary": "Gets all the nodes starting from the root item recursively.",
-        "operationId": "getSubtree",
-        "parameters": [
-          {
-            "name": "pageToken",
-            "in": "query",
-            "description": "The page token for pagination",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "The page size for pagination",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 10
-            }
-          },
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "The tags to filter the subtree by",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the subtree.",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDtoDirectoryItemDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request could not be processed due to invalid parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing or invalid credentials.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "No privileges to access the resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/directory/v1/subtree/{scope}": {
+    "/directory/v1/items/{id}/subtree": {
       "get": {
         "tags": [
           "Directory"
         ],
         "summary": "Gets all the nodes under the given directory item recursively.",
-        "operationId": "getSubtree_1",
+        "description": "This endpoint can be used to retrieve a paginated parent-first subtree of a directory item. \n        The subtree is returned in a paginated format, with each page containing a specified number of nodes. \n        The nodes are returned in a parent-first order, meaning that the parent nodes are returned before their child nodes. \n        The subtree can be filtered by tags and the depth of the subtree can be specified. \n        Additionally a set of tags can be specified to filter the subtree by.",
+        "operationId": "getSubtree",
         "parameters": [
           {
-            "name": "scope",
+            "name": "id",
             "in": "path",
             "description": "The UUID of the directory item to retrieve the subtree for",
             "required": true,
@@ -1643,6 +1850,16 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "description": "The depth of the subtree to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -1651,7 +1868,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageDtoDirectoryItemDto"
+                  "$ref": "#/components/schemas/PageDtoDirectoryItem"
                 }
               }
             }
@@ -2613,10 +2830,10 @@
           }
         }
       },
-      "DirectoryTagCortexDto": {
+      "DirectoryTagCortex": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           {
             "type": "object",
@@ -2639,57 +2856,10 @@
           "type"
         ]
       },
-      "DirectoryTagDtoObject": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "ITEM": "#/components/schemas/DirectoryTagItemDto",
-            "SPACE": "#/components/schemas/DirectoryTagSpaceDto",
-            "FEATURE_FLAG": "#/components/schemas/DirectoryTagFeatureFlagDto",
-            "VACANCY": "#/components/schemas/DirectoryTagVacancyDto",
-            "CORTEX": "#/components/schemas/DirectoryTagCortexDto"
-          }
-        },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/DirectoryTagItemDto"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagSpaceDto"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagFeatureFlagDto"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagVacancyDto"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagCortexDto"
-          }
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "ITEM",
-              "SPACE",
-              "FEATURE_FLAG",
-              "VACANCY",
-              "CORTEX"
-            ]
-          },
-          "name": {}
-        },
-        "required": [
-          "name",
-          "type"
-        ]
-      },
-      "DirectoryTagFeatureFlagDto": {
+      "DirectoryTagFeatureFlag": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           {
             "type": "object",
@@ -2708,10 +2878,10 @@
           "type"
         ]
       },
-      "DirectoryTagItemDto": {
+      "DirectoryTagItem": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           {
             "type": "object",
@@ -2741,10 +2911,57 @@
           "type"
         ]
       },
-      "DirectoryTagSpaceDto": {
+      "DirectoryTagObject": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "ITEM": "#/components/schemas/DirectoryTagItem",
+            "SPACE": "#/components/schemas/DirectoryTagSpace",
+            "FEATURE_FLAG": "#/components/schemas/DirectoryTagFeatureFlag",
+            "VACANCY": "#/components/schemas/DirectoryTagVacancy",
+            "CORTEX": "#/components/schemas/DirectoryTagCortex"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/DirectoryTagItem"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagSpace"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagFeatureFlag"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagVacancy"
+          },
+          {
+            "$ref": "#/components/schemas/DirectoryTagCortex"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ITEM",
+              "SPACE",
+              "FEATURE_FLAG",
+              "VACANCY",
+              "CORTEX"
+            ]
+          },
+          "name": {}
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "DirectoryTagSpace": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           {
             "type": "object",
@@ -2783,10 +3000,10 @@
           "type"
         ]
       },
-      "DirectoryTagVacancyDto": {
+      "DirectoryTagVacancy": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           {
             "type": "object",
@@ -2806,11 +3023,12 @@
           "type"
         ]
       },
-      "DirectoryTagValueDto": {
+      "DirectoryTagValue": {
         "type": "object",
+        "description": "Tag value with tag",
         "properties": {
           "tag": {
-            "$ref": "#/components/schemas/DirectoryTagDtoObject"
+            "$ref": "#/components/schemas/DirectoryTagObject"
           },
           "value": {
             "type": "string"
@@ -2820,8 +3038,9 @@
           "tag"
         ]
       },
-      "ImportDirectoryItemDto": {
+      "ImportDirectoryItem": {
         "type": "object",
+        "description": "Import Directory Item",
         "properties": {
           "name": {
             "type": "string"
@@ -2829,13 +3048,13 @@
           "tags": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DirectoryTagValueDto"
+              "$ref": "#/components/schemas/DirectoryTagValue"
             }
           },
           "children": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ImportDirectoryItemDto"
+              "$ref": "#/components/schemas/ImportDirectoryItem"
             }
           }
         }
@@ -2900,7 +3119,7 @@
           "authorType"
         ]
       },
-      "DirectoryItemDto": {
+      "DirectoryItem": {
         "type": "object",
         "properties": {
           "id": {
@@ -2916,7 +3135,7 @@
           "tags": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DirectoryTagValueDto"
+              "$ref": "#/components/schemas/DirectoryTagValue"
             }
           },
           "createdAt": {
@@ -2932,6 +3151,14 @@
           "name",
           "path"
         ]
+      },
+      "TagValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
       },
       "ImportBuildingRequest": {
         "type": "object",
@@ -3001,25 +3228,13 @@
           "lockId"
         ]
       },
-      "UpdateDirectoryItemRequestDto": {
+      "UpdateDirectoryItemRequest": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DirectoryTagValueDto"
-            }
-          },
-          "removeMissingTags": {
-            "type": "boolean"
           }
-        },
-        "required": [
-          "removeMissingTags"
-        ]
+        }
       },
       "ScopeDirectoryItemDto": {
         "type": "object",
@@ -3038,7 +3253,7 @@
           "tags": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DirectoryTagValueDto"
+              "$ref": "#/components/schemas/DirectoryTagValue"
             }
           }
         },
@@ -3274,13 +3489,13 @@
           }
         }
       },
-      "PageDtoDirectoryItemDto": {
+      "PageDtoDirectoryItem": {
         "type": "object",
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DirectoryItemDto"
+              "$ref": "#/components/schemas/DirectoryItem"
             }
           },
           "nextPageToken": {
