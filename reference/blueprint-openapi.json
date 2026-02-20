@@ -3,7 +3,7 @@
   "info": {
     "title": "OpenDOOR API",
     "description": "The OpenDOOR API provides access to the core features of the OpenDOOR platform. It allows developers to build custom applications and integrations on top of the OpenDOOR platform.",
-    "version": "0.27.0"
+    "version": "0.28.1"
   },
   "servers": [
     {
@@ -184,77 +184,6 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/PermissionSetDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/directory/v1/items": {
-      "post": {
-        "tags": [
-          "Directory"
-        ],
-        "summary": "Create a directory item and its subtree.",
-        "operationId": "createTopDirectoryItem",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ImportDirectoryItem"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully created the subtree.",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/DirectoryItem"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request could not be processed due to invalid parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing or invalid credentials.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "No privileges to access the resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1916,38 +1845,6 @@
         }
       }
     },
-    "/access/v1/paths/{directoryItemId}/descendants": {
-      "get": {
-        "tags": [
-          "Access Paths"
-        ],
-        "summary": "Get direct descendants of the given directory item.",
-        "operationId": "getDirectDescendants",
-        "parameters": [
-          {
-            "name": "directoryItemId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/DescendantsDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/access/v1/paths/to/{directoryItemId}": {
       "get": {
         "tags": [
@@ -2013,6 +1910,38 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/AccessPathsToItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access/v1/paths/from/{directoryItemId}": {
+      "get": {
+        "tags": [
+          "Access Paths"
+        ],
+        "summary": "Get access paths directly originating from a directory item",
+        "operationId": "getDirectDescendants",
+        "parameters": [
+          {
+            "name": "directoryItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DescendantsDto"
                 }
               }
             }
@@ -2404,7 +2333,7 @@
       "RoleClauseDTO": {
         "type": "object",
         "properties": {
-          "id": {
+          "roleClauseId": {
             "type": "string",
             "format": "uuid"
           },
@@ -2830,6 +2759,107 @@
           }
         }
       },
+      "TagValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "exception": {
+            "type": "string"
+          },
+          "trace": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "exception",
+          "message",
+          "path",
+          "requestId",
+          "status",
+          "timestamp",
+          "trace"
+        ]
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "authorType": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "USER",
+              "CLIENT",
+              "UNKNOWN"
+            ]
+          },
+          "authorId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authorType"
+        ]
+      },
+      "DirectoryItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValue"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/Author"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "path"
+        ]
+      },
       "DirectoryTagCortex": {
         "allOf": [
           {
@@ -3056,107 +3086,6 @@
             "items": {
               "$ref": "#/components/schemas/ImportDirectoryItem"
             }
-          }
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "timestamp": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "error": {
-            "type": "string"
-          },
-          "requestId": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "exception": {
-            "type": "string"
-          },
-          "trace": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "error",
-          "exception",
-          "message",
-          "path",
-          "requestId",
-          "status",
-          "timestamp",
-          "trace"
-        ]
-      },
-      "Author": {
-        "type": "object",
-        "properties": {
-          "authorType": {
-            "type": "string",
-            "enum": [
-              "SERVICE",
-              "USER",
-              "CLIENT",
-              "UNKNOWN"
-            ]
-          },
-          "authorId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "authorType"
-        ]
-      },
-      "DirectoryItem": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DirectoryTagValue"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/Author"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "path"
-        ]
-      },
-      "TagValue": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
           }
         }
       },
@@ -3586,42 +3515,47 @@
           }
         }
       },
-      "DescendantsDto": {
-        "type": "object",
-        "properties": {
-          "directoryItemIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        },
-        "required": [
-          "directoryItemIds"
-        ]
-      },
       "AccessPathDto": {
         "type": "object",
         "properties": {
-          "directoryItemIds": {
+          "directoryItems": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "$ref": "#/components/schemas/AccessPathItemDto"
             }
           }
         },
         "required": [
-          "directoryItemIds"
+          "directoryItems"
+        ]
+      },
+      "AccessPathItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValue"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name"
         ]
       },
       "AccessPathsToItem": {
         "type": "object",
         "properties": {
-          "targetDirectoryItemId": {
-            "type": "string",
-            "format": "uuid"
+          "targetDirectoryItem": {
+            "$ref": "#/components/schemas/AccessPathItemDto"
           },
           "paths": {
             "type": "array",
@@ -3632,7 +3566,21 @@
         },
         "required": [
           "paths",
-          "targetDirectoryItemId"
+          "targetDirectoryItem"
+        ]
+      },
+      "DescendantsDto": {
+        "type": "object",
+        "properties": {
+          "directoryItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccessPathItemDto"
+            }
+          }
+        },
+        "required": [
+          "directoryItems"
         ]
       },
       "PageDtoDirectoryItemLockDto": {
