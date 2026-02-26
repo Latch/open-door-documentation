@@ -144,362 +144,240 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
 
 ```json Request Body
 {
-    "name": "ODC Portfolio 1",
-    "tags": {
-        "space:PORTFOLIO": "",
-        "item:SPACE": ""
-    },
-    "children": [
+  "name": "ODC Portfolio 1",
+  "tags": [
+    { "tag": { "type": "SPACE", "name": "PORTFOLIO" } },
+    { "tag": { "type": "ITEM", "name": "SPACE" } }
+  ],
+  "children": [
+    {
+      "name": "ODCP1 Property 1",
+      "tags": [
+        { "tag": { "type": "SPACE", "name": "PROPERTY" } },
+        { "tag": { "type": "ITEM", "name": "SPACE" } }
+      ],
+      "children": [
         {
-            "name": "ODCP1 Property 1",
-            "tags": {
-                "space:PROPERTY": "",
-                "item:SPACE": ""
+          "name": "Parking Lot",
+          "tags": [
+            { "tag": { "type": "SPACE", "name": "BUILDING" } },
+            { "tag": { "type": "ITEM", "name": "SPACE" } }
+          ],
+          "children": [
+            {
+              "name": "Parking Lot Entrance",
+              "tags": [
+                { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                { "tag": { "type": "ITEM", "name": "SPACE" } }
+              ]
             },
-            "children": [
+            {
+              "name": "Staff Parking",
+              "tags": [
+                { "tag": { "type": "SPACE", "name": "PARKING_GROUP" } },
+                { "tag": { "type": "ITEM", "name": "SPACE" } }
+              ],
+              "children": [
                 {
-                    "name": "Parking Lot",
-                    "tags": {
-                        "space:BUILDING": "",
-                        "item:SPACE": ""
-                    },
-                    "children": [
-                        {
-                            "name": "Parking Lot Entrance",
-                            "tags": {
-                                "space:ENTRANCE": "",
-                                "item:SPACE": ""
-                            }
-                        },
-                        {
-                            "name": "Staff Parking",
-                            "tags": {
-                                "space:PARKING_GROUP": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Staff Slot 1",
-                                    "tags": {
-                                        "space:PARKING_SLOT": "",
-                                        "item:SPACE": ""
-                                    }
-                                },
-                                {
-                                    "name": "Staff Slot 10",
-                                    "tags": {
-                                        "space:PARKING_SLOT": "",
-                                        "item:SPACE": ""
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Residents Parking",
-                            "tags": {
-                                "space:PARKING_GROUP": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Residents Slot 101",
-                                    "tags": {
-                                        "space:PARKING_SLOT": "",
-                                        "item:SPACE": ""
-                                    }
-                                },
-                                {
-                                    "name": "Residents Slot 310",
-                                    "tags": {
-                                        "space:PARKING_SLOT": "",
-                                        "item:SPACE": ""
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+                  "name": "Staff Slot 1",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
                 },
                 {
-                    "name": "Residential Building",
-                    "tags": {
-                        "space:BUILDING": "",
-                        "item:SPACE": ""
-                    },
-                    "children": [
-                        {
-                            "name": "Residential Building Entrance",
-                            "tags": {
-                                "space:ENTRANCE": "",
-                                "item:SPACE": ""
-                            }
-                        },
-                        {
-                            "name": "Common Areas",
-                            "tags": {
-                                "space:COMMON_GROUP": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Lobby",
-                                    "tags": {
-                                        "space:COMMON_AREA": "",
-                                        "item:SPACE": ""
-                                    }
-                                },
-                                {
-                                    "name": "Package Room",
-                                    "tags": {
-                                        "space:COMMON_AREA": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Delivery Service Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        },
-                                        {
-                                            "name": "Lockbox 101",
-                                            "tags": {
-                                                "space:STORAGE_SLOT": "",
-                                                "item:SPACE": ""
-                                            }
-                                        },
-                                        {
-                                            "name": "Lockbox 310",
-                                            "tags": {
-                                                "space:STORAGE_SLOT": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "Elevator 1",
-                                    "tags": {
-                                        "space:COMMON_AREA": "",
-                                        "item:SPACE": ""
-                                    }
-                                },
-                                {
-                                    "name": "Elevator 2",
-                                    "tags": {
-                                        "space:COMMON_AREA": "",
-                                        "item:SPACE": ""
-                                    }
-                                },
-                                {
-                                    "name": "Amenities",
-                                    "tags": {
-                                        "space:COMMON_AREA": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Amenities Entrance",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        },
-                                        {
-                                            "name": "Spa",
-                                            "tags": {
-                                                "space:COMMON_AREA": "",
-                                                "item:SPACE": ""
-                                            },
-                                            "children": [
-                                                {
-                                                    "name": "Spa Door",
-                                                    "tags": {
-                                                        "space:ENTRANCE": "",
-                                                        "item:SPACE": ""
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "name": "Gym",
-                                            "tags": {
-                                              "space:COMMON_AREA": "",
-                                              "item:SPACE": ""
-                                            },
-                                            "children": [
-                                                {
-                                                    "name": "Gym Door",
-                                                    "tags": {
-                                                        "space:ENTRANCE": "",
-                                                        "item:SPACE": ""
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "name": "Meeting Rooms",
-                                            "tags": {
-                                                "space:COMMON_AREA": "",
-                                                "item:SPACE": ""
-                                            },
-                                            "children": [
-                                                {
-                                                    "name": "Meeting Rooms Door",
-                                                    "tags": {
-                                                        "space:ENTRANCE": "",
-                                                        "item:SPACE": ""
-                                                    }
-                                                },
-                                                {
-                                                    "name": "Room 1",
-                                                    "tags": {
-                                                        "space:ROOM": "",
-                                                        "item:SPACE": ""
-                                                    }
-                                                },
-                                                {
-                                                    "name": "Room 6",
-                                                    "tags": {
-                                                        "space:ROOM": "",
-                                                        "item:SPACE": ""
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Floor 1",
-                            "tags": {
-                                "space:FLOOR": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Floor 1 - Unit 101",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 1 - Unit 101 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "Floor 1 - Unit 110",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 1 - Unit 110 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Floor 2",
-                            "tags": {
-                                "space:FLOOR": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Floor 2 - Unit 201",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 2 - Unit 201 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "Floor 2 - Unit 210",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 2 - Unit 210 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Floor 3",
-                            "tags": {
-                                "space:FLOOR": "",
-                                "item:SPACE": ""
-                            },
-                            "children": [
-                                {
-                                    "name": "Floor 3 - Unit 301",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 3 - Unit 301 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "Floor 3 - Unit 310",
-                                    "tags": {
-                                        "space:UNIT": "",
-                                        "item:SPACE": ""
-                                    },
-                                    "children": [
-                                        {
-                                            "name": "Floor 3 - Unit 310 Door",
-                                            "tags": {
-                                                "space:ENTRANCE": "",
-                                                "item:SPACE": ""
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
+                  "name": "Staff Slot 10",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
                 }
-            ]
+              ]
+            },
+            {
+              "name": "Residents Parking",
+              "tags": [
+                { "tag": { "type": "SPACE", "name": "PARKING_GROUP" } },
+                { "tag": { "type": "ITEM", "name": "SPACE" } }
+              ],
+              "children": [
+                {
+                  "name": "Residents Slot 101",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
+                },
+                {
+                  "name": "Residents Slot 310",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Residential Building",
+          "tags": [
+            { "tag": { "type": "SPACE", "name": "BUILDING" } },
+            { "tag": { "type": "ITEM", "name": "SPACE" } }
+          ],
+          "children": [
+            {
+              "name": "Residential Building Entrance",
+              "tags": [
+                { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                { "tag": { "type": "ITEM", "name": "SPACE" } }
+              ]
+            },
+            {
+              "name": "Common Areas",
+              "tags": [
+                { "tag": { "type": "SPACE", "name": "COMMON_GROUP" } },
+                { "tag": { "type": "ITEM", "name": "SPACE" } }
+              ],
+              "children": [
+                {
+                  "name": "Lobby",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
+                },
+                {
+                  "name": "Package Room",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ],
+                  "children": [
+                    {
+                      "name": "Delivery Service Door",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ]
+                    },
+                    {
+                      "name": "Lockbox 101",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ]
+                    },
+                    {
+                      "name": "Lockbox 310",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Elevator 1",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
+                },
+                {
+                  "name": "Elevator 2",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ]
+                },
+                {
+                  "name": "Amenities",
+                  "tags": [
+                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                  ],
+                  "children": [
+                    {
+                      "name": "Amenities Entrance",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ]
+                    },
+                    {
+                      "name": "Spa",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ],
+                      "children": [
+                        {
+                          "name": "Spa Door",
+                          "tags": [
+                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Gym",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ],
+                      "children": [
+                        {
+                          "name": "Gym Door",
+                          "tags": [
+                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Meeting Rooms",
+                      "tags": [
+                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
+                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                      ],
+                      "children": [
+                        {
+                          "name": "Meeting Rooms Door",
+                          "tags": [
+                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
+                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                          ]
+                        },
+                        {
+                          "name": "Room 1",
+                          "tags": [
+                            { "tag": { "type": "SPACE", "name": "ROOM" } },
+                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                          ]
+                        },
+                        {
+                          "name": "Room 6",
+                          "tags": [
+                            { "tag": { "type": "SPACE", "name": "ROOM" } },
+                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
+
 ```
 
 #### Step 2: Send Request!
