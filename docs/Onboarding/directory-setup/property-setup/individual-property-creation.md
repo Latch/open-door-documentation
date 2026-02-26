@@ -146,50 +146,120 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
 {
   "name": "ODC Portfolio 1",
   "tags": [
-    { "tag": { "type": "SPACE", "name": "PORTFOLIO" } },
-    { "tag": { "type": "ITEM", "name": "SPACE" } }
+    {
+      "tag": {
+        "type": "SPACE",
+        "name": "PORTFOLIO"
+      }
+    },
+    {
+      "tag": {
+        "type": "ITEM",
+        "name": "SPACE"
+      }
+    }
   ],
   "children": [
     {
       "name": "ODCP1 Property 1",
       "tags": [
-        { "tag": { "type": "SPACE", "name": "PROPERTY" } },
-        { "tag": { "type": "ITEM", "name": "SPACE" } }
+        {
+          "tag": {
+            "type": "SPACE",
+            "name": "PROPERTY"
+          }
+        },
+        {
+          "tag": {
+            "type": "ITEM",
+            "name": "SPACE"
+          }
+        }
       ],
       "children": [
         {
           "name": "Parking Lot",
           "tags": [
-            { "tag": { "type": "SPACE", "name": "BUILDING" } },
-            { "tag": { "type": "ITEM", "name": "SPACE" } }
+            {
+              "tag": {
+                "type": "SPACE",
+                "name": "BUILDING"
+              }
+            },
+            {
+              "tag": {
+                "type": "ITEM",
+                "name": "SPACE"
+              }
+            }
           ],
           "children": [
             {
               "name": "Parking Lot Entrance",
               "tags": [
-                { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                { "tag": { "type": "ITEM", "name": "SPACE" } }
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "ENTRANCE"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
               ]
             },
             {
               "name": "Staff Parking",
               "tags": [
-                { "tag": { "type": "SPACE", "name": "PARKING_GROUP" } },
-                { "tag": { "type": "ITEM", "name": "SPACE" } }
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "PARKING_GROUP"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
               ],
               "children": [
                 {
                   "name": "Staff Slot 1",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "PARKING_SLOT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 },
                 {
                   "name": "Staff Slot 10",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "PARKING_SLOT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 }
               ]
@@ -197,22 +267,52 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
             {
               "name": "Residents Parking",
               "tags": [
-                { "tag": { "type": "SPACE", "name": "PARKING_GROUP" } },
-                { "tag": { "type": "ITEM", "name": "SPACE" } }
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "PARKING_GROUP"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
               ],
               "children": [
                 {
                   "name": "Residents Slot 101",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "PARKING_SLOT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 },
                 {
                   "name": "Residents Slot 310",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "PARKING_SLOT" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "PARKING_SLOT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 }
               ]
@@ -222,57 +322,137 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
         {
           "name": "Residential Building",
           "tags": [
-            { "tag": { "type": "SPACE", "name": "BUILDING" } },
-            { "tag": { "type": "ITEM", "name": "SPACE" } }
+            {
+              "tag": {
+                "type": "SPACE",
+                "name": "BUILDING"
+              }
+            },
+            {
+              "tag": {
+                "type": "ITEM",
+                "name": "SPACE"
+              }
+            }
           ],
           "children": [
             {
               "name": "Residential Building Entrance",
               "tags": [
-                { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                { "tag": { "type": "ITEM", "name": "SPACE" } }
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "ENTRANCE"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
               ]
             },
             {
               "name": "Common Areas",
               "tags": [
-                { "tag": { "type": "SPACE", "name": "COMMON_GROUP" } },
-                { "tag": { "type": "ITEM", "name": "SPACE" } }
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "COMMON_AREA"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
               ],
               "children": [
                 {
                   "name": "Lobby",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "COMMON_AREA"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 },
                 {
                   "name": "Package Room",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "STORAGE_SLOT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ],
                   "children": [
                     {
                       "name": "Delivery Service Door",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ]
                     },
                     {
                       "name": "Lockbox 101",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "STORAGE_SLOT"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ]
                     },
                     {
                       "name": "Lockbox 310",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "STORAGE_SLOT" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "STORAGE_SLOT"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ]
                     }
                   ]
@@ -280,43 +460,103 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
                 {
                   "name": "Elevator 1",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "COMMON_AREA"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 },
                 {
                   "name": "Elevator 2",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "COMMON_AREA"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ]
                 },
                 {
                   "name": "Amenities",
                   "tags": [
-                    { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                    { "tag": { "type": "ITEM", "name": "SPACE" } }
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "COMMON_AREA"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
                   ],
                   "children": [
                     {
                       "name": "Amenities Entrance",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ]
                     },
                     {
                       "name": "Spa",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "COMMON_AREA"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ],
                       "children": [
                         {
                           "name": "Spa Door",
                           "tags": [
-                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                            {
+                              "tag": {
+                                "type": "SPACE",
+                                "name": "ENTRANCE"
+                              }
+                            },
+                            {
+                              "tag": {
+                                "type": "ITEM",
+                                "name": "SPACE"
+                              }
+                            }
                           ]
                         }
                       ]
@@ -324,15 +564,35 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
                     {
                       "name": "Gym",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "COMMON_AREA"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ],
                       "children": [
                         {
                           "name": "Gym Door",
                           "tags": [
-                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                            {
+                              "tag": {
+                                "type": "SPACE",
+                                "name": "ENTRANCE"
+                              }
+                            },
+                            {
+                              "tag": {
+                                "type": "ITEM",
+                                "name": "SPACE"
+                              }
+                            }
                           ]
                         }
                       ]
@@ -340,30 +600,343 @@ We will be using Directory structure from [Example Directory Structure](doc:exam
                     {
                       "name": "Meeting Rooms",
                       "tags": [
-                        { "tag": { "type": "SPACE", "name": "COMMON_AREA" } },
-                        { "tag": { "type": "ITEM", "name": "SPACE" } }
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "COMMON_AREA"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
                       ],
                       "children": [
                         {
                           "name": "Meeting Rooms Door",
                           "tags": [
-                            { "tag": { "type": "SPACE", "name": "ENTRANCE" } },
-                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                            {
+                              "tag": {
+                                "type": "SPACE",
+                                "name": "ENTRANCE"
+                              }
+                            },
+                            {
+                              "tag": {
+                                "type": "ITEM",
+                                "name": "SPACE"
+                              }
+                            }
                           ]
                         },
                         {
                           "name": "Room 1",
                           "tags": [
-                            { "tag": { "type": "SPACE", "name": "ROOM" } },
-                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                            {
+                              "tag": {
+                                "type": "SPACE",
+                                "name": "ROOM"
+                              }
+                            },
+                            {
+                              "tag": {
+                                "type": "ITEM",
+                                "name": "SPACE"
+                              }
+                            }
                           ]
                         },
                         {
                           "name": "Room 6",
                           "tags": [
-                            { "tag": { "type": "SPACE", "name": "ROOM" } },
-                            { "tag": { "type": "ITEM", "name": "SPACE" } }
+                            {
+                              "tag": {
+                                "type": "SPACE",
+                                "name": "ROOM"
+                              }
+                            },
+                            {
+                              "tag": {
+                                "type": "ITEM",
+                                "name": "SPACE"
+                              }
+                            }
                           ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Floor 1",
+              "tags": [
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "FLOOR"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "name": "Floor 1 - Unit 101",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 1 - Unit 101 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Floor 1 - Unit 110",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 1 - Unit 110 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Floor 2",
+              "tags": [
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "FLOOR"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "name": "Floor 2 - Unit 201",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 2 - Unit 201 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Floor 2 - Unit 210",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 2 - Unit 210 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Floor 3",
+              "tags": [
+                {
+                  "tag": {
+                    "type": "SPACE",
+                    "name": "FLOOR"
+                  }
+                },
+                {
+                  "tag": {
+                    "type": "ITEM",
+                    "name": "SPACE"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "name": "Floor 3 - Unit 301",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 3 - Unit 301 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Floor 3 - Unit 310",
+                  "tags": [
+                    {
+                      "tag": {
+                        "type": "SPACE",
+                        "name": "UNIT"
+                      }
+                    },
+                    {
+                      "tag": {
+                        "type": "ITEM",
+                        "name": "SPACE"
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "name": "Floor 3 - Unit 310 Door",
+                      "tags": [
+                        {
+                          "tag": {
+                            "type": "SPACE",
+                            "name": "ENTRANCE"
+                          }
+                        },
+                        {
+                          "tag": {
+                            "type": "ITEM",
+                            "name": "SPACE"
+                          }
                         }
                       ]
                     }
