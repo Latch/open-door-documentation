@@ -1,9 +1,9 @@
 - prerequisites
 - authentication
 - directory-setup
+- permission-sets-setup
 - assign-locks-to-directories
 - access-paths-setup
-- permission-sets-setup
 - roles-setup
 - role-assignments
 - handover-to-property-manager-tbd
