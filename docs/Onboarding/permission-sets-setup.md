@@ -1,5 +1,5 @@
 ---
-title: 4. Permission Sets Setup
+title: 2. Permission Sets Setup
 excerpt: POST Permission Set.
 deprecated: false
 hidden: false
@@ -7,7 +7,7 @@ metadata:
   robots: index
 ---
 <Callout icon="📝" theme="info">
-  **Step 3/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
+  **Step 2/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
 </Callout>
 
 Create Sets of Permissions that define the capabilities Roles will have.
