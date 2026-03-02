@@ -10,8 +10,8 @@ next:
     Once your directory structure is confirmed to be correct and complete,
     proceed with the next step.
   pages:
-    - slug: assign-locks-to-directories
-      title: 2. Directory Locks Setup
+    - slug: permission-sets-setup
+      title: 4. Permission Sets Setup
       type: basic
 ---
 Please do not attempt to follow these instructions for your first few properties. Instead, rely on your DOOR Sales Representative to verify and create your directory structure, as described in [Prepare and Submit Property Data](doc:migrate-from-legacy-property). Only follow these instructions when the required directory structure is confirmed to be working in other properties.
