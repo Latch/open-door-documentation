@@ -2,8 +2,8 @@
 - authentication
 - directory-setup
 - permission-sets-setup
+- roles-setup
 - assign-locks-to-directories
 - access-paths-setup
-- roles-setup
 - role-assignments
 - handover-to-property-manager-tbd
