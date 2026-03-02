@@ -28,7 +28,7 @@ Create Sets of Permissions that define the capabilities Roles will have.
 
 Include the following JSON properties:
 
-* `locationDirectoryItemId`: Directory Item ID where the Permission Set is applicable. It can be your Root Directory Item, allowing application to sub-Directories.
+* `locationDirectoryItemId`: Directory Item ID where the Permission Set is applicable. It can be the Directory Item of your **Account**, allowing application to every space within your account.
 * `name`: Name of the Permission Set.
 * `permissions`: A String array containing OpenDOOR Permissions.
 
