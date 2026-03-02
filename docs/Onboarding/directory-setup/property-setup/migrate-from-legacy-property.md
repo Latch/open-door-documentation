@@ -10,8 +10,8 @@ next:
     Expect feedback from your Sales Representative. Once done, proceed with the
     next step.
   pages:
-    - slug: access-paths-setup
-      title: 3. Access Paths Setup
+    - slug: permission-sets-setup
+      title: 4. Permission Sets Setup
       type: basic
 ---
 <Callout icon="🤝" theme="info">
