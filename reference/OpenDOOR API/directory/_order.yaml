@@ -1,8 +1,8 @@
 - createdirectoryitem
 - getdirectoryitem
 - updatedirectoryitem
-- getuserscopes
 - getsubtree
 - addtag
 - removetag
 - updatetag
+- getuseritemsbytag

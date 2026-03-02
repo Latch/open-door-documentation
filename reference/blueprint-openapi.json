@@ -3,7 +3,7 @@
   "info": {
     "title": "OpenDOOR API",
     "description": "The OpenDOOR API provides access to the core features of the OpenDOOR platform. It allows developers to build custom applications and integrations on top of the OpenDOOR platform.",
-    "version": "0.28.1"
+    "version": "0.34.0"
   },
   "servers": [
     {
@@ -1460,6 +1460,7 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
                 "VIEW_LOCKS"
               ]
@@ -1527,6 +1528,7 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
                 "VIEW_LOCKS"
               ]
@@ -1610,6 +1612,7 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
                 "VIEW_LOCKS"
               ]
@@ -1654,34 +1657,68 @@
         }
       }
     },
-    "/directory/v1/user/scopes/{root}": {
+    "/directory/v1/user/items/tag/{tagType}/name/{tagName}": {
       "get": {
         "tags": [
           "Directory"
         ],
-        "summary": "Gets all the accessible scopes for the user",
-        "operationId": "getUserScopes",
+        "summary": "Get visible directory items by tag",
+        "description": "Gets directory items visible to the current user, filtered by a specific tag. Searches ancestors first, then subtree if no ancestor match is found. Pagination is best-effort: the first page includes all ancestor matches before subtree traversal, so the number of returned items may exceed pageSize.",
+        "operationId": "getUserItemsByTag",
         "parameters": [
           {
-            "name": "root",
+            "name": "tagType",
             "in": "path",
+            "description": "The tag type to filter by (e.g. SPACE)",
             "required": true,
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "enum": [
+                "ITEM",
+                "SPACE",
+                "FEATURE_FLAG",
+                "VACANCY",
+                "CORTEX"
+              ]
+            }
+          },
+          {
+            "name": "tagName",
+            "in": "path",
+            "description": "The tag name to filter by (e.g. PROPERTY)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Approximate page size for pagination. First-page ancestor matches are returned in full and can exceed this value.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1000
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The page token for pagination",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the scopes.",
+            "description": "Successfully retrieved the directory items.",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DirectoryItem"
-                  }
+                  "$ref": "#/components/schemas/PageDtoUserDirectoryItem"
                 }
               }
             }
@@ -2170,6 +2207,7 @@
         "type": "object",
         "properties": {
           "itemType": {
+            "type": "string",
             "enum": [
               "ROOT",
               "PORTFOLIO",
@@ -2182,10 +2220,12 @@
               "CONTROL",
               "CONTENT",
               "INVENTORY_ITEM",
-              "COMPLIANCE_ITEM"
+              "COMPLIANCE_ITEM",
+              "UNRECOGNIZED"
             ]
           },
           "spaceType": {
+            "type": "string",
             "enum": [
               "BUILDING_GROUP",
               "BUILDING",
@@ -2211,26 +2251,33 @@
               "SPACE_COMMON_AREA",
               "SPACE_PRIVATE_GROUP",
               "SPACE_PRIVATE_AREA",
-              "SPACE_ENTRANCE"
+              "SPACE_ENTRANCE",
+              "UNRECOGNIZED"
             ]
           },
           "featureFlag": {
+            "type": "string",
             "enum": [
-              "BLUEPRINT_ENABLED"
+              "BLUEPRINT_ENABLED",
+              "UNRECOGNIZED"
             ]
           },
           "vacancy": {
+            "type": "string",
             "enum": [
               "VACANT",
-              "OCCUPIED"
+              "OCCUPIED",
+              "UNRECOGNIZED"
             ]
           },
           "cortex": {
+            "type": "string",
             "enum": [
               "ACCOUNT",
               "BUILDING",
               "UNIT",
-              "DOOR"
+              "DOOR",
+              "UNRECOGNIZED"
             ]
           }
         }
@@ -2269,12 +2316,14 @@
             "type": "string"
           },
           "type": {
+            "type": "string",
             "enum": [
               "ROLE_TYPE_GUEST",
               "ROLE_TYPE_RESIDENT",
               "ROLE_TYPE_VENDOR",
               "ROLE_TYPE_STAFF",
-              "ROLE_TYPE_ADMIN"
+              "ROLE_TYPE_ADMIN",
+              "UNRECOGNIZED"
             ]
           },
           "clauses": {
@@ -2282,10 +2331,6 @@
             "items": {
               "$ref": "#/components/schemas/RoleCreationRequestClauseDTO"
             }
-          },
-          "scopeDirectoryItemId": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       },
@@ -2319,9 +2364,11 @@
         "type": "object",
         "properties": {
           "idSource": {
+            "type": "string",
             "enum": [
               "DOOR_USER_IDP",
-              "DOOR_SERVICE"
+              "DOOR_SERVICE",
+              "UNRECOGNIZED"
             ]
           },
           "id": {
@@ -2364,12 +2411,14 @@
             "type": "string"
           },
           "type": {
+            "type": "string",
             "enum": [
               "ROLE_TYPE_GUEST",
               "ROLE_TYPE_RESIDENT",
               "ROLE_TYPE_VENDOR",
               "ROLE_TYPE_STAFF",
-              "ROLE_TYPE_ADMIN"
+              "ROLE_TYPE_ADMIN",
+              "UNRECOGNIZED"
             ]
           },
           "clauses": {
@@ -2420,9 +2469,6 @@
           "name": {
             "type": "string"
           },
-          "locationDirectoryItemId": {
-            "type": "string"
-          },
           "scopeDefinitions": {
             "type": "array",
             "items": {
@@ -2455,6 +2501,7 @@
           "permissions": {
             "type": "array",
             "items": {
+              "type": "string",
               "enum": [
                 "MANAGE_DIRECTORY",
                 "OCCUPY",
@@ -2481,8 +2528,10 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
-                "VIEW_LOCKS"
+                "VIEW_LOCKS",
+                "UNRECOGNIZED"
               ]
             }
           }
@@ -2492,9 +2541,11 @@
         "type": "object",
         "properties": {
           "idSource": {
+            "type": "string",
             "enum": [
               "DOOR_USER_IDP",
-              "DOOR_SERVICE"
+              "DOOR_SERVICE",
+              "UNRECOGNIZED"
             ]
           },
           "id": {
@@ -2541,10 +2592,12 @@
             "type": "boolean"
           },
           "provisioningStatus": {
+            "type": "string",
             "enum": [
               "PROVISIONING_STATUS_PENDING",
               "PROVISIONING_STATUS_SUCCESS",
-              "PROVISIONING_STATUS_FAILURE"
+              "PROVISIONING_STATUS_FAILURE",
+              "UNRECOGNIZED"
             ]
           }
         }
@@ -2590,19 +2643,23 @@
             "format": "int64"
           },
           "provisioningStatus": {
+            "type": "string",
             "enum": [
               "PROVISIONING_STATUS_PENDING",
               "PROVISIONING_STATUS_SUCCESS",
-              "PROVISIONING_STATUS_FAILURE"
+              "PROVISIONING_STATUS_FAILURE",
+              "UNRECOGNIZED"
             ]
           },
           "type": {
+            "type": "string",
             "enum": [
               "ROLE_TYPE_GUEST",
               "ROLE_TYPE_RESIDENT",
               "ROLE_TYPE_VENDOR",
               "ROLE_TYPE_STAFF",
-              "ROLE_TYPE_ADMIN"
+              "ROLE_TYPE_ADMIN",
+              "UNRECOGNIZED"
             ]
           },
           "startTime": {
@@ -2641,9 +2698,6 @@
           "name": {
             "type": "string"
           },
-          "locationDirectoryItemId": {
-            "type": "string"
-          },
           "scopeDefinitions": {
             "type": "array",
             "items": {
@@ -2676,6 +2730,7 @@
           "permissions": {
             "type": "array",
             "items": {
+              "type": "string",
               "enum": [
                 "MANAGE_DIRECTORY",
                 "OCCUPY",
@@ -2702,8 +2757,10 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
-                "VIEW_LOCKS"
+                "VIEW_LOCKS",
+                "UNRECOGNIZED"
               ]
             }
           }
@@ -2726,6 +2783,7 @@
           "permissions": {
             "type": "array",
             "items": {
+              "type": "string",
               "enum": [
                 "MANAGE_DIRECTORY",
                 "OCCUPY",
@@ -2752,8 +2810,10 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
-                "VIEW_LOCKS"
+                "VIEW_LOCKS",
+                "UNRECOGNIZED"
               ]
             }
           }
@@ -2795,17 +2855,7 @@
           "trace": {
             "type": "string"
           }
-        },
-        "required": [
-          "error",
-          "exception",
-          "message",
-          "path",
-          "requestId",
-          "status",
-          "timestamp",
-          "trace"
-        ]
+        }
       },
       "Author": {
         "type": "object",
@@ -2822,10 +2872,7 @@
           "authorId": {
             "type": "string"
           }
-        },
-        "required": [
-          "authorType"
-        ]
+        }
       },
       "DirectoryItem": {
         "type": "object",
@@ -2853,12 +2900,7 @@
           "createdBy": {
             "$ref": "#/components/schemas/Author"
           }
-        },
-        "required": [
-          "id",
-          "name",
-          "path"
-        ]
+        }
       },
       "DirectoryTagCortex": {
         "allOf": [
@@ -2880,11 +2922,7 @@
             }
           }
         ],
-        "description": "Internal tag used to map legacy entities",
-        "required": [
-          "name",
-          "type"
-        ]
+        "description": "Internal tag used to map legacy entities"
       },
       "DirectoryTagFeatureFlag": {
         "allOf": [
@@ -2902,10 +2940,6 @@
               }
             }
           }
-        ],
-        "required": [
-          "name",
-          "type"
         ]
       },
       "DirectoryTagItem": {
@@ -2935,10 +2969,6 @@
               }
             }
           }
-        ],
-        "required": [
-          "name",
-          "type"
         ]
       },
       "DirectoryTagObject": {
@@ -2953,23 +2983,6 @@
             "CORTEX": "#/components/schemas/DirectoryTagCortex"
           }
         },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/DirectoryTagItem"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagSpace"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagFeatureFlag"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagVacancy"
-          },
-          {
-            "$ref": "#/components/schemas/DirectoryTagCortex"
-          }
-        ],
         "properties": {
           "type": {
             "type": "string",
@@ -2982,11 +2995,7 @@
             ]
           },
           "name": {}
-        },
-        "required": [
-          "name",
-          "type"
-        ]
+        }
       },
       "DirectoryTagSpace": {
         "allOf": [
@@ -3024,10 +3033,6 @@
               }
             }
           }
-        ],
-        "required": [
-          "name",
-          "type"
         ]
       },
       "DirectoryTagVacancy": {
@@ -3047,10 +3052,6 @@
               }
             }
           }
-        ],
-        "required": [
-          "name",
-          "type"
         ]
       },
       "DirectoryTagValue": {
@@ -3058,15 +3059,28 @@
         "description": "Tag value with tag",
         "properties": {
           "tag": {
-            "$ref": "#/components/schemas/DirectoryTagObject"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DirectoryTagCortex"
+              },
+              {
+                "$ref": "#/components/schemas/DirectoryTagFeatureFlag"
+              },
+              {
+                "$ref": "#/components/schemas/DirectoryTagItem"
+              },
+              {
+                "$ref": "#/components/schemas/DirectoryTagSpace"
+              },
+              {
+                "$ref": "#/components/schemas/DirectoryTagVacancy"
+              }
+            ]
           },
           "value": {
             "type": "string"
           }
-        },
-        "required": [
-          "tag"
-        ]
+        }
       },
       "ImportDirectoryItem": {
         "type": "object",
@@ -3102,11 +3116,7 @@
           "name": {
             "type": "string"
           }
-        },
-        "required": [
-          "buildingId",
-          "directoryItemId"
-        ]
+        }
       },
       "AccessPathSegmentDto": {
         "type": "object",
@@ -3185,12 +3195,7 @@
               "$ref": "#/components/schemas/DirectoryTagValue"
             }
           }
-        },
-        "required": [
-          "id",
-          "name",
-          "tags"
-        ]
+        }
       },
       "ScopePermissionSetDto": {
         "type": "object",
@@ -3198,6 +3203,7 @@
           "permissions": {
             "type": "array",
             "items": {
+              "type": "string",
               "enum": [
                 "MANAGE_DIRECTORY",
                 "OCCUPY",
@@ -3224,19 +3230,17 @@
                 "REVOKE_ANY_VENDOR",
                 "REVOKE_ANY_ADMIN",
                 "MANAGE_ROLES",
+                "VIEW_ROLES",
                 "MANAGE_LOCKS",
-                "VIEW_LOCKS"
+                "VIEW_LOCKS",
+                "UNRECOGNIZED"
               ]
             }
           },
           "conditions": {
             "$ref": "#/components/schemas/ConditionDTO"
           }
-        },
-        "required": [
-          "conditions",
-          "permissions"
-        ]
+        }
       },
       "ScopePermissionsDto": {
         "type": "object",
@@ -3250,11 +3254,7 @@
               "$ref": "#/components/schemas/ScopePermissionSetDto"
             }
           }
-        },
-        "required": [
-          "directoryItem",
-          "permissionSets"
-        ]
+        }
       },
       "ScopeResponseDto": {
         "type": "object",
@@ -3265,10 +3265,7 @@
               "$ref": "#/components/schemas/ScopePermissionsDto"
             }
           }
-        },
-        "required": [
-          "scopes"
-        ]
+        }
       },
       "RbacDirectoryItemDTO": {
         "type": "object",
@@ -3351,6 +3348,7 @@
             "format": "uuid"
           },
           "permission": {
+            "type": "string",
             "enum": [
               "MANAGE_DIRECTORY",
               "OCCUPY",
@@ -3377,18 +3375,22 @@
               "REVOKE_ANY_VENDOR",
               "REVOKE_ANY_ADMIN",
               "MANAGE_ROLES",
+              "VIEW_ROLES",
               "MANAGE_LOCKS",
-              "VIEW_LOCKS"
+              "VIEW_LOCKS",
+              "UNRECOGNIZED"
             ]
           },
           "conditions": {
             "$ref": "#/components/schemas/ConditionDTO"
           },
           "status": {
+            "type": "string",
             "enum": [
               "PROVISIONING_STATUS_PENDING",
               "PROVISIONING_STATUS_SUCCESS",
-              "PROVISIONING_STATUS_FAILURE"
+              "PROVISIONING_STATUS_FAILURE",
+              "UNRECOGNIZED"
             ]
           },
           "roleAssignmentClauseId": {
@@ -3418,6 +3420,39 @@
           }
         }
       },
+      "PageDtoUserDirectoryItem": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDirectoryItem"
+            }
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDirectoryItem": {
+        "type": "object",
+        "description": "A directory item visible to the current user",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTagValue"
+            }
+          }
+        }
+      },
       "PageDtoDirectoryItem": {
         "type": "object",
         "properties": {
@@ -3430,10 +3465,7 @@
           "nextPageToken": {
             "type": "string"
           }
-        },
-        "required": [
-          "items"
-        ]
+        }
       },
       "MeDTO": {
         "type": "object",
@@ -3493,14 +3525,17 @@
             "format": "int32"
           },
           "nfcTechnologyType": {
+            "type": "string",
             "enum": [
               "MIFARE_CLASSIC",
-              "DESFIRE_V1"
+              "DESFIRE_V1",
+              "UNRECOGNIZED"
             ]
           },
           "qualifyDays": {
             "type": "array",
             "items": {
+              "type": "string",
               "enum": [
                 "DAY_OF_WEEK_UNSPECIFIED",
                 "MONDAY",
@@ -3509,7 +3544,8 @@
                 "THURSDAY",
                 "FRIDAY",
                 "SATURDAY",
-                "SUNDAY"
+                "SUNDAY",
+                "UNRECOGNIZED"
               ]
             }
           }
@@ -3524,10 +3560,7 @@
               "$ref": "#/components/schemas/AccessPathItemDto"
             }
           }
-        },
-        "required": [
-          "directoryItems"
-        ]
+        }
       },
       "AccessPathItemDto": {
         "type": "object",
@@ -3545,11 +3578,7 @@
               "$ref": "#/components/schemas/DirectoryTagValue"
             }
           }
-        },
-        "required": [
-          "id",
-          "name"
-        ]
+        }
       },
       "AccessPathsToItem": {
         "type": "object",
@@ -3563,11 +3592,7 @@
               "$ref": "#/components/schemas/AccessPathDto"
             }
           }
-        },
-        "required": [
-          "paths",
-          "targetDirectoryItem"
-        ]
+        }
       },
       "DescendantsDto": {
         "type": "object",
@@ -3578,10 +3603,7 @@
               "$ref": "#/components/schemas/AccessPathItemDto"
             }
           }
-        },
-        "required": [
-          "directoryItems"
-        ]
+        }
       },
       "PageDtoDirectoryItemLockDto": {
         "type": "object",
@@ -3595,10 +3617,7 @@
           "nextPageToken": {
             "type": "string"
           }
-        },
-        "required": [
-          "items"
-        ]
+        }
       },
       "DirectoryItemLocksDto": {
         "type": "object",
@@ -3609,10 +3628,7 @@
               "$ref": "#/components/schemas/DirectoryItemLockDto"
             }
           }
-        },
-        "required": [
-          "directoryItemLocks"
-        ]
+        }
       }
     },
     "securitySchemes": {
