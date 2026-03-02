@@ -7,7 +7,7 @@ metadata:
   robots: index
 ---
 <Callout icon="📝" theme="info">
-  **Step 4/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
+  **Step 3/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
 </Callout>
 
 Associate physical Latch Cortex Locks with OpenDOOR Directory Items of `ENTRANCE` type, that represent Doors within the property.
