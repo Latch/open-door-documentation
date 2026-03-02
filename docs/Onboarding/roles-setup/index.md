@@ -34,7 +34,7 @@ The request body should include the following properties:
 
 <Accordion title="Clauses Details" icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
-  * **`conditions`**: An optional array of Condition Objects.
+  * **`conditions`**: Additional conditions of various types. _Each_ condition type is optional, as is the entire `conditions` field; it is also possible to set up more than one condition type.
     * **`dateIntervalCondition`**: Specifies the date range.
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
