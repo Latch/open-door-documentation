@@ -7,7 +7,7 @@ metadata:
   robots: index
 ---
 <Callout icon="📝" theme="info">
-  **Step 3/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
+  **Step 2/5 of Granting User Access to Doors:** This step is part of the process to grant users access to open doors within the property. User Access to Door Directory Items is determined by Directory Locks, Access Paths, Permission Sets, Roles and Role Assignments.
 </Callout>
 
 Specify the Roles and their types available in the building, what actions can they do (based on Permission Sets) and where they are applicable (Scopes).
