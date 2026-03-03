@@ -39,22 +39,21 @@ do {
 val token: String = /* token fetched from Auth0 */
 try {
 	val latch = Latch.initialize(token)
-
+	
 	val cachedLocks = latch.locks()
-    // display cachedLocks on UI
+	// display cachedLocks on UI
 
-    try {
-        val fetchedLocks = latch.fetchLocks()
-        // display fetchedLocks on UI  (note: fetchedLocks, not cachedLocks)
-    } catch (e: Exception) {
-        // show error
-        // if error is 401, user should be logged out
-    }
+	try {
+		val fetchedLocks = latch.fetchLocks()
+		// display fetchedLocks on UI  (note: fetchedLocks, not cachedLocks)
+	} catch (e: Exception) {
+		// show error
+		// if error is 401, user should be logged out
+	}
 } catch (e: Exception) {
-    // show error
-    // if error is 401, user should be logged out
+	// show error
+	// if error is 401, user should be logged out
 }
-
 ```
 
 <br />
