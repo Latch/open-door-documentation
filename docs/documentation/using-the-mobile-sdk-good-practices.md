@@ -17,19 +17,19 @@ let token = /* token fetched from Auth0 */
 do {
   let latch = try await Latch.initialize(withToken: token)
   
-	let cachedLocks = await latch.locks()
-	// display cachedLocks on UI
+  let cachedLocks = await latch.locks()
+  // display cachedLocks on UI
 
-	do {
-		let fetchedLocks = try await latch.fetchLocks()
-		// display fetchedLocks on UI
-	} catch {
-		// show error
-		// if error is 401, user should be logged out
-	}
+  do {
+    let fetchedLocks = try await latch.fetchLocks()
+    // display fetchedLocks on UI
+  } catch {
+    // show error
+    // if error is 401, user should be logged out
+  }
 } catch {
-	// show error
-	// if error is 401, user should be logged out
+  // show error
+  // if error is 401, user should be logged out
 }
 ```
 
@@ -38,21 +38,21 @@ do {
 ```kotlin
 val token: String = /* token fetched from Auth0 */
 try {
-	val latch = Latch.initialize(token)
+  val latch = Latch.initialize(token)
 	
-	val cachedLocks = latch.locks()
-	// display cachedLocks on UI
+  val cachedLocks = latch.locks()
+  // display cachedLocks on UI
 
-	try {
-		val fetchedLocks = latch.fetchLocks()
-		// display fetchedLocks on UI  (note: fetchedLocks, not cachedLocks)
-	} catch (e: Exception) {
-		// show error
-		// if error is 401, user should be logged out
-	}
+  try {
+    val fetchedLocks = latch.fetchLocks()
+    // display fetchedLocks on UI  (note: fetchedLocks, not cachedLocks)
+  } catch (e: Exception) {
+    // show error
+    // if error is 401, user should be logged out
+  }
 } catch (e: Exception) {
-	// show error
-	// if error is 401, user should be logged out
+  // show error
+  // if error is 401, user should be logged out
 }
 ```
 
