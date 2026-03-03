@@ -31,10 +31,10 @@ The request body should include the following properties:
 * **`name`**: The name of the Role.
 * **`type`**: Must be one of the five predefined Role Types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`).
 * **`clauses`**: An array of Clause Objects that define the specific permissions a Role can have. Each Clause includes:
-  *  a `permissionSetId` identifying the permission set that will be granted (i.e. **WHAT** the user can do);
+  * a `permissionSetId` identifying the permission set that will be granted (i.e. **WHAT** the user can do);
   * a `directoryScopeSelector` that identifies **WHERE** the user can perform those actions. It determines whether the Clause is _statically scoped_, targeting a **fixed** directory item for all users who will be assigned to this role, or _dynamically scoped_, allowing the selection of a different directory item for each user when this role is assigned.
   * optional conditions that specify constraints such as date ranges, time intervals, and directory item tags that the permissions will apply to **after** the role is assigned.
-  * The crucial distinction between the scope **selector** and directory **conditions**: the selector only applies at role assignment time, limiting where the role clause can be applied (example: "Select **one** unit in the building"); whereas the conditions apply forever to all directories that match (example: "**All** units in the building").
+    * The crucial distinction between the scope **selector** and directory **conditions**: the selector only applies at role assignment time, limiting where the role clause can be applied (example: "Select **one** unit in the building"); whereas the conditions apply forever to all directories that match (example: "**All** units in the building").
 
 <Accordion title="Clauses Details" icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
