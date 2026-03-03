@@ -15,21 +15,21 @@ Our mobile SDK is designed for offline first scenario, therefore the integration
 ```swift
 let token = /* token fetched from Auth0 */
 do {
-		let latch = try await Latch.initialize(withToken: token)
+	let latch = try await Latch.initialize(withToken: token)
   
-		let cachedLocks = await latch.locks()
-		// display cachedLocks on UI
+	let cachedLocks = await latch.locks()
+	// display cachedLocks on UI
 
-		do {
-				let fetchedLocks = try await latch.fetchLocks()
-				// display fetchedLocks on UI
-			} catch {
-					// show error
-					// if error is 401, user should be logged out
-		}
-} catch {
+	do {
+		let fetchedLocks = try await latch.fetchLocks()
+		// display fetchedLocks on UI
+	} catch {
 		// show error
 		// if error is 401, user should be logged out
+	}
+} catch {
+	// show error
+	// if error is 401, user should be logged out
 }
 ```
 
@@ -38,9 +38,9 @@ do {
 ```kotlin
 val token: String = /* token fetched from Auth0 */
 try {
-		val latch = Latch.initialize(token)
+	val latch = Latch.initialize(token)
 
-		val cachedLocks = latch.locks()
+	val cachedLocks = latch.locks()
     // display cachedLocks on UI
 
     try {
