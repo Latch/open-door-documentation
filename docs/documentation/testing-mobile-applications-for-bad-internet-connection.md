@@ -32,6 +32,7 @@ metadata:
 <br />
 
 **Testing on iOS (Using Network Link Conditioner)**
+
 Network Link Conditioner allows simulation of various network conditions directly on iOS devices or simulators.
 Enable Network Link Conditioner On iOS Device: **Settings → Developer → Network Link Conditioner**.
 
@@ -47,10 +48,11 @@ Recommended profiles for testing:
 <br />
 
 **Testing on Android**
+
 Android OS doesn’t provide reliable, built-in bandwidth/latency throttling on real devices. Android Emulator provides built-in network throttling options.
 
 * Open Android Emulator.
-* Click Extended Controls (⋮). 
+* Click Extended Controls (⋮).
 * Go to Cellular → Set Network Type (Edge, HSPA, LTE).
 * Adjust Speed and Latency manually if needed.
 * Use Airplane mode to simulate offline state.
