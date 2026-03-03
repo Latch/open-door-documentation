@@ -16,7 +16,7 @@ next:
 ---
 Please do not attempt to follow these instructions for your first few properties. Instead, rely on your DOOR Sales Representative to verify and create your directory structure, as described in [Prepare and Submit Property Data](doc:migrate-from-legacy-property). Only follow these instructions when the required directory structure is confirmed to be working in other properties.
 
-Throughout this section, we will be making calls to the OpenDOOR API. Whenever attempting to make a request:
+Throughout the onboarding guide, we will be making calls to the OpenDOOR API. Whenever attempting to make a request:
 
 * Use the [API Reference](/reference) section to see detailed API documentation.
 * Obtain a bearer token by following the instructions in the [Authentication](doc:authentication) section.
