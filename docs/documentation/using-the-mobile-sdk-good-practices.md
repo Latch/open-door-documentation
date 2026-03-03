@@ -37,11 +37,10 @@ do {
 
 ```kotlin
 val token: String = /* token fetched from Auth0 */
-
 try {
 		val latch = Latch.initialize(token)
 
-    val cachedLocks = latch.locks()
+		val cachedLocks = latch.locks()
     // display cachedLocks on UI
 
     try {
