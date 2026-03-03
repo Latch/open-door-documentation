@@ -30,22 +30,24 @@ The request body should include the following properties:
 
 * **`name`**: The name of the Role.
 * **`type`**: Must be one of the five predefined Role Types (`ROLE_TYPE_GUEST`, `ROLE_TYPE_RESIDENT`, `ROLE_TYPE_VENDOR`, `ROLE_TYPE_STAFF` and `ROLE_TYPE_ADMIN`).
-* **`clauses`**: An array of Clause Objects that define the specific behaviors and permissions a Role can have. Each Clause includes a `permissionSetId` and optional conditions that specify constraints such as date ranges, time intervals, and directory item tags. The `directoryScopeSelector` determines whether the Clause is statically or dynamically scoped, allowing for flexible role configurations.
+* **`clauses`**: An array of Clause Objects that define the specific permissions a Role can have. Each Clause includes:
+  *  a `permissionSetId` identifying the permission set that will be granted (i.e. **WHAT** the user can do);
+  * a `directoryScopeSelector` that identifies **WHERE** the user can perform those actions. It determines whether the Clause is _statically scoped_, targeting a **fixed** directory item for all users who will be assigned to this role, or _dynamically scoped_, allowing the selection of a different directory item for each user when this role is assigned.
+  * optional conditions that specify constraints such as date ranges, time intervals, and directory item tags that the permissions will apply to **after** the role is assigned.
+  * The crucial distinction between the scope **selector** and directory **conditions**: the selector only applies at role assignment time, limiting where the role clause can be applied (example: "Select **one** unit in the building"); whereas the conditions apply forever to all directories that match (example: "**All** units in the building").
 
 <Accordion title="Clauses Details" icon="angle-down">
   * **`permissionSetId`**: ID of the Permission Set.
-  * **`conditions`**: Additional conditions of various types. _Each_ condition type is optional, as is the entire `conditions` field; it is also possible to set up more than one condition type.
+  * **`conditions`**: Additional conditions of various types. *Each* condition type is optional, as is the entire `conditions` field; it is also possible to set up more than one condition type.
     * **`dateIntervalCondition`**: Specifies the date range.
     * **`weekdayTimeIntervalCondition`**: Specifies the time intervals for weekdays.
     * **`directoryItemTagCondition`**: Filters based on Directory Item Tags.
     * **`accessPermissionTypeCondition`**: Defines access type (`REACH` or `ACCESS`).
     * **`accessShowDoorCodesCondition`**: Boolean to show Door Codes.
   * **`directoryScopeSelector`**: Defines the Scope. The system will determine if the Clause is statically or dynamically scoped based on this.
-    * **`directoryItemId`**: ID for static scoping.
-    * **`directoryItemTag`**: Tags for dynamic scoping.
+    * **`directoryItemId`**: The directory item where this clause will apply.
+    * **`directoryItemTag`**: Selectable tags; including this field will make the clause **dynamically scoped**.
 </Accordion>
-
-* **`scopeDirectoryItemId`**: ID for the scope directory item.
 
 <Callout icon="📝" theme="default">
   Role Clauses can be either **Statically Scoped**, indicated through `directoryItemId` JSON property or **Dynamically Scoped**, indicated by `directoryItemTag`, in `directoryScopeSelector` JSON Object property.
