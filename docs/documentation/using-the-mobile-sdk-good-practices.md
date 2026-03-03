@@ -15,7 +15,7 @@ Our mobile SDK is designed for offline first scenario, therefore the integration
 ```swift
 let token = /* token fetched from Auth0 */
 do {
-	let latch = try await Latch.initialize(withToken: token)
+  let latch = try await Latch.initialize(withToken: token)
   
 	let cachedLocks = await latch.locks()
 	// display cachedLocks on UI
