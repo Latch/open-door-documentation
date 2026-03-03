@@ -1,5 +1,5 @@
 ---
-title: Testing mobile applications for various Internet connection
+title: Testing mobile applications for various Internet connections
 excerpt: >-
   This document outlines best practices for testing the mobile application under
   poor or unstable network conditions to ensure resilience, proper error
