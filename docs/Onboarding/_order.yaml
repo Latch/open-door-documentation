@@ -1,9 +1,9 @@
 - prerequisites
 - authentication
+- calling-the-opendoor-api
 - directory-setup
 - permission-sets-setup
 - roles-setup
 - assign-locks-to-directories
 - access-paths-setup
 - role-assignments
-- calling-the-opendoor-api
