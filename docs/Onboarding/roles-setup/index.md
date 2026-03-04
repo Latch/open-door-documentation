@@ -54,7 +54,7 @@ The request body should include the following properties:
 </Callout>
 
 <Callout icon="⚠️" theme="warning">
-  **Important Note:** The Permissions for a Role are defined within Permission Sets. Ensure that the Permission Set specified for each Role meets the minimum permission requirements to function correctly. For more details, refer to [5. Roles Setup → Maximum Allowed Permissions for Each Role Type Type](https://opendoor-uwel.readme.io/update/docs/essential-permissions-for-each-role-type).
+  **Important Note:** The Permissions for a Role are defined within Permission Sets. Ensure that the Permission Set specified for each Role is limited to the maximum allowable permissions for each individual role type. For example, you may not use an "admin" permission set for a resident role! For more details, refer to [5. Roles Setup → Maximum Allowed Permissions for Each Role Type Type](https://opendoor-uwel.readme.io/update/docs/essential-permissions-for-each-role-type).
 </Callout>
 
 <br />
