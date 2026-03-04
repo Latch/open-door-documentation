@@ -19,7 +19,7 @@ metadata:
 7. [Access logs](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#access-logs)
 8. [Guest Access](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#guest-access)
 9. [Log level](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#log-level)
-10. <Anchor label="API docs" target="_blank" href="https://refactored-adventure-2q4l4q2.pages.github.io/documentation/opendoorcore/">API docs</Anchor> 
+10. [API docs](https://refactored-adventure-2q4l4q2.pages.github.io/documentation/opendoorcore/)
 
 ### Add OpenDOOR SDK as a dependency
 
