@@ -1,5 +1,5 @@
 ---
-title: iOS Docs
+title: iOS
 excerpt: >-
   The SDK provides APIs to view, unlock and sync DOOR-supported locks and to
   manage guests accesses.
