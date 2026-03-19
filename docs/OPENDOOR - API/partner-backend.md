@@ -31,11 +31,11 @@ There will be 2 sets of Client Id and Client Secret, each one for different use 
 All the interactions between the Partner BE or Partner app and Latch BE must contain a [JWT token](https://auth0.com/docs/secure/tokens/json-web-tokens)  that represents the partner and the scope of permissions. There are 2 type of tokens:
 
 * User-scoped
-  * Partner-scoped
+* Partner-scoped
 
-    Depending on the API used and whether the API call is done on behalf of the user or not, the partner should use the corresponding token.
+Depending on the API used and whether the API call is done on behalf of the user or not, the partner should use the corresponding token.
 
-    The Partner BE will be responsible for communicating to the Latch-provided Auth0 service to retrieve an authorization token. This token will need to be passed down through the Partner App to the Latch SDK.
+The Partner BE will be responsible for communicating to the Latch-provided Auth0 service to retrieve an authorization token. This token will need to be passed down through the Partner App to the Latch SDK.
 
 ### User-scoped Tokens
 
@@ -55,7 +55,7 @@ The User’s relationship to the Partner is verified by the Latch Authentication
 
 Partner BE sends the Client Id and Client Secret to the Latch Auth0 app, without including a user email, and the Partner ID is returned as a [claim](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-token-claims)  in the JWT token. Each token returned by the Latch Auth0 App is scoped to a specific Partner.
 
-Authorization Token Generation
+## Authorization Token Generation
 
 ### User-scoped tokens
 
@@ -64,143 +64,138 @@ As part of the authorization request, the user will need to be identified throug
 To obtain a token from the Latch Auth0 App, the following steps need to be executed as demonstrated in the above diagram:
 
 1. Partner App obtains the IP (IPv4) address from the Device and the email of the logged in User and sends that to the Partner BE.
-   1. POST from Partner BE, to the Latch Auth0 App with the following
+2. POST from Partner BE, to the Latch Auth0 App with the following
 
-      ```
-      POST https://auth.prod.latch.com/passwordless/start
-      ```
+   ```
+   POST https://auth.prod.latch.com/passwordless/start
+   ```
 
-      HTTP Request Headers
+   HTTP Request Headers
 
-      ```
-      auth0-forwarded-for: {{user_ip}}
-      ```
+   ```
+   auth0-forwarded-for: {{user_ip}}
+   ```
 
-      HTTP Request Body
+   HTTP Request Body
 
-      ```
-      {
-          "client_id": "{{passwordless_client_id}}",
-          "client_secret": "{{passwordless_client_secret}}",
-          "email": "{{user_email}}",
-          "connection": "email",
-          "send": "code"
-      }
-      ```
+   ```
+   {
+       "client_id": "{{passwordless_client_id}}",
+       "client_secret": "{{passwordless_client_secret}}",
+       "email": "{{user_email}}",
+       "connection": "email",
+       "send": "code"
+   }
+   ```
 
-      HTTP Response Body
+   HTTP Response Body
 
-      ```
-      {
-          "email": "<string>",
-          "email_verified": <bool>
-          "_id": "<string>",
-      }
-      ```
+   ```
+   {
+       "email": "<string>",
+       "email_verified": <bool>
+       "_id": "<string>",
+   }
+   ```
+3. If the Request is successful, Latch Auth0 app, will send a Verification Code to the user’s email and return an HTTP 200 with the following fields:
 
-      1. If the Request is successful, Latch Auth0 app, will send a Verification Code to the user’s email and return an HTTP 200 with the following fields:
+   * `email`: User email (same as the email provided in the HTTP request).
+   * `email_verified`: Unused field.
+   * `_id`: Unused field.
 
-         * `email`: User email (same as the email provided in the HTTP request).
-         * `email_verified`: Unused field.
-         * `_id`: Unused field.
+   In case of an error, the API will return the following HTTP error codes and detailed information in the `error_description` field:
 
-         In case of an error, the API will return the following HTTP error codes and detailed information in the `error_description` field:
+   * HTTP 400
+     * `error="bad.email"`: Missing `email` parameter.
 
-         * HTTP 400
-           * `error="bad.email"`: Missing `email` parameter.
+       ⇒ Check the API request to make sure all fields have been populated.
 
-             ⇒ Check the API request to make sure all fields have been populated.
+     * `error="extensibility_error" error_description="UNAUTHORIZED"`: Email account is not authorized or doesn't exist.
 
-           * `error="extensibility_error" error_description="UNAUTHORIZED"`: Email account is not authorized or doesn't exist.
+       ⇒ Check if the email has been configured in Mission Control or programmatically via User Kit API.
 
-             ⇒ Check if the email has been configured in Mission Control or programmatically via User Kit API.
+     * `error="extensibility_error" error_description="USER_ACCOUNT_NOT_ACTIVE"`: Email account exists, but is not active.
 
-           * `error="extensibility_error" error_description="USER_ACCOUNT_NOT_ACTIVE"`: Email account exists, but is not active.
+       ⇒ Contact Latch Support to check the status of the user account.
 
-             ⇒ Contact Latch Support to check the status of the user account.
+   * HTTP 403
+     * `error="unauthorized_client"`: missing or invalid credentials.
 
-         * HTTP 403
-           * `error="unauthorized_client"`: missing or invalid credentials.
+       ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
 
-             ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
+   * HTTP 500
+     * `error="internal_server_error"`: There was an unexpected error.
 
-         * HTTP 500
-           * `error="internal_server_error"`: There was an unexpected error.
+       ⇒ Contact Latch Support to help debug this issue.
+4. The Partner App will need to provide UI for the user to input the Verification Code from the user’s email.
+5. The Partner App will need to send the User email address and the Verification Code to the Partner BE.
+6. POST from the Partner BE, to the Latch Auth0 App with the following
 
-             ⇒ Contact Latch Support to help debug this issue.
+   ```
+   POST https://auth.prod.latch.com/v1/oauth/token
+   ```
 
-         1. The Partner App will need to provide UI for the user to input the Verification Code from the user’s email.
+   HTTP Request Body
 
-            1. The Partner App will need to send the User email address and the Verification Code to the Partner BE.
+   ```
+   {
+       "client_id": "{{passwordless_client_id}}",
+       "client_secret": "{{passwordless_client_secret}}",
+       "otp": "{{verification_code}}", 
+       "username": "{{user_email}}", 
+       "audience": "https://rest.latchaccess.com/access/sdk", 
+       "grant_type": "http://auth0.com/oauth/grant-type/passwordless/otp", 
+       "realm": "email", 
+       "scope": "openid profile email offline_access"
+   }
+   ```
 
-               1. POST from the Partner BE, to the Latch Auth0 App with the following
+   HTTP Response Body
 
-                  ```
-                  POST https://auth.prod.latch.com/v1/oauth/token
-                  ```
+   ```
+   {
+       "access_token": "<string>",
+       "refresh_token": "<string>",
+       "expires_in": <int>,
+       "token_type": "Bearer",
+       "scope": "openid profile email offline_access",
+       "id_token": "<string>"
+   }
+   ```
+7. If the request was successful, an HTTP 200 will be returned with the following fields:
 
-                  HTTP Request Body
+   * `access_token`: User-scoped access token the Partner BE should send to the Partner App so it can initialize the SDK.
+   * `refresh_token`: Refresh token the Partner BE should store to use later during the token refresh flow, once the Access token expires.
+   * `expires_in`: Time-to-live of the access token, in seconds. After this amount of time, the given access token will no longer be valid.
+   * `token_type`: Auth scheme to use (will always be "Bearer").
+   * `scope`: List of scopes included in the token (same as the value provided in the HTTP request.
+   * `id_token`: Unused field.
 
-                  ```
-                  {
-                      "client_id": "{{passwordless_client_id}}",
-                      "client_secret": "{{passwordless_client_secret}}",
-                      "otp": "{{verification_code}}", 
-                      "username": "{{user_email}}", 
-                      "audience": "https://rest.latchaccess.com/access/sdk", 
-                      "grant_type": "http://auth0.com/oauth/grant-type/passwordless/otp", 
-                      "realm": "email", 
-                      "scope": "openid profile email offline_access"
-                  }
-                  ```
+   In case of an error, the API will return the following HTTP error codes and detailed information in the `error_description` field:
 
-                  HTTP Response Body
+   * HTTP 400
+     * `error="invalid_request"`: Missing or invalid parameter.
 
-                  ```
-                  {
-                      "access_token": "<string>",
-                      "refresh_token": "<string>",
-                      "expires_in": <int>,
-                      "token_type": "Bearer",
-                      "scope": "openid profile email offline_access",
-                      "id_token": "<string>"
-                  }
-                  ```
+       ⇒ Check the API request to make sure all fields have been populated. More details about the error in the `error_description` field.
 
-                  1. If the request was successful, an HTTP 200 will be returned with the following fields:
+   * HTTP 401
+     * `error="access_denied"`: missing or invalid credentials.
 
-                     * `access_token`: User-scoped access token the Partner BE should send to the Partner App so it can initialize the SDK.
-                     * `refresh_token`: Refresh token the Partner BE should store to use later during the token refresh flow, once the Access token expires.
-                     * `expires_in`: Time-to-live of the access token, in seconds. After this amount of time, the given access token will no longer be valid.
-                     * `token_type`: Auth scheme to use (will always be "Bearer").
-                     * `scope`: List of scopes included in the token (same as the value provided in the HTTP request.
-                     * `id_token`: Unused field.
+       ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
 
-                     In case of an error, the API will return the following HTTP error codes and detailed information in the `error_description` field:
+   * HTTP 403
+     * `"error": "invalid_grant"`: Missing or invalid grant parameters.
 
-                     * HTTP 400
-                       * `error="invalid_request"`: Missing or invalid parameter.
+       ⇒ Check the API request to make sure the `username`, `otp`, `audience`, and `scope` fields have the right values.
 
-                         ⇒ Check the API request to make sure all fields have been populated. More details about the error in the `error_description` field.
+     * `"error": "unauthorized_client"`: Missing or invalid grant type.
 
-                     * HTTP 401
-                       * `error="access_denied"`: missing or invalid credentials.
+       ⇒ Check the API request to make sure the `grant_type` field has the right value.
 
-                         ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
+   * HTTP 500
+     * `error="internal_server_error"`: There was an unexpected error.
 
-                     * HTTP 403
-                       * `"error": "invalid_grant"`: Missing or invalid grant parameters.
-
-                         ⇒ Check the API request to make sure the `username`, `otp`, `audience`, and `scope` fields have the right values.
-
-                       * `"error": "unauthorized_client"`: Missing or invalid grant type.
-
-                         ⇒ Check the API request to make sure the `grant_type` field has the right value.
-
-                     * HTTP 500
-                       * `error="internal_server_error"`: There was an unexpected error.
-
-                         ⇒ Contact Latch Support to help debug this issue.
+       ⇒ Contact Latch Support to help debug this issue.
 
 ### Partner-scoped tokens
 
@@ -232,36 +227,35 @@ To obtain a token from the Latch Auth0 App, the following steps need to be execu
        "token_type": "Bearer"
    }
    ```
+2. If the request was successful, an HTTP 200 will be returned with the following fields:
 
-   1. If the request was successful, an HTTP 200 will be returned with the following fields:
+   * `access_token`: Partner-scoped access token the Partner BE should store to use in all future API requests.
+   * `expires_in`: Time-to-live of the access token, in seconds. After this amount of time, the given access token will no longer be valid.
+   * `token_type`: Auth scheme to use (will always be "Bearer").
 
-      * `access_token`: Partner-scoped access token the Partner BE should store to use in all future API requests.
-      * `expires_in`: Time-to-live of the access token, in seconds. After this amount of time, the given access token will no longer be valid.
-      * `token_type`: Auth scheme to use (will always be "Bearer").
+   In case of an error, the API will return the following error codes:
 
-      In case of an error, the API will return the following error codes:
+   * HTTP 400
+     * `error="invalid_request"`: missing required parameters.
 
-      * HTTP 400
-        * `error="invalid_request"`: missing required parameters.
+       ⇒ Check the request includes the `grant_type` parameter.
 
-          ⇒ Check the request includes the `grant_type` parameter.
+   * HTTP 401
+     * `error="access_denied"`: missing or invalid credentials.
 
-      * HTTP 401
-        * `error="access_denied"`: missing or invalid credentials.
+       ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
 
-          ⇒ Check the request is using the correct value for `client_id` and `client_secret`.
+   * HTTP 403
+     * `error="access_denied"`: missing or invalid `audience` parameter.
 
-      * HTTP 403
-        * `error="access_denied"`: missing or invalid `audience` parameter.
+       ⇒ Check the API request to make sure the `audience` field has the right value.
 
-          ⇒ Check the API request to make sure the `audience` field has the right value.
+   * HTTP 500
+     * `error="internal_server_error"`: there was an unexpected error.
 
-      * HTTP 500
-        * `error="internal_server_error"`: there was an unexpected error.
+       ⇒ Contact Latch Support to help debug this issue.
 
-          ⇒ Contact Latch Support to help debug this issue.
-
-Token Expiration
+## Token Expiration
 
 ### User-scoped tokens
 
@@ -275,9 +269,9 @@ Ideally, the Partner App should retrieve a new token before the current one’s 
 
 The JWT token provided to the Partner BE from the Latch Authentication service will expire within 24 hours. Invoking OpenKit APIs with an expired token will return a 403 Forbidden HTTP error and the partner BE should initiate the token authorization flow again (as described above).
 
-Refresh Token
+## Refresh Token
 
-<br />
+TBD IMG
 
 The Refresh Token ensures the user does not have to be issued a Verification repeatedly and must be implemented by the Partner App and BE. When the Latch SDK makes a request with an expired Access Token, the Latch BE will throw an error that can be captured by the Partner App to begin the Refresh Token flow.
 
@@ -350,5 +344,3 @@ The Refresh Token ensures the user does not have to be issued a Verification rep
        ⇒ Contact Latch Support to help debug this issue.
 
 The Partner App will need to re-initialize the Latch SDK with the new Access Token.
-
-<br />
