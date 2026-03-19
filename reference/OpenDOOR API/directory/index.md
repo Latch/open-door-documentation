@@ -1,4 +1,0 @@
----
-title: Directory
-hidden: false
----
