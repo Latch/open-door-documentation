@@ -1,0 +1,306 @@
+---
+title: iOS Docs
+excerpt: >-
+  The SDK provides APIs to view, unlock and sync DOOR-supported locks and to
+  manage guests accesses.
+deprecated: false
+hidden: false
+metadata:
+  robots: index
+---
+<br />
+
+## Setup
+
+1. [Add the SDK as a dependency](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#add-the-sdk-as-a-dependency)
+2. [Initialize the library](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#initialize-the-library)
+3. [Retrieve locks](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#retrieve-locks)
+4. [Unlock](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#unlock)
+5. [Proximity unlock](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#proximity-unlock)
+6. [Sync](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#sync)
+7. [Access logs](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#access-logs)
+8. [Log level](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#log-level)
+9. [Guest Access](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#guest-access)
+
+<br />
+
+### Add the SDK as a dependency
+
+1. In Xcode, Go to File > Add Packages... > Add Local...
+2. Navigate to LatchSDK Swift Package (package can be downloaded from [here](https://github.com/Latch/openkit-mobile-sdks/tree/main/ios))
+3. Select your project in "Add to Project" pop-up button
+4. Click "Add Package"
+
+```swift iOS
+dependencies: [
+  .product(name: "OpenDOORCore", package: "OpenDOORSDK")
+]
+```
+
+### Initialize the library
+
+Initialization of the LatchSDK is done by calling Latch.initialize() function
+This function takes two parameters:
+
+`token` - representing optional String value of the Auth0 token
+
+`allAccesses` - flag that indicate if we should load all accesses (partner and non-partner) of the user. (introduced in the version `1.44.0`)
+
+Async/Await
+
+```swift
+let token: String? = ... // fetched from Auth0
+
+/* 
+Optional flag that indicate if we should load all accesses (partner and non-partner) of the user.
+ - If not provided, the default value is `false` and will behave as it was previously.
+ - Setting this flag to `true` will load all devices that user has access to.
+*/
+@available(*, introduced: 1.44.0)
+let allAccesses: Bool = true
+
+/// initialize with all accesses
+let latchWithAllAccesses = try await Latch.initialize(withToken: token, loadAllAccesses: allAccesses)
+
+/// initialize with default value (previous implementation)
+let latch = try await Latch.initialize(withToken: token)
+```
+
+Completion Block
+
+```swift
+let token = ... // fetched from Auth0
+
+/* 
+Optional flag that indicate if we should load all accesses (partner and non-partner) of the user.
+ - If not provided, the default value is `false` and will behave as it was previously.
+ - Setting this flag to `true` will load all devices that user has access to.
+*/
+@available(*, introduced: 1.44.0)
+let allAccesses: Bool = true
+
+/// initialize with all accesses
+Latch.initialize(withToken: token, loadAllAccesses: allAccesses) { result in
+  switch result {
+  case let .success(latch):
+    ...
+  case let .failure(error):
+    ...
+  }
+}
+
+/// initialize with default value (previous implementation)
+Latch.initialize(withToken: token) { ... }
+```
+
+## Retrieve locks
+
+The list of locks can be retrieved from local cache using `locks()` or fetched from server using fetchLocks()`
+
+`locks()` returns the cached list of locks retrieved during initialization. This works even if the device is offline.  
+Use `locks()` when you want a quick response or need to support offline access.
+
+Async/Await
+
+```swift
+let locks = await latch.locks()
+```
+
+Completion Block
+
+```swift
+latch.locks { locks in
+  ...
+}
+```
+
+`fetchLocks()` forces a refresh by calling the server. If the device is offline or the request fails, it throws FetchLocksError error.  
+When `fetchLocks()` succeeds, the cache is updated, and subsequent calls to `locks()` will return the refreshed list.  
+It was introduced in version 1.5.0
+
+```swift
+
+let locks = try await latch.fetchLocks()
+```
+
+## Unlock
+
+Async/Await
+
+```swift
+try await latch.unlock(lockID: lock.id.uuidString)
+```
+
+Completion Block
+
+```swift
+latch.unlock(lockID: lock.id.uuidString) { result in
+  switch result {
+  case .success:
+    ...
+  case let .failure(error);
+    ...
+  }
+}
+```
+
+## Proximity Unlock
+
+```swift
+latch.proximityUnlockHandler = { unlock in
+  print("Unlock Status: \(unlock.lockID) \(unlock.status)")
+}
+latch.startProximityUnlock()
+...
+latch.stopProximityUnlock()
+```
+
+## Sync
+
+Sync allows your mobile client to act as a bridge to the Latch backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide Latch with full information around the issue.
+
+After each unlock, the SDK will passively sync data with the Latch ecosystem to keep user data as up to date as possible. Explicitly calling `.sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `.sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
+
+Async/Await
+
+```swift
+try await latch.sync(lockID: lock.id.uuidString)
+```
+
+Completion Block
+
+```swift
+latch.sync(lockID: lock.id.uuidString) { result in
+  switch result {
+  case .success:
+    ...
+  case let .failure(error):
+    ...
+  }
+}
+```
+
+## Access Logs
+
+Access Logs are providing access logs information for a given lock.
+
+Async/Await
+
+```swift
+/* Retrieve all access logs for the selected lock
+ - Parameter lockUuid: UUID of the Lock
+ - Returns: Array of `LatchAccessLog`
+ */
+@available(*, introduced: 1.44.0)
+try await latch.getAccessLogs(lockUuid: lock.id)
+```
+
+Completion Block
+
+```swift
+/* Retrieve all access logs for the selected lock
+ - Parameter lockUuid: UUID of the Lock
+ */
+@available(*, introduced: 1.44.0)
+latch.getAccessLogs(lockUuid: lock.id) { result in
+  switch result {
+  case let .success(logs):
+    ...
+  case let .failure(error):
+    ...
+  }
+}
+```
+
+## Guest Access
+
+Getting the list of guests can be done like this:
+
+Async/Await
+
+```swift
+try await latch.inviteGuest(
+	firstName: "John",
+  lastName: "Doe",
+  email: "john@example.com",
+  phone: "+1234567890",
+  startTime: Date(),
+  endTime: nil, // no end date
+  deviceUUIDs: lockUUIDs,
+  passcodeType: PasscodeType.PERMANENT,
+) 
+```
+
+Completion Block
+
+```swift
+try await latch.guests {
+	switch result {
+  	case let .success(guests):
+    	...
+  	case let .failure(error):
+    	...
+	}
+}
+
+```
+
+Inviting a guest can be done like this:
+
+Async/Await
+
+```swift
+try await latch.inviteGuest(
+	firstName: "John",
+  lastName: "Doe",
+  email: "john@example.com",
+  phone: "+1234567890",
+  startTime: Date(),
+  endTime: nil, // no end date
+  deviceUUIDs: lockUUIDs,
+  passcodeType: PasscodeType.PERMANENT,
+) 
+```
+
+Completion Block
+
+```swift
+latch.inviteGuest(
+	firstName: "John",
+  lastName: "Doe",
+  email: "john@example.com",
+  phone: "+1234567890",
+  startTime: Date(),
+  endTime: nil, // no end date
+  deviceUUIDs: lockUUIDs,
+  passcodeType: PasscodeType.PERMANENT,
+) { result in
+  switch result {
+  case let .success(guest):
+    ...
+  case let .failure(error):
+    ...
+  }
+}
+```
+
+Revoking a guest access can be done like this:
+
+Async/Await
+
+```swift
+try await latch.deleteGuest()
+```
+
+Completion Block
+
+```swift
+latch.deleteGuest { result in
+  switch result {
+  case let .success:
+    ...
+  case let .failure(error):
+    ...
+  }
+}
+```
