@@ -7,8 +7,6 @@ metadata:
 ---
 Share Kit allows Partners and their End Users the ability to share access to Guests (non-Residents) via both a Machine to Machine Server Integration or via the Latch SDK inside of a Partner App.   
 
-<br />
-
 It is important to note that when a Resident loses access, so will all of their dependent Guests.
 
 ## Users API
