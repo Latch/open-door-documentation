@@ -1,7 +1,7 @@
 ---
 title: Partner Backend
 excerpt: >-
-  Latch will provide Partners with a unique
+  DOOR will provide Partners with a unique
   [](https://auth0.com/docs/get-started/applications)
 deprecated: false
 hidden: false
@@ -10,7 +10,7 @@ metadata:
 ---
 ## Client Id and Client Secret
 
-These are unique values provided by Latch to the Partner through secure and encrypted channels. It is the Partner’s responsibility to securely store the Client Id and Client Secret so that it is only used when communicating with the Latch Auth0 app.
+These are unique values provided by DOOR to the Partner through secure and encrypted channels. It is the Partner’s responsibility to securely store the Client Id and Client Secret so that it is only used when communicating with the Latch Auth0 app.
 
 There will be 2 sets of Client Id and Client Secret, each one for different use cases:
 
