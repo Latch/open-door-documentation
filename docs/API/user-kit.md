@@ -98,7 +98,7 @@ It is possible to filter results by Building UUID.
 
      ⇒ Contact Latch Support
 
-Users API
+## Users API
 
 ### Get users
 
@@ -193,10 +193,9 @@ Partners can fetch a list of their Users. This will be done by using a partner-s
    * `401 Unauthorized`: missing or invalid access token.
 
      ⇒ Check the token hasn't expired and refresh the token if needed.
+   * `500 Internal Server Error`: there was an unexpected error.
 
-     * `500 Internal Server Error`: there was an unexpected error.
-
-       ⇒ Contact Latch Support
+     ⇒ Contact Latch Support
 
 ### Create users and grant access
 
@@ -264,15 +263,15 @@ We currently support two `role`'s: `RESIDENT` and `NON_RESIDENT`.
 In the future though, the `role` could be used to determine what credential details the Partner Backend has the ability to see.
 For example, a Partner Backend can see credential details for their own `NON_RESIDENT`'s but not for `RESIDENT`'s as that would be a privacy violation.
 
-#### &#x20;Field descriptions
+#### Field descriptions
 
 * `shouldNotify` (default `true`): controls whenever email notifications are sent to the invited user. The emails
   include the welcome email and/or the Doorcode email. If set to `false` **no** emails are sent. In order to prevent
   invalid scenarios validations are put in place to prevent the following request situation since it would lead to the
   user having no way of accessing their Doorcode:
   * `shouldNotify`: `false`
-    * `passcodeType`: `DAILY` or `DAILY_SINGLE_USE`
-      * `role`: `RESIDENT`
+  * `passcodeType`: `DAILY` or `DAILY_SINGLE_USE`
+  * `role`: `RESIDENT`
 
 #### Results
 
@@ -421,14 +420,12 @@ Partners can fetch a single user. This will be done by using a partner-scoped to
    * `401 Unauthorized`: missing or invalid access token.
 
      ⇒ Check the token hasn't expired and refresh the token if needed.
+   * `404 Not Found`: invalid user.
 
-     * `404 Not Found`: invalid user.
+     ⇒ Check the user identifier.
+   * `500 Internal Server Error`: there was an unexpected error.
 
-       ⇒ Check the user identifier.
-
-       * `500 Internal Server Error`: there was an unexpected error.
-
-         ⇒ Contact Latch Support
+     ⇒ Contact Latch Support
 
 ### Patch access
 
@@ -652,22 +649,21 @@ Partners can fetch a list of users in a building that are residents with active 
      "nextPageToken": "<string>"
    }
    ```
+2. If the request was successful, the Partner BE will receive an HTTP 200 containing a list of Resident objects, with the following fields:
 
-   2. If the request was successful, the Partner BE will receive an HTTP 200 containing a list of Resident objects, with the following fields:
+   * `email`: Email address associated with the user.
+   * `firstName`: First name of the user.
+   * `lastName`: Last name of the user.
+   * `userUuid`: Unique identifier of the user.
+   * `phone`: Phone number of the user. Nullable field.
+   * `nextPageToken`: Token to fetch the next page. Expected value is `null` when there is no next page.
 
-      * `email`: Email address associated with the user.
-      * `firstName`: First name of the user.
-      * `lastName`: Last name of the user.
-      * `userUuid`: Unique identifier of the user.
-      * `phone`: Phone number of the user. Nullable field.
-      * `nextPageToken`: Token to fetch the next page. Expected value is `null` when there is no next page.
+   In case of an error, the API will return the following error responses:
 
-      In case of an error, the API will return the following error responses:
+   * `401 Unauthorized`: missing or invalid access token.
 
-      * `401 Unauthorized`: missing or invalid access token.
+     ⇒ Check the token hasn't expired and refresh the token if needed.
 
-        ⇒ Check the token hasn't expired and refresh the token if needed.
+   * `500 Internal Server Error`: there was an unexpected error.
 
-      * `500 Internal Server Error`: there was an unexpected error.
-
-        ⇒ Contact Latch Support
+     ⇒ Contact Latch Support
