@@ -93,11 +93,11 @@ Retrieve all locks accessible to the current user. This list can be used to buil
   | `id`   | UUID   | Unique Identifier     |
   | `name` | String | Name of the lock/door |
 
-  **Errors**
+**Errors**
 
-  | Code    | Description                 |
-  | ------- | --------------------------- |
-  | `Error` | An unexpected error occured |
+| Code    | Description                 |
+| ------- | --------------------------- |
+| `Error` | An unexpected error occured |
 
 ## Unlock
 
