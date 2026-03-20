@@ -5,10 +5,10 @@ hidden: false
 metadata:
   robots: index
 ---
-| C1                                                                                                     | M         | C2        | R2        |
-| :----------------------------------------------------------------------------------------------------- | :-------- | :-------- | :-------- |
-| ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/devices_c1.png) |           |           |           |
-| FW v.2.4.2                                                                                             | FW v.1.02 | FW v.1.02 | FW v.4.01 |
+| C1                                                                                                     | M                                                                                                     | C2                                                                                                     | R2                                                                                                     |
+| :----------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/devices_c1.png) | ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/devices_m.png) | ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/devices_c2.png) | ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/devices_r2.png) |
+| FW v.2.4.2                                                                                             | FW v.1.02                                                                                             | FW v.1.02                                                                                              | FW v.4.01                                                                                              |
 
 ## Supported Device Firmware Versions
 
