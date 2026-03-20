@@ -16,9 +16,9 @@ The user’s acceptance will be needed by the Latch SDK where it will be securel
 
 > The consent will be gathered only once from the End User, not per device.
 
-| IMG TBD        | IMG TBD    |
-| -------------- | ---------- |
-| Android dialog | iOS dialog |
+| ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/consent_android.png) | ![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/consent_ios.png) |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Android dialog                                                                                              | iOS dialog                                                                                              |
 
 ## Supported Platforms
 
