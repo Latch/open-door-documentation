@@ -6,8 +6,6 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
 [**Cache first strategy**]()
 
 Our mobile SDK is designed for offline first scenario, therefore the integration application can take advantage of this by using a `cache first - network after` data strategy. This means usage of data from the SDK cache via the `locks` function and in the background get the new locks via the `fetchLocks` function.
