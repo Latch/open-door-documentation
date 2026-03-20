@@ -7,9 +7,7 @@ metadata:
 ---
 ## User Kit
 
-<br />
-
-![Alt text](https://github.com/Latch/open-door-documentation/blob/v2.1/assets/user_kit_flow.png)
+<Image align="center" alt="Alt text" src="https://files.readme.io/2018f62c7b643966f0eec21507b7aae6b18cddcbeb7ca855350d0bdfdc3e2612-user_kit_flow.png" />
 
 ## Unlock Kit
 
