@@ -20,8 +20,6 @@ The user’s acceptance will be needed by the Latch SDK where it will be securel
 | -------------- | ---------- |
 | Android dialog | iOS dialog |
 
-<br />
-
 ## Supported Platforms
 
 The Latch SDKs will support the following versions of IOS and Android. Post the Beta period, all versions of IOS/Android currently supported by the Latch App will also be supported.
