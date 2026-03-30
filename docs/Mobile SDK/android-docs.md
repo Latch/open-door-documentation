@@ -1,8 +1,8 @@
 ---
 title: Android SDK
 excerpt: >-
-  The SDK provides APIs to view, unlock and sync DOOR-supported locks and to
-  manage guests accesses.
+  The Android SDK allows you to initialize and unlock a DOOR-supported lock.
+  This tutorial corresponds with version 2.0.0 of the SDK.
 deprecated: false
 hidden: false
 metadata:
