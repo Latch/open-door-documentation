@@ -8,70 +8,65 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
 ## Setup
 
-1. [Add the SDK as a dependency](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#add-the-sdk-as-a-dependency)
-2. [Initialize the library](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#initialize-the-library)
-3. [Retrieve locks](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#retrieve-locks)
-4. [Unlock](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#unlock)
-5. [Proximity unlock](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#proximity-unlock)
-6. [Sync](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#sync)
-7. [Access logs](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#access-logs)
-8. [Log level](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#log-level)
-9. [Guest Access](https://opendoor-uwel.readme.io/docs/openkit-android-sdk#guest-access)
+1. Declare SDK as a dependency
+2. Initialize the library
+3. View the locks and select one to unlock
+4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
 
-<br />
+### Declare SDK as a dependencyu
 
-### Add the SDK as a dependency
-
-Include your local maven repository where the Latch SDK is stored at
+Add **Maven Central** to your repositories (if not already present), then declare the dependency in your **application module's** `build.gradle.kts`:
 
 ```kotlin
 repositories {
-  //(...)
-  maven {
-    url "[your/path/to/sdk]"
-  }
+    google()
+    mavenCentral()
 }
-```
 
-Note that we will be delivering the SDK as a zipped artifact during beta. The entire decompressed folder needs to be held at `[your/path/to/sdk]` described above. For example, the current folder structure for version 1.4.0 is `com/latch/sdk/1.4.0`.
-
-In your **application module’s** build.gradle file. Declare latch-sdk as a dependency.
-
-```kotlin
 dependencies {
-  implementation('com.latch:sdk:1.4.0')
+  implementation('com.door.opendoor.android:2.0.0')
   //(...)
 }
 ```
 
 ### Initialize the library
 
-Use your Auth0 token retrieved from Latch’s Auth endpoint, call `initialize()`.
+Use your Auth0 token retrieved from DOOR's Auth endpoint, call `setupWithToken()`.
 
-```kotlin
-LatchClient.initialize(context, token)
-```
+The OpenDOOR SDK uses Kotlin Coroutines to perform actions asynchronously. All SDK functions are `suspend` functions that can be called from a coroutine scope, or you can use Flow-based streams for reactive updates.
 
-The Latch SDK uses RxJava to perform actions asynchronously. Each of the functions the SDK provides will return a Single that provides the result non-linearly.
+**Important:** `setupWithToken()` must be called from the main thread because it takes a Context parameter.
+
 Note that `context` here must not be the `applicationContext`.
 
 ```kotlin
-// Initialize with lock inclusion preference
-LatchClient.initialize(context, includeAllLocks = true)
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.door.opendoor.android.core.api.OpenDOOR
+import com.door.opendoor.android.core.api.exceptions.SetupException
+import com.door.opendoor.android.core.api.exceptions.NetworkException
 
-// Set up with token
-LatchClient.setupWithToken(token, includeAllLocks = true)
-  .subscribe { setupResult ->
-    when(setupResult) {
-      SetupResult.Success -> // SDK ready
-      SetupResult.InvalidToken -> // Handle token issues
-      // Handle other cases
+val client = OpenDOOR.instance
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.setupWithToken(
+            context = context,
+            token = token,
+            includeAllLocks = true
+        )
+        // SDK is ready
+    } catch (e: SetupException.InvalidTokenException) {
+        // Handle invalid token - refresh and retry
+    } catch (e: SetupException) {
+        // Handle other setup errors
+    } catch (e: NetworkException) {
+        // Handle network errors
     }
-  }
+}
 ```
 
 The `includeAllLocks` parameter determines whether to show:
@@ -79,201 +74,383 @@ The `includeAllLocks` parameter determines whether to show:
 * `true`: All locks that user can access (partner and non-partner)
 * `false`: Only partner-managed locks
 
-### Retrieve locks
+### Thread Requirements
 
-Both `locks()` and `fetchLocks()` return a `Single` that provides results asynchronously.
+The SDK has specific thread requirements for different operations:
 
-* `locks()` — Returns the cached list of locks retrieved during initialization. This works even if the device is offline.
-* `fetchLocks()` — Forces a refresh by calling the server. If the device is offline or the request fails, it returns an error.
+**Must be called from the main thread:**
 
-When `fetchLocks()` succeeds, the cache is updated, and subsequent calls to `locks()` will return the refreshed list.
+* `unlock()`
+* `sync()`
+* `startProximityUnlock()`
+* `stopProximityUnlock()`
 
-**Usage guidelines:**
+All BLE operations must be called from the main thread.
 
-* Use `locks()` when you want a quick response or need to support offline access.
-* Use `fetchLocks()` when you need the latest state from the server.
+**Can be called from any thread:**
+
+* `fetchLocks()`
+* `getAccessLogs()`
+* `inviteGuests()`
+* `guests()`
+* `setupWithToken()`
+
+All examples in this tutorial use `Dispatchers.Main`.
+
+### View the locks and select one to unlock
+
+You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`. These methods have different behaviors:
+
+* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
+
+* **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
+
+**Option 1: Fetch locks once**
 
 ```kotlin
-LatchClient
-  .locks()
-  .subscribe
-    { locksResult ->
-      when(locksResult) {
-        is LocksResult.Success -> {
-          //Latch locks are available under locksResult.locks
-        }
-        //(handle other cases...)
-      }
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val locks = client.fetchLocks()
+        // Use locks list - this will only return after server call completes
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
     }
+}
 ```
 
+**Option 2: Listen for lock updates (Flow)**
+
 ```kotlin
-LatchClient
-  .fetchLocks()
-  .subscribe
-    { locksResult ->
-      when(locksResult) {
-        is LocksResult.Success -> {
-          //Latch locks are available under locksResult.locks
+import kotlinx.coroutines.flow.collect
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.listenForLocks().collect { locks ->
+            // This will be called whenever locks are updated
+            // First call will have cached data immediately, then updated data when server refresh completes
+            // Use locks list
         }
-        //(handle other cases...)
-      }
+    } catch (e: SDKException) {
+        // Handle SDK errors
     }
+}
 ```
+
+**Option 3: Listen for lock updates (Callback)**
+
+```kotlin
+import com.door.opendoor.android.core.api.listeners.LocksListener
+import com.door.opendoor.android.core.api.model.Lock
+
+client.listenForLocks(object : LocksListener {
+    override fun onUpdate(locks: List<Lock>) {
+        // This will be called whenever locks are updated
+        // Use locks list
+    }
+})
+```
+
+With the locks retrieved, we can now call `unlock()` to unlock a DOOR lock.
 
 ## Unlock
 
-With the locks retrieved from `LocksResult.Success.locks`, we can now call `unlock()` to unlock a Latch lock.
+To unlock a lock, call `unlock()` and listen for unlock events to track the progress and result.
+
+**Important:** `unlock()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
-LatchClient
-  .unlock(lock.uuid)
-  .subscribe
-    { unlockResult ->
-      when(unlockResult) {
-        UnlockResult.Success -> //lock is unlocked!
-        //(handle other cases...)
-      }
+import kotlinx.coroutines.flow.collect
+import com.door.opendoor.android.core.api.exceptions.BluetoothException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.model.UnlockEvent
+import java.util.UUID
+
+val lockId: UUID = lock.uuid
+
+// Start listening for unlock events first
+CoroutineScope(Dispatchers.Main).launch {
+    client.listenForUnlockEvents().collect { event ->
+        when (event) {
+            is UnlockEvent.UnlockStarted -> {
+                // Unlock process has started
+            }
+            is UnlockEvent.UnlockSuccess -> {
+                // Lock is unlocked! event.lockId contains the lock UUID
+            }
+            is UnlockEvent.UnlockFailed -> {
+                // Unlock failed - check event.failReason for details
+                // event.lockId contains the lock UUID
+            }
+            is UnlockEvent.UnlockCanceled -> {
+                // Unlock was canceled
+            }
+        }
     }
-```
+}
 
-Your Latch lock should be unlocked now!
-
-## Proximity unlock
-
-Another way to unlock the door is through “Proximity Unlock”. It will continuously unlock the closest lock that’s available.
-
-First, we subscribe to the continuous listener.
-
-```kotlin
-LatchClient
-  .proximityUnlockListener()
-  .subscribe 
-    { proximityUnlockStatus ->
-      when(proximityUnlockStatus) {
-        is ProximityUnlockStatus.Success -> // The unlocked door can be identified with proximityUnlockStatus.lockUuid
-		
-        // (stopProximityUnlock() is invoked for all other cases)
-      }
+// Then initiate the unlock
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.unlock(lockId)
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: BluetoothException) {
+        // Handle Bluetooth errors
     }
+}
 ```
 
-Then, use the `startProximityUnlock()` and `stopProximityUnlock()` function we have provided to control proximity unlock.
+**Alternative: Using callback listener**
 
 ```kotlin
-LatchClient
-  .startProximityUnlock()
-```
+import com.door.opendoor.android.core.api.exceptions.BluetoothException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.listeners.UnlockEventsListener
+import com.door.opendoor.android.core.api.model.UnlockEvent
 
-```kotlin
-LatchClient
-  .stopProximityUnlock() // The unlock listener is disposed
-```
-
-Note that, after proximity unlock is stopped, the previous listener is no longer available and a new listener is needed. The following code snippet is an example usage.
-
-```kotlin
-LatchClient
-  .proximityUnlockListener()
-  .subscribe 
-  ...
-
-LatchClient
-  .startProximityUnlock() // Starts Proximity Unlock
-
-LatchClient
-  .stopProximityUnlock()  // Stops Proximity Unlock and dispose the listener
-
-LatchClient
-  .proximityUnlockListener()  
-  .subscribe 
-  ...
-  
-LatchClient
-  .startProximityUnlock() // Restarts proximity unlock with a new listener
-```
-
-We also provide a one-shot proximity unlock functions, similar to `unlock()` and terminates after it unlocks the closest lock.
-
-```kotlin
-LatchClient
-  .proximityUnlock()
-  .subscribe 
-    { proximityUnlockStatus ->
-      when(proximityUnlockStatus) {
-        is ProximityUnlockStatus.Success -> // The unlocked door can be identified with proximityUnlockStatus.lockUuid
-
-	  //(handle other cases...) 
-      }  
+client.listenForUnlockEvents(object : UnlockEventsListener {
+    override fun onNewEvent(event: UnlockEvent) {
+        when (event) {
+            is UnlockEvent.UnlockStarted -> {
+                // Unlock process has started
+            }
+            is UnlockEvent.UnlockSuccess -> {
+                // Lock is unlocked!
+            }
+            is UnlockEvent.UnlockFailed -> {
+                // Unlock failed
+            }
+            is UnlockEvent.UnlockCanceled -> {
+                // Unlock was canceled
+            }
+        }
     }
+})
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.unlock(lockId)
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: BluetoothException) {
+        // Handle Bluetooth errors
+    }
+}
 ```
+
+Your DOOR lock should be unlocked now!
+
+## Unlock the closest lock that's available
+
+Another way to unlock the door is through "Proximity Unlock". It will continuously unlock the closest lock that's available.
+
+**Important:** `startProximityUnlock()` and `stopProximityUnlock()` must be called from the main thread as they perform BLE operations.
+
+First, set up a listener for unlock events. Then start proximity unlock, and stop it when needed.
+
+**Using Flow:**
+
+```kotlin
+import kotlinx.coroutines.flow.collect
+import com.door.opendoor.android.core.api.exceptions.BluetoothException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.model.UnlockEvent
+
+// Set up the listener first
+val unlockJob = CoroutineScope(Dispatchers.Main).launch {
+    client.listenForUnlockEvents().collect { event ->
+        when (event) {
+            is UnlockEvent.UnlockSuccess -> {
+                // The unlocked door can be identified with event.lockId
+            }
+            is UnlockEvent.UnlockFailed -> {
+                // Handle unlock failure
+            }
+            is UnlockEvent.UnlockCanceled -> {
+                // Handle unlock cancellation
+            }
+            is UnlockEvent.UnlockStarted -> {
+                // Unlock process started
+            }
+        }
+    }
+}
+
+// Start proximity unlock
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.startProximityUnlock()
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: BluetoothException) {
+        // Handle Bluetooth errors
+    }
+}
+
+// Stop proximity unlock when done
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.stopProximityUnlock()
+        unlockJob.cancel() // Cancel the listener job
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    }
+}
+```
+
+**Using callback listener:**
+
+```kotlin
+import com.door.opendoor.android.core.api.exceptions.BluetoothException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.listeners.UnlockEventsListener
+import com.door.opendoor.android.core.api.model.UnlockEvent
+
+// Set up the listener
+client.listenForUnlockEvents(object : UnlockEventsListener {
+    override fun onNewEvent(event: UnlockEvent) {
+        when (event) {
+            is UnlockEvent.UnlockSuccess -> {
+                // The unlocked door can be identified with event.lockId
+            }
+            is UnlockEvent.UnlockFailed -> {
+                // Handle unlock failure
+            }
+            is UnlockEvent.UnlockCanceled -> {
+                // Handle unlock cancellation
+            }
+            is UnlockEvent.UnlockStarted -> {
+                // Unlock process started
+            }
+        }
+    }
+})
+
+// Start proximity unlock
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.startProximityUnlock()
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: BluetoothException) {
+        // Handle Bluetooth errors
+    }
+}
+
+// Stop proximity unlock when done
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.stopProximityUnlock()
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    }
+}
+```
+
+Note: After stopping proximity unlock, you can set up a new listener and start it again if needed. The listener will continue to receive events from both explicit unlocks and proximity unlocks as long as it's active.
 
 ## Sync
 
-Sync allows your mobile client to act as a bridge to the Latch backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide Latch with full information around the issue.
+Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
 
-After each unlock, the SDK will passively sync data with the Latch ecosystem to keep user data as up to date as possible. Explicitly calling `.sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `.sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
+After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
+
+**Important:** `sync()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
-LatchClient
-  .sync(lock.uuid)
-  .subscribe
-  { syncResult ->
-    when(syncResult) {
-      SyncResult.Success -> //lock sync is success!
-      //(handle other cases...)
+import com.door.opendoor.android.core.api.exceptions.BluetoothException
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.exceptions.SyncException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.sync(lockId)
+        // Sync completed successfully
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: BluetoothException) {
+        // Handle Bluetooth errors
+    } catch (e: NetworkException) {
+        // Handle network errors
+    } catch (e: SyncException) {
+        // Handle sync-specific errors
     }
-  }
+}
 ```
 
-Your Latch lock is synced now!
+Your DOOR lock is synced now!
 
 ## Access logs
 
 Retrieve access logs for a lock.
 
 ```kotlin
-LatchClient.accessLogs(lockUuid)
-  .subscribe
-  { accessLogsResult ->
-    when(accessLogsResult) {
-      is AccessLogsResult.Success -> {
-        // Access logs are available under accessLogsResult.accessLogs
-      }
-      //(handle other cases...)
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val accessLogs = client.getAccessLogs(lockId)
+        // Use accessLogs list
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
     }
-  }
-```
-
-### Guest Access
-
-Invite guests
-
-```kotlin
-LatchClient.inviteGuests(
-  firstName = "John",
-  lastName = "Doe",
-  email = "john@example.com",
-  phone = "+1234567890",
-  startTime = LocalDateTime.now(),
-  endTime = null, // No expiration
-  deviceUuids = listOf(lockUUID.toString()),
-  passcodeType = PasscodeType.PERMANENT
-).subscribe { inviteResult ->
-  // Handle invitation result
 }
 ```
 
-Retrieve guests
+## Guest Access
+
+### Invite guests
 
 ```kotlin
-LatchClient.guests()
-  .subscribe { guestsResult ->
-    when(guestsResult) {
-      is GuestsResult.Success -> {
-        val guestList = guestsResult.guests
-      }
-      // Handle error cases
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.model.PasscodeType
+import java.time.LocalDateTime
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val guest = client.inviteGuests(
+            firstName = "John",
+            lastName = "Doe",
+            email = "john@example.com",
+            phone = "+1234567890",
+            startTime = LocalDateTime.now(),
+            endTime = null, // No expiration
+            deviceUuids = listOf(lockId),
+            passcodeType = PasscodeType.PERMANENT
+        )
+        // Guest invitation successful - use guest object
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
     }
-  }
+}
+```
+
+### Retrieve guest list
+
+```kotlin
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val guestList = client.guests()
+        // Use guestList
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
+    }
+}
 ```
