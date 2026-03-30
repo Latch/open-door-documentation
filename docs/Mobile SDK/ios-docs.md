@@ -8,28 +8,32 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
 ## Setup
 
-1. [Add the SDK as a dependency](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#add-the-sdk-as-a-dependency)
-2. [Initialize the library](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#initialize-the-library)
-3. [Retrieve locks](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#retrieve-locks)
-4. [Unlock](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#unlock)
-5. [Proximity unlock](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#proximity-unlock)
-6. [Sync](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#sync)
-7. [Access logs](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#access-logs)
-8. [Log level](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#log-level)
-9. [Guest Access](https://opendoor-uwel.readme.io/docs/openkit-ios-sdk#guest-access)
+1. [Add OpenDOOR SDK as a dependency](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#add-opendoor-sdk-as-a-dependency)
+2. [Initialize the library](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#initialize-the-library)
+3. [Sign out](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sign-out)
+4. [Get locks](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#get-locks)
+5. [Unlock](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#unlock)
+6. [Sync](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sync)
+7. [Access logs](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#access-logs)
+8. [Guest Access](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#guest-access)
+9. [Log level](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#log-level)
+10. [API docs](https://refactored-adventure-2q4l4q2.pages.github.io/documentation/opendoorcore/)
 
-<br />
+### Add OpenDOOR SDK as a dependency
 
-### Add the SDK as a dependency
+1. In Xcode, select “File” → “Add Packages...”
+2. Enter [https://github.com/Latch/opendoor-sdk-spm.git](https://github.com/Latch/opendoor-sdk-spm.git) or [git@github.com](mailto:git@github.com):Latch/opendoor-sdk-spm.git
+3. Select OpenDOORCore library product
 
-1. In Xcode, Go to File > Add Packages... > Add Local...
-2. Navigate to LatchSDK Swift Package (package can be downloaded from [here](https://github.com/Latch/openkit-mobile-sdks/tree/main/ios))
-3. Select your project in "Add to Project" pop-up button
-4. Click "Add Package"
+Or you can add the following dependency to your Package.swift:
+
+```swift iOS
+.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
+```
+
+and add it to your target like this:
 
 ```swift iOS
 dependencies: [
@@ -39,268 +43,422 @@ dependencies: [
 
 ### Initialize the library
 
-Initialization of the LatchSDK is done by calling Latch.initialize() function
-This function takes two parameters:
+Use your Auth0 token retrieved from DOOR's Auth endpoint, get an instance of OpenDOOR, and call `setupWithToken()` with parameters:
 
-`token` - representing optional String value of the Auth0 token
+token - Auth0 token
 
-`allAccesses` - flag that indicate if we should load all accesses (partner and non-partner) of the user. (introduced in the version `1.44.0`)
+includeAllLocks - determines whether we should load all locks that user can access (partner and non-partner) or only partner-managed locks.
 
-Async/Await
+```swift iOS
+ import OpenDOORCore
 
-```swift
-let token: String? = ... // fetched from Auth0
+ let client = await OpenDOOR.getInstance()
+ do {
+    try await client.setupWithToken(token: token, includeAllLocks: true)
+ } catch let error as SetupError {
+     // Handle setup errors
+ } catch let error as NetworkError {
+  // Handle network errors
+ }
 
-/* 
-Optional flag that indicate if we should load all accesses (partner and non-partner) of the user.
- - If not provided, the default value is `false` and will behave as it was previously.
- - Setting this flag to `true` will load all devices that user has access to.
-*/
-@available(*, introduced: 1.44.0)
-let allAccesses: Bool = true
-
-/// initialize with all accesses
-let latchWithAllAccesses = try await Latch.initialize(withToken: token, loadAllAccesses: allAccesses)
-
-/// initialize with default value (previous implementation)
-let latch = try await Latch.initialize(withToken: token)
 ```
 
-Completion Block
+Note:
 
-```swift
-let token = ... // fetched from Auth0
+1. Attempting to call any OpenDOOR SDK function before initialization will throw
+   SDKError.sdkNotInitialized.
 
-/* 
-Optional flag that indicate if we should load all accesses (partner and non-partner) of the user.
- - If not provided, the default value is `false` and will behave as it was previously.
- - Setting this flag to `true` will load all devices that user has access to.
-*/
-@available(*, introduced: 1.44.0)
-let allAccesses: Bool = true
+2. All OpenDOOR SDK APIs are not guaranteed to return on the main thread.
+   If you use the result to update UI, you are responsible for dispatching back to the main thread.
 
-/// initialize with all accesses
-Latch.initialize(withToken: token, loadAllAccesses: allAccesses) { result in
-  switch result {
-  case let .success(latch):
-    ...
-  case let .failure(error):
-    ...
-  }
-}
+3. Ensure your app declares the required Bluetooth permissions in Info.plist and enables Bluetooth backgrounds modes.
 
-/// initialize with default value (previous implementation)
-Latch.initialize(withToken: token) { ... }
+### Sign out
+
+To clear all cached data and remove authentication token call `clear()`.
+After calling `clear()`, the client must be set up again with setupWithToken().
+
+```swift iOS
+ import OpenDOORCore
+
+ let client = await OpenDOOR.getInstance()
+ do {
+    try await client.clear()
+ } catch let error as SDKError {
+     // Handle sdk general errors
+ } 
+
 ```
 
-## Retrieve locks
+### Get locks
 
-The list of locks can be retrieved from local cache using `locks()` or fetched from server using fetchLocks()`
+You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()` variants. These methods have different behaviors:
 
-`locks()` returns the cached list of locks retrieved during initialization. This works even if the device is offline.  
-Use `locks()` when you want a quick response or need to support offline access.
+* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails.
+  If the API request fails with token expired, an error will be thrown even if there is cached data.
 
-Async/Await
+* **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. Cached locks are emitted first, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants do not emit errors from the stream, but the call itself can throw (e.g., SDK not initialized). They can be used to work offline.
 
-```swift
-let locks = await latch.locks()
+Note:
+
+Whenever locks are retrieved from the server, configuration data is also synchronized in the background.
+
+**Option 1: Fetch locks**
+
+```swift iOS
+ import OpenDOORCore
+
+ do {
+    try await client.fetchLocks()
+ } catch let error as SDKError {
+     // Handle sdk general errors
+ } catch let error as NetworkError {
+     // Handle network errors
+ }
 ```
 
-Completion Block
+**Option 2: Listen for locks updates (AsyncStream)**
 
-```swift
-latch.locks { locks in
-  ...
-}
+```swift iOS
+ import OpenDOORCore
+
+ do {
+    let stream = try client.listenForLocks()
+    for await locks in stream {
+        // Use locks list
+    }
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
 ```
 
-`fetchLocks()` forces a refresh by calling the server. If the device is offline or the request fails, it throws FetchLocksError error.  
-When `fetchLocks()` succeeds, the cache is updated, and subsequent calls to `locks()` will return the refreshed list.  
-It was introduced in version 1.5.0
+**Option 3: Listen for locks updates (Combine Publisher)**
 
-```swift
+```swift iOS
+ import OpenDOORCore
 
-let locks = try await latch.fetchLocks()
+ do {
+    // Keep a strong reference to the subscription.
+    locksSubscription = try client.listenForLocksPublisher()
+                .receive(on: DispatchQueue.main)
+                .sink(
+                    receiveValue: { locks in
+                       // Use locks list
+                    }
+                )
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
+```
+
+**Option 4: Listen for locks updates (Callback listener)**
+
+Note:
+
+The listener is weakly retained by the SDK. Keep a strong reference (for example, a stored property) or it may be deallocated. If you explicitly want to stop listening to locks updates, call `stopListenForLocks`.
+
+```swift iOS
+ import OpenDOORCore
+
+ let listener = LockStreamListener()
+ do {
+    try client.listenForLocks(listener: listener)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
+
+ // stop listening
+ do {
+    try client.stopListenForLocks(listener: listener)
+ } catch let error as SDKError {
+   // Handle SDK errors
+ }
 ```
 
 ## Unlock
 
-Async/Await
+Unlocking a door can be done in two ways: explicitly (by calling `unlock()`) or using proximity unlock.
 
-```swift
-try await latch.unlock(lockID: lock.id.uuidString)
+One unlock at a time can be done, with mention that explicit unlock has precedence over proximity unlock.
+
+Unlock events can be tracked using different variants for publishing them, described later in this section.
+
+### Explicit unlock
+
+```swift iOS
+ import OpenDOORCore
+
+ let lockID = lock.id
+ 
+ do {
+    try await client.unlock(lockID: lockID)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as BluetoothError {
+    // Handle Bluetooth errors
+ } catch let error as UnlockError {
+    // Handle unlock errors
+ }
 ```
 
-Completion Block
+### Proximity unlock
 
-```swift
-latch.unlock(lockID: lock.id.uuidString) { result in
-  switch result {
-  case .success:
-    ...
-  case let .failure(error);
-    ...
-  }
-}
+Once it is started, it will continuously scan for nearby locks and will automatically unlock the first eligible lock found within range.
+
+```swift iOS
+ import OpenDOORCore
+ 
+ do {
+    try await client.startProximityUnlock()
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as BluetoothError {
+    // Handle Bluetooth errors
+ }
 ```
 
-## Proximity Unlock
+Proximity unlock scanning can be stopped when needed by calling `stopProximityUnlock`.
 
-```swift
-latch.proximityUnlockHandler = { unlock in
-  print("Unlock Status: \(unlock.lockID) \(unlock.status)")
-}
-latch.startProximityUnlock()
-...
-latch.stopProximityUnlock()
+```swift iOS
+ import OpenDOORCore
+
+ do {
+    try await client.stopProximityUnlock()
+ } catch let error as SDKError {
+    // Handle SDK errors
+ }
+```
+
+### Unlock events
+
+Unlock events from both explicit unlocks and proximity are published through the unlock event stream APIs: listenForUnlockEvents, unlockEventsPublisher, and the callback-based listenForUnlockEvents.
+
+**Option 1: Listen for unlock events (AsyncStream)**
+
+```swift iOS
+ import OpenDOORCore
+
+ do {
+    let stream = try client.listenForUnlockEvents()
+    for await unlockEvent in stream {
+        // Use unlock event
+         switch unlockEvent {
+         case .started:
+              // Unlock process has started
+         case .success:
+             // Lock is unlocked!
+         case .failed:
+              // Unlock failed
+         case .canceled:
+             // Unlock was canceled
+        }
+    }
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
+```
+
+**Option 2: Listen for unlock events (Combine Publisher)**
+
+```swift iOS
+ import OpenDOORCore
+
+ do {
+     // Keep a strong reference to the subscription.
+      unlockEventsSubscription = try client.unlockEventsPublisher()
+                .receive(on: DispatchQueue.main)
+                .sink { unlockEvent in
+                    // Use unlock event
+                     switch unlockEvent {
+                     case .started:
+                        // Unlock process has started
+                     case .success:
+                        // Lock is unlocked!
+                     case .failed:
+                        // Unlock failed
+                     case .canceled:
+                        // Unlock was canceled
+                     }
+                }
+
+ } catch let error as SDKError {
+        // Handle SDK errors
+ }
+```
+
+**Option 3: Listen for unlock events (Callback listener)**
+
+Note:
+
+The listener is weakly retained by the SDK. Keep a strong reference (for example, a stored property) or it may be deallocated. If you explicitly want to stop listening to unlock events, call `stopListenForUnlockEvents`.
+
+```swift iOS
+ import OpenDOORCore
+
+ let listener = UnlockEventListener()
+ 
+ do {
+    try client.listenForUnlockEvents(listener: listener)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
+  
+ // stop listening
+ do {
+    try client.stopListenForUnlockEvents(listener: listener)
+ } catch let error as SDKError {
+   // Handle SDK errors
+ }
 ```
 
 ## Sync
 
-Sync allows your mobile client to act as a bridge to the Latch backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide Latch with full information around the issue.
+Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
 
-After each unlock, the SDK will passively sync data with the Latch ecosystem to keep user data as up to date as possible. Explicitly calling `.sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `.sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
+After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data.
 
-Async/Await
+The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
 
-```swift
-try await latch.sync(lockID: lock.id.uuidString)
+```swift iOS
+ import OpenDOORCore
+
+ let lockID = lock.id
+ do {
+    try await client.sync(lockID: lockID)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as BluetoothError {
+    // Handle Bluetooth errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ } catch let error as SyncError {
+    // Handle sync errors
+ }
 ```
 
-Completion Block
+## Access logs
 
-```swift
-latch.sync(lockID: lock.id.uuidString) { result in
-  switch result {
-  case .success:
-    ...
-  case let .failure(error):
-    ...
-  }
-}
-```
+Retrieve access logs for a lock.
 
-## Access Logs
+```swift iOS
+ import OpenDOORCore
 
-Access Logs are providing access logs information for a given lock.
-
-Async/Await
-
-```swift
-/* Retrieve all access logs for the selected lock
- - Parameter lockUuid: UUID of the Lock
- - Returns: Array of `LatchAccessLog`
- */
-@available(*, introduced: 1.44.0)
-try await latch.getAccessLogs(lockUuid: lock.id)
-```
-
-Completion Block
-
-```swift
-/* Retrieve all access logs for the selected lock
- - Parameter lockUuid: UUID of the Lock
- */
-@available(*, introduced: 1.44.0)
-latch.getAccessLogs(lockUuid: lock.id) { result in
-  switch result {
-  case let .success(logs):
-    ...
-  case let .failure(error):
-    ...
-  }
-}
+ let lockID = lock.id
+ do {
+    try await client.getAccessLogs(lockID: lockID)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ }
 ```
 
 ## Guest Access
 
-Getting the list of guests can be done like this:
+### Invite guests
 
-Async/Await
+To share access to the selected list of eligible locks (`isSharable == true`) and to the entire path if the building supports this feature, use `inviteGuest`.
 
-```swift
-try await latch.inviteGuest(
-	firstName: "John",
-  lastName: "Doe",
-  email: "john@example.com",
-  phone: "+1234567890",
-  startTime: Date(),
-  endTime: nil, // no end date
-  deviceUUIDs: lockUUIDs,
-  passcodeType: PasscodeType.PERMANENT,
-) 
+A guest invitation can be created with temporary door code access or
+in-app access with time-based restrictions.
+
+This operation may partially succeed. See GuestInvitesError for details about any locks that failed.
+
+```swift iOS
+ import OpenDOORCore
+
+ let lockIDs: [UUID] = <array of lock IDs where isSharable == true>
+ do {
+    try await client.inviteGuest(
+                    firstName: "John",
+                    lastName: "Doe",
+                    email: "john@example.com",
+                    phone: "+1234567890",
+                    lockIDs: lockIDs,
+                    inviteType: inviteType
+                )
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ } catch let error as GuestInvitesError {
+   // Handle invites guest errors: 
+   // error.successfulLockIDs - ids of locks with successful invite.
+   // error.failedLockIDs - ids of locks with failed invite.
+   // error.failedLockErrors - errors encountered for each lock that failed. 
+ }
 ```
 
-Completion Block
+### Revoke a guest's access
 
-```swift
-try await latch.guests {
-	switch result {
-  	case let .success(guests):
-    	...
-  	case let .failure(error):
-    	...
-	}
-}
+To remove access to a single lock, without affecting other locks the guest may have access to, call `revokeGuestAccess`.
 
+```swift iOS
+ import OpenDOORCore
+
+ let guestID = guest.id
+ let lockID = lock.id
+ do {
+    let guests = try await client.revokeGuestAccess(guestID: guestID, lockID: lockID)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ } catch let error as RevokeGuestError {
+    // Handle revoke guest errors
+ }
 ```
 
-Inviting a guest can be done like this:
+### Revoke all guest's accesses
 
-Async/Await
+To remove a guest's ability to unlock any DOOR lock call `revokeGuestAllAccesses`.
 
-```swift
-try await latch.inviteGuest(
-	firstName: "John",
-  lastName: "Doe",
-  email: "john@example.com",
-  phone: "+1234567890",
-  startTime: Date(),
-  endTime: nil, // no end date
-  deviceUUIDs: lockUUIDs,
-  passcodeType: PasscodeType.PERMANENT,
-) 
+This method performs a best-effort operation. If some revocations fail, the operation may partially succeed and throws the first error encountered.
+
+```swift iOS
+ import OpenDOORCore
+
+ let guestID = guest.id
+ do {
+    let guests = try await client.revokeGuestAllAccesses(guestID: guestID)
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ } catch let error as RevokeGuestError {
+    // Handle revoke guest errors
+ }
 ```
 
-Completion Block
+### Retrieve guest list
 
-```swift
-latch.inviteGuest(
-	firstName: "John",
-  lastName: "Doe",
-  email: "john@example.com",
-  phone: "+1234567890",
-  startTime: Date(),
-  endTime: nil, // no end date
-  deviceUUIDs: lockUUIDs,
-  passcodeType: PasscodeType.PERMANENT,
-) { result in
-  switch result {
-  case let .success(guest):
-    ...
-  case let .failure(error):
-    ...
-  }
-}
+To get information for all guests with shared access call `guests`.
+
+```swift iOS
+ import OpenDOORCore
+
+ do {
+    let guests = try await client.guests()
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } catch let error as NetworkError {
+    // Handle network errors
+ }
 ```
 
-Revoking a guest access can be done like this:
+## Log level
 
-Async/Await
+To control how much diagnostic information the SDK logs, call `setLogLevel`.
+It supports two levels:
 
-```swift
-try await latch.deleteGuest()
-```
+1. `debug` - produce more detailed output.
+2. `error` - restrict logs to important issues only.
 
-Completion Block
+Default log level is error.
 
-```swift
-latch.deleteGuest { result in
-  switch result {
-  case let .success:
-    ...
-  case let .failure(error):
-    ...
-  }
-}
+```swift iOS
+ import OpenDOORCore
+ 
+ let logLevel = LogLevel.debug
+ client.setLogLevel(logLevel)
 ```
