@@ -8,14 +8,14 @@ hidden: false
 metadata:
   robots: index
 ---
-## Setup
+## Setup 
 
 1. Declare SDK as a dependency
 2. Initialize the library
 3. View the locks and select one to unlock
 4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
 
-### Declare SDK as a dependencyu
+### Declare SDK as a dependency
 
 Add **Maven Central** to your repositories (if not already present), then declare the dependency in your **application module's** `build.gradle.kts`:
 
