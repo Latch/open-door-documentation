@@ -255,7 +255,7 @@ Partners can invite users, without the need of creating them ahead of time, and 
    ```
 
    HTTP Response Body (v2)
-2. ```
+   ```
    {
       "email": "<string>",
       "firstName": "<string>",
