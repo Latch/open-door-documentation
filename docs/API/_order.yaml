@@ -1,9 +1,9 @@
 - partner-backend
 - get-buildings
 - get-doors
-- get-user
 - post-access
 - patch-access
 - delete-revoke-access
 - get-building-residents
 - get-users
+- get-user
