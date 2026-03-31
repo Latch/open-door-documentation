@@ -18,7 +18,7 @@ There will be 2 sets of Client Id and Client Secret, each one for different use 
 * These credentials are used to create **user-scoped tokens** (see "Authorization Token" section below) and then use that token to make calls from the SDK.
 * In this documentation, we'll refer to them as `{{passwordless_client_id}}` and `{{passwordless_client_secret}}`.
 * Partner-scoped credentials (machine-to-machine)
-* These credentials are used to create partner-scoped tokens (see "Authorization Token" section below) and then use that token to make calls for non-user related actions (e.g. for the User Kit APIs).
+* These credentials are used to create partner-scoped tokens (see "Authorization Token" section below) and then use that token to make calls for non-user related actions (e.g. for the OpenDOOR APIs).
 * In this documentation, we'll refer to them as `{{m2m_client_id}}` and `{{m2m_client_secret}}`.
 * **Note:** These credentials are also used to generate the user tokens, which are expected to be replaced by passwordless tokens.
 
@@ -112,7 +112,7 @@ To obtain a token from the Latch Auth0 App, the following steps need to be execu
 
      * `error="extensibility_error" error_description="UNAUTHORIZED"`: Email account is not authorized or doesn't exist.
 
-       ⇒ Check if the email has been configured in Mission Control or programmatically via User Kit API.
+       ⇒ Check if the email has been configured in DOOR OS or programmatically via OpenDOOR API.
 
      * `error="extensibility_error" error_description="USER_ACCOUNT_NOT_ACTIVE"`: Email account exists, but is not active.
 
@@ -267,7 +267,7 @@ Ideally, the Partner App should retrieve a new token before the current one’s 
 
 ### Partner-scoped tokens
 
-The JWT token provided to the Partner BE from the Latch Authentication service will expire within 24 hours. Invoking OpenKit APIs with an expired token will return a 403 Forbidden HTTP error and the partner BE should initiate the token authorization flow again (as described above).
+The JWT token provided to the Partner BE from the Latch Authentication service will expire within 24 hours. Invoking OpenDOOR APIs with an expired token will return a 403 Forbidden HTTP error and the partner BE should initiate the token authorization flow again (as described above).
 
 ## Refresh Token
 
