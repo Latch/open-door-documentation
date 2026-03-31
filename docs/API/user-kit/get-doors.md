@@ -1,5 +1,5 @@
 ---
-title: Get Doors
+title: GET Doors
 deprecated: false
 hidden: false
 metadata:
