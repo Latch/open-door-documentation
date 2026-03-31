@@ -28,6 +28,8 @@ HTTP Request Body
 <empty>
 ```
 
+### Response
+
 HTTP Response Body
 
 ```
@@ -55,8 +57,6 @@ HTTP Response Body
     ]
 }
 ```
-
-### Response
 
 If the request was successful, the Partner BE will receive an HTTP 200 with the following fields:
 
