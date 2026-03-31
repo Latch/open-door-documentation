@@ -8,7 +8,7 @@ hidden: false
 metadata:
   robots: index
 ---
-## Request
+### Request
 
 GET users request from the Partner BE to the Latch BE
 
@@ -35,7 +35,7 @@ HTTP Request Body
 <empty>
 ```
 
-## Response
+### Response
 
 HTTP Response Body
 
