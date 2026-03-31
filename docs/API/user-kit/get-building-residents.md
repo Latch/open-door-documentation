@@ -1,13 +1,15 @@
 ---
 title: GET Building Residents
+excerpt: >-
+  ### Request  Partners can fetch a list of users in a building that are
+  residents with active accesses. This will be done by using a partner-scoped
+  token from the BE.
 deprecated: false
 hidden: false
 metadata:
   robots: index
 ---
 ### Request
-
-Partners can fetch a list of users in a building that are residents with active accesses. This will be done by using a partner-scoped token from the BE.
 
 GET residents request from the Partner BE to the Latch BE
 
