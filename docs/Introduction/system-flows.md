@@ -5,12 +5,12 @@ hidden: false
 metadata:
   robots: index
 ---
-## User Kit
+## Partner Backend
 
-![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/user_kit_flow.png)
+<Image align="center" alt="Devices" src="https://files.readme.io/8cc7d69a48f3c1c2fb1fb580c1a269f975195a8a2e6b1833fdaa102ae27f3df1-user_kit_flow.png" />
 
-## Unlock Kit
+## Partner App
 
-![Devices](https://raw.githubusercontent.com/Latch/open-door-documentation/v2.1/assets/unlock_kit_flow.png)
+<Image align="center" alt="Devices" src="https://files.readme.io/919c2d25296163179ad72adac0238c3a2aca6c1bb0f2413f032fda2dacc74aea-unlock_kit_flow.png" />
 
 <br />
