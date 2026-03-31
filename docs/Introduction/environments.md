@@ -13,4 +13,4 @@ DOOR will provide the Partners with a specific set of devices that can be operat
 
 Traffic from Partner BE will be aggressively monitored for unusual activity and rate-limited based on reasonable usage patterns.
 
-In the future, a sandbox environment will be developed by DOOR and provided to Partners that will mimic much of the production environment.
+A sandbox property will be prepared by DOOR and provided to Partners for developing and testing the integration.
