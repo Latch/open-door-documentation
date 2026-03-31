@@ -38,16 +38,16 @@ HTTP Response Body
 <empty>
 ```
 
-1. If the request was successful, the Partner BE will receive an HTTP 200 and an empty body response. In case of an error, the API will return the following error responses:
+If the request was successful, the Partner BE will receive an HTTP 200 and an empty body response. In case of an error, the API will return the following error responses:
 
-   * `404 Not Found`: invalid user or door UUIDs.
+* `404 Not Found`: invalid user or door UUIDs.
 
-     ⇒ Check the user and door identifiers.
+  ⇒ Check the user and door identifiers.
 
-   * `401 Unauthorized`: missing or invalid access token.
+* `401 Unauthorized`: missing or invalid access token.
 
-     ⇒ Check the token hasn't expired and refresh the token if needed.
+  ⇒ Check the token hasn't expired and refresh the token if needed.
 
-   * `500 Internal Server Error`: there was an unexpected error.
+* `500 Internal Server Error`: there was an unexpected error.
 
-     ⇒ Contact Latch Support
+  ⇒ Contact Latch Support
