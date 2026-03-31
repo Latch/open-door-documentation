@@ -8,11 +8,11 @@ metadata:
 ---
 ## User Consent
 
-To utilize Latch Services, all users must adhere to and accept Latch Terms of Service and Privacy Policies. This applies to users of the Latch App on all platforms including users of any Partner App that utilizes the Latch SDK.
+To utilize DOOR Services, all users must adhere to and accept DOOR Terms of Service and Privacy Policies. This applies to users of the DOOR App on all platforms including users of any Partner App that utilizes the DOOR SDK.
 
-The Latch SDK will display a system-level dialog requesting the user’s consent to the Latch [Terms of Service](https://www.latch.com/terms-of-service)  and [Privacy Policy](https://www.latch.com/privacy-policy) . The dialog will provide links to [latch.com](http://latch.com/)  where the user can review the Terms of Service and Privacy Policy. The user will have the opportunity to Agree or Disagree with the Latch terms. If the user agrees to the terms the SDK will continue to function as intended and provide the ability to Unlock.
+The OpenDOOR SDK will display a system-level dialog requesting the user’s consent to the DOOR [Terms of Service](https://www.door.com/terms-of-service)  and [Privacy Policy](https://www.door.com/privacy-policy) . The dialog will provide links to [door.com](http://door.com/)  where the user can review the Terms of Service and Privacy Policy. The user will have the opportunity to Agree or Disagree with the DOOR terms. If the user agrees to the terms the SDK will continue to function as intended and provide the ability to Unlock.
 
-The user’s acceptance will be needed by the Latch SDK where it will be securely stored and transmitted to the Latch BE for permanent persistence. The SDK will look for the user’s acceptance and consent either locally or from the Latch BE and will not fulfill any requests from the Partner App until the User Acceptance has been provided or retrieved from persistence.
+The user’s acceptance will be needed by the OpenDOOR SDK where it will be securely stored and transmitted to the DOOR BE for permanent persistence. The SDK will look for the user’s acceptance and consent either locally or from the DOOR BE and will not fulfill any requests from the Partner App until the User Acceptance has been provided or retrieved from persistence.
 
 > The consent will be gathered only once from the End User, not per device.
 
@@ -22,7 +22,7 @@ The user’s acceptance will be needed by the Latch SDK where it will be securel
 
 ## Supported Platforms
 
-The Latch SDKs will support the following versions of IOS and Android. Post the Beta period, all versions of IOS/Android currently supported by the Latch App will also be supported.
+The OpenDOOR SDKs will support the following versions of IOS and Android. Post the Beta period, all versions of IOS/Android currently supported by the DOOR App will also be supported.
 
 | Platform | SDK Beta          |
 | -------- | ----------------- |
@@ -31,17 +31,17 @@ The Latch SDKs will support the following versions of IOS and Android. Post the 
 
 ## Communications
 
-The Latch SDK will execute its own communication protocol with Latch services and fetch the relevant information to allow Partner Apps to build a list of Doors and Locks. All fetched information will be directly stored in the mobile storage. The Latch SDK will internally manage its own encrypted database storage. Typical storage needs for the Latch SDK should not exceed 10MB.
+The DOOR  SDK will execute its own communication protocol with DOOR services and fetch the relevant information to allow Partner Apps to build a list of Doors and Locks. All fetched information will be directly stored in the mobile storage. The OpenDOOR SDK will internally manage its own encrypted database storage. Typical storage needs for the OpenDOOR SDK should not exceed 10MB.
 
 ## Bluetooth
 
-Beyond standard internet-based connectivity requirements, the Latch SDK heavily utilizes Bluetooth protocols to communicate with Latch Lock devices. The Partner App will not need to implement BT on its own as the Latch SDK will encapsulate all necessary protocols and be responsible for scanning for a device, connecting to a device, setting up a device, and unlocking a device.
+Beyond standard internet-based connectivity requirements, the OpenDOOR SDK heavily utilizes Bluetooth protocols to communicate with DOOR Lock devices. The Partner App will not need to implement BT on its own as the OpenDOOR SDK will encapsulate all necessary protocols and be responsible for scanning for a device, connecting to a device, setting up a device, and unlocking a device.
 
-The Partner App however will need to ensure users have granted appropriate permissions to Bluetooth (iOS and Android) for the Partner App. Without these permissions granted, the Latch SDK will not be able to function.
+The Partner App however will need to ensure users have granted appropriate permissions to Bluetooth (iOS and Android) for the Partner App. Without these permissions granted, the OpenDOOR SDK will not be able to function.
 
 ## Permissions
 
-The Latch SDK requires specific permissions from the user in order to function properly. The SDK will ask for these permissions upon initialization. As an example, if the user chooses to disable the BLE permission, the SDK will throw a BlePermissionNotGranted error for the App to handle when the user attempts to unlock a door. At this point, the App can choose to reinitialize the SDK so permissions can be requested by the SDK.
+The OpenDOOR SDK requires specific permissions from the user in order to function properly. The SDK will ask for these permissions upon initialization. As an example, if the user chooses to disable the BLE permission, the SDK will throw a BlePermissionNotGranted error for the App to handle when the user attempts to unlock a door. At this point, the App can choose to reinitialize the SDK so permissions can be requested by the SDK.
 
 The following are a list of permissions that the SDK requests from the user:
 
@@ -54,7 +54,7 @@ The following are a list of permissions that the SDK requests from the user:
 initialize(token)
 ```
 
-Initializes the Latch SDK. The Latch SDK requires the current user to agree to Latch's Terms & Conditions and Privacy Policy. If the current user has not granted permission, a modal system alert will be presented to request permission.
+Initializes the OpenDOOR SDK. The OpenDOOR SDK requires the current user to agree to DOOR's Terms & Conditions and Privacy Policy. If the current user has not granted permission, a modal system alert will be presented to request permission.
 
 **Parameters**
 
@@ -105,7 +105,7 @@ Retrieve all locks accessible to the current user. This list can be used to buil
 unlock(uuid)
 ```
 
-Use BLE to scan for a specific Latch device and explicitly unlock the device.
+Use BLE to scan for a specific DOOR device and explicitly unlock the device.
 
 Performing BLE operations requires the user to grant the app permission to use native Bluetooth APIs. This will result in a system modal to be presented on first use.
 
@@ -126,7 +126,7 @@ Either a success or failure.
 | Code                                    | Description                                                                |
 | --------------------------------------- | -------------------------------------------------------------------------- |
 | `LatchError.bluetoothDisabled`          | The current device does not have Bluetooth enabled.                        |
-| `LatchError.permissionDenied`           | User denied Latch SDK access to use the device's Bluetooth.                |
+| `LatchError.permissionDenied`           | User denied OpenDOOR SDK access to use the device's Bluetooth.                |
 | `LatchError.concurrentUnlockInProgress` | Only one unlock operation is allowed at a time.                            |
 | `LatchError.lockNotFound`               | Failed to find a lock with a unique identifier matching the given lock ID. |
 | `LatchError.timeout`                    | Unlock failed to complete in a reasonable amount of time.                  |
