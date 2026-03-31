@@ -1,6 +1,6 @@
 ---
 title: Good Practices
-excerpt: Guideline for good practices on using our Mobile SDK
+excerpt: Guideline for good practices on using our OpenDOOR Mobile SDK
 deprecated: false
 hidden: false
 metadata:
