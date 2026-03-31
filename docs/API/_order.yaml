@@ -5,4 +5,5 @@
 - get-users
 - get-user
 - post-access
+- patch-access
 - user-kit
