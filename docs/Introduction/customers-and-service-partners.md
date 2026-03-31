@@ -11,12 +11,12 @@ For customers, we provide industry-leading, DOOR-enabled hardware and intuitive 
 
 For partners, we are building world-class SDKs and APIs to support mutual customers by enabling DOOR features for different management platforms, resident experiences, and building services. Through our SDKs and APIs, we can deliver new products to end-users by leveraging a combination of partner and DOOR systems to manage DOOR hardware.
 
-| Type             | Function                                                          |
-| ---------------- | ----------------------------------------------------------------- |
-| End User         | Utilizes the Partner App with OpenDOORSDK to Unlock DOOR devices. |
-| Customer         | Purchases and manages DOOR devices.                               |
-| Partner          | Utilizes the OpenDOOR API & SDK.                                  |
-| Customer Partner | Purchases DOOR devices and utilizes the OpenDOOR API & SDK.       |
+| Type             | Function                                                                   |
+| ---------------- | -------------------------------------------------------------------------- |
+| End User         | Utilizes the partner's app (based on OpenDOOR SDK) to Unlock DOOR devices. |
+| Customer         | Purchases and manages DOOR devices.                                        |
+| Partner          | Utilizes the OpenDOOR API & SDK.                                           |
+| Customer Partner | Purchases DOOR devices and utilizes the OpenDOOR API & SDK.                |
 
 ## Responsibilities
 
