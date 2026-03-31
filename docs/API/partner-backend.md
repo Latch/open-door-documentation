@@ -35,19 +35,19 @@ All the interactions between the Partner BE or Partner app and DOOR BE must cont
 
 Depending on the API used and whether the API call is done on behalf of the user or not, the partner should use the corresponding token.
 
-The Partner BE will be responsible for communicating to the DOOR-provided Auth0 service to retrieve an authorization token. This token will need to be passed down through the Partner App to the Latch SDK.
+The Partner BE will be responsible for communicating to the DOOR-provided Auth0 service to retrieve an authorization token. This token will need to be passed down through the Partner App to the DOOR SDK.
 
 ### User-scoped Tokens
 
 **These tokens allow partners to make API calls on behalf of an end-user.**
 
-The user email is provided by the Partner App to the Partner BE and sent along with the Client Id and Client Secret to the DOOR Auth0 app. The provided email address is for the user attempting to utilize the Partner App to unlock a Latch device.
+The user email is provided by the Partner App to the Partner BE and sent along with the Client Id and Client Secret to the DOOR Auth0 app. The provided email address is for the user attempting to utilize the Partner App to unlock a DOOR device.
 
-For the Latch Auth0 App to generate a proper token, the user must already be provisioned within the DOOR ecosystem, associated with the Partner, and granted access by the Partner or Latch to specific Doors.
+For the DOOR Auth0 App to generate a proper token, the user must already be provisioned within the DOOR ecosystem, associated with the Partner, and granted access by the Partner or DOOR to specific Doors.
 
-The User’s relationship to the Partner is verified by the DOOR Authentication service and both the User ID and Partner ID are returned as [claims](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-token-claims)  in the JWT token. Each token returned by the Latch Auth0 App is scoped to a specific User and Partner.
+The User’s relationship to the Partner is verified by the DOOR Authentication service and both the User ID and Partner ID are returned as [claims](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-token-claims)  in the JWT token. Each token returned by the DOOR Auth0 App is scoped to a specific User and Partner.
 
-> The Latch Auth0 App does not require that a password is provided for the DOOR user account. Therefore a password for the user is not to be collected or transmitted by the Partner App to the DOOR Auth0.
+> The DOOR Auth0 App does not require that a password is provided for the DOOR user account. Therefore a password for the user is not to be collected or transmitted by the Partner App to the DOOR Auth0.
 
 ### Partner-scoped Tokens
 
