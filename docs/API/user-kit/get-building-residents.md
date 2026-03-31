@@ -1,5 +1,5 @@
 ---
-title: Get Building Residents
+title: GET Building Residents
 deprecated: false
 hidden: false
 metadata:
