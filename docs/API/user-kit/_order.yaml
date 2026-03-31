@@ -5,3 +5,4 @@
 - get-user
 - post-access
 - delete-revoke-access
+- patch-access
