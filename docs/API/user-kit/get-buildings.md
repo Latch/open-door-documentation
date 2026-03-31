@@ -1,5 +1,5 @@
 ---
-title: Get Buildings
+title: GET Buildings
 excerpt: >-
   Partners can fetch a list of their Buildings. This will be done by using a
   partner-scoped token from the BE.
