@@ -2,6 +2,6 @@
 - get-building-residents
 - get-doors
 - get-users
+- get-user
 - post-access
 - delete-revoke-access
-- get-user
