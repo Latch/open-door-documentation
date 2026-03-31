@@ -9,50 +9,50 @@ metadata:
 
 Partners can fetch a list of users in a building that are residents with active accesses. This will be done by using a partner-scoped token from the BE.
 
-1. GET residents request from the Partner BE to the Latch BE
+GET residents request from the Partner BE to the Latch BE
 
-   ```
-   GET https://rest.latchaccess.com/access/sdk/v1/buildings/:building/residents
-   ```
+```
+GET https://rest.latchaccess.com/access/sdk/v1/buildings/:building/residents
+```
 
-   HTTP Query Parameters
+HTTP Query Parameters
 
-   ```
-   pageSize: <integer> (default is 100)
-   pageToken: "<string>" (default is "0", first page)
-   ```
+```
+pageSize: <integer> (default is 100)
+pageToken: "<string>" (default is "0", first page)
+```
 
-   HTTP Headers
+HTTP Headers
 
-   ```
-   Authorization: Bearer {{access_token}}
-   ```
+```
+Authorization: Bearer {{access_token}}
+```
 
-   HTTP Request Body
+HTTP Request Body
 
-   ```
-   <empty>
-   ```
-
-   HTTP Response Body
-
-   ```
-   {
-     "residents": [
-       {
-         "email": "<string>",
-         "firstName": "<string>",
-         "lastName": "<string>",
-         "userUuid": "<string>",
-         "phone": "<string>"
-       },
-       ...
-     ],
-     "nextPageToken": "<string>"
-   }
-   ```
+```
+<empty>
+```
 
 ### Response
+
+HTTP Response Body
+
+```
+{
+  "residents": [
+    {
+      "email": "<string>",
+      "firstName": "<string>",
+      "lastName": "<string>",
+      "userUuid": "<string>",
+      "phone": "<string>"
+    },
+    ...
+  ],
+  "nextPageToken": "<string>"
+}
+```
 
 If the request was successful, the Partner BE will receive an HTTP 200 containing a list of Resident objects, with the following fields:
 
