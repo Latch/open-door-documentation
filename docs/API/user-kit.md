@@ -207,12 +207,11 @@ Partners can invite users, without the need of creating them ahead of time, and 
    POST https://rest.latchaccess.com/access/sdk/v1/users
    ```
 
-   use v2 for a reacher Response:  
+   use v2 for a reacher Response:
 
    ```
    POST https://rest.latchaccess.com/access/sdk/v2/users
    ```
-
 
    HTTP Headers
 
@@ -220,7 +219,7 @@ Partners can invite users, without the need of creating them ahead of time, and 
    Authorization: Bearer {{access_token}}
    ```
 
-   HTTP Request Body 
+   HTTP Request Body
 
    ```
    {
@@ -256,37 +255,34 @@ Partners can invite users, without the need of creating them ahead of time, and 
    ```
 
    HTTP Response Body (v2)
-
-   1. ```
-      {
-         "email": "<string>",
-         "firstName": "<string>",
-         "lastName": "<string>",
-         "userUuid": "<string>",
-         "phone": "<string>"
-         "accesses": [
-           {
-             "doorUuid: "<string>",
-             "passcodeType": "<string>",
-             "shareable": <boolean>,
-             "startTime": "<string>",
-             "endTime": "<string>",
-             "granter": {
-               "type": "<string>",
-               "uuid": "<string>",
-             },
-             "role": "<string>",
-             "doorcode": {
-               "code": "<string>"          // e.g. "1234567"
-               "description": "<string>"
-             }
-           },
-           ...
-         ]
-      }
-      ```
-
-   <br />
+2. ```
+   {
+      "email": "<string>",
+      "firstName": "<string>",
+      "lastName": "<string>",
+      "userUuid": "<string>",
+      "phone": "<string>"
+      "accesses": [
+        {
+          "doorUuid: "<string>",
+          "passcodeType": "<string>",
+          "shareable": <boolean>,
+          "startTime": "<string>",
+          "endTime": "<string>",
+          "granter": {
+            "type": "<string>",
+            "uuid": "<string>",
+          },
+          "role": "<string>",
+          "doorcode": {
+            "code": "<string>"          // e.g. "1234567"
+            "description": "<string>"
+          }
+        },
+        ...
+      ]
+   }
+   ```
 
 #### Validation
 
