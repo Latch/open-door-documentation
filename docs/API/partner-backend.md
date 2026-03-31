@@ -271,7 +271,7 @@ The JWT token provided to the Partner BE from the Latch Authentication service w
 
 ## Refresh Token
 
-TBD IMG
+<Image align="center" alt="Devices" src="https://files.readme.io/37fbdc6cf95b1b18a2e856fe34ab96da0ab4380e442273f99e9eb5a9605096de-refresh_token_flow.png" />
 
 The Refresh Token ensures the user does not have to be issued a Verification repeatedly and must be implemented by the Partner App and BE. When the Latch SDK makes a request with an expired Access Token, the Latch BE will throw an error that can be captured by the Partner App to begin the Refresh Token flow.
 
