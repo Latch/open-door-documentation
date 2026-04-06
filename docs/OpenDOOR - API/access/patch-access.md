@@ -1,5 +1,5 @@
 ---
-title: PATCH Access
+title: Update Access
 excerpt: >-
   Partners can update user access to given doors. This will be done by using a
   partner-scoped token from the BE.
