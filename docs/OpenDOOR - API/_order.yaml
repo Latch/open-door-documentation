@@ -2,7 +2,6 @@
 - buildings
 - doors
 - users
-- get-building-residents
 - post-access
 - patch-access
 - delete-revoke-access
