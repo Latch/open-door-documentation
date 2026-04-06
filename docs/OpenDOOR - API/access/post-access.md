@@ -1,5 +1,5 @@
 ---
-title: POST Access
+title: Create Access
 excerpt: >-
   Partners can invite users, without the need of creating them ahead of time,
   and grant access to a set of doors. This will be done by using a
