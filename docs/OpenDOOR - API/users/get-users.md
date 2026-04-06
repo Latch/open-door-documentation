@@ -1,5 +1,5 @@
 ---
-title: GET Users
+title: Get Users
 excerpt: >-
   Partners can fetch a list of their Users. This will be done by using a
   partner-scoped token from the BE.
