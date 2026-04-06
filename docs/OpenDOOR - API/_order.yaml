@@ -1,6 +1,5 @@
 - partner-backend
 - buildings
-- get-buildings
 - get-doors
 - post-access
 - patch-access
