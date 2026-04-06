@@ -2,7 +2,7 @@
 title: Access
 deprecated: false
 hidden: false
-icon: 🙍‍♂️
+icon: 🔑
 metadata:
   robots: index
 ---
