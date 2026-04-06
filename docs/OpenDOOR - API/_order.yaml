@@ -1,10 +1,10 @@
 - partner-backend
 - buildings
 - doors
+- users
 - post-access
 - patch-access
 - delete-revoke-access
 - get-building-residents
 - get-users
 - get-user
-- users
