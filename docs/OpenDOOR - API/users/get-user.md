@@ -1,5 +1,5 @@
 ---
-title: GET User
+title: Get User
 excerpt: >-
   Partners can fetch a single user. This will be done by using a partner-scoped
   token from the BE.
