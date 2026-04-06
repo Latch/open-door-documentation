@@ -2,7 +2,7 @@
 - buildings
 - doors
 - users
-- post-access
 - patch-access
 - delete-revoke-access
 - access
+- post-access
