@@ -1,5 +1,5 @@
 ---
-title: DELETE (Revoke) Access
+title: Revoke Access
 excerpt: >-
   Partners can revoke user access to given doors. This will be done by using a
   partner-scoped token from the BE.
