@@ -15,4 +15,4 @@ Use the Buildings endpoints to:
 * Identify where doors and users belong
 * Sync your system with the correct property structure
 
-Most integrations start by fetching buildings and using their IDs to scope all subsequent requests.
+Most integrations start by fetching buildings and using their IDs to scope subsequent requests.
