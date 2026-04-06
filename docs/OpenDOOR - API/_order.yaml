@@ -1,7 +1,6 @@
 - partner-backend
 - buildings
 - doors
-- get-doors
 - post-access
 - patch-access
 - delete-revoke-access
