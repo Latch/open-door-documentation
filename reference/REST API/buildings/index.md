@@ -1,4 +1,0 @@
----
-title: Buildings
-hidden: false
----
