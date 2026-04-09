@@ -1,0 +1,1055 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "User API",
+    "description": "User API",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://rest.latchaccess.com/access/sdk",
+      "description": "Latch REST API base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Devices",
+      "description": "Device operations"
+    }
+  ],
+  "paths": {
+    "/v1/devices": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "List Devices",
+        "description": "Retrieves data model from Latch backend, see [design doc](https://docs.google.com/document/d/1G8kKj0d-SZY_t7OtW3YrtHbX6bg1ulDvdaT0HBsOsG8/edit#heading=h.pj0h22s8irn1) for details",
+        "operationId": "listDevices",
+        "parameters": [
+          {
+            "name": "public_key",
+            "in": "query",
+            "description": "Base 64 encoded string of the public key generated on the mobile client",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved data model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevicesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/devices/{deviceUuid}/sync/{syncUuid}/complete": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Complete Device Sync",
+        "description": "Complete pending sync tasks for the given device",
+        "operationId": "syncComplete",
+        "parameters": [
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "description": "UUID of the device for which to complete the sync",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "syncUuid",
+            "in": "path",
+            "description": "UUID of the sync session to complete",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "204": {
+            "description": "Successfully completed sync session for the given device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/devices/{deviceUuid}/sync/downlinkData": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Device Downlink Data",
+        "description": "Get downlink data for given device synchronization",
+        "operationId": "syncDownlink",
+        "parameters": [
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "description": "UUID of the device to sync",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "packetType",
+            "in": "query",
+            "description": "Downlink type to retrieve",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ACCESS_CODE_LIST",
+                "ACCESS_LOGS",
+                "ACCESS_PHOTOS",
+                "BATTERY",
+                "DEVICE_CONFIGURATION",
+                "DEVICE_KEY",
+                "DOOR_SCHEDULE",
+                "FIRMWARE_VERSION_QUERY",
+                "MEMFAULT_LOGS",
+                "SYSTEM_KEY",
+                "SYSTEM_LOG",
+                "SYSTEM_TIME",
+                "TIMEZONE"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved downlink packets for the given device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownlinkResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/devices/{deviceUuid}/sync/upload": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Upload Device Sync Data",
+        "description": "Post sync data for the given device",
+        "operationId": "syncUpload",
+        "parameters": [
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "description": "UUID of the device",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostSyncDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully uploaded data from the device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/devices/{deviceUuid}/syncConfig": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Get Device Sync Config",
+        "description": "Get sync tasks configurations for given device synchronization",
+        "operationId": "getSyncConfig",
+        "parameters": [
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "description": "UUID of the device",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "syncType",
+            "in": "query",
+            "description": "Tasks to return for given synchronization",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PASSIVE",
+                "PREAUTH",
+                "SETUP"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved sync tasks configurations for the given device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncConfigResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/devices/syncConfigs": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "summary": "List Device Sync Configs",
+        "description": "Get sync tasks configurations for devices user has access to",
+        "operationId": "listSyncConfigs",
+        "parameters": [
+          {
+            "name": "syncType",
+            "in": "query",
+            "description": "Tasks to return for given synchronization",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PASSIVE",
+                "PREAUTH",
+                "SETUP"
+              ]
+            }
+          },
+          {
+            "name": "deviceUuids",
+            "in": "query",
+            "description": "Optional device UUIDs to get sync configurations for a list of devices.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved sync tasks configurations for devices the user has access to",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncConfigsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BadRequestError": {
+        "title": "BadRequestError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "EMAIL_AND_PHONE_PROVIDED",
+              "EMAIL_CAN_NOT_BE_EMPTY",
+              "EMAIL_OR_PHONE_REQUIRED",
+              "EMAIL_REQUIRED_FOR_PERMANENT",
+              "END_TIME_NOT_SUPPORTED",
+              "INVALID_END_TIME",
+              "INVALID_PHONE",
+              "INVALID_START_TIME",
+              "PASSCODE_TYPE_CANT_BE_REVOKED",
+              "USER_CAN_NOT_SHARE"
+            ]
+          }
+        }
+      },
+      "Data": {
+        "title": "Data",
+        "required": [
+          "bodyPackets",
+          "headerAndSignaturePackets"
+        ],
+        "type": "object",
+        "properties": {
+          "bodyPackets": {
+            "type": "string",
+            "format": "byte"
+          },
+          "headerAndSignaturePackets": {
+            "type": "string",
+            "format": "byte"
+          },
+          "syncUuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "BLE packet data"
+      },
+      "Device": {
+        "title": "Device",
+        "required": [
+          "buildingUuid",
+          "deviceApiVersion",
+          "deviceName",
+          "deviceType",
+          "doorcode",
+          "isPendingAccessCodesSync",
+          "isPendingTimezoneSync",
+          "startTime",
+          "unlockAuthCode",
+          "unlockSignatureMessage",
+          "unlockUuid",
+          "updateSignatureMessage",
+          "updateUuid",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "buildingUuid": {
+            "type": "string",
+            "description": "UUID of the building the lock is located in.",
+            "format": "uuid"
+          },
+          "deviceApiVersion": {
+            "$ref": "#/components/schemas/DeviceApiVersion"
+          },
+          "deviceName": {
+            "type": "string",
+            "description": "Name of the device"
+          },
+          "deviceType": {
+            "type": "string",
+            "enum": [
+              "C",
+              "G",
+              "M",
+              "R"
+            ]
+          },
+          "doorcode": {
+            "type": "string",
+            "description": "Decrypted 7-digit doorcode to unlock device.",
+            "example": "1234567"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "User's access end time",
+            "format": "date-time"
+          },
+          "isPendingAccessCodesSync": {
+            "type": "boolean",
+            "description": "Access codes waiting to be synced to the device",
+            "example": false
+          },
+          "isPendingTimezoneSync": {
+            "type": "boolean",
+            "description": "Timezone waiting to be synced to the device",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "description": "User's access start time",
+            "format": "date-time"
+          },
+          "unlockAuthCode": {
+            "type": "string",
+            "description": "The user’s specific BLE code used to build the unlock message"
+          },
+          "unlockSignatureMessage": {
+            "type": "string",
+            "description": "Signature signed by the Latch system key on the BE to build the unlock message"
+          },
+          "unlockUuid": {
+            "type": "string",
+            "description": "UUID for the lens",
+            "format": "uuid"
+          },
+          "updateSignatureMessage": {
+            "type": "string",
+            "description": "Signature used to build the authentication message for the home system"
+          },
+          "updateUuid": {
+            "type": "string",
+            "description": "UUID for the home system",
+            "format": "uuid"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Latch Device object"
+      },
+      "DeviceApiVersion": {
+        "title": "DeviceApiVersion",
+        "type": "object",
+        "properties": {
+          "bleVersion": {
+            "type": "string",
+            "enum": [
+              "BLE0",
+              "BLE1",
+              "BLE2",
+              "BLE3"
+            ]
+          },
+          "hsVersion": {
+            "type": "string",
+            "enum": [
+              "HS0",
+              "HS10",
+              "HS11",
+              "HS12",
+              "HS13",
+              "HS3",
+              "HS4",
+              "HS5",
+              "HS6",
+              "HS7",
+              "HS8",
+              "HS9"
+            ]
+          },
+          "lsVersion": {
+            "type": "string",
+            "enum": [
+              "LS0",
+              "LS4",
+              "LS5",
+              "LS6",
+              "LS7",
+              "LS8",
+              "LS9"
+            ]
+          }
+        }
+      },
+      "DevicesResponse": {
+        "title": "DevicesResponse",
+        "required": [
+          "devices"
+        ],
+        "type": "object",
+        "properties": {
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Device"
+            }
+          }
+        },
+        "description": "Response from the devices endpoint"
+      },
+      "DownlinkData": {
+        "title": "DownlinkData",
+        "required": [
+          "bodyPackets",
+          "headerAndSignaturePackets",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "bodyPackets": {
+            "type": "string",
+            "format": "byte"
+          },
+          "headerAndSignaturePackets": {
+            "type": "string",
+            "format": "byte"
+          },
+          "syncUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ACCESS_CODE_LIST",
+              "ACCESS_LOGS",
+              "ACCESS_PHOTOS",
+              "BATTERY",
+              "DEVICE_CONFIGURATION",
+              "DEVICE_KEY",
+              "DOOR_SCHEDULE",
+              "FIRMWARE_VERSION_QUERY",
+              "MEMFAULT_LOGS",
+              "SYSTEM_KEY",
+              "SYSTEM_LOG",
+              "SYSTEM_TIME",
+              "TIMEZONE"
+            ]
+          }
+        },
+        "description": "BLE packet data"
+      },
+      "DownlinkResponse": {
+        "title": "DownlinkResponse",
+        "required": [
+          "downlinkData"
+        ],
+        "type": "object",
+        "properties": {
+          "downlinkData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DownlinkData"
+            }
+          }
+        },
+        "description": "Response from the downlink endpoint"
+      },
+      "DownlinkTask": {
+        "title": "DownlinkTask",
+        "required": [
+          "name",
+          "syncOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Data"
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "ACCESS_CODE_LIST",
+              "ACCESS_LOGS",
+              "ACCESS_PHOTOS",
+              "BATTERY",
+              "DEVICE_CONFIGURATION",
+              "DEVICE_KEY",
+              "DOOR_SCHEDULE",
+              "FIRMWARE_VERSION_QUERY",
+              "MEMFAULT_LOGS",
+              "SYSTEM_KEY",
+              "SYSTEM_LOG",
+              "SYSTEM_TIME",
+              "TIMEZONE"
+            ]
+          },
+          "syncOrder": {
+            "$ref": "#/components/schemas/SyncOrder"
+          }
+        },
+        "description": "Sync task data to write to the device"
+      },
+      "InternalServerError": {
+        "title": "InternalServerError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "INTERNAL_SERVER_ERROR"
+            ]
+          }
+        }
+      },
+      "PostSyncDataRequest": {
+        "title": "PostSyncDataRequest",
+        "required": [
+          "syncData"
+        ],
+        "type": "object",
+        "properties": {
+          "syncData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SyncData"
+            }
+          }
+        },
+        "description": "JSON representation of data from the device for the sync upload endpoint"
+      },
+      "SyncConfig": {
+        "title": "SyncConfig",
+        "required": [
+          "deviceUuid",
+          "downlinkTasks",
+          "uplinkTasks"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "description": "Device identifier",
+            "format": "uuid"
+          },
+          "downlinkTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DownlinkTask"
+            }
+          },
+          "uplinkTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UplinkTask"
+            }
+          }
+        },
+        "description": "Sync configuration for a given device"
+      },
+      "SyncConfigResponse": {
+        "title": "SyncConfigResponse",
+        "required": [
+          "syncConfig"
+        ],
+        "type": "object",
+        "properties": {
+          "syncConfig": {
+            "$ref": "#/components/schemas/SyncConfig"
+          }
+        },
+        "description": "Response from the syncConfig endpoint"
+      },
+      "SyncConfigsResponse": {
+        "title": "SyncConfigsResponse",
+        "required": [
+          "syncConfigs"
+        ],
+        "type": "object",
+        "properties": {
+          "syncConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SyncConfig"
+            }
+          }
+        },
+        "description": "Response from the syncConfigs endpoint"
+      },
+      "SyncData": {
+        "title": "SyncData",
+        "required": [
+          "channel",
+          "packet"
+        ],
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "Bluetooth channel to identify type of data to read from the device"
+          },
+          "packet": {
+            "type": "string",
+            "format": "byte"
+          }
+        },
+        "description": "Sync Data object"
+      },
+      "SyncOrder": {
+        "title": "SyncOrder",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "integer",
+            "description": "Indicates when the given task will execute during active sync",
+            "format": "int32",
+            "example": 0
+          },
+          "passive": {
+            "type": "integer",
+            "description": "Indicates when the given task will execute during passive sync",
+            "format": "int32",
+            "example": 0
+          },
+          "preauth": {
+            "type": "integer",
+            "description": "Indicates when the given task will execute during pre-authentication sync",
+            "format": "int32",
+            "example": 0
+          },
+          "setup": {
+            "type": "integer",
+            "description": "Indicates when the given task will execute during setup sync",
+            "format": "int32",
+            "example": 0
+          }
+        },
+        "description": "The order of tasks for each device synchronization"
+      },
+      "UnauthorizedError": {
+        "title": "UnauthorizedError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "UNAUTHORIZED"
+            ]
+          }
+        }
+      },
+      "UplinkTask": {
+        "title": "UplinkTask",
+        "required": [
+          "channel",
+          "name",
+          "syncOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "Bluetooth channel to identify type of data to read from the device"
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "ACCESS_CODE_LIST",
+              "ACCESS_LOGS",
+              "ACCESS_PHOTOS",
+              "BATTERY",
+              "DEVICE_CONFIGURATION",
+              "DEVICE_KEY",
+              "DOOR_SCHEDULE",
+              "FIRMWARE_VERSION_QUERY",
+              "MEMFAULT_LOGS",
+              "SYSTEM_KEY",
+              "SYSTEM_LOG",
+              "SYSTEM_TIME",
+              "TIMEZONE"
+            ]
+          },
+          "syncOrder": {
+            "$ref": "#/components/schemas/SyncOrder"
+          }
+        },
+        "description": "Sync task data to read from the lock"
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
