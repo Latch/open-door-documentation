@@ -49,9 +49,12 @@ Authentication endpoints must always go through your backend because they requir
 
 ## Installation
 
-Install the package:
+Install the package:  
 
-```bash
+```markdown
+
+
+// https://www.npmjs.com/package/@dooraccess/opendoor-web-sdk
 npm install @dooraccess/opendoor-web-sdk
 ```
 
