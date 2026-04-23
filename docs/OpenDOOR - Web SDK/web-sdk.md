@@ -525,6 +525,207 @@ const locks = await client.getLocks();
 
 ***
 
+<br />
+
+## Optional: Generate a Local Reference App with AI
+
+Use this prompt to generate a local mock integration that preserves the real browser/backend architecture required by the OpenDOOR Web SDK.
+
+<Callout icon="💡" theme="info">
+  Use this prompt for local prototyping and architecture exploration. Keep the auth and device flows mocked unless you are intentionally replacing the mock backend with your real partner integration.
+</Callout>
+
+<Accordion title="Expand the AI coding prompt" icon="fa-code">
+  <pre>
+    Build a compact, production-style reference app that demonstrates how a partner would integrate the OpenDOOR Web SDK using a browser frontend plus a backend layer, but use mocked backend behavior and mocked lock data so the app runs locally with no real credentials, no external API calls, and no CORS issues.
+
+    Use this documentation as reference context:
+    [https://opendoor-uwel.readme.io/docs/web-sdk](https://opendoor-uwel.readme.io/docs/web-sdk)
+
+    Do not rely on the URL alone. Follow the constraints in this prompt as the primary source of truth.
+
+    If you cannot access or reliably read that documentation, do not guess. Ask me to paste the relevant sections first. Specifically request:
+
+    1. Installation/import section
+    2. SDKConfig/options section
+    3. Devices methods section
+    4. Token management methods section
+    5. Error handling section
+    6. Lock object/type shape
+    7. Backend auth flow guidance
+
+    Do not generate code that assumes undocumented APIs.
+
+    This should feel like it was written by a strong senior engineer: clean architecture, small modules, minimal surface area, readable code, clear naming, no unnecessary abstractions, no filler, no generated-looking code, no giant files, and no tutorial-style clutter. Optimize for maintainability and clarity.
+
+    Stack:
+
+    * Frontend: React + Vite
+    * Backend: Node.js + Express
+    * Language: JavaScript
+    * Styling: lightweight CSS, clean and intentional, no UI library
+    * Keep dependencies minimal
+
+    Primary goal:
+    Create a partner-facing starter/reference implementation that models the real browser/backend split required for the OpenDOOR Web SDK, while mocking the auth/token/device flows locally.
+
+    Important constraints:
+
+    * Do not use or teach `baseUrl`
+    * Do not call any real external services
+    * Do not require real Auth0, real Latch APIs, or real npm publishing setup
+    * Mock everything locally
+    * Add concise comments only at the replacement points where a partner would swap mock logic for real integration logic
+    * The app should teach architecture, not environment-specific wiring
+
+    Functional requirements:
+
+    1. User enters email and requests an OTP
+    2. Backend mocks the OTP send flow
+    3. User enters OTP and verifies it
+    4. Backend returns a fake access token and stores fake refresh/session state in memory
+    5. Frontend transitions into an authenticated state
+    6. Frontend fetches mocked locks from the backend
+    7. UI supports filtering by:
+       * all
+       * active
+       * expired
+    8. UI renders:
+       * lock name
+       * building ID
+       * door code or fallback text
+       * access status
+       * formatted start/end timestamps
+    9. Include loading, empty, and error states
+    10. Include token/session status in the UI for demo visibility
+    11. Include a mock refresh token endpoint and wire the frontend to use it
+
+    Architecture expectations:
+
+    * Do not build a monolith
+    * Separate frontend UI components from API utilities and domain helpers
+    * Separate backend routes from mock services/data helpers
+    * Keep the folder structure obvious and unsurprising
+    * Prefer pure helper functions for data formatting and access-status logic
+    * No Redux, no complex state libraries, no unnecessary context usage
+    * No class-heavy architecture unless there is a strong reason
+    * No magic strings scattered everywhere; centralize constants where appropriate
+
+    Frontend structure should look roughly like this:
+
+    * src/components/AuthPanel.jsx
+    * src/components/OtpForm.jsx
+    * src/components/LockFilters.jsx
+    * src/components/LockList.jsx
+    * src/components/LockCard.jsx
+    * src/components/StatusBadge.jsx
+    * src/lib/api.js
+    * src/lib/lock-status.js
+    * src/lib/format.js
+    * src/App.jsx
+
+    Backend structure should look roughly like this:
+
+    * server/index.js
+    * server/routes/auth.js
+    * server/routes/locks.js
+    * server/services/mock-auth.js
+    * server/services/mock-locks.js
+    * server/data/locks.js
+
+    Implementation details:
+
+    * Use in-memory state only
+    * Do not persist anything
+    * Mock OTP rule:
+      * any email is accepted
+      * OTP value "123456" succeeds
+      * anything else returns a clear error
+    * Mock refresh flow:
+      * if a session exists, return a new fake token
+      * otherwise return 401
+    * Mock locks endpoint should return a realistic array with:
+      * active lock
+      * expired lock
+      * indefinite-access lock (`endTime: null`)
+      * lock with no door code (`doorCode: null`)
+    * Date formatting should be human-readable, for example:
+      * Apr 23, 2026, 10:30 AM
+    * Access status rules:
+      * if now is before startTime => upcoming
+      * if endTime exists and now is after endTime => expired
+      * otherwise => active
+    * It is acceptable to expose an "Upcoming" visual state even if the main filters are all / active / expired
+
+    Design expectations:
+
+    * Clean, calm UI
+    * Not flashy
+    * Strong spacing and hierarchy
+    * Avoid default browser-looking forms/buttons
+    * Responsive for common laptop widths
+    * Simple but polished card layout
+    * Status colors should be restrained and legible
+    * Use a small set of CSS variables
+    * Avoid overdesigned gradients or gimmicks
+
+    Code quality expectations:
+
+    * Comments should be sparse and useful
+    * Add comments only where a partner would benefit from understanding what to replace in a real integration
+    * Avoid obvious comments
+    * Handle failure states explicitly
+    * Avoid nested conditional messes
+    * Prefer straightforward control flow
+    * Keep components focused and easy to scan
+    * Do not overfit for extensibility beyond this use case
+
+    Important integration framing:
+    This is not just a mock app. It should clearly teach the correct architecture:
+
+    * browser UI does not own confidential auth credentials
+    * backend handles OTP/token flows
+    * frontend receives an access token
+    * frontend then fetches lock data through backend-controlled endpoints in this mock version
+    * in a real integration, the mocked auth/token logic would be replaced with real partner backend logic
+    * real deployments may require same-origin backend routing or controlled proxying depending on environment and browser networking constraints
+
+    README requirements:
+    Write a short, strong README that includes:
+
+    * what this project demonstrates
+    * how to run frontend
+    * how to run backend
+    * mock credentials/OTP behavior
+    * available endpoints
+    * how this maps to a real OpenDOOR integration
+    * exactly which files a partner would replace when moving from mock to real auth/device flows
+
+    Also include a section titled:
+    "Swap Mock Logic for Real Integration"
+
+    This section should point to the backend auth/token services and backend lock service as the intended replacement points.
+
+    At the end of the README, add a "Run It" section that explicitly tells the user which commands to run to start the backend server and the frontend dev server.
+
+    Output requirements:
+
+    * Return the full codebase
+    * Keep files concise
+    * Avoid placeholder TODO spam
+    * Make sure the app actually hangs together coherently
+    * Prefer code that looks hand-written by an experienced engineer over code that looks generated
+  </pre>
+</Accordion>
+
+<br />
+
+<br />
+
+<br />
+
+<br />
+
 ## Summary
 
 To integrate the OpenDOOR Web SDK successfully:
