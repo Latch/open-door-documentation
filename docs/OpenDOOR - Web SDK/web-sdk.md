@@ -30,18 +30,18 @@ At a high level:
 6. The frontend calls the Devices methods to retrieve locks and door codes
 7. When the token expires, the frontend asks your backend for a new access token
 
-```javascript
+```text
 Frontend -> Your Backend -> Latch Auth
 Frontend -> OpenDOOR Web SDK -> Configured API Base
 ```
 
 ### Important Browser Networking Note
 
-The SDK makes its device/lock requests from the browser to the configured API base.
+Many web integrations use a same-origin backend proxy in front of the upstream API. This avoids browser cross-origin issues and gives you a controlled integration point in
+your own environment.
 
-In the standard production setup, that is the Latch API. This works only if the target origin allows the browser origin that is hosting your application.
-
-If your browser origin is not allowed to call the target API origin directly, you must route SDK traffic through a same-origin backend proxy instead.
+If your deployment is configured to allow your browser origin to call the target API origin directly, the SDK can use its default production API base without additional
+proxying.
 
 Authentication endpoints must always go through your backend because they require confidential credentials.
 
@@ -51,7 +51,7 @@ Authentication endpoints must always go through your backend because they requir
 
 Install the package:
 
-```javascript
+```bash
 npm install @dooraccess/opendoor-web-sdk
 ```
 
@@ -66,6 +66,8 @@ import { OpenDOORClient } from '@dooraccess/opendoor-web-sdk';
 ## Backend Integration
 
 Your backend is responsible for the authentication flow. Do **not** expose confidential credentials such as `client_id`, `client_secret`, or `refresh_token` in browser code.
+
+The examples below assume your application uses server-side session middleware or another secure server-side storage mechanism. Adapt them to your own backend architecture.
 
 ### Step 1: Send OTP
 
@@ -233,6 +235,9 @@ const client = new OpenDOORClient({
 });
 ```
 
+If your `onTokenExpired` callback returns a new token, the SDK retries the failed request automatically. If your callback throws or rejects, that error is propagated back to
+your application so your UI can decide whether to re-authenticate the user or show an error state.
+
 ### Optional Configuration
 
 ```javascript
@@ -267,7 +272,7 @@ The Devices methods return the doors the user can unlock and any available door 
 
 Returns all locks available to the current user according to the configured access scope.
 
-```js
+```javascript
 const locks = await client.getLocks();
 ```
 
@@ -294,25 +299,25 @@ Returns a single lock by device UUID.
 const lock = await client.getLock('device-001');
 ```
 
+`getLock(lockId)` derives its result from the current device list rather than a dedicated single-lock endpoint. In practice, it performs the same underlying device fetch as
+`getLocks()` and then selects the matching lock from that result.
+
 ### `includeAllDevices`
 
-The `includeAllDevices` option controls which credentials are returned.
+By default, the SDK retrieves only the credentials generated from accesses granted by the Partner that retrieved the user’s JWT token.
 
-If `includeAllDevices` is `true`, the SDK retrieves **all** of the user’s credentials for all doors the user can unlock.
+```javascript
+const client = new OpenDOORClient({
+  token,
+});
+```
+
+If `includeAllDevices` is `true`, the SDK retrieves all of the user’s credentials for all doors the user can unlock.
 
 ```javascript
 const client = new OpenDOORClient({
   token,
   includeAllDevices: true,
-});
-```
-
-If `includeAllDevices` is `false`, the SDK retrieves only the credentials generated from accesses granted by the Partner that retrieved the user’s JWT token.
-
-```javascript
-const client = new OpenDOORClient({
-  token,
-  includeAllDevices: false,
 });
 ```
 
@@ -424,18 +429,27 @@ Thrown when SDK configuration is invalid.
 ### Example
 
 ```javascript
+import {
+  AuthError,
+  APIError,
+  ConfigError,
+  NetworkError,
+  NotFoundError,
+  OpenDOORClient,
+} from '@dooraccess/opendoor-web-sdk';
+
 try {
   const locks = await client.getLocks();
 } catch (error) {
-  if (error.name === 'AuthError') {
+  if (error instanceof AuthError) {
     console.error('Authentication failed or token refresh was not possible');
-  } else if (error.name === 'APIError') {
+  } else if (error instanceof APIError) {
     console.error('The API returned an error response');
-  } else if (error.name === 'NetworkError') {
+  } else if (error instanceof NetworkError) {
     console.error('A network or timeout error occurred');
-  } else if (error.name === 'NotFoundError') {
+  } else if (error instanceof NotFoundError) {
     console.error('The requested lock was not found');
-  } else if (error.name === 'ConfigError') {
+  } else if (error instanceof ConfigError) {
     console.error('SDK configuration is invalid');
   } else {
     console.error('Unexpected error', error);
