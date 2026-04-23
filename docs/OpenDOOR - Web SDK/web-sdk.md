@@ -7,31 +7,43 @@ metadata:
 ---
 The OpenDOOR Web SDK allows your web application to retrieve the doors a user can unlock and display any available door codes.
 
-This SDK is **data/API-only**. It does **not** provide UI components. Your application is responsible for:
+This SDK is **data/API-only**. It does **not** render UI for you. Your application is responsible for:
 
+* Authenticating the user
 * Rendering the user experience
-* Handling authentication on your backend
-* Passing a valid JWT access token to the SDK
+* Passing a valid JWT access token into the SDK
+* Handling token refresh through your backend
 
 ***
 
-## Overview
+## How It Works
 
-The SDK runs in the browser, but authentication must be handled by your backend because it requires confidential credentials.
-
-```text
-Frontend -> Your Backend -> Latch Auth
-Frontend -> OpenDOOR Web SDK -> Latch API
-```
+The SDK runs in the browser. Authentication must be handled by your backend because it requires confidential credentials.
 
 At a high level:
 
 1. Your backend sends the user a one-time passcode (OTP)
-2. Your backend verifies the OTP and exchanges it for a JWT access token
-3. Your backend returns the JWT access token to the frontend
-4. The frontend initializes the OpenDOOR Web SDK with that token
-5. The frontend calls SDK methods such as `getLocks()`
-6. When the token expires, the frontend asks your backend for a refreshed token
+2. Your backend verifies the OTP and exchanges it for an access token
+3. Your backend stores the refresh token securely
+4. Your backend returns the access token to the frontend
+5. The frontend initializes the SDK with that access token
+6. The frontend calls the Devices methods to retrieve locks and door codes
+7. When the token expires, the frontend asks your backend for a new access token
+
+```javascript
+Frontend -> Your Backend -> Latch Auth
+Frontend -> OpenDOOR Web SDK -> Configured API Base
+```
+
+### Important Browser Networking Note
+
+The SDK makes its device/lock requests from the browser to the configured API base.
+
+In the standard production setup, that is the Latch API. This works only if the target origin allows the browser origin that is hosting your application.
+
+If your browser origin is not allowed to call the target API origin directly, you must route SDK traffic through a same-origin backend proxy instead.
+
+Authentication endpoints must always go through your backend because they require confidential credentials.
 
 ***
 
@@ -39,13 +51,13 @@ At a high level:
 
 Install the package:
 
-```bash
+```javascript
 npm install @dooraccess/opendoor-web-sdk
 ```
 
 Import the SDK in your frontend application:
 
-```js
+```javascript
 import { OpenDOORClient } from '@dooraccess/opendoor-web-sdk';
 ```
 
@@ -59,7 +71,7 @@ Your backend is responsible for the authentication flow. Do **not** expose confi
 
 Your backend calls the passwordless start endpoint.
 
-```js
+```javascript
 app.post('/api/door/send-otp', async (req, res) => {
   const response = await fetch('https://auth.prod.latch.com/passwordless/start', {
     method: 'POST',
@@ -88,7 +100,7 @@ app.post('/api/door/send-otp', async (req, res) => {
 
 Your backend verifies the OTP and exchanges it for an access token.
 
-```js
+```javascript
 app.post('/api/door/verify-otp', async (req, res) => {
   const response = await fetch('https://auth.prod.latch.com/oauth/token', {
     method: 'POST',
@@ -113,10 +125,8 @@ app.post('/api/door/verify-otp', async (req, res) => {
     return res.status(response.status).json(data);
   }
 
-  // Store refresh_token securely on the backend or in a secure server-side session.
   req.session.refreshToken = data.refresh_token;
 
-  // Return only the access token to the frontend.
   res.json({
     token: data.access_token,
   });
@@ -127,7 +137,7 @@ app.post('/api/door/verify-otp', async (req, res) => {
 
 When the frontend needs a new token, your backend uses the stored refresh token.
 
-```js
+```javascript
 app.post('/api/door/refresh-token', async (req, res) => {
   const refreshToken = req.session.refreshToken;
 
@@ -173,22 +183,22 @@ Your backend should:
 
 * Send the OTP
 * Verify the OTP
-* Exchange OTP for an access token
+* Exchange the OTP for an access token
 * Store the refresh token securely
 * Refresh the access token when needed
 * Return only the access token to the browser
 
 Your backend should **not**:
 
-* Expose `client_secret` to the browser
-* Expose `refresh_token` to the browser
-* Perform the SDK device calls on behalf of the frontend unless you intentionally choose to proxy them
+* Expose `client_secret` in browser code
+* Expose `refresh_token` in browser code
+* Assume the SDK performs authentication for you
 
 ***
 
 ## Frontend Setup
 
-Once your frontend receives a JWT access token from your backend, it can initialize the SDK.
+Once your frontend receives an access token from your backend, it can initialize the SDK.
 
 ### Basic Setup
 
@@ -202,7 +212,7 @@ const client = new OpenDOORClient({
 
 ### Recommended Setup with Automatic Token Refresh
 
-```js
+```javascript
 import { OpenDOORClient } from '@dooraccess/opendoor-web-sdk';
 
 const client = new OpenDOORClient({
@@ -234,6 +244,10 @@ const client = new OpenDOORClient({
       credentials: 'include',
     });
 
+    if (!response.ok) {
+      throw new Error('Failed to refresh token');
+    }
+
     const data = await response.json();
     return data.token;
   },
@@ -253,7 +267,7 @@ The Devices methods return the doors the user can unlock and any available door 
 
 Returns all locks available to the current user according to the configured access scope.
 
-```javascript
+```js
 const locks = await client.getLocks();
 ```
 
@@ -282,7 +296,7 @@ const lock = await client.getLock('device-001');
 
 ### `includeAllDevices`
 
-The `includeAllDevices` option controls which user credentials are returned.
+The `includeAllDevices` option controls which credentials are returned.
 
 If `includeAllDevices` is `true`, the SDK retrieves **all** of the user’s credentials for all doors the user can unlock.
 
@@ -334,7 +348,7 @@ Field details:
 
 Called when the SDK needs a fresh token.
 
-Your implementation should call your backend and return a new JWT.
+Your implementation should call your backend and return a new access token.
 
 ```javascript
 const client = new OpenDOORClient({
@@ -344,6 +358,10 @@ const client = new OpenDOORClient({
       method: 'POST',
       credentials: 'include',
     });
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token');
+    }
 
     const data = await response.json();
     return data.token;
@@ -389,7 +407,7 @@ Thrown when authentication fails, the token is invalid, or the SDK cannot automa
 
 ### `APIError`
 
-Thrown when the Latch API returns a non-success HTTP response.
+Thrown when the API returns a non-success HTTP response.
 
 ### `NetworkError`
 
@@ -429,7 +447,7 @@ try {
 
 ## Recommended Integration Pattern
 
-A typical web integration looks like this:
+A typical web integration looks like this.
 
 ### Backend
 
@@ -441,17 +459,19 @@ A typical web integration looks like this:
 
 ### Frontend
 
-* Request access token from your backend
+* Request an access token from your backend
 * Initialize `OpenDOORClient`
 * Call `getLocks()` or `getLock(lockId)`
 * Provide `onTokenExpired` so the SDK can refresh automatically
-
-Example:
 
 ```javascript
 const tokenResponse = await fetch('/api/door/session', {
   credentials: 'include',
 });
+
+if (!tokenResponse.ok) {
+  throw new Error('Failed to load door session');
+}
 
 const tokenData = await tokenResponse.json();
 
@@ -462,6 +482,10 @@ const client = new OpenDOORClient({
       method: 'POST',
       credentials: 'include',
     });
+
+    if (!refreshResponse.ok) {
+      throw new Error('Failed to refresh token');
+    }
 
     const refreshData = await refreshResponse.json();
     return refreshData.token;
@@ -489,7 +513,7 @@ const locks = await client.getLocks();
 To integrate the OpenDOOR Web SDK successfully:
 
 1. Build the authentication flow on your backend
-2. Return a JWT access token to the frontend
+2. Return an access token to the frontend
 3. Initialize the SDK in the browser
 4. Call the Devices methods to retrieve locks and door codes
 5. Implement automatic token refresh through `onTokenExpired`
