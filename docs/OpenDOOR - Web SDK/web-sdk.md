@@ -5,10 +5,6 @@ hidden: true
 metadata:
   robots: index
 ---
-<br />
-
-[# OpenDOOR Web SDK]()
-
 The OpenDOOR Web SDK allows your web application to retrieve the doors a user can unlock and display any available door codes.
 
 This SDK is **data/API-only**. It does **not** provide UI components. Your application is responsible for:
