@@ -49,7 +49,7 @@ Authentication endpoints must always go through your backend because they requir
 
 ## Installation
 
-Install the package:  
+Install the package:
 
 ```markdown
 
@@ -580,7 +580,7 @@ Use this prompt to generate a local mock integration that preserves the real bro
 
     Functional requirements:
 
-    1. User enters email and requests an OTP
+    1. click Send OTP
     2. Backend mocks the OTP send flow
     3. User enters OTP and verifies it
     4. Backend returns a fake access token and stores fake refresh/session state in memory
