@@ -12,7 +12,9 @@ This SDK is **data/API-only**. It does **not** render UI for you. Your applicati
 * Authenticating the user
 * Rendering the user experience
 * Passing a valid JWT access token into the SDK
-* Handling token refresh through your backend
+* Handling token refresh through your backend  
+
+**_PLEASE NOTE:_** Partner domains, where the SDK is used, must be registered with our DevOps to whitelist
 
 ***
 
