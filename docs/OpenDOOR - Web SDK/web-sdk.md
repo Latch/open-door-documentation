@@ -530,7 +530,7 @@ const locks = await client.getLocks();
 Use this prompt to generate a local mock integration that preserves the real browser/backend architecture required by the OpenDOOR Web SDK.
 
 <Callout icon="💡" theme="info">
-  Use this prompt for local prototyping and architecture exploration. Keep the auth and device flows mocked unless you are intentionally replacing the mock backend with your real partner integration.  
+  Use this prompt for local prototyping and architecture exploration. Keep the auth and device flows mocked unless you are intentionally replacing the mock backend with your real partner integration.
 
   The second prompts gives a more robust prototype that includes server side code, with an assumption of close approximation, with actual api calls. Of course, as a prototype, you need to make sure it aligns and meets your due diligence.
 </Callout>
@@ -718,235 +718,229 @@ Use this prompt to generate a local mock integration that preserves the real bro
   </pre>
 </Accordion>
 
-<br />
-
 <Accordion title="Expand the AI Coding Prompt: Advanced" icon="fa-code">
   <pre>
-      
-       Build a production-ready app that integrates the OpenDOOR Web SDK using a browser frontend and backend layer. This app hits real Latch/Auth0 APIs and uses the real SDK. User substitutes their own 
-  credentials to run it.                                                                                                                                                                              
-                                                                                                                                                                                                      
-  Use this documentation as reference context:                                                                                                                                                        
-  https://opendoor-uwel.readme.io/docs/web-sdk                                                                                                                                                        
-                                                                                                                                                                                                      
-  Do not rely on the URL alone. Follow the constraints in this prompt as the primary source of truth.                                                                                                 
-                                                                                                                                                                                                      
-  If you cannot access or reliably read that documentation, do not guess. Ask me to paste the relevant sections first. Specifically request:                                                          
-                                                                                                                                                                                                      
-  - Installation/import section                                                                                                                                                                       
-  - SDKConfig/options section                                                                                                                                                                         
-  - Devices methods section                                                                                                                                                                           
-  - Token management methods section                                                                                                                                                                  
-  - Error handling section                                                                                                                                                                            
-  - Lock object/type shape                                                                                                                                                                            
-  - Backend auth flow guidance                                                                                                                                                                        
-                                                                                                                                                                                                      
-  Do not generate code that assumes undocumented APIs.                                                                                                                                                
-                                                                                                                                                                                                      
-  Stack                                                                                                                                                                                               
-                                                                                                                                                                                                      
-  - Frontend: React + Vite                                                                                                                                                                            
-  - Backend: Node.js + Express                                                                                                                                                                        
-  - Language: JavaScript                                                                                                                                                                              
-  - Styling: lightweight CSS, clean and intentional, no UI library                                                                                                                                    
-  - Dependencies: minimal (dotenv, express, cors on backend; react, @dooraccess/opendoor-web-sdk on frontend)                                                                                         
-                                                                                                                                                                                                      
-  Credentials                                                                                                                                                                                         
-                                                                                                                                                                                                      
-  Backend reads LATCH_CLIENT_ID and LATCH_CLIENT_SECRET from environment variables via dotenv.                                                                                                        
-                                                                                                                                                                                                      
-  No .env.example file. README documents required variables. Server validates on startup and exits with clear error if missing.                                                                       
-                                                                                                                                                                                                      
-  .gitignore must include .env.                                                                                                                                                                       
-                                                                                                                                                                                                      
-  Primary Goal                                                                                                                                                                                        
-                                                                                                                                                                                                      
-  A production-ready implementation that a partner can clone, add credentials, and run against real Latch APIs immediately.                                                                           
-                                                                                                                                                                                                      
-  Constraints                                                                                                                                                                                         
-                                                                                                                                                                                                      
-  - No mocks. All auth and device flows hit real APIs.                                                                                                                                                
-  - Backend hits real Latch auth endpoints.                                                                                                                                                           
-  - Frontend uses real @dooraccess/opendoor-web-sdk package.                                                                                                                                          
-  - Do not use or teach baseUrl.                                                                                                                                                                      
-  - Comments should be sparse and useful—only where a partner benefits from understanding integration points or error handling rationale.                                                             
-                                                                                                                                                                                                      
-  Backend Responsibilities                                                                                                                                                                            
-                                                                                                                                                                                                      
-  All routes return JSON. All errors return &#123; error: string &#125; with appropriate status codes.                                                                                                
-                                                                                                                                                                                                      
-  Endpoints                                                                                                                                                                                           
-  ┌────────┬─────────────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐                                  
-  │ Method │          Path           │                                                         Description                                                         │                                  
-  ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                  
-  │ POST   │ /api/auth/send-otp      │ Calls https://auth.prod.latch.com/passwordless/start                                                                        │                                  
-  ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                  
-  │ POST   │ /api/auth/verify-otp    │ Calls https://auth.prod.latch.com/oauth/token (passwordless grant). Stores refresh token server-side. Returns access token. │                                  
-  ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                  
-  │ POST   │ /api/auth/refresh-token │ Calls https://auth.prod.latch.com/oauth/token (refresh_token grant). Returns new access token.                              │                                  
-  ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤                                  
-  │ POST   │ /api/auth/logout        │ Clears stored refresh token.                                                                                                │                                  
-  └────────┴─────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘                                  
-  Error Handling Requirements                                                                                                                                                                         
-                                                                                                                                                                                                      
-  - Validate request body before calling Latch APIs.                                                                                                                                                  
-  - Handle Latch API errors: parse response, return meaningful error messages.                                                                                                                        
-  - Handle network failures: timeout, DNS, connection refused.                                                                                                                                        
-  - Handle rate limiting: surface retry-after if present.                                                                                                                                             
-  - Never expose client_secret or refresh_token to browser.                                                                                                                                           
-  - Log errors server-side with context (no secrets in logs).                                                                                                                                         
-                                                                                                                                                                                                      
-  Startup Validation                                                                                                                                                                                  
-                                                                                                                                                                                                      
-  On startup, check for LATCH_CLIENT_ID and LATCH_CLIENT_SECRET. If missing, print clear message and exit:                                                                                            
-                                                                                                                                                                                                      
-  Error: Missing required environment variables.                                                                                                                                                      
-  Create server/.env with:                                                                                                                                                                            
-    LATCH_CLIENT_ID=your_client_id                                                                                                                                                                    
-    LATCH_CLIENT_SECRET=your_client_secret                                                                                                                                                            
-                                                                                                                                                                                                      
-  Frontend Responsibilities                                                                                                                                                                           
-                                                                                                                                                                                                      
-  - Auth flow UI: email input, send OTP, OTP input, verify                                                                                                                                            
-  - On successful auth, initialize OpenDOORClient from @dooraccess/opendoor-web-sdk                                                                                                                   
-  - Wire onTokenExpired to call backend /api/auth/refresh-token                                                                                                                                       
-  - Call client.getLocks() to fetch locks from Latch APIs                                                                                                                                             
-  - Render locks with filtering: all / active / expired                                                                                                                                               
-  - Handle SDK errors by type:                                                                                                                                                                        
-    - AuthError: logout, return to login                                                                                                                                                              
-    - APIError: display error message                                                                                                                                                                 
-    - NetworkError: display connectivity error                                                                                                                                                        
-    - NotFoundError: handle gracefully                                                                                                                                                                
-                                                                                                                                                                                                      
-  Functional Requirements                                                                                                                                                                             
-                                                                                                                                                                                                      
-  - User enters email, clicks Send OTP                                                                                                                                                                
-  - Backend sends OTP via Latch API                                                                                                                                                                   
-  - User enters OTP, clicks Verify                                                                                                                                                                    
-  - Backend exchanges OTP for tokens, returns access token                                                                                                                                            
-  - Frontend initializes OpenDOORClient with token                                                                                                                                                    
-  - Frontend calls client.getLocks()                                                                                                                                                                  
-  - UI filters: all, active, expired                                                                                                                                                                  
-  - UI displays: lock name, building ID, door code (or "Not available"), access status badge, formatted start/end timestamps                                                                          
-  - States: loading, empty, error                                                                                                                                                                     
-  - Session/token status visible in UI                                                                                                                                                                
-  - Refresh token flow wired and working                                                                                                                                                              
-                                                                                                                                                                                                      
-  Access Status Logic                                                                                                                                                                                 
-                                                                                                                                                                                                      
-  - now &lt; startTime: upcoming                                                                                                                                                                      
-  - endTime !== null &amp;&amp; now &gt; endTime: expired                                                                                                                                             
-  - otherwise: active                                                                                                                                                                                 
-                                                                                                                                                                                                      
-  Filters:                                                                                                                                                                                            
-  - "all": show everything                                                                                                                                                                            
-  - "active": show active + upcoming                                                                                                                                                                  
-  - "expired": show expired only                                                                                                                                                                      
-                                                                                                                                                                                                      
-  Date Formatting                                                                                                                                                                                     
-                                                                                                                                                                                                      
-  Human-readable: Apr 23, 2026, 10:30 AM                                                                                                                                                              
-                                                                                                                                                                                                      
-  Frontend Structure                                                                                                                                                                                  
-                                                                                                                                                                                                      
-  src/                                                                                                                                                                                                
-    components/                                                                                                                                                                                       
-      AuthPanel.jsx                                                                                                                                                                                   
-      OtpForm.jsx                                                                                                                                                                                     
-      LockFilters.jsx                                                                                                                                                                                 
-      LockList.jsx                                                                                                                                                                                    
-      LockCard.jsx                                                                                                                                                                                    
-      StatusBadge.jsx                                                                                                                                                                                 
-    lib/                                                                                                                                                                                              
-      api.js                                                                                                                                                                                          
-      sdk.js                                                                                                                                                                                          
-      lock-status.js                                                                                                                                                                                  
-      format.js                                                                                                                                                                                       
-    App.jsx                                                                                                                                                                                           
-    App.css                                                                                                                                                                                           
-    index.css                                                                                                                                                                                         
-    main.jsx                                                                                                                                                                                          
-                                                                                                                                                                                                      
-  Backend Structure                                                                                                                                                                                   
-                                                                                                                                                                                                      
-  server/                                                                                                                                                                                             
-    index.js                                                                                                                                                                                          
-    routes/auth.js                                                                                                                                                                                    
-    services/latch.js                                                                                                                                                                                 
-    lib/session.js                                                                                                                                                                                    
-    lib/config.js                                                                                                                                                                                     
-                                                                                                                                                                                                      
-  Code Quality                                                                                                                                                                                        
-                                                                                                                                                                                                      
-  - Expert-level, concise                                                                                                                                                                             
-  - Small modules, single responsibility                                                                                                                                                              
-  - Robust error handling with clear messages                                                                                                                                                         
-  - No nested conditional messes                                                                                                                                                                      
-  - Pure helper functions where possible                                                                                                                                                              
-  - Constants centralized, no magic strings                                                                                                                                                           
-  - Comments only where they add value for integration understanding                                                                                                                                  
-                                                                                                                                                                                                      
-  .gitignore                                                                                                                                                                                          
-                                                                                                                                                                                                      
-  Must include:                                                                                                                                                                                       
-                                                                                                                                                                                                      
-  node_modules                                                                                                                                                                                        
-  dist                                                                                                                                                                                                
-  .DS_Store                                                                                                                                                                                           
-  *.log                                                                                                                                                                                               
-  .env                                                                                                                                                                                                
-                                                                                                                                                                                                      
-  README Requirements                                                                                                                                                                                 
-                                                                                                                                                                                                      
-  - What this project is                                                                                                                                                                              
-  - Prerequisites: Node 18+, npm, Latch partner credentials                                                                                                                                           
-  - Setup: how to create .env with required variables                                                                                                                                                 
-  - Run: commands for backend and frontend                                                                                                                                                            
-  - Endpoints: table of available API routes                                                                                                                                                          
-  - Architecture: brief explanation of browser/backend split and why                                                                                                                                  
-  - SDK usage: how frontend initializes and uses OpenDOORClient                                                                                                                                       
-  - Getting credentials: "Contact your Latch partner representative" or relevant portal link if known                                                                                                 
-                                                                                                                                                                                                      
-  Run It                                                                                                                                                                                              
-                                                                                                                                                                                                      
-  1. Configure credentials                                                                                                                                                                            
-                                                                                                                                                                                                      
-  Create server/.env with:                                                                                                                                                                            
-                                                                                                                                                                                                      
-  LATCH_CLIENT_ID=your_client_id                                                                                                                                                                      
-  LATCH_CLIENT_SECRET=your_client_secret                                                                                                                                                              
-                                                                                                                                                                                                      
-  2. Start backend                                                                                                                                                                                    
-                                                                                                                                                                                                      
-  cd server &amp;&amp; npm install &amp;&amp; npm start                                                                                                                                               
-                                                                                                                                                                                                      
-  Runs at http://localhost:3001                                                                                                                                                                       
-                                                                                                                                                                                                      
-  3. Start frontend                                                                                                                                                                                   
-                                                                                                                                                                                                      
-  npm install &amp;&amp; npm run dev                                                                                                                                                                  
-                                                                                                                                                                                                      
-  Runs at http://localhost:5173                                                                                                                                                                       
-                                                                                                                                                                                                      
-  4. Use the app                                                                                                                                                                                      
-                                                                                                                                                                                                      
-  - Enter your email                                                                                                                                                                                  
-  - Check email for OTP                                                                                                                                                                               
-  - Enter OTP to authenticate                                                                                                                                                                         
-  - View and filter your locks                                                                                                                                                                        
-                                                                                                                                                                                                      
-  Output Requirements                                                                                                                                                                                 
-                                                                                                                                                                                                      
-  - Full codebase, all files                                                                                                                                                                          
-  - Concise, no filler                                                                                                                                                                                
-  - Production-ready error handling                                                                                                                                                                   
-  - Code that looks hand-written by an expert, not generated                                                                                                    
-                                                                                                              
+    Build a production-ready app that integrates the OpenDOOR Web SDK using a browser frontend and backend layer. This app hits real Latch/Auth0 APIs and uses the real SDK. User substitutes their own
+    credentials to run it.
+
+    Use this documentation as reference context:\
+    [https://opendoor-uwel.readme.io/docs/web-sdk](https://opendoor-uwel.readme.io/docs/web-sdk)
+
+    Do not rely on the URL alone. Follow the constraints in this prompt as the primary source of truth.
+
+    If you cannot access or reliably read that documentation, do not guess. Ask me to paste the relevant sections first. Specifically request:
+
+    * Installation/import section
+    * SDKConfig/options section
+    * Devices methods section
+    * Token management methods section
+    * Error handling section
+    * Lock object/type shape
+    * Backend auth flow guidance
+
+    Do not generate code that assumes undocumented APIs.
+
+    Stack
+
+    * Frontend: React + Vite
+    * Backend: Node.js + Express
+    * Language: JavaScript
+    * Styling: lightweight CSS, clean and intentional, no UI library
+    * Dependencies: minimal (dotenv, express, cors on backend; react, @dooraccess/opendoor-web-sdk on frontend)
+
+    Credentials
+
+    Backend reads LATCH\_CLIENT\_ID and LATCH\_CLIENT\_SECRET from environment variables via dotenv.
+
+    No .env.example file. README documents required variables. Server validates on startup and exits with clear error if missing.
+
+    .gitignore must include .env.
+
+    Primary Goal
+
+    A production-ready implementation that a partner can clone, add credentials, and run against real Latch APIs immediately.
+
+    Constraints
+
+    * No mocks. All auth and device flows hit real APIs.
+    * Backend hits real Latch auth endpoints.
+    * Frontend uses real @dooraccess/opendoor-web-sdk package.
+    * Do not use or teach baseUrl.
+    * Comments should be sparse and useful—only where a partner benefits from understanding integration points or error handling rationale.
+
+    Backend Responsibilities
+
+    All routes return JSON. All errors return \{ error: string } with appropriate status codes.
+
+    Endpoints\
+    ┌────────┬─────────────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐\
+    │ Method │          Path           │                                                         Description                                                         │\
+    ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤\
+    │ POST   │ /api/auth/send-otp      │ Calls [https://auth.prod.latch.com/passwordless/start](https://auth.prod.latch.com/passwordless/start)                                                                        │\
+    ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤\
+    │ POST   │ /api/auth/verify-otp    │ Calls [https://auth.prod.latch.com/oauth/token](https://auth.prod.latch.com/oauth/token) (passwordless grant). Stores refresh token server-side. Returns access token. │\
+    ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤\
+    │ POST   │ /api/auth/refresh-token │ Calls [https://auth.prod.latch.com/oauth/token](https://auth.prod.latch.com/oauth/token) (refresh\_token grant). Returns new access token.                              │\
+    ├────────┼─────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤\
+    │ POST   │ /api/auth/logout        │ Clears stored refresh token.                                                                                                │\
+    └────────┴─────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘\
+    Error Handling Requirements
+
+    * Validate request body before calling Latch APIs.
+    * Handle Latch API errors: parse response, return meaningful error messages.
+    * Handle network failures: timeout, DNS, connection refused.
+    * Handle rate limiting: surface retry-after if present.
+    * Never expose client\_secret or refresh\_token to browser.
+    * Log errors server-side with context (no secrets in logs).
+
+    Startup Validation
+
+    On startup, check for LATCH\_CLIENT\_ID and LATCH\_CLIENT\_SECRET. If missing, print clear message and exit:
+
+    Error: Missing required environment variables.\
+    Create server/.env with:\
+    LATCH\_CLIENT\_ID=your\_client\_id\
+    LATCH\_CLIENT\_SECRET=your\_client\_secret
+
+    Frontend Responsibilities
+
+    * Auth flow UI: email input, send OTP, OTP input, verify
+    * On successful auth, initialize OpenDOORClient from @dooraccess/opendoor-web-sdk
+    * Wire onTokenExpired to call backend /api/auth/refresh-token
+    * Call client.getLocks() to fetch locks from Latch APIs
+    * Render locks with filtering: all / active / expired
+    * Handle SDK errors by type:
+      * AuthError: logout, return to login
+      * APIError: display error message
+      * NetworkError: display connectivity error
+      * NotFoundError: handle gracefully
+
+    Functional Requirements
+
+    * User enters email, clicks Send OTP
+    * Backend sends OTP via Latch API
+    * User enters OTP, clicks Verify
+    * Backend exchanges OTP for tokens, returns access token
+    * Frontend initializes OpenDOORClient with token
+    * Frontend calls client.getLocks()
+    * UI filters: all, active, expired
+    * UI displays: lock name, building ID, door code (or "Not available"), access status badge, formatted start/end timestamps
+    * States: loading, empty, error
+    * Session/token status visible in UI
+    * Refresh token flow wired and working
+
+    Access Status Logic
+
+    * now \< startTime: upcoming
+    * endTime !== null && now > endTime: expired
+    * otherwise: active
+
+    Filters:
+
+    * "all": show everything
+    * "active": show active + upcoming
+    * "expired": show expired only
+
+    Date Formatting
+
+    Human-readable: Apr 23, 2026, 10:30 AM
+
+    Frontend Structure
+
+    src/\
+    components/\
+    AuthPanel.jsx\
+    OtpForm.jsx\
+    LockFilters.jsx\
+    LockList.jsx\
+    LockCard.jsx\
+    StatusBadge.jsx\
+    lib/\
+    api.js\
+    sdk.js\
+    lock-status.js\
+    format.js\
+    App.jsx\
+    App.css\
+    index.css\
+    main.jsx
+
+    Backend Structure
+
+    server/\
+    index.js\
+    routes/auth.js\
+    services/latch.js\
+    lib/session.js\
+    lib/config.js
+
+    Code Quality
+
+    * Expert-level, concise
+    * Small modules, single responsibility
+    * Robust error handling with clear messages
+    * No nested conditional messes
+    * Pure helper functions where possible
+    * Constants centralized, no magic strings
+    * Comments only where they add value for integration understanding
+
+    .gitignore
+
+    Must include:
+
+    node\_modules\
+    dist\
+    .DS\_Store\
+    \*.log\
+    .env
+
+    README Requirements
+
+    * What this project is
+    * Prerequisites: Node 18+, npm, Latch partner credentials
+    * Setup: how to create .env with required variables
+    * Run: commands for backend and frontend
+    * Endpoints: table of available API routes
+    * Architecture: brief explanation of browser/backend split and why
+    * SDK usage: how frontend initializes and uses OpenDOORClient
+    * Getting credentials: "Contact your Latch partner representative" or relevant portal link if known
+
+    Run It
+
+    1. Configure credentials
+
+    Create server/.env with:
+
+    LATCH\_CLIENT\_ID=your\_client\_id\
+    LATCH\_CLIENT\_SECRET=your\_client\_secret
+
+    2. Start backend
+
+    cd server && npm install && npm start
+
+    Runs at [http://localhost:3001](http://localhost:3001)
+
+    3. Start frontend
+
+    npm install && npm run dev
+
+    Runs at [http://localhost:5173](http://localhost:5173)
+
+    4. Use the app
+
+    * Enter your email
+    * Check email for OTP
+    * Enter OTP to authenticate
+    * View and filter your locks
+
+    Output Requirements
+
+    * Full codebase, all files
+    * Concise, no filler
+    * Production-ready error handling
+    * Code that looks hand-written by an expert, not generated
   </pre>
 </Accordion>
-
-
-
 
 > <br />
 
