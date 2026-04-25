@@ -1,5 +1,8 @@
 ---
 title: Web SDK
+excerpt: >-
+  The OpenDOOR Web SDK allows your web application to retrieve the doors a user
+  can unlock and display any available door codes.
 deprecated: false
 hidden: true
 metadata:
@@ -533,6 +536,10 @@ Use this prompt to generate a local mock integration that preserves the real bro
   Use this prompt for local prototyping and architecture exploration. Keep the auth and device flows mocked unless you are intentionally replacing the mock backend with your real partner integration.
 
   The second prompts gives a more robust prototype that includes server side code, with an assumption of close approximation, with actual api calls. Of course, as a prototype, you need to make sure it aligns and meets your due diligence.
+</Callout>
+
+<Callout icon="⚠️" theme="danger">
+  Partner ID and Partner Secret must never be exposed in frontend code, mobile binaries, browser-accessible bundles, client-side configuration, or source control — including private repositories. Store them only on backend systems you control, such as a secrets manager or server-side environment variables, and use them only for server-to-server requests.
 </Callout>
 
 <Accordion title="Expand the AI coding prompt: Simple" icon="fa-code">
