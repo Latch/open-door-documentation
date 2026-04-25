@@ -717,7 +717,6 @@ Use this prompt to generate a local mock integration that preserves the real bro
     * Prefer code that looks hand-written by an experienced engineer over code that looks generated
   </pre>
 </Accordion>
-
 <Accordion title="Expand the AI Coding Prompt: Advanced" icon="fa-code">
   <pre>
     Build a production-ready app that integrates the OpenDOOR Web SDK using a browser frontend and backend layer. This app hits real Latch/Auth0 APIs and uses the real SDK. User substitutes their own
@@ -942,7 +941,7 @@ Use this prompt to generate a local mock integration that preserves the real bro
   </pre>
 </Accordion>
 
-> <br />
+<br />
 
 <br />
 
