@@ -71,7 +71,9 @@ import { OpenDOORClient } from '@dooraccess/opendoor-web-sdk';
 
 ## Backend Integration
 
-Your backend is responsible for the authentication flow. Do **not** expose confidential credentials such as `client_id`, `client_secret`, or `refresh_token` in browser code.
+Your backend is responsible for the authentication flow. Do **not** expose confidential credentials such as `client_id`, `client_secret`, or `refresh_token` in browser code.  
+
+Please see this documentation for additional information: https://opendoor-uwel.readme.io/docs/partner-backend
 
 The examples below assume your application uses server-side session middleware or another secure server-side storage mechanism. Adapt them to your own backend architecture.
 
@@ -724,6 +726,7 @@ Use this prompt to generate a local mock integration that preserves the real bro
     * Prefer code that looks hand-written by an experienced engineer over code that looks generated
   </pre>
 </Accordion>
+
 <Accordion title="Expand the AI Coding Prompt: Advanced" icon="fa-code">
   <pre>
     Build a production-ready app that integrates the OpenDOOR Web SDK using a browser frontend and backend layer. This app hits real Latch/Auth0 APIs and uses the real SDK. User substitutes their own
