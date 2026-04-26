@@ -71,9 +71,9 @@ import { OpenDOORClient } from '@dooraccess/opendoor-web-sdk';
 
 ## Backend Integration
 
-Your backend is responsible for the authentication flow. Do **not** expose confidential credentials such as `client_id`, `client_secret`, or `refresh_token` in browser code.  
+Your backend is responsible for the authentication flow. Do **not** expose confidential credentials such as `client_id`, `client_secret`, or `refresh_token` in browser code.
 
-Please see this documentation for additional information: https://opendoor-uwel.readme.io/docs/partner-backend
+Please see this documentation for additional information: [https://opendoor-uwel.readme.io/docs/partner-backend](https://opendoor-uwel.readme.io/docs/partner-backend)
 
 The examples below assume your application uses server-side session middleware or another secure server-side storage mechanism. Adapt them to your own backend architecture.
 
@@ -112,7 +112,7 @@ Your backend verifies the OTP and exchanges it for an access token.
 
 ```javascript
 app.post('/api/door/verify-otp', async (req, res) => {
-  const response = await fetch('https://auth.prod.latch.com/oauth/token', {
+  const response = await fetch('https://auth.prod.latch.com/v1/oauth/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ app.post('/api/door/refresh-token', async (req, res) => {
     });
   }
 
-  const response = await fetch('https://auth.prod.latch.com/oauth/token', {
+  const response = await fetch('https://auth.prod.latch.com/v1/oauth/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
