@@ -4,7 +4,7 @@ excerpt: >-
   The OpenDOOR Web SDK allows your web application to retrieve the doors a user
   can unlock and display any available door codes.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
