@@ -8,7 +8,7 @@ hidden: false
 metadata:
   robots: index
 ---
-## Setup 
+## Setup
 
 1. Declare SDK as a dependency
 2. Initialize the library
@@ -247,7 +247,9 @@ Your DOOR lock should be unlocked now!
 
 ## Unlock the closest lock that's available
 
-Another way to unlock the door is through "Proximity Unlock". It will continuously unlock the closest lock that's available.
+Another way to unlock a door is through Proximity Unlock. When started, the SDK continuously scans for nearby locks and attempts to unlock only when the phone is very close to a lock, similar to how proximity unlock works in the app.
+
+This is intended for close-range unlocks, typically when the phone is within a few inches of the lock, not from several feet or meters away. For example, the phone may need to be roughly less than 3 inches from the lock before an unlock is triggered.
 
 **Important:** `startProximityUnlock()` and `stopProximityUnlock()` must be called from the main thread as they perform BLE operations.
 
