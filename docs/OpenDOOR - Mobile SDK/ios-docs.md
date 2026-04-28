@@ -65,18 +65,15 @@ includeAllLocks - determines whether we should load all locks that user can acce
 
 Note:
 
-1. Attempting to call any OpenDOOR SDK function before initialization will throw
-   SDKError.sdkNotInitialized.
+1. Attempting to call any OpenDOOR SDK function before initialization will throw SDKError.sdkNotInitialized.
 
-2. All OpenDOOR SDK APIs are not guaranteed to return on the main thread.
-   If you use the result to update UI, you are responsible for dispatching back to the main thread.
+2. All OpenDOOR SDK APIs are not guaranteed to return on the main thread. If you use the result to update UI, you are responsible for dispatching back to the main thread.
 
 3. Ensure your app declares the required Bluetooth permissions in Info.plist and enables Bluetooth backgrounds modes.
 
 ### Sign out
 
-To clear all cached data and remove authentication token call `clear()`.
-After calling `clear()`, the client must be set up again with setupWithToken().
+To clear all cached data and remove authentication token call `clear()`. After calling `clear()`, the client must be set up again with setupWithToken().
 
 ```swift iOS
  import OpenDOORCore
@@ -94,8 +91,7 @@ After calling `clear()`, the client must be set up again with setupWithToken().
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()` variants. These methods have different behaviors:
 
-* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails.
-  If the API request fails with token expired, an error will be thrown even if there is cached data.
+* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails. If the API request fails with token expired, an error will be thrown even if there is cached data.
 
 * **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. Cached locks are emitted first, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants do not emit errors from the stream, but the call itself can throw (e.g., SDK not initialized). They can be used to work offline.
 
@@ -203,7 +199,9 @@ Unlock events can be tracked using different variants for publishing them, descr
 
 ### Proximity unlock
 
-Once it is started, it will continuously scan for nearby locks and will automatically unlock the first eligible lock found within range.
+Proximity unlock continuously scans for nearby locks after it is started. It will automatically attempt to unlock an eligible lock only when the phone is very close to the lock, similar to how proximity unlock works in the app.
+
+This is intended for close-range unlocks, typically when the phone is within a few inches of the lock, not from several feet or meters away. For example, the phone may need to be roughly less than 3 inches from the lock before an unlock is triggered.
 
 ```swift iOS
  import OpenDOORCore
@@ -359,8 +357,7 @@ Retrieve access logs for a lock.
 
 To share access to the selected list of eligible locks (`isSharable == true`) and to the entire path if the building supports this feature, use `inviteGuest`.
 
-A guest invitation can be created with temporary door code access or
-in-app access with time-based restrictions.
+A guest invitation can be created with temporary door code access or in-app access with time-based restrictions.
 
 This operation may partially succeed. See GuestInvitesError for details about any locks that failed.
 
@@ -448,8 +445,7 @@ To get information for all guests with shared access call `guests`.
 
 ## Log level
 
-To control how much diagnostic information the SDK logs, call `setLogLevel`.
-It supports two levels:
+To control how much diagnostic information the SDK logs, call `setLogLevel`. It supports two levels:
 
 1. `debug` - produce more detailed output.
 2. `error` - restrict logs to important issues only.
