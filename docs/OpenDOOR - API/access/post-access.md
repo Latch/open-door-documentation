@@ -19,7 +19,7 @@ POST from the Partner BE to the Latch BE with the user and door information
 POST https://rest.latchaccess.com/access/sdk/v1/users
 ```
 
-use v2 for a reacher Response:
+use v2 for a richer Response:
 
 ```
 POST https://rest.latchaccess.com/access/sdk/v2/users
