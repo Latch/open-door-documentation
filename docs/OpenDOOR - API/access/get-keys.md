@@ -1,5 +1,8 @@
 ---
 title: Get Keys
+excerpt: >-
+  Partners can view keys. This will be done by using a partner-scoped token from
+  the BE.
 deprecated: false
 hidden: false
 metadata:
