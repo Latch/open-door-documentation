@@ -10,6 +10,10 @@ metadata:
 ---
 <br />
 
+<Callout icon="circle-info" theme="info">
+  Revoking a key that contains multiple doors will revoke access to all door.
+</Callout>
+
 ### Request
 
 DELETE from the Partner BE to the Latch BE with an empty body request.
