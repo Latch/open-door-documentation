@@ -9,7 +9,9 @@ hidden: false
 metadata:
   robots: index
 ---
-### Request  
+Creating access can be used for OpenDoor auto-generated keys as well as manually created keys from DoorOS that are marked for the current partner..
+
+### Request
 
 POST from the Partner BE to the Latch BE with the user and door information
 
@@ -39,7 +41,7 @@ HTTP Request Body
     "phone": "<string>",
     "startTime": "<datetime>",  // e.g. "2022-09-30T15:11:02.537Z"
     "endTime": "<datetime>",    // e.g. "2022-09-30T15:11:02.537Z"
-    "doorUuids": [
+    "keyUuids": [
       "<string>",
       ...
     ],
@@ -50,7 +52,7 @@ HTTP Request Body
 }
 ```
 
-### Response  
+### Response
 
 HTTP Response Body (v1)
 
@@ -105,19 +107,13 @@ HTTP Response Body (v2)
 | DAILY            | Doorcode           | 7 digit doorcode that works for the entire calendar day set to the timezone of the device.End time from request is not used.                                          | Either email or phone required (not both). Start time must be either on the day of the request or the next day. No start time further in advance will be allowed. Exact start time on the day not honored. Shareable must be false. | If email is provided, Latch will email the doorcode. If phone is provided, Latch will text the doorcode unless an existing User is found with a matching phone number. If a User with that phone number is found and has an email address, Latch will send an email not a text. |
 | DAILY_SINGLE_USE | Doorcode           | 7 digit doorcode that works for the entire calendar day set to the timezone of the device, but expires 15 minutes after first use. End time from request is not used. | Either email or phone required (not both). Start time must be either on the day of the request or the next day. No start time further in advance will be allowed. Shareable must be false.                                          | If email is provided, Latch will email the doorcode. If phone is provided, Latch will text the doorcode unless an existing User is found with a matching phone number. If a User with that phone number is found and has an email address, Latch will send an email not a text. |
 
-Note that the `role` in the request does not bear relevance on the validation.
-The `role` field allows clients to classify their understanding of a User's role with respect to a certain Door, but does not imply a certain credential type or shareability.
-We currently support two `role`'s: `RESIDENT` and `NON_RESIDENT`.
+Note that the `role` in the request does not bear relevance on the validation. The `role` field allows clients to classify their understanding of a User's role with respect to a certain Door, but does not imply a certain credential type or shareability. We currently support two `role`'s: `RESIDENT` and `NON_RESIDENT`.
 
-In the future though, the `role` could be used to determine what credential details the Partner Backend has the ability to see.
-For example, a Partner Backend can see credential details for their own `NON_RESIDENT`'s but not for `RESIDENT`'s as that would be a privacy violation.
+In the future though, the `role` could be used to determine what credential details the Partner Backend has the ability to see. For example, a Partner Backend can see credential details for their own `NON_RESIDENT`'s but not for `RESIDENT`'s as that would be a privacy violation.
 
 #### Field descriptions
 
-* `shouldNotify` (default `true`): controls whenever email notifications are sent to the invited user. The emails
-  include the welcome email and/or the Doorcode email. If set to `false` **no** emails are sent. In order to prevent
-  invalid scenarios validations are put in place to prevent the following request situation since it would lead to the
-  user having no way of accessing their Doorcode:
+* `shouldNotify` (default `true`): controls whenever email notifications are sent to the invited user. The emails include the welcome email and/or the Doorcode email. If set to `false` **no** emails are sent. In order to prevent invalid scenarios validations are put in place to prevent the following request situation since it would lead to the user having no way of accessing their Doorcode:
   * `shouldNotify`: `false`
   * `passcodeType`: `DAILY` or `DAILY_SINGLE_USE`
   * `role`: `RESIDENT`
