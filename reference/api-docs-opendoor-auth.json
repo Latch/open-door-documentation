@@ -1,0 +1,492 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Authentication",
+    "description": "Authentication",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://auth.prod.latch.com",
+      "description": "Latch Auth API base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Partner Authentication",
+      "description": "Partner authentication operations"
+    },
+    {
+      "name": "User Authentication",
+      "description": "User authentication operations"
+    }
+  ],
+  "paths": {
+    "/v1/oauth/token#m2m": {
+      "post": {
+        "tags": [
+          "Partner Authentication"
+        ],
+        "summary": "Authenticate Partner",
+        "description": "Legacy M2M Authorization endpoint",
+        "operationId": "authenticatePartner",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationRequestParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated with Auth0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponseParams"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Invalid Auth0 Credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/passwordless/start": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Start Passwordless Login",
+        "description": "Passwordless Authorization start endpoint",
+        "operationId": "startPasswordlessLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordlessStartRequestParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully started passwordless flow",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasswordlessStartResponseParams"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Invalid Auth0 Credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/oauth/token#passwordless": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Complete Authentication",
+        "description": "Passwordless Authorization endpoint",
+        "operationId": "completeAuthentication",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordlessAuthorizationRequestParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated with Auth0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasswordlessAuthorizationResponseParams"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Invalid Auth0 Credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/oauth/token#refresh": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Refresh Token",
+        "description": "Auth0 token refresh endpoint",
+        "operationId": "refreshToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationRefreshRequestParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated with Auth0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasswordlessAuthorizationResponseParams"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Invalid Auth0 Credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthorizationRefreshRequestParams": {
+        "title": "AuthorizationRefreshRequestParams",
+        "required": [
+          "audience",
+          "client_id",
+          "client_secret",
+          "grant_type",
+          "refresh_token"
+        ],
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "description": "Latch API to be authorized for",
+            "default": "https://rest.latchaccess.com/access/sdk"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Auth0 regular web application client identifier"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Auth0 regular web application client secret"
+          },
+          "grant_type": {
+            "type": "string",
+            "description": "Always \"refresh_token\"",
+            "enum": [
+              "refresh_token"
+            ]
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Auth0 refresh token"
+          }
+        },
+        "description": "Parameters for the Auth0 token refresh endpoint"
+      },
+      "AuthorizationRequestParams": {
+        "title": "AuthorizationRequestParams",
+        "required": [
+          "audience",
+          "client_id",
+          "client_secret",
+          "grant_type"
+        ],
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "description": "Latch API to be authorized for",
+            "default": "https://rest.latchaccess.com/access/sdk"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Auth0 client identifier"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Auth0 client secret"
+          },
+          "grant_type": {
+            "type": "string",
+            "description": "Always \"client_credentials\"",
+            "enum": [
+              "client_credentials"
+            ]
+          }
+        },
+        "description": "Parameters for the Auth0 endpoint"
+      },
+      "AuthorizationResponseParams": {
+        "title": "AuthorizationResponseParams",
+        "required": [
+          "access_token",
+          "token_type"
+        ],
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Auth0 access token"
+          },
+          "token_type": {
+            "type": "string",
+            "description": "Token type",
+            "enum": [
+              "Bearer"
+            ]
+          }
+        },
+        "description": "Response from the authentication endpoint"
+      },
+      "PasswordlessAuthorizationRequestParams": {
+        "title": "PasswordlessAuthorizationRequestParams",
+        "required": [
+          "audience",
+          "client_id",
+          "client_secret",
+          "grant_type",
+          "otp",
+          "realm",
+          "scope",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "description": "Latch API to be authorized for",
+            "default": "https://rest.latchaccess.com/access/sdk"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Auth0 regular web application client identifier"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Auth0 regular web application client secret"
+          },
+          "grant_type": {
+            "type": "string",
+            "enum": [
+              "http://auth0.com/oauth/grant-type/passwordless/otp"
+            ]
+          },
+          "otp": {
+            "type": "string",
+            "description": "Auth0 verification code sent to user",
+            "example": "123456"
+          },
+          "realm": {
+            "type": "string",
+            "enum": [
+              "email"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "description": "Auth0 scopes for token",
+            "enum": [
+              "openid profile email offline_access"
+            ]
+          },
+          "username": {
+            "type": "string",
+            "description": "Email of user"
+          }
+        },
+        "description": "Parameters for the Auth0 passwordless token endpoint"
+      },
+      "PasswordlessAuthorizationResponseParams": {
+        "title": "PasswordlessAuthorizationResponseParams",
+        "required": [
+          "access_token",
+          "refresh_token",
+          "token_type"
+        ],
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Auth0 access token"
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Auth0 refresh token"
+          },
+          "token_type": {
+            "type": "string",
+            "description": "Token type",
+            "enum": [
+              "Bearer"
+            ]
+          }
+        },
+        "description": "Response from the authentication endpoint"
+      },
+      "PasswordlessStartRequestParams": {
+        "title": "PasswordlessStartRequestParams",
+        "required": [
+          "client_id",
+          "client_secret",
+          "connection",
+          "email",
+          "send"
+        ],
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Auth0 regular web application client identifier"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Auth0 regular web application client secret"
+          },
+          "connection": {
+            "type": "string",
+            "enum": [
+              "email"
+            ]
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of user"
+          },
+          "send": {
+            "type": "string",
+            "enum": [
+              "code"
+            ]
+          }
+        },
+        "description": "Parameters for the Auth0 passwordless start endpoint"
+      },
+      "PasswordlessStartResponseParams": {
+        "title": "PasswordlessStartResponseParams",
+        "required": [
+          "_id",
+          "email",
+          "email_verified"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Auth0 request identifier"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email"
+          },
+          "email_verified": {
+            "type": "boolean",
+            "description": "Verification status of Auth0 account associated with user email. This will not impact the auth flow.",
+            "example": false
+          }
+        },
+        "description": "Response from the authentication endpoint"
+      },
+      "UnauthorizedError": {
+        "title": "UnauthorizedError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "UNAUTHORIZED"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
