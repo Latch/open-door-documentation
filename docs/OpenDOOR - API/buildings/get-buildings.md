@@ -10,7 +10,7 @@ metadata:
 ---
 ### Request
 
-GET request from the Partner BE to the Latch BE with an empty body request
+GET request from the Partner BE to the DOOR BE with an empty body request
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/buildings
@@ -75,4 +75,4 @@ In case of an error, the API will return the following error responses:
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support
