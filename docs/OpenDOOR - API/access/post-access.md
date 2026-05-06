@@ -13,7 +13,7 @@ Creating access can be used for **OpenDOOR** auto-generated keys as well as manu
 
 ### Request
 
-POST from the Partner BE to the Latch BE with the user and door information
+POST from the Partner BE to the DOOR BE with the user and door information
 
 ```
 POST https://rest.latchaccess.com/access/sdk/v1/users
@@ -140,6 +140,6 @@ In case of an error, the API will return the following error responses:
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support
 
 <br />
