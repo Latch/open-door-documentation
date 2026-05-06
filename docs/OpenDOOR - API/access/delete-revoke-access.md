@@ -16,7 +16,7 @@ metadata:
 
 ### Request
 
-DELETE from the Partner BE to the Latch BE with an empty body request.
+DELETE from the Partner BE to the DOOR BE with an empty body request.
 
 ```
 DELETE https://rest.latchaccess.com/access/sdk/v1/users/:user/doors/:door
@@ -54,4 +54,4 @@ If the request was successful, the Partner BE will receive an HTTP 200 and an em
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support
