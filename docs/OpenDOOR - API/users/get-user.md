@@ -10,7 +10,7 @@ metadata:
 ---
 ### Request
 
-GET user request from the Partner BE to the Latch BE with a valid user uuid.
+GET user request from the Partner BE to the DOOR BE with a valid user uuid.
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/users/:user
@@ -94,4 +94,4 @@ In case of an error, the API will return the following error responses:
   ⇒ Check the user identifier.
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support
