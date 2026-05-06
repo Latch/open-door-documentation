@@ -793,7 +793,7 @@
           "Access Management"
         ],
         "summary": "Update User Access",
-        "description": "Update user access to the given door.",
+        "description": "Update user access to the given door/key",
         "operationId": "updateUserAccess",
         "parameters": [
           {
