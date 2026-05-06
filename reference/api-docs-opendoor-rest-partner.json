@@ -1,0 +1,1831 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Partner API",
+    "description": "Partner API",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://rest.latchaccess.com/access/sdk",
+      "description": "Door/Key REST API base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Buildings",
+      "description": "Building operations"
+    },
+    {
+      "name": "Doors",
+      "description": "Door/Key operations"
+    },
+    {
+      "name": "Users",
+      "description": "User operations"
+    },
+    {
+      "name": "Access Management",
+      "description": "User access management operations"
+    }
+  ],
+  "paths": {
+    "/v1/buildings": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "List Buildings",
+        "description": "Get a Door partner's list of buildings",
+        "operationId": "listBuildings",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of buildings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/doors": {
+      "get": {
+        "tags": [
+          "Doors"
+        ],
+        "summary": "List Doors",
+        "description": "Get a Door partner's list of doors/keys",
+        "operationId": "listDoors",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max number of doors/keys to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The token of page to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "buildingUuid",
+            "in": "query",
+            "description": "Building UUID for filtering doors/keys",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of doors/keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoorsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/keys": {
+      "get": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "List Keys",
+        "description": "Get a DOOR partner's list of keys for a building",
+        "operationId": "listKeys",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max number of keys to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The token of page to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "buildingUuid",
+            "in": "query",
+            "description": "Building UUID for filtering keys",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeysResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/keys/{keyUuid}/accesses": {
+      "get": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "List Accesses By Key",
+        "description": "Get all accesses on a key for a Door partner",
+        "operationId": "listKeyAccesses",
+        "parameters": [
+          {
+            "name": "keyUuid",
+            "in": "path",
+            "description": "UUID of the key to get accesses for.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved key accesses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeyAccessesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List Users",
+        "description": "Get a Door partner's list of users",
+        "operationId": "listUsers",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max number of users to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The token of page to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Grant Access to User",
+        "description": "Create Door user and grant access to doors/keys",
+        "operationId": "grantAccessToUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostUserResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userUuid}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get User",
+        "description": "Get a single user for a Door partner",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "UUID of the user to fetch.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/buildings/{buildingUuid}/residents": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List Building Residents",
+        "description": "Get residents based on active key memberships in a building.",
+        "operationId": "listBuildingResidents",
+        "parameters": [
+          {
+            "name": "buildingUuid",
+            "in": "path",
+            "description": "UUID of the building",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max number of residents to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The token of page to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved residents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResidentsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v2/users": {
+      "post": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Grant Access to User V2",
+        "description": "Create Door user and grant access to doors/keys. Returns a richer response than V1.",
+        "operationId": "grantAccessToUserV2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userUuid}/doors/{doorUuid}": {
+      "patch": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Update User Access",
+        "description": "Update user access to the given door/key.",
+        "operationId": "updateUserAccess",
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "UUID of the user that we want to update access for.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "doorUuid",
+            "in": "path",
+            "description": "UUID of door/key we want to update access for.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDoorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated access to the given door/key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Revoke User Access",
+        "description": "Revoke user access to the given door/key.",
+        "operationId": "revokeUserAccess",
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "UUID of the user that we want to revoke access to.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "doorUuid",
+            "in": "path",
+            "description": "UUID of door/key we want to revoke access to.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully revoked access to the given door/key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessGranter": {
+        "title": "AccessGranter",
+        "required": [
+          "type",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of granter",
+            "enum": [
+              "PARTNER",
+              "USER"
+            ]
+          },
+          "uuid": {
+            "type": "string",
+            "description": "identifier of the granter of access",
+            "format": "uuid"
+          }
+        },
+        "description": "Definition of the granter of Access"
+      },
+      "Address": {
+        "title": "Address",
+        "required": [
+          "addressLine1",
+          "addressLine2",
+          "addressLine3",
+          "city",
+          "country",
+          "postalCode",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "addressLine1": {
+            "type": "string",
+            "description": "Address line 1"
+          },
+          "addressLine2": {
+            "type": "string",
+            "description": "Address line 2"
+          },
+          "addressLine3": {
+            "type": "string",
+            "description": "Address line 3"
+          },
+          "city": {
+            "type": "string",
+            "description": "City the building is located in"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country the building is located in"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal code of the building"
+          },
+          "state": {
+            "type": "string",
+            "description": "State the building is located in"
+          }
+        },
+        "description": "Address of the building"
+      },
+      "BadRequestError": {
+        "title": "BadRequestError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "BUILDING_UUID_REQUIRED",
+              "EMAIL_AND_PHONE_PROVIDED",
+              "EMAIL_CAN_NOT_BE_EMPTY",
+              "EMAIL_OR_PHONE_REQUIRED",
+              "EMAIL_REQUIRED_FOR_PERMANENT",
+              "END_TIME_NOT_SUPPORTED",
+              "INVALID_END_TIME",
+              "INVALID_PHONE",
+              "INVALID_START_TIME",
+              "MISSING_END_TIME",
+              "PASSCODE_TYPE_CANT_BE_REVOKED",
+              "USER_CAN_NOT_SHARE"
+            ]
+          }
+        }
+      },
+      "Battery": {
+        "title": "Battery",
+        "required": [
+          "lastUpdated",
+          "percentage"
+        ],
+        "type": "object",
+        "properties": {
+          "lastUpdated": {
+            "type": "integer",
+            "description": "Indicates latest time when the battery percentage was updated",
+            "format": "int64",
+            "example": 1737137633
+          },
+          "percentage": {
+            "type": "integer",
+            "description": "Estimated battery percentage",
+            "format": "int32",
+            "example": 92
+          }
+        },
+        "description": "Information on the device battery."
+      },
+      "Building": {
+        "title": "Building",
+        "required": [
+          "address",
+          "name",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the Building"
+          },
+          "portfolio": {
+            "$ref": "#/components/schemas/Portfolio"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Timezone of the building in IANA zone ID format",
+            "example": "America/New_York"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Building unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door Building object"
+      },
+      "BuildingsResponse": {
+        "title": "BuildingsResponse",
+        "required": [
+          "buildings"
+        ],
+        "type": "object",
+        "properties": {
+          "buildings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Building"
+            }
+          }
+        },
+        "description": "Response from the buildings endpoint"
+      },
+      "DeviceInfo": {
+        "title": "DeviceInfo",
+        "required": [
+          "battery",
+          "serialNumber",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "battery": {
+            "$ref": "#/components/schemas/Battery"
+          },
+          "serialNumber": {
+            "type": "string",
+            "description": "Serial number of the lock device",
+            "example": "0123456789"
+          },
+          "type": {
+            "type": "string",
+            "description": "Door device type",
+            "example": "C"
+          }
+        },
+        "description": "Additional information about the physical lock device."
+      },
+      "Door": {
+        "title": "Door",
+        "required": [
+          "buildingUuid",
+          "name",
+          "type",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "accessibilityType": {
+            "type": "string",
+            "enum": [
+              "COMMUNAL",
+              "PRIVATE"
+            ]
+          },
+          "buildingUuid": {
+            "type": "string",
+            "description": "UUID of the building",
+            "format": "uuid"
+          },
+          "device": {
+            "$ref": "#/components/schemas/DeviceInfo"
+          },
+          "isConnected": {
+            "type": "boolean",
+            "description": "Indicates whether a door/key is connected to the internet via wifi/ethernet/hub",
+            "example": false
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the door/key"
+          },
+          "sdkDoorUuid": {
+            "type": "string",
+            "description": "Door Door/Key Unique Identifier - for SDK use only",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of door/key",
+            "enum": [
+              "DOOR",
+              "ELEVATOR"
+            ]
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Door/Key unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door Door/Key object"
+      },
+      "Doorcode": {
+        "title": "Doorcode",
+        "required": [
+          "code",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "A 7 digit doorcode to unlock door/key",
+            "example": "1234567"
+          },
+          "description": {
+            "type": "string",
+            "description": "A message to explain the doorcode result",
+            "enum": [
+              "COMMUNAL_DOORCODE_CONFLICT",
+              "USER_HAS_GUEST_ACCESS_CONFLICT",
+              "USER_HAS_RESIDENT_ACCESS",
+              "VALID"
+            ]
+          }
+        },
+        "description": "Doorcode object"
+      },
+      "DoorsResponse": {
+        "title": "DoorsResponse",
+        "required": [
+          "doors"
+        ],
+        "type": "object",
+        "properties": {
+          "doors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Door"
+            }
+          },
+          "nextPageToken": {
+            "type": "string",
+            "description": "Token to fetch the next page",
+            "example": "1"
+          }
+        },
+        "description": "Response from the doors/keys endpoint"
+      },
+      "InternalServerError": {
+        "title": "InternalServerError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "INTERNAL_SERVER_ERROR"
+            ]
+          }
+        }
+      },
+      "Key": {
+        "title": "Key",
+        "required": [
+          "name",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "accountUuid": {
+            "type": "string",
+            "description": "UUID of the account that owns the key",
+            "format": "uuid"
+          },
+          "buildingUuid": {
+            "type": "string",
+            "description": "UUID of the building",
+            "format": "uuid"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of key access",
+            "format": "date-time"
+          },
+          "keyType": {
+            "type": "string",
+            "description": "Type of key",
+            "enum": [
+              "DOOR",
+              "ELEVATOR"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the key"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of key access",
+            "format": "date-time"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Key unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "DOOR Key object"
+      },
+      "KeyAccess": {
+        "title": "KeyAccess",
+        "required": [
+          "doors",
+          "granter",
+          "keyUuid",
+          "passcodeType",
+          "shareable",
+          "startTime",
+          "userUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "doors": {
+            "type": "array",
+            "description": "Per-door/key access data",
+            "items": {
+              "$ref": "#/components/schemas/KeyAccessDoor"
+            }
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of the access",
+            "format": "date-time"
+          },
+          "granter": {
+            "$ref": "#/components/schemas/AccessGranter"
+          },
+          "keyUuid": {
+            "type": "string",
+            "description": "Key unique identifier",
+            "format": "uuid"
+          },
+          "passcodeType": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "DAILY_SINGLE_USE",
+              "PERMANENT"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "GUEST",
+              "NON_RESIDENT",
+              "RESIDENT",
+              "TOURER"
+            ]
+          },
+          "shareable": {
+            "type": "boolean",
+            "description": "User able to share access to guests",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of the access",
+            "format": "date-time"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "User identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "A user's access to a key, with per-door/key data grouped in the doors/keys list"
+      },
+      "KeyAccessDoor": {
+        "title": "KeyAccessDoor",
+        "required": [
+          "sdkDoorUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "doorcode": {
+            "$ref": "#/components/schemas/Doorcode"
+          },
+          "sdkDoorUuid": {
+            "type": "string",
+            "description": "Door Door/Key Unique Identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door/Key-specific data within a key access"
+      },
+      "KeyAccessesResponse": {
+        "title": "KeyAccessesResponse",
+        "required": [
+          "accesses"
+        ],
+        "type": "object",
+        "properties": {
+          "accesses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyAccess"
+            }
+          }
+        },
+        "description": "Response from the key accesses endpoint"
+      },
+      "KeysResponse": {
+        "title": "KeysResponse",
+        "required": [
+          "keys"
+        ],
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Key"
+            }
+          },
+          "nextPageToken": {
+            "type": "string",
+            "description": "Token to fetch the next page",
+            "example": "1"
+          }
+        },
+        "description": "Response from the keys endpoint"
+      },
+      "NotFoundError": {
+        "title": "NotFoundError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          }
+        }
+      },
+      "Portfolio": {
+        "title": "Portfolio",
+        "required": [
+          "name",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Portfolio"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Portfolio unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door Portfolio object"
+      },
+      "PostUserRequest": {
+        "title": "PostUserRequest",
+        "required": [
+          "firstName",
+          "lastName",
+          "passcodeType",
+          "shareable",
+          "startTime"
+        ],
+        "type": "object",
+        "properties": {
+          "doorUuids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of user"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of access to doors/keys",
+            "format": "date-time"
+          },
+          "firstName": {
+            "maxLength": 2147483647,
+            "minLength": 1,
+            "type": "string",
+            "description": "First name of user"
+          },
+          "keyUuids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "lastName": {
+            "maxLength": 2147483647,
+            "minLength": 1,
+            "type": "string",
+            "description": "Last name of user"
+          },
+          "passcodeType": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "DAILY_SINGLE_USE",
+              "PERMANENT"
+            ]
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number of user"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "GUEST",
+              "NON_RESIDENT",
+              "RESIDENT",
+              "TOURER"
+            ]
+          },
+          "shareable": {
+            "type": "boolean",
+            "description": "User able to share access to guests",
+            "example": false
+          },
+          "shouldNotify": {
+            "type": "boolean",
+            "description": "Toggle user invite notification",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of access to doors/keys",
+            "format": "date-time"
+          }
+        },
+        "description": "JSON representation of the user for the post users endpoint"
+      },
+      "PostUserResponse": {
+        "title": "PostUserResponse",
+        "required": [
+          "doors",
+          "userUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "doors": {
+            "type": "array",
+            "description": "List of doors/keys user has access to",
+            "items": {
+              "$ref": "#/components/schemas/Door"
+            }
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "User unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Response from the post users endpoint"
+      },
+      "Resident": {
+        "title": "Resident",
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "userUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john.smith@example.com"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1-111-111-1111"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "Unique identifier of the user",
+            "format": "uuid"
+          }
+        },
+        "description": "Resident object"
+      },
+      "ResidentsResponse": {
+        "title": "ResidentsResponse",
+        "required": [
+          "residents"
+        ],
+        "type": "object",
+        "properties": {
+          "nextPageToken": {
+            "type": "string",
+            "description": "Token to fetch the next page"
+          },
+          "residents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resident"
+            }
+          }
+        },
+        "description": "Response from the residents endpoint. Returns first 100 residents by default"
+      },
+      "UnauthorizedError": {
+        "title": "UnauthorizedError",
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "UNAUTHORIZED"
+            ]
+          }
+        }
+      },
+      "UpdateUserDoorRequest": {
+        "title": "UpdateUserDoorRequest",
+        "type": "object",
+        "properties": {
+          "endTime": {
+            "type": "string",
+            "description": "End time of access to door/key",
+            "format": "date-time"
+          },
+          "shareable": {
+            "type": "boolean",
+            "description": "User able to share access to guests",
+            "example": false
+          }
+        },
+        "description": "JSON representation of the user's access to the door/key to update for the patch users door/key endpoint"
+      },
+      "User": {
+        "title": "User",
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "userUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "accesses": {
+            "type": "array",
+            "description": "List of accesses a user has",
+            "items": {
+              "$ref": "#/components/schemas/UserAccess"
+            }
+          },
+          "email": {
+            "type": "string",
+            "example": "john.smith@example.com"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1-111-111-1111"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "User identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door User object"
+      },
+      "UserAccess": {
+        "title": "UserAccess",
+        "required": [
+          "doorUuid",
+          "endTime",
+          "granter",
+          "passcodeType",
+          "shareable",
+          "startTime"
+        ],
+        "type": "object",
+        "properties": {
+          "doorUuid": {
+            "type": "string",
+            "description": "Identifier of the Door/Key related to the access",
+            "format": "uuid"
+          },
+          "doorcode": {
+            "$ref": "#/components/schemas/Doorcode"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of the access",
+            "format": "date-time"
+          },
+          "granter": {
+            "$ref": "#/components/schemas/AccessGranter"
+          },
+          "passcodeType": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "DAILY_SINGLE_USE",
+              "PERMANENT"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "GUEST",
+              "NON_RESIDENT",
+              "RESIDENT",
+              "TOURER"
+            ]
+          },
+          "sdkDoorUuid": {
+            "type": "string",
+            "description": "Door Door/Key Unique Identifier - for SDK use only",
+            "format": "uuid"
+          },
+          "shareable": {
+            "type": "boolean",
+            "description": "User able to share access to guests",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of the access",
+            "format": "date-time"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "User identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Definition of a User's Access to a Door/Key and the metadata associated"
+      },
+      "UsersResponse": {
+        "title": "UsersResponse",
+        "required": [
+          "users"
+        ],
+        "type": "object",
+        "properties": {
+          "nextPageToken": {
+            "type": "string",
+            "description": "Token to fetch the next page"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        },
+        "description": "Response from the users endpoint"
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
