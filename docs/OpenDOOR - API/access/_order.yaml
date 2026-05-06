@@ -2,3 +2,4 @@
 - post-access
 - patch-access
 - delete-revoke-access
+- get-accesses-by-key
