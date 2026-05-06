@@ -21,7 +21,7 @@ A key typically represents access rules to one or more doors in a building. Both
 Partners can fetch the list of keys enabled for them using a **partner-scoped token** from their backend.  
 Results can be filtered by `buildingUuid` and paginated.
 
-GET request from the Partner BE to the **OpenDOOR** API with an empty body request.
+GET request from the Partner BE to the DOOR BE with an empty body request.
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/keys
@@ -75,6 +75,6 @@ In case of an error, the API may return:
 
 * `500 Internal Server Error`: Unexpected backend error.
 
-  ⇒ Retry and contact Latch Support if persistent.
+  ⇒ Retry and contact DOOR Support if persistent.
 
 <br />
