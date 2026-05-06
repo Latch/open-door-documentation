@@ -718,7 +718,7 @@
           "Access Management"
         ],
         "summary": "Grant Access to User V2",
-        "description": "Create Latch user and grant access to doors",
+        "description": "Create Latch user and grant access to doors/keys",
         "operationId": "grantAccessToUserV2",
         "requestBody": {
           "content": {
