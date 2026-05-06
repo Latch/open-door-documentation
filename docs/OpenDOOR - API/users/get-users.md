@@ -10,7 +10,7 @@ metadata:
 ---
 ### Request
 
-GET users request from the Partner BE to the Latch BE
+GET users request from the Partner BE to the DOOR BE
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/users
