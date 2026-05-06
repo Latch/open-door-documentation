@@ -10,7 +10,7 @@ metadata:
 ### Prerequisites - Setup Keys
 
 You will need the `keyUuid` for the key you want to inspect.  
-This value can be retrieved from the **List Keys** endpoint. You can also create the key in DOOR OS and mark it as enabled for this partner.
+This value can be retrieved from the **List Keys** endpoint. You can also create the key in **DOOR OS** and mark it as enabled for this partner.
 
 ### Request
 
@@ -84,4 +84,4 @@ In case of an error, the API may return:
 
 * `500 Internal Server Error`: Unexpected backend error.
 
-  ⇒ Retry and contact Latch Support if persistent.
+  ⇒ Retry and contact Door Support if persistent.
