@@ -10,7 +10,7 @@ metadata:
 ---
 ### Request
 
-PATCH user request from the Partner BE to the Latch BE with valid user and door uuid.
+PATCH user request from the Partner BE to the DOOR BE with valid user and door uuid.
 
 ```
 PATCH https://rest.latchaccess.com/access/sdk/v1/users/:user/doors/:door
@@ -66,9 +66,7 @@ HTTP Response Body
 
 #### Field Descriptions
 
-Keep in mind that if `endTime` is omitted from the request body, the api will treat it as if the `endTime` was
-explicitly set to `null`. This is expected in order to support requests to remove expiration from access. To
-keep the existing `endTime`, simply add it to the request body.
+Keep in mind that if `endTime` is omitted from the request body, the api will treat it as if the `endTime` was explicitly set to `null`. This is expected in order to support requests to remove expiration from access. To keep the existing `endTime`, simply add it to the request body.
 
 #### Results
 
@@ -111,4 +109,4 @@ In case of an error, the API will return the following error responses:
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-⇒ Contact Latch Support
+⇒ Contact DOOR Support
