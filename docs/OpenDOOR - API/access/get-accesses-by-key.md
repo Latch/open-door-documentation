@@ -84,4 +84,4 @@ In case of an error, the API may return:
 
 * `500 Internal Server Error`: Unexpected backend error.
 
-  ⇒ Retry and contact Door Support if persistent.
+  ⇒ Retry and contact Latch Support if persistent.
