@@ -16,7 +16,7 @@ This value can be retrieved from the **List Keys** endpoint. You can also create
 
 Partners can fetch all accesses associated with a specific key using a **partner-scoped token** from their backend.
 
-GET request from the Partner BE to the Open Door with an empty body request.
+GET request from the Partner BE to the **OpenDOOR** with an empty body request.
 
 ```http
 GET https://rest.latchaccess.com/access/sdk/v1/keys/{keyUuid}/accesses
