@@ -16,7 +16,7 @@ This value can be retrieved from the **List Keys** endpoint. You can also create
 
 Partners can fetch all accesses associated with a specific key using a **partner-scoped token** from their backend.
 
-GET request from the Partner BE to the **OpenDOOR** with an empty body request.
+GET request from the Partner BE to the DOOR BE with an empty body request.
 
 ```http
 GET https://rest.latchaccess.com/access/sdk/v1/keys/{keyUuid}/accesses
@@ -84,4 +84,4 @@ In case of an error, the API may return:
 
 * `500 Internal Server Error`: Unexpected backend error.
 
-  ⇒ Retry and contact Latch Support if persistent.
+  ⇒ Retry and contact DOOR Support if persistent.
