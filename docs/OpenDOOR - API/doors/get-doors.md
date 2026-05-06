@@ -95,4 +95,4 @@ In case of an error, the API will return the following error responses:
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support
