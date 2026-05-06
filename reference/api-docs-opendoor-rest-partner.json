@@ -463,7 +463,7 @@
           "Access Management"
         ],
         "summary": "Grant Access to User",
-        "description": "Create Latch user and grant access to doors",
+        "description": "Create Latch user and grant access to doors/keys",
         "operationId": "grantAccessToUser",
         "requestBody": {
           "content": {
