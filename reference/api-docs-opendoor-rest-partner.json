@@ -897,7 +897,7 @@
           "Access Management"
         ],
         "summary": "Revoke User Access",
-        "description": "Revoke user access to the given door.",
+        "description": "Revoke user access to the given door/key",
         "operationId": "revokeUserAccess",
         "parameters": [
           {
