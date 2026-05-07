@@ -8,27 +8,21 @@ hidden: true
 metadata:
   robots: index
 ---
-<br />
-
-> **Building a new integration?** You don't need this guide. Go straight to the **[Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)** or **[iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)** — they cover install and usage from scratch.
->
-> **Migrating an Android app?** Keep the Android SDK 2.1 tutorial open next to this guide. The tutorial is the current from-scratch reference; this guide covers the v1-to-v2 deltas.
->
-> This document is for engineers whose app **already integrates Latch SDK v1 (OpenKit)** and is upgrading to **OpenDOOR SDK v2**.
+This guide is for engineers whose app already integrates Latch SDK v1 (OpenKit) and is upgrading to OpenDOOR SDK v2. If you are building a new integration, use the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) or [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs) instead — they cover install and usage from scratch. Android migrators should keep the 2.1 tutorial open alongside this guide; the tutorial is the current from-scratch reference, and this guide covers the v1-to-v2 deltas.
 
 ***
 
 ## Before you begin
 
-1. **Confirm coroutines (Android) or Swift Concurrency (iOS) is already wired into your app.** v2 exposes suspend functions on Android and `async throws` on iOS; it does not provide a blocking or completion-handler façade. If you don't have a coroutine scope at the call sites today, add concurrency support in a separate PR before this one so reviewers can evaluate the concurrency change separately from the SDK migration.
-2. **Inventory your SDK surface.** Run a project-wide search for `LatchClient.`, `Latch.` (iOS), `import com.latch.android.sdk`, and `import LatchSDK`, and list the call sites. The migration is mechanical once you know the size of the diff.
-3. **Read [§ The three shifts](#the-three-shifts).** The whole rewrite makes sense once you've internalized them.
+1. Confirm coroutines (Android) or Swift Concurrency (iOS) is already wired into your app. v2 has no blocking or completion-handler façade. If you don't have a coroutine scope at the call sites today, add concurrency support in a separate PR before this one — mixing the two refactors makes the diff hard to review.
+2. Inventory your SDK surface. Run a project-wide search for `LatchClient.`, `Latch.` (iOS), `import com.latch.android.sdk`, and `import LatchSDK`, and list the call sites. The migration is mechanical once you know the size of the diff.
+3. Read [§ The three shifts](#the-three-shifts). The whole rewrite makes sense once you've internalized them.
 
 ***
 
 ## The three shifts
 
-After you understand these shifts, most remaining changes are mechanical search-and-replace.
+Almost everything else is mechanical search-and-replace once these click.
 
 ### Shift 1 — Async model
 
@@ -53,63 +47,58 @@ After you understand these shifts, most remaining changes are mechanical search-
 
 ## Migration in five steps
 
-Use this recommended order. Each step is self-contained; land steps sequentially to keep diffs small.
+One recommended order. Each step is a self-contained change — land them sequentially to keep diffs small.
 
 ### Step 1 — Swap the dependency
 
-v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.8.1`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. 
+v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.5.0`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs).
 
-v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the **[iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)**.
-
-**Android (`app/build.gradle.kts`):**
+Android (`app/build.gradle.kts`):
 
 ```kotlin
-// Remove
+// Remove — v1 install
+// The local-folder maven repo that pointed at the unzipped artifacts:
 repositories {
     maven { url = uri("[your/path/to/unzipped-sdk]") }
 }
 implementation("com.latch:sdk:1.8.1")
 
-// Add
+// Add — v2 install
 repositories {
     google()
     mavenCentral()
 }
-implementation("com.latch:opendoor.android:2.1.1")
+implementation("com.door:opendoor.android:2.1.1")
 ```
 
 You can also delete the unzipped SDK folder from your repo once the v2 dependency resolves cleanly.
 
-**iOS (Xcode):**
+iOS (Xcode):
 
-```swift
+```
 Remove — v1 install
   File → Packages → remove the local "LatchSDK" package reference,
   then delete the LatchSDK folder you had checked into the repo.
 
 Add — v2 install (Package.swift or Xcode "Add Package")
-  .package(url: "https://github.com/door-com/opendoor-ios-sdk.git", from: "2.1.0")
+  .package(url: "<published v2 SPM repo URL — confirm with the SDK team>", from: "2.1.0")
 ```
 
-If your v1 integration uses CocoaPods (`pod 'LatchSDK'`), switch to SPM — v2 publishes only via SPM.
+If you were on CocoaPods (`pod 'LatchSDK'`), this is your forcing function to switch to SPM — v2 publishes only via SPM.
 
 ### Step 2 — Update imports & entry point
 
-Run the Android import replacement repo-wide:
-
 ```bash
+# Android — repo-wide
 find . -type f \( -name "*.kt" -o -name "*.java" \) -print0 \
   | xargs -0 sed -i '' 's/com\.latch\.android\.sdk/com.door.opendoor.android/g'
-```
 
-Run the iOS import replacement repo-wide:
-
-```bash
+# iOS — repo-wide
 find . -type f -name "*.swift" -print0 \
-  | xargs -0 sed -i '' 's/import LatchSDK/import OpenDOORSDK/g'
+  | xargs -0 sed -i '' 's/import LatchSDK/import OpenDOORCore/g'
 ```
 
-Then swap the Android entry point from `LatchClient` to `OpenDOOR.instance`:
+Then swap the entry point. Android first:
 
 ```kotlin
 // v1
@@ -126,7 +115,8 @@ iOS:
 let latch = try await Latch.initialize(withToken: token, loadAllAccesses: false)
 
 // v2 — getInstance() is async because it lazily constructs internal state.
-// Cache the returned client in your DI container and call it once per process.
+// Cache the returned client in your DI container; you only need to call it
+// once per process.
 let client = await OpenDOOR.getInstance()
 try await client.setupWithToken(token: token, includeAllLocks: false)
 ```
@@ -161,11 +151,9 @@ viewModelScope.launch {
 
 ### Step 4 — Subscribe to event streams (the biggest behavioral change)
 
-In v1, `unlock()` returned the unlock outcome (`Success` / `Failed` / `Canceled`). In v2, **`unlock()` returns when the BLE request is _initiated_**. Outcomes arrive on `listenForUnlockEvents()`. Exceptions thrown from `unlock()` are pre-flight failures only (Bluetooth off, lock not in cache, etc.).
+In v1, `unlock()` returned the unlock outcome (`Success` / `Failed` / `Canceled`). In v2, `unlock()` returns when the BLE request is initiated; outcomes arrive on `listenForUnlockEvents()`. Exceptions thrown from `unlock()` are pre-flight failures only (Bluetooth off, lock not in cache, etc.).
 
-You'll do this in two parts:
-
-**Part A — wire the stream once at app start.**
+Wire the stream once at app start:
 
 ```kotlin
 // Android — in your DI / app-init code
@@ -185,7 +173,7 @@ Task {
 }
 ```
 
-**Part B — at each call site, stop expecting a return value.**
+Then at each call site, stop expecting a return value:
 
 ```kotlin
 // v1
@@ -195,17 +183,17 @@ when (outcome) { /* …Success / Failed / Canceled handling… */ }
 // v2 — fire-and-(observe-elsewhere)
 try {
     client.unlock(lockId)   // returns when request initiated, not when unlock completes
-} catch (e: BluetoothException.BluetoothDisabled) {
+} catch (e: BluetoothException.BluetoothDisabledException) {
     promptEnableBluetooth()
 }
-// outcome arrives on the stream you wired in Part A
+// outcome arrives on the stream you wired earlier
 ```
 
 Apply the same pattern to proximity unlock — the unified `listenForUnlockEvents()` carries proximity events too, distinguished by `event.method`. See [§ Proximity unlock](#proximity-unlock).
 
-### Step 5 — Update guest invitation call sites
+### Step 5 — Update guest-invite call sites
 
-`PasscodeType` (a v1 enum) is gone. Use one of two `InviteType` constructors. The v1 method is `inviteGuests`; the v2 method is `inviteGuest`. See [§ Guest invitations](#guest-invitations) for the full mapping.
+`PasscodeType` (a v1 enum) is gone. Use one of two top-level types that implement the sealed `InviteType` interface: `InAppInvite` or `TempDoorcodeInvite`. See [§ Guest invitations](#guest-invitations) for the full mapping.
 
 ```kotlin
 // v1
@@ -223,7 +211,7 @@ client.inviteGuest(
     email     = email,
     phone     = phone,
     lockIds   = listOf(lockId),
-    inviteType = InviteType.InAppInvite(
+    inviteType = InAppInvite(
         accessType = null,
         startTime  = startTime,
         endTime    = endTime,
@@ -232,7 +220,7 @@ client.inviteGuest(
 )
 ```
 
-> **Recommendation.** Translate your invite-form UI state into an `InviteType` **at the boundary** (the moment the user taps "Send"). Don't propagate a v1-shaped `PasscodeType` enum through your domain layer.
+Translate your invite-form UI state into an `InviteType` at the boundary (the moment the user taps "Send"). Don't propagate a v1-shaped `PasscodeType` enum through your domain layer.
 
 ***
 
@@ -240,34 +228,34 @@ client.inviteGuest(
 
 ### Modules & entry points
 
-|                     | v1                              | v2                                                               |
-| ------------------- | ------------------------------- | ---------------------------------------------------------------- |
-| Brand               | Latch SDK / OpenKit             | OpenDOOR                                                         |
-| Android package     | `com.latch.android.sdk`         | `com.door.opendoor.android`                                      |
-| Android entry       | `LatchClient` (object)          | `OpenDOOR.instance: DoorClient`                                  |
-| iOS module          | `LatchSDK`                      | `OpenDOORSDK`                                                    |
-| iOS entry           | `Latch.initialize(withToken:…)` | `await OpenDOOR.getInstance()` then `client.setupWithToken(...)` |
-| iOS error protocol  | `LatchSDKError`                 | `OpenDOORSDKError`                                               |
-| iOS access-log type | `LatchAccessLog`                | `AccessLog`                                                      |
+|                     | v1                              | v2                                                                                            |
+| ------------------- | ------------------------------- | --------------------------------------------------------------------------------------------- |
+| Brand               | Latch SDK / OpenKit             | OpenDOOR                                                                                      |
+| Android package     | `com.latch.android.sdk`         | `com.door.opendoor.android`                                                                   |
+| Android entry       | `LatchClient` (object)          | `OpenDOOR.instance: DoorClient`                                                               |
+| iOS module          | `LatchSDK`                      | `OpenDOORCore` (importable library product; the SPM package directory is named `OpenDOORSDK`) |
+| iOS entry           | `Latch.initialize(withToken:…)` | `await OpenDOOR.getInstance()` then `client.setupWithToken(...)`                              |
+| iOS error protocol  | `LatchSDKError`                 | `OpenDOORSDKError`                                                                            |
+| iOS access-log type | `LatchAccessLog`                | `AccessLog`                                                                                   |
 
 ### Method signatures (Android)
 
-| v1                                                                                                 | v2                                                                                                  | Behavior change?                                                                |
-| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `LatchClient.initialize(context)` + `LatchClient.setupWithToken(token).blockingGet(): SetupResult` | `client.setupWithToken(activity, token, includeAllLocks): Unit` (suspend, throws)                   | Single call. Now takes an `Activity`, not a `Context`.                          |
-| _(no v1 logout API)_                                                                               | `client.clear(): Unit` (suspend)                                                                    | New.                                                                            |
-| `LatchClient.fetchLocks(): Single<LocksResult>`                                                    | `client.fetchLocks(): List<Lock>` (suspend)                                                         | —                                                                               |
-| `LatchClient.locks(): Single<LocksResult>` (cache-only)                                            | **Removed.** Use `client.listenForLocks().first()`.                                                 | Removed.                                                                        |
-| _(no v1 stream)_                                                                                   | `client.listenForLocks(): Flow<List<Lock>>`                                                         | New.                                                                            |
-| `LatchClient.unlock(...): Single<UnlockResult>` (3 overloads)                                      | `client.unlock(lockId: UUID)` and `client.unlock(lock: Lock)` (suspend, throws)                     | **Outcome moved to event stream.**                                              |
-| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change.                 |
-| _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                                            |
-| `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                                      |
-| `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | Method renamed to singular. `Guest` no longer returned. Multi-lock in one call. |
-| `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                                               |
-| _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                                 |
-| `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                                               |
-| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** Use build flavors.                                                                     | Removed (build-time only).                                                      |
+| v1                                                                                                 | v2                                                                                                  | Behavior change?                                                |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `LatchClient.initialize(context)` + `LatchClient.setupWithToken(token).blockingGet(): SetupResult` | `client.setupWithToken(activity, token, includeAllLocks): Unit` (suspend, throws)                   | Single call. Now takes an `Activity`, not a `Context`.          |
+| _(no v1 logout API)_                                                                               | `client.clear(): Unit` (suspend)                                                                    | New.                                                            |
+| `LatchClient.fetchLocks(): Single<LocksResult>`                                                    | `client.fetchLocks(): List<Lock>` (suspend)                                                         | —                                                               |
+| `LatchClient.locks(): Single<LocksResult>` (cache-only)                                            | **Removed.** Use `client.listenForLocks().first()`.                                                 | Removed.                                                        |
+| _(no v1 stream)_                                                                                   | `client.listenForLocks(): Flow<List<Lock>>`                                                         | New.                                                            |
+| `LatchClient.unlock(...): Single<UnlockResult>` (3 overloads)                                      | `client.unlock(lockId: UUID)` and `client.unlock(lock: Lock)` (suspend, throws)                     | **Outcome moved to event stream.**                              |
+| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change. |
+| _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                            |
+| `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                      |
+| `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | `Guest` no longer returned. Multi-lock in one call.             |
+| `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                               |
+| _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                 |
+| `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                               |
+| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** Use build flavors.                                                                     | Removed (build-time only).                                      |
 
 ### Method signatures (iOS)
 
@@ -292,7 +280,7 @@ client.inviteGuest(
 
 ### Setup & teardown
 
-v2 does not have a separate `initialize(context)` call. `setupWithToken` does both SDK initialization and authentication; the Activity you pass carries the Application reference the SDK needs internally. `clear()` is new — v1 had no logout primitive.
+v2 has no separate `initialize(context)` call. `setupWithToken` does both SDK initialization and authentication; the Activity you pass carries the Application reference the SDK needs internally. `clear()` is new — v1 had no logout primitive.
 
 ```kotlin
 // v1
@@ -305,9 +293,9 @@ client.setupWithToken(activity, token, includeAllLocks = false)
 client.clear()
 ```
 
-**Throws (v2):** `SetupException.{InvalidToken, ConsentNotGranted, SetupInternalError}`, `NetworkException`, `IllegalArgumentException` (if the supplied Activity can't host UI).
+Throws in v2: `SetupException.{InvalidTokenException, ConsentNotGrantedException, SetupInternalException}`, `NetworkException`, `IllegalArgumentException` (if the supplied Activity can't host UI).
 
-**Two gotchas.** (1) `setupWithToken` requires a **live foreground Activity** on Android because the SDK may need that Activity to present consent or system UI during setup. Do not call it from a `Service` or background `WorkManager` worker. (2) The SDK holds the token in memory only and does **not persist it across process restart**. If your app needs cross-launch persistence, store it yourself and call `setupWithToken` on launch.
+Two gotchas. First, `setupWithToken` requires a live foreground Activity on Android — do not call it from a `Service` or background `WorkManager` worker. Second, the token is held in memory only and is not persisted across process restart. If your app needs cross-launch persistence, store it yourself and call `setupWithToken` on launch.
 
 ### Locks list
 
@@ -329,24 +317,26 @@ Use `fetchLocks()` only for explicit user actions ("pull to refresh") or when yo
 
 ### Unlock & event stream
 
-In v1 you treated `unlock()` as a request-response RPC. In v2, the response (success / failure / cancellation) arrives on a stream. The exception thrown from `unlock()` is **only** the pre-flight check — Bluetooth off, lock not in cache, SDK not initialized.
+In v1 you treated `unlock()` as a request-response RPC. In v2, the response (success, failure, cancellation) arrives on a stream. The exception thrown from `unlock()` is only the pre-flight check — Bluetooth off, lock not in cache, SDK not initialized.
 
-**Failure cases that move from `catch` to the stream:**
+Failure cases that move from `catch` to the stream (Android shape; iOS equivalents use `UnlockEvent` with `status = .canceled` or `.failed(reason)` — see [§ iOS error rename](#ios--v1--v2-error-rename)):
 
-| v1 thrown                                | v2 stream event                                               |
-| ---------------------------------------- | ------------------------------------------------------------- |
-| `UnlockError.concurrentUnlockInProgress` | `UnlockEvent.UnlockCanceled(cause = ConcurrentUnlockStarted)` |
-| `UnlockError.outOfSchedule`              | `UnlockEvent.UnlockFailed(failReason = OutOfSchedule)`        |
-| `UnlockError.timeout`                    | `UnlockEvent.UnlockFailed(failReason = Timeout)`              |
+| v1 thrown                                | v2 stream event                                        |
+| ---------------------------------------- | ------------------------------------------------------ |
+| `UnlockError.concurrentUnlockInProgress` | `UnlockEvent.UnlockCanceled`                           |
+| `UnlockError.outOfSchedule`              | `UnlockEvent.UnlockFailed(failReason = OutOfSchedule)` |
+| `UnlockError.timeout`                    | `UnlockEvent.UnlockFailed(failReason = Timeout)`       |
 
-**Failure cases that stay thrown:**
+Failure cases that stay thrown:
 
-| v1 thrown                       | v2 thrown                                                                                   |
-| ------------------------------- | ------------------------------------------------------------------------------------------- |
-| `UnlockError.bluetoothDisabled` | `BluetoothException.BluetoothDisabled` (Android) / `BluetoothError.bluetoothDisabled` (iOS) |
-| `UnlockError.lockNotFound(_)`   | `UnlockError.lockNotFound(_)` (iOS) — Android stays in cache validation                     |
+| v1 thrown                       | v2 thrown                                                                                                                                |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `UnlockError.bluetoothDisabled` | `BluetoothException.BluetoothDisabledException` (Android) / `BluetoothError.bluetoothDisabled` (iOS)                                     |
+| `UnlockError.lockNotFound(_)`   | `UnlockError.lockNotFound(_)` (iOS) — Android surfaces this through the unlock event stream as `UnlockFailed(failReason = LockNotFound)` |
 
-**`UnlockEvent` cases (Android):** `UnlockStarted`, `UnlockSuccess`, `UnlockFailed`, `UnlockCanceled`. Each carries `lockId: UUID` and `method: UnlockMethod` (`Explicit` or `Proximity`). `UnlockFailed` additionally carries a `failReason` of `LockNotFound`, `LockNotRecognized`, `OutOfSchedule`, `Timeout`, `BluetoothLost`, `Internal`.
+Android `UnlockEvent` cases: `UnlockStarted`, `SetupSync`, `UnlockSuccess`, `UnlockFailed`, `UnlockCanceled`. Each carries `lockId: UUID?` and `method: UnlockEventMethod` (`Explicit` or `Proximity`). `UnlockFailed` additionally carries a `failReason: UnlockFailureReason` of `BluetoothDisabled`, `BluetoothError`, `LockNotFound`, `LockNotRecognized`, `OutOfSchedule`, `Timeout`, or `InternalError`. (`SetupSync` is new in SDK 2.1; emit a setup-sync UI state when you receive it. iOS does not expose an equivalent case.)
+
+iOS `UnlockEvent` is a struct: `UnlockEvent(lock: Lock?, status: UnlockEventStatus, method: UnlockEventMethod)`. `status` is an enum of `.started`, `.failed(UnlockFailureReason)`, `.canceled`, `.success`. iOS `UnlockFailureReason` cases: `.bluetoothDisabled`, `.outOfSchedule`, `.timeout`, `.unlockInternalError(String)`.
 
 ### Proximity unlock
 
@@ -363,7 +353,7 @@ client.stopProximityUnlock()
 // proximity events arrive on listenForUnlockEvents() with method = Proximity
 ```
 
-> **If your UX relied on proximity resuming after an explicit unlock**, restart proximity after the explicit unlock finishes. Call `startProximityUnlock()` again from the app state transition that handles the explicit unlock result.
+If your UX relied on proximity resuming after an explicit unlock, call `startProximityUnlock()` again after the explicit unlock finishes.
 
 ### Sync
 
@@ -379,25 +369,25 @@ do {
 } catch let e as SyncError { /* dedicated type now */ }
 ```
 
-`SyncException` / `SyncError` cases: `LockNotFound`, `Canceled`, `UnlockInProgress`, `SyncInternalError`.
+Android `SyncException` cases: `LockNotFoundException`, `CanceledException`, `UnlockInProgressException`, `SyncInternalException`. iOS `SyncError` cases: `.lockNotFound(String)`, `.canceled`, `.unlockInProgress`, `.syncInternalError(String)`.
 
 ### Guest invitations
 
-`PasscodeType` (v1, single enum) splits into two `InviteType` constructors:
+`PasscodeType` (v1, single enum) splits into two types that implement the sealed `InviteType` interface:
 
-| Use when…                                          | Constructor                     | Required fields                                                                           |
-| -------------------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------- |
-| Guest is in the Door ecosystem and accepts in-app  | `InviteType.InAppInvite`        | `accessType?`, `startTime`, `endTime?` (null = permanent), `showDoorcodes`                |
-| Guest is _not_ in the ecosystem; one-shot doorcode | `InviteType.TempDoorcodeInvite` | `accessType?`, `duration` (`Limit15Minutes` / `FullDay`), `period` (`Today` / `Tomorrow`) |
+| Use when…                                          | Constructor          | Required fields                                                                           |
+| -------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------- |
+| Guest is in the Door ecosystem and accepts in-app  | `InAppInvite`        | `accessType?`, `startTime`, `endTime?` (null = permanent), `showDoorcodes`                |
+| Guest is _not_ in the ecosystem; one-shot doorcode | `TempDoorcodeInvite` | `accessType?`, `duration` (`Limit15Minutes` / `FullDay`), `period` (`Today` / `Tomorrow`) |
 
-**Two non-obvious changes** beyond the type swap:
+Two non-obvious changes beyond the type swap:
 
-1. **Return type is `Unit` / `Void`.** v1 returned the created `Guest`. To read it back, call `guests()` after the invite resolves.
-2. **One call invites to multiple locks.** Pass `lockIds: List<UUID>`. Per-lock partial failures surface as `GuestInvitesException` / `GuestInvitesError`, which carries a per-lock outcome list — render that list, don't blanket-fail the operation.
+1. The return type is `Unit` / `Void`. v1 returned the created `Guest`. To read it back, call `guests()` after the invite resolves.
+2. One call invites to multiple locks. Pass `lockIds: List<UUID>`. Per-lock partial failures surface as `GuestInvitesException` / `GuestInvitesError`, which carries a per-lock outcome list — render that list, don't blanket-fail the operation.
 
 ### Guest listing & revocation
 
-**iOS rename:**
+iOS rename:
 
 ```swift
 // v1
@@ -409,7 +399,7 @@ try await client.revokeGuestAllAccesses(guestID: id)
 try await client.revokeGuestAccess(guestID: id, lockID: lockId)
 ```
 
-**Android — new in v2:** v1 had no public revoke API. If your Android app round-tripped through your own backend to revoke, switch to the SDK calls.
+On Android, revoke is new in v2 — v1 had no public revoke API. If your Android app round-tripped through your own backend to revoke, switch to the SDK calls.
 
 ### Access logs
 
@@ -421,35 +411,35 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 
 ### Android — v1 sealed `*Result` → v2 typed exceptions
 
-| v1 outcome                                                                   | v2                                                                                                            |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `*Result.Success(data)`                                                      | return value of the `suspend` call                                                                            |
-| `*Result.NotInitialized`                                                     | `SDKException.SDKNotInitializedException`                                                                     |
-| `LocksResult.Error` / `GuestsResult.Error` / `AccessLogsResult.NetworkError` | `NetworkException.{InvalidTokenException, NoInternetException, InternalNetworkException, ForbiddenException}` |
-| `SetupResult.InvalidToken`                                                   | `SetupException.InvalidToken`                                                                                 |
-| `SetupResult.ConsentNotGranted`                                              | `SetupException.ConsentNotGranted`                                                                            |
-| `SetupResult.Error`                                                          | `SetupException.SetupInternalError` / `NetworkException`                                                      |
-| `UnlockResult.Success` / `Failed` / `Canceled`                               | `UnlockEvent.{UnlockSuccess, UnlockFailed, UnlockCanceled}` (stream)                                          |
-| `UnlockResult.BluetoothDisabled`                                             | `BluetoothException.BluetoothDisabled` (thrown pre-flight)                                                    |
-| `SyncResult.{LockNotFound, Canceled, UnlockInProgress}`                      | `SyncException.{LockNotFound, Canceled, UnlockInProgress}`                                                    |
-| `SyncResult.Error`                                                           | `SyncException.SyncInternalError` / `NetworkException`                                                        |
-| `InviteGuestsResult.PartialFailure(...)`                                     | `GuestInvitesException` (per-lock outcome list)                                                               |
-| `InviteGuestsResult.Error`                                                   | `InviteGuestException.*` / `NetworkException`                                                                 |
+| v1 outcome                                                                   | v2                                                                                    |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `*Result.Success(data)`                                                      | return value of the `suspend` call                                                    |
+| `*Result.NotInitialized`                                                     | `SDKException.SDKNotInitializedException`                                             |
+| `LocksResult.Error` / `GuestsResult.Error` / `AccessLogsResult.NetworkError` | `NetworkException.{InvalidTokenException, InternalNetworkException, PayloadError}`    |
+| `SetupResult.InvalidToken`                                                   | `SetupException.InvalidTokenException`                                                |
+| `SetupResult.ConsentNotGranted`                                              | `SetupException.ConsentNotGrantedException`                                           |
+| `SetupResult.Error`                                                          | `SetupException.SetupInternalException` / `NetworkException`                          |
+| `UnlockResult.Success` / `Failed` / `Canceled`                               | `UnlockEvent.{UnlockSuccess, UnlockFailed, UnlockCanceled}` (stream)                  |
+| `UnlockResult.BluetoothDisabled`                                             | `BluetoothException.BluetoothDisabledException` (thrown pre-flight)                   |
+| `SyncResult.{LockNotFound, Canceled, UnlockInProgress}`                      | `SyncException.{LockNotFoundException, CanceledException, UnlockInProgressException}` |
+| `SyncResult.Error`                                                           | `SyncException.SyncInternalException` / `NetworkException`                            |
+| `InviteGuestsResult.PartialFailure(...)`                                     | `GuestInvitesException` (per-lock outcome list)                                       |
+| `InviteGuestsResult.Error`                                                   | `InviteGuestException.*` / `NetworkException`                                         |
 
 ### iOS — v1 → v2 error rename
 
-| v1 (iOS)                                     | v2 (iOS)                                                               |
-| -------------------------------------------- | ---------------------------------------------------------------------- |
-| `FetchLocksError.invalidToken`               | `NetworkError.invalidToken`                                            |
-| `FetchLocksError.internalError(_, _)`        | `NetworkError.internalNetworkError(_)`                                 |
-| `UnlockError.bluetoothDisabled`              | `BluetoothError.bluetoothDisabled`                                     |
-| `UnlockError.concurrentUnlockInProgress`     | `UnlockEvent.UnlockCanceled` (stream)                                  |
-| `UnlockError.lockNotFound(_)`                | `UnlockError.lockNotFound(_)` (still thrown)                           |
-| `UnlockError.outOfSchedule` / `.timeout`     | `UnlockEvent.UnlockFailed` with corresponding `failureReason` (stream) |
-| `DeleteGuestError.passcodeTypeCantBeRevoked` | `RevokeGuestError.passcodeTypeCantBeRevoked`                           |
-| `DeleteGuestError.deviceNotFound`            | `RevokeGuestError.deviceNotFound`                                      |
-| `InviteGuestError.*`                         | `InviteGuestError.*` (same 7 cases — name-only)                        |
-| `ConsentError.userConsentDenied`             | `SetupError.consentNotGranted`                                         |
+| v1 (iOS)                                     | v2 (iOS)                                                                             |
+| -------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `FetchLocksError.invalidToken`               | `NetworkError.invalidToken`                                                          |
+| `FetchLocksError.internalError(_, _)`        | `NetworkError.internalNetworkError(_)`                                               |
+| `UnlockError.bluetoothDisabled`              | `BluetoothError.bluetoothDisabled`                                                   |
+| `UnlockError.concurrentUnlockInProgress`     | `UnlockEvent` with `status = .canceled` (stream)                                     |
+| `UnlockError.lockNotFound(_)`                | `UnlockError.lockNotFound(_)` (still thrown)                                         |
+| `UnlockError.outOfSchedule` / `.timeout`     | `UnlockEvent` with `status = .failed(.outOfSchedule)` / `.failed(.timeout)` (stream) |
+| `DeleteGuestError.passcodeTypeCantBeRevoked` | `RevokeGuestError.passcodeTypeCantBeRevoked`                                         |
+| `DeleteGuestError.deviceNotFound`            | `RevokeGuestError.deviceNotFound`                                                    |
+| `InviteGuestError.*`                         | `InviteGuestError.*` (same 7 cases — name-only)                                      |
+| `ConsentError.userConsentDenied`             | `SetupError.consentNotGranted`                                                       |
 
 ***
 
@@ -469,5 +459,5 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 
 ## See also
 
-* **[Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)**
-* **[iOS v2 SDK docs](https://developers.door.com/docs/ios-docs)**
+* [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)
+* [iOS v2 SDK docs](https://developers.door.com/docs/ios-docs)
