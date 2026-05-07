@@ -460,4 +460,4 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 ## See also
 
 * [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)
-* [iOS v2 SDK docs](https://developers.door.com/docs/ios-docs)
+* [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)
