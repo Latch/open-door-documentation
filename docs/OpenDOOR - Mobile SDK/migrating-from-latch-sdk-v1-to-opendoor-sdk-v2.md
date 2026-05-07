@@ -20,7 +20,7 @@ metadata:
 
 ## Before you begin
 
-1. **Confirm coroutines (Android) or Swift Concurrency (iOS) is already wired into your app.** v2 has no blocking / completion-handler façade. If you don't have a coroutine scope at the call sites today, add concurrency support in a separate PR before this one — mixing the two refactors makes the diff hard to review.
+1. **Confirm coroutines (Android) or Swift Concurrency (iOS) is already wired into your app.** v2 exposes suspend functions on Android and `async throws` on iOS; it does not provide a blocking or completion-handler façade. If you don't have a coroutine scope at the call sites today, add concurrency support in a separate PR before this one so reviewers can evaluate the concurrency change separately from the SDK migration.
 2. **Inventory your SDK surface.** Run a project-wide search for `LatchClient.`, `Latch.` (iOS), `import com.latch.android.sdk`, and `import LatchSDK`, and list the call sites. The migration is mechanical once you know the size of the diff.
 3. **Read [§ The three shifts](#the-three-shifts).** The whole rewrite makes sense once you've internalized them.
 
@@ -28,7 +28,7 @@ metadata:
 
 ## The three shifts
 
-Almost everything else is mechanical search-and-replace once these click.
+After you understand these shifts, most remaining changes are mechanical search-and-replace.
 
 ### Shift 1 — Async model
 
@@ -53,11 +53,11 @@ Almost everything else is mechanical search-and-replace once these click.
 
 ## Migration in five steps
 
-One recommended order. Each step is a self-contained change — land them sequentially to keep diffs small.
+Use this recommended order. Each step is self-contained; land steps sequentially to keep diffs small.
 
 ### Step 1 — Swap the dependency
 
-The legacy GitHub-repo artifact channel is **deprecated** in v2. Android v2.1 is published through Maven Central; use the exact current version from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs).
+The legacy GitHub-repo artifact channel is **deprecated** in v2. Door publishes Android v2.1 through Maven Central; use the exact current version from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs).
 
 **Android (`app/build.gradle.kts`):**
 
@@ -84,21 +84,25 @@ implementation("com.latch:opendoor.android:2.1.1")
 .package(url: "https://github.com/door-com/opendoor-ios-sdk.git", from: "2.0.0")
 ```
 
-If you were on CocoaPods (`pod 'LatchSDK'`), this is your forcing function to switch to SPM — v2 publishes only via SPM.
+If your v1 integration uses CocoaPods (`pod 'LatchSDK'`), switch to SPM — v2 publishes only via SPM.
 
 ### Step 2 — Update imports & entry point
 
+Run the Android import replacement repo-wide:
+
 ```bash
-# Android — repo-wide
 find . -type f \( -name "*.kt" -o -name "*.java" \) -print0 \
   | xargs -0 sed -i '' 's/com\.latch\.android\.sdk/com.door.opendoor.android/g'
+```
 
-# iOS — repo-wide
+Run the iOS import replacement repo-wide:
+
+```bash
 find . -type f -name "*.swift" -print0 \
   | xargs -0 sed -i '' 's/import LatchSDK/import OpenDOORSDK/g'
 ```
 
-Then swap the entry point. Android first:
+Then swap the Android entry point from `LatchClient` to `OpenDOOR.instance`:
 
 ```kotlin
 // v1
@@ -115,8 +119,7 @@ iOS:
 let latch = try await Latch.initialize(withToken: token, loadAllAccesses: false)
 
 // v2 — getInstance() is async because it lazily constructs internal state.
-// Cache the returned client in your DI container; you only need to call it
-// once per process.
+// Cache the returned client in your DI container and call it once per process.
 let client = await OpenDOOR.getInstance()
 try await client.setupWithToken(token: token, includeAllLocks: false)
 ```
@@ -193,9 +196,9 @@ try {
 
 Apply the same pattern to proximity unlock — the unified `listenForUnlockEvents()` carries proximity events too, distinguished by `event.method`. See [§ Proximity unlock](#proximity-unlock).
 
-### Step 5 — Update guest-invite call sites
+### Step 5 — Update guest invitation call sites
 
-`PasscodeType` (a v1 enum) is gone. Use one of two `InviteType` constructors. See [§ Guest invitations](#guest-invitations) for the full mapping.
+`PasscodeType` (a v1 enum) is gone. Use one of two `InviteType` constructors. The v1 method is `inviteGuests`; the v2 method is `inviteGuest`. See [§ Guest invitations](#guest-invitations) for the full mapping.
 
 ```kotlin
 // v1
@@ -253,7 +256,7 @@ client.inviteGuest(
 | `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change. |
 | _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                            |
 | `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                      |
-| `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | `Guest` no longer returned. Multi-lock in one call.             |
+| `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | Method renamed to singular. `Guest` no longer returned. Multi-lock in one call. |
 | `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                               |
 | _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                 |
 | `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                               |
@@ -282,7 +285,7 @@ client.inviteGuest(
 
 ### Setup & teardown
 
-v2 has **no separate `initialize(context)` call**. `setupWithToken` does both SDK initialization and authentication; the Activity you pass carries the Application reference the SDK needs internally. `clear()` is new — v1 had no logout primitive.
+v2 does not have a separate `initialize(context)` call. `setupWithToken` does both SDK initialization and authentication; the Activity you pass carries the Application reference the SDK needs internally. `clear()` is new — v1 had no logout primitive.
 
 ```kotlin
 // v1
@@ -297,7 +300,7 @@ client.clear()
 
 **Throws (v2):** `SetupException.{InvalidToken, ConsentNotGranted, SetupInternalError}`, `NetworkException`, `IllegalArgumentException` (if the supplied Activity can't host UI).
 
-**Two gotchas.** (1) `setupWithToken` requires a **live foreground Activity** on Android — do not call it from a `Service` or background `WorkManager` worker. (2) The token is held in memory only and is **not persisted across process restart**. If your app needs cross-launch persistence, store it yourself and call `setupWithToken` on launch.
+**Two gotchas.** (1) `setupWithToken` requires a **live foreground Activity** on Android because the SDK may need that Activity to present consent or system UI during setup. Do not call it from a `Service` or background `WorkManager` worker. (2) The SDK holds the token in memory only and does **not persist it across process restart**. If your app needs cross-launch persistence, store it yourself and call `setupWithToken` on launch.
 
 ### Locks list
 
@@ -353,7 +356,7 @@ client.stopProximityUnlock()
 // proximity events arrive on listenForUnlockEvents() with method = Proximity
 ```
 
-> **If your UX relied on proximity resuming after an explicit unlock**, call `startProximityUnlock()` again after the explicit unlock finishes.
+> **If your UX relied on proximity resuming after an explicit unlock**, restart proximity after the explicit unlock finishes. Call `startProximityUnlock()` again from the app state transition that handles the explicit unlock result.
 
 ### Sync
 
