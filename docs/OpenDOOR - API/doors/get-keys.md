@@ -30,8 +30,8 @@ GET https://rest.latchaccess.com/access/sdk/v1/keys
 HTTP Query Parameters
 
 ```
-pageSize: <integer>            (default returns all keys)
-pageToken: "<string>"          (default first page)
+pageSize: <integer>            (optional default returns all keys)
+pageToken: "<string>"          (optional default first page)
 buildingUuid: "<string>"       (optional filter by building UUID)
 ```
 
