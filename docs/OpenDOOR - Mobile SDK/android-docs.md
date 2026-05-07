@@ -8,6 +8,16 @@ hidden: false
 metadata:
   robots: index
 ---
+The Android SDK allows you to initialize and unlock a DOOR-supported lock. This tutorial corresponds with version 2.1.1 of the SDK.
+
+## What's new in SDK 2.1
+
+- **New modern API:** coroutine-first `suspend` functions, Flow listeners, callback listeners, and Activity-based setup for permission and consent UI.
+- **Improved unlock:** explicit and proximity unlocks now share the same unlock event stream, with clearer progress, success, failure, and cancellation events.
+- **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
+- **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt and emits `UnlockEvent.UnlockCanceled`.
+- **Increased proximity unlock range:** proximity unlock now supports a larger BLE trigger range than earlier SDK 2.0 builds while still selecting the closest eligible lock.
+
 ## Setup
 
 1. Declare SDK as a dependency
@@ -26,7 +36,7 @@ repositories {
 }
 
 dependencies {
-  implementation('com.door.opendoor.android:2.0.0')
+  implementation('com.door.opendoor.android:2.1.1')
   //(...)
 }
 ```
@@ -37,7 +47,7 @@ Use your Auth0 token retrieved from DOOR's Auth endpoint, call `setupWithToken()
 
 The OpenDOOR SDK uses Kotlin Coroutines to perform actions asynchronously. All SDK functions are `suspend` functions that can be called from a coroutine scope, or you can use Flow-based streams for reactive updates.
 
-**Important:** `setupWithToken()` must be called from the main thread because it takes a Context parameter.
+**Important:** `setupWithToken()` must be called from the main thread because it takes a live `Activity` for permission and consent UI.
 
 Note that `context` here must not be the `applicationContext`.
 
@@ -54,7 +64,7 @@ val client = OpenDOOR.instance
 CoroutineScope(Dispatchers.Main).launch {
     try {
         client.setupWithToken(
-            context = context,
+            activity = activity,
             token = token,
             includeAllLocks = true
         )
@@ -70,30 +80,30 @@ CoroutineScope(Dispatchers.Main).launch {
 ```
 
 The `includeAllLocks` parameter determines whether to show:
-
-* `true`: All locks that user can access (partner and non-partner)
-* `false`: Only partner-managed locks
+- `true`: All locks that user can access (partner and non-partner)
+- `false`: Only partner-managed locks
 
 ### Thread Requirements
 
 The SDK has specific thread requirements for different operations:
 
 **Must be called from the main thread:**
-
-* `unlock()`
-* `sync()`
-* `startProximityUnlock()`
-* `stopProximityUnlock()`
+- `unlock()`
+- `cancelUnlock()`
+- `sync()`
+- `startProximityUnlock()`
+- `stopProximityUnlock()`
 
 All BLE operations must be called from the main thread.
 
 **Can be called from any thread:**
-
-* `fetchLocks()`
-* `getAccessLogs()`
-* `inviteGuests()`
-* `guests()`
-* `setupWithToken()`
+- `fetchLocks()`
+- `getAccessLogs()`
+- `inviteGuests()`
+- `guests()`
+- `revokeGuestAllAccesses()`
+- `revokeGuestAccess()`
+- `setupWithToken()`
 
 All examples in this tutorial use `Dispatchers.Main`.
 
@@ -101,9 +111,9 @@ All examples in this tutorial use `Dispatchers.Main`.
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`. These methods have different behaviors:
 
-* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
+- **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
 
-* **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
+- **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
 
 **Option 1: Fetch locks once**
 
@@ -179,6 +189,10 @@ CoroutineScope(Dispatchers.Main).launch {
             is UnlockEvent.UnlockStarted -> {
                 // Unlock process has started
             }
+            is UnlockEvent.SetupSync -> {
+                // The lock needs setup sync before unlock.
+                // Show setup/sync progress here if this is the user's first unlock for this door.
+            }
             is UnlockEvent.UnlockSuccess -> {
                 // Lock is unlocked! event.lockId contains the lock UUID
             }
@@ -205,6 +219,18 @@ CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
+To cancel an active explicit unlock attempt, call `cancelUnlock()`. Cancellation is reported through `UnlockEvent.UnlockCanceled`. If no unlock is active, `cancelUnlock()` completes without emitting an event.
+
+```kotlin
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        client.cancelUnlock()
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    }
+}
+```
+
 **Alternative: Using callback listener**
 
 ```kotlin
@@ -218,6 +244,9 @@ client.listenForUnlockEvents(object : UnlockEventsListener {
         when (event) {
             is UnlockEvent.UnlockStarted -> {
                 // Unlock process has started
+            }
+            is UnlockEvent.SetupSync -> {
+                // The lock needs setup sync before unlock.
             }
             is UnlockEvent.UnlockSuccess -> {
                 // Lock is unlocked!
@@ -247,9 +276,9 @@ Your DOOR lock should be unlocked now!
 
 ## Unlock the closest lock that's available
 
-Another way to unlock a door is through Proximity Unlock. When started, the SDK continuously scans for nearby locks and attempts to unlock only when the phone is very close to a lock, similar to how proximity unlock works in the app.
+Another way to unlock the door is through "Proximity Unlock". It continuously scans for nearby locks and unlocks the closest eligible lock when it is within the SDK's BLE range threshold.
 
-This is intended for close-range unlocks, typically when the phone is within a few inches of the lock, not from several feet or meters away. For example, the phone may need to be roughly less than 3 inches from the lock before an unlock is triggered.
+SDK 2.1 increases the proximity unlock trigger range compared with earlier SDK 2.0 builds. Real-world range still depends on phone model, lock type, installation, and local BLE conditions, so use unlock events to drive UI state instead of assuming a fixed distance.
 
 **Important:** `startProximityUnlock()` and `stopProximityUnlock()` must be called from the main thread as they perform BLE operations.
 
@@ -279,6 +308,9 @@ val unlockJob = CoroutineScope(Dispatchers.Main).launch {
             is UnlockEvent.UnlockStarted -> {
                 // Unlock process started
             }
+            is UnlockEvent.SetupSync -> {
+                // The selected lock needs setup sync before proximity unlock can finish.
+            }
         }
     }
 }
@@ -305,6 +337,8 @@ CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
+Use `cancelUnlock()` to cancel only the current proximity unlock attempt. Proximity unlock mode remains active and can continue scanning. Use `stopProximityUnlock()` when you want to stop proximity unlock mode.
+
 **Using callback listener:**
 
 ```kotlin
@@ -328,6 +362,9 @@ client.listenForUnlockEvents(object : UnlockEventsListener {
             }
             is UnlockEvent.UnlockStarted -> {
                 // Unlock process started
+            }
+            is UnlockEvent.SetupSync -> {
+                // The selected lock needs setup sync before proximity unlock can finish.
             }
         }
     }
@@ -449,6 +486,82 @@ CoroutineScope(Dispatchers.Main).launch {
     try {
         val guestList = client.guests()
         // Use guestList
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
+    }
+}
+```
+
+### Revoke guest access
+
+Revoke operations are network-backed. After revoking, call `guests()` again to refresh local state.
+
+**Revoke a guest's access to a single lock:**
+
+```kotlin
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.RevokeGuestException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val guestList = client.guests()
+        val guest = guestList.first()
+        val guestId = guest.id
+
+        val lockId = guest.guestAccesses.first().lockId
+
+        client.revokeGuestAccess(
+            guestId = guestId,
+            lockId = lockId
+        )
+
+        // Optionally refresh guests after revoke
+        val refreshedGuests = client.guests()
+    } catch (e: RevokeGuestException) {
+        when (e.reason) {
+            RevokeGuestException.Reason.PASSCODE_TYPE_CANT_BE_REVOKED -> {
+                // The passcode type can't be revoked for this guest access
+            }
+            else -> {
+                // Handle other revoke failures
+            }
+        }
+    } catch (e: SDKException) {
+        // Handle SDK errors
+    } catch (e: NetworkException) {
+        // Handle network errors
+    }
+}
+```
+
+**Revoke all of a guest's accesses:**
+
+```kotlin
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.RevokeGuestException
+import com.door.opendoor.android.core.api.exceptions.SDKException
+
+CoroutineScope(Dispatchers.Main).launch {
+    try {
+        val guestList = client.guests()
+        val guestId = guestList.first().id
+
+        client.revokeGuestAllAccesses(guestId)
+
+        // Optionally refresh guests after revoke
+        val refreshedGuests = client.guests()
+    } catch (e: RevokeGuestException) {
+        when (e.reason) {
+            RevokeGuestException.Reason.PASSCODE_TYPE_CANT_BE_REVOKED -> {
+                // The passcode type can't be revoked for one or more guest accesses
+            }
+            else -> {
+                // Handle other revoke failures
+            }
+        }
     } catch (e: SDKException) {
         // Handle SDK errors
     } catch (e: NetworkException) {
