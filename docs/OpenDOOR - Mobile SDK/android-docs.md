@@ -2,7 +2,7 @@
 title: Android SDK
 excerpt: >-
   The Android SDK allows you to initialize and unlock a DOOR-supported lock.
-  This tutorial corresponds with version 2.0.0 of the SDK.
+  This tutorial corresponds with version 2.1.1 of the SDK.
 deprecated: false
 hidden: false
 metadata:
