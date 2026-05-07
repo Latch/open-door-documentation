@@ -202,7 +202,7 @@
           "Doors and Keys"
         ],
         "summary": "List Keys",
-        "description": "Get a DOOR partner's list of keys for a building",
+        "description": "Get a DOOR partner's list of keys",
         "operationId": "listKeys",
         "parameters": [
           {
