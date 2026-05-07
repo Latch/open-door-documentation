@@ -59,7 +59,7 @@ Use this recommended order. Each step is self-contained; land steps sequentially
 
 v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.8.1`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. 
 
-v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the iOS v2 SDK docs.
+v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the **[iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)**.
 
 **Android (`app/build.gradle.kts`):**
 
