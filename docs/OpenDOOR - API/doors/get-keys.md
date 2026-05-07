@@ -50,7 +50,7 @@ HTTP Response Body
   "keys": [
     {
       "uuid": "<string>",
-      "keyType": "<string>",      // possible values "DOOR" | "ELEVATOR",
+      "keyType": "<string>",      // possible values "DOOR" | "ELEVATOR"
       "name": "<string>",
       "buildingUuid": "<string>",
       "accountUuid": "<string>",
