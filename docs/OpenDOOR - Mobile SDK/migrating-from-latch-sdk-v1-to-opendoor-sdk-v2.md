@@ -10,7 +10,7 @@ metadata:
 ---
 <br />
 
-> **Building a new integration?** You don't need this guide. Go straight to the **[Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)** or **[iOS v2 SDK docs](https://developers.door.com/docs/ios-docs)** — they cover install and usage from scratch.
+> **Building a new integration?** You don't need this guide. Go straight to the **[Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)** or **[iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)** — they cover install and usage from scratch.
 >
 > **Migrating an Android app?** Keep the Android SDK 2.1 tutorial open next to this guide. The tutorial is the current from-scratch reference; this guide covers the v1-to-v2 deltas.
 >
@@ -57,14 +57,16 @@ Use this recommended order. Each step is self-contained; land steps sequentially
 
 ### Step 1 — Swap the dependency
 
-The legacy GitHub-repo artifact channel is **deprecated** in v2. Door publishes Android v2.1 through Maven Central; use the exact current version from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs).
+v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.8.1`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the iOS v2 SDK docs.
 
 **Android (`app/build.gradle.kts`):**
 
 ```kotlin
 // Remove
-maven { url = uri("https://maven.pkg.github.com/<latch-org>/latch-android-sdk") }
-implementation("com.latch.android:sdk:1.x.y")
+repositories {
+    maven { url = uri("[your/path/to/unzipped-sdk]") }
+}
+implementation("com.latch:sdk:1.8.1")
 
 // Add
 repositories {
@@ -74,14 +76,17 @@ repositories {
 implementation("com.latch:opendoor.android:2.1.1")
 ```
 
-**iOS (`Package.swift` or via Xcode "Add Package"):**
+You can also delete the unzipped SDK folder from your repo once the v2 dependency resolves cleanly.
+
+**iOS (Xcode):**
 
 ```swift
-// Remove
-.package(url: "…/LatchSDK.git", from: "1.0.0")
+Remove — v1 install
+  File → Packages → remove the local "LatchSDK" package reference,
+  then delete the LatchSDK folder you had checked into the repo.
 
-// Add
-.package(url: "https://github.com/door-com/opendoor-ios-sdk.git", from: "2.0.0")
+Add — v2 install (Package.swift or Xcode "Add Package")
+  .package(url: "https://github.com/door-com/opendoor-ios-sdk.git", from: "2.1.0")
 ```
 
 If your v1 integration uses CocoaPods (`pod 'LatchSDK'`), switch to SPM — v2 publishes only via SPM.
@@ -245,22 +250,22 @@ client.inviteGuest(
 
 ### Method signatures (Android)
 
-| v1                                                                                                 | v2                                                                                                  | Behavior change?                                                |
-| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `LatchClient.initialize(context)` + `LatchClient.setupWithToken(token).blockingGet(): SetupResult` | `client.setupWithToken(activity, token, includeAllLocks): Unit` (suspend, throws)                   | Single call. Now takes an `Activity`, not a `Context`.          |
-| _(no v1 logout API)_                                                                               | `client.clear(): Unit` (suspend)                                                                    | New.                                                            |
-| `LatchClient.fetchLocks(): Single<LocksResult>`                                                    | `client.fetchLocks(): List<Lock>` (suspend)                                                         | —                                                               |
-| `LatchClient.locks(): Single<LocksResult>` (cache-only)                                            | **Removed.** Use `client.listenForLocks().first()`.                                                 | Removed.                                                        |
-| _(no v1 stream)_                                                                                   | `client.listenForLocks(): Flow<List<Lock>>`                                                         | New.                                                            |
-| `LatchClient.unlock(...): Single<UnlockResult>` (3 overloads)                                      | `client.unlock(lockId: UUID)` and `client.unlock(lock: Lock)` (suspend, throws)                     | **Outcome moved to event stream.**                              |
-| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change. |
-| _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                            |
-| `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                      |
+| v1                                                                                                 | v2                                                                                                  | Behavior change?                                                                |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `LatchClient.initialize(context)` + `LatchClient.setupWithToken(token).blockingGet(): SetupResult` | `client.setupWithToken(activity, token, includeAllLocks): Unit` (suspend, throws)                   | Single call. Now takes an `Activity`, not a `Context`.                          |
+| _(no v1 logout API)_                                                                               | `client.clear(): Unit` (suspend)                                                                    | New.                                                                            |
+| `LatchClient.fetchLocks(): Single<LocksResult>`                                                    | `client.fetchLocks(): List<Lock>` (suspend)                                                         | —                                                                               |
+| `LatchClient.locks(): Single<LocksResult>` (cache-only)                                            | **Removed.** Use `client.listenForLocks().first()`.                                                 | Removed.                                                                        |
+| _(no v1 stream)_                                                                                   | `client.listenForLocks(): Flow<List<Lock>>`                                                         | New.                                                                            |
+| `LatchClient.unlock(...): Single<UnlockResult>` (3 overloads)                                      | `client.unlock(lockId: UUID)` and `client.unlock(lock: Lock)` (suspend, throws)                     | **Outcome moved to event stream.**                                              |
+| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change.                 |
+| _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                                            |
+| `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                                      |
 | `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | Method renamed to singular. `Guest` no longer returned. Multi-lock in one call. |
-| `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                               |
-| _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                 |
-| `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                               |
-| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** Use build flavors.                                                                     | Removed (build-time only).                                      |
+| `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                                               |
+| _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                                 |
+| `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                                               |
+| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** Use build flavors.                                                                     | Removed (build-time only).                                                      |
 
 ### Method signatures (iOS)
 
