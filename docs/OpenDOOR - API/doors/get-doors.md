@@ -13,10 +13,9 @@ After selecting a door, the property manager will select the partner from the dr
 
 ### Request
 
-Partners can fetch a list of all the doors that are enabled for them, by using a partner-scoped token from the BE.
-It is possible to filter results by Building UUID.
+Partners can fetch a list of all the doors that are enabled for them, by using a partner-scoped token from the BE. It is possible to filter results by Building UUID.
 
-GET request from the Partner BE to the Latch BE with an empty body request
+GET request from the Partner BE to the DOOR BE with an empty body request
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/doors
@@ -96,4 +95,4 @@ In case of an error, the API will return the following error responses:
 
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support

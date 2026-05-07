@@ -34,7 +34,7 @@
           "Partner Authentication"
         ],
         "summary": "Authenticate Partner",
-        "description": "Legacy M2M Authorization endpoint",
+        "description": "M2M Authorization endpoint",
         "operationId": "authenticatePartner",
         "requestBody": {
           "content": {

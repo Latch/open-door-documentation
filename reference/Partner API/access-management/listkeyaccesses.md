@@ -1,6 +1,6 @@
 ---
 api:
   file: api-docs-opendoor-rest-partner.json
-  operationId: revokeUserAccess
+  operationId: listKeyAccesses
 hidden: false
 ---

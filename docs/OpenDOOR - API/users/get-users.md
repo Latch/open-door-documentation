@@ -10,7 +10,7 @@ metadata:
 ---
 ### Request
 
-GET users request from the Partner BE to the Latch BE
+GET users request from the Partner BE to the DOOR BE
 
 ```
 GET https://rest.latchaccess.com/access/sdk/v1/users
@@ -103,4 +103,4 @@ In case of an error, the API will return the following error responses:
   ⇒ Check the token hasn't expired and refresh the token if needed.
 * `500 Internal Server Error`: there was an unexpected error.
 
-  ⇒ Contact Latch Support
+  ⇒ Contact DOOR Support

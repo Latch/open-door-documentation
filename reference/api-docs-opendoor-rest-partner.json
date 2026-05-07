@@ -14,7 +14,7 @@
   "servers": [
     {
       "url": "https://rest.latchaccess.com/access/sdk",
-      "description": "Latch REST API base URL"
+      "description": "DOOR REST API base URL"
     }
   ],
   "tags": [
@@ -24,7 +24,7 @@
     },
     {
       "name": "Doors",
-      "description": "Door operations"
+      "description": "Door/Key operations"
     },
     {
       "name": "Users",
@@ -42,7 +42,7 @@
           "Buildings"
         ],
         "summary": "List Buildings",
-        "description": "Get a Latch partner's list of buildings",
+        "description": "Get a DOOR partner's list of buildings",
         "operationId": "listBuildings",
         "responses": {
           "200": {
@@ -105,13 +105,13 @@
           "Doors"
         ],
         "summary": "List Doors",
-        "description": "Get a Latch partner's list of doors",
+        "description": "Get a DOOR partner's list of doors/keys",
         "operationId": "listDoors",
         "parameters": [
           {
             "name": "pageSize",
             "in": "query",
-            "description": "Max number of doors to return",
+            "description": "Max number of doors/keys to return",
             "required": false,
             "style": "form",
             "schema": {
@@ -132,7 +132,7 @@
           {
             "name": "buildingUuid",
             "in": "query",
-            "description": "Building UUID for filtering doors",
+            "description": "Building UUID for filtering doors/keys",
             "required": false,
             "style": "form",
             "schema": {
@@ -143,11 +143,184 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of doors",
+            "description": "Successfully retrieved list of doors/keys",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DoorsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/keys": {
+      "get": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "List Keys",
+        "description": "Get a DOOR partner's list of keys for a building",
+        "operationId": "listKeys",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Max number of keys to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "The token of page to return",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "buildingUuid",
+            "in": "query",
+            "description": "Building UUID for filtering keys",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeysResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/keys/{keyUuid}/accesses": {
+      "get": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "List Accesses By Key",
+        "description": "Get all accesses on a key for a DOOR partner",
+        "operationId": "listKeyAccesses",
+        "parameters": [
+          {
+            "name": "keyUuid",
+            "in": "path",
+            "description": "UUID of the key to get accesses for.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved key accesses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeyAccessesResponse"
                 }
               }
             }
@@ -202,7 +375,7 @@
           "Users"
         ],
         "summary": "List Users",
-        "description": "Get a Latch partner's list of users",
+        "description": "Get a DOOR partner's list of users",
         "operationId": "listUsers",
         "parameters": [
           {
@@ -286,7 +459,7 @@
           "Access Management"
         ],
         "summary": "Grant Access to User",
-        "description": "Create Latch user and grant access to doors",
+        "description": "Create DOOR user and grant access to doors/keys",
         "operationId": "grantAccessToUser",
         "requestBody": {
           "content": {
@@ -361,7 +534,7 @@
           "Users"
         ],
         "summary": "Get User",
-        "description": "Get a single user for a Latch partner",
+        "description": "Get a single user for a DOOR partner",
         "operationId": "getUser",
         "parameters": [
           {
@@ -541,7 +714,7 @@
           "Access Management"
         ],
         "summary": "Grant Access to User V2",
-        "description": "Create Latch user and grant access to doors",
+        "description": "Create DOOR user and grant access to doors/keys. Returns a richer response than V1.",
         "operationId": "grantAccessToUserV2",
         "requestBody": {
           "content": {
@@ -616,7 +789,7 @@
           "Access Management"
         ],
         "summary": "Update User Access",
-        "description": "Update user access to the given door.",
+        "description": "Update user access to the given door/key.",
         "operationId": "updateUserAccess",
         "parameters": [
           {
@@ -633,7 +806,7 @@
           {
             "name": "doorUuid",
             "in": "path",
-            "description": "UUID of door we want to update access for.",
+            "description": "UUID of door/key we want to update access for.",
             "required": true,
             "style": "simple",
             "schema": {
@@ -653,7 +826,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully updated access to the given door.",
+            "description": "Successfully updated access to the given door/key.",
             "content": {
               "application/json": {
                 "schema": {
@@ -720,7 +893,7 @@
           "Access Management"
         ],
         "summary": "Revoke User Access",
-        "description": "Revoke user access to the given door.",
+        "description": "Revoke user access to the given door/key.",
         "operationId": "revokeUserAccess",
         "parameters": [
           {
@@ -737,7 +910,7 @@
           {
             "name": "doorUuid",
             "in": "path",
-            "description": "UUID of door we want to revoke access to.",
+            "description": "UUID of door/key we want to revoke access to.",
             "required": true,
             "style": "simple",
             "schema": {
@@ -748,7 +921,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully revoked access to the given door.",
+            "description": "Successfully revoked access to the given door/key.",
             "content": {
               "application/json": {
                 "schema": {
@@ -883,6 +1056,7 @@
           "message": {
             "type": "string",
             "enum": [
+              "BUILDING_UUID_REQUIRED",
               "EMAIL_AND_PHONE_PROVIDED",
               "EMAIL_CAN_NOT_BE_EMPTY",
               "EMAIL_OR_PHONE_REQUIRED",
@@ -891,6 +1065,7 @@
               "INVALID_END_TIME",
               "INVALID_PHONE",
               "INVALID_START_TIME",
+              "MISSING_END_TIME",
               "PASSCODE_TYPE_CANT_BE_REVOKED",
               "USER_CAN_NOT_SHARE"
             ]
@@ -950,7 +1125,7 @@
             "format": "uuid"
           }
         },
-        "description": "Latch Building object"
+        "description": "DOOR Building object"
       },
       "BuildingsResponse": {
         "title": "BuildingsResponse",
@@ -987,7 +1162,7 @@
           },
           "type": {
             "type": "string",
-            "description": "Latch device type",
+            "description": "DOOR device type",
             "example": "C"
           }
         },
@@ -1020,21 +1195,21 @@
           },
           "isConnected": {
             "type": "boolean",
-            "description": "Indicates whether a door is connected to the internet via wifi/ethernet/hub",
+            "description": "Indicates whether a door/key is connected to the internet via wifi/ethernet/hub",
             "example": false
           },
           "name": {
             "type": "string",
-            "description": "Name of the door"
+            "description": "Name of the door/key"
           },
           "sdkDoorUuid": {
             "type": "string",
-            "description": "Latch Door Unique Identifier - for SDK use only",
+            "description": "DOOR Door/Key Unique Identifier - for SDK use only",
             "format": "uuid"
           },
           "type": {
             "type": "string",
-            "description": "Type of door",
+            "description": "Type of door/key",
             "enum": [
               "DOOR",
               "ELEVATOR"
@@ -1042,11 +1217,11 @@
           },
           "uuid": {
             "type": "string",
-            "description": "Door unique identifier",
+            "description": "Door/Key unique identifier",
             "format": "uuid"
           }
         },
-        "description": "Latch Door object"
+        "description": "DOOR Door/Key object"
       },
       "Doorcode": {
         "title": "Doorcode",
@@ -1058,7 +1233,7 @@
         "properties": {
           "code": {
             "type": "string",
-            "description": "A 7 digit doorcode to unlock door",
+            "description": "A 7 digit doorcode to unlock door/key",
             "example": "1234567"
           },
           "description": {
@@ -1093,7 +1268,7 @@
             "example": "1"
           }
         },
-        "description": "Response from the doors endpoint"
+        "description": "Response from the doors/keys endpoint"
       },
       "InternalServerError": {
         "title": "InternalServerError",
@@ -1109,6 +1284,177 @@
             ]
           }
         }
+      },
+      "Key": {
+        "title": "Key",
+        "required": [
+          "name",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "accountUuid": {
+            "type": "string",
+            "description": "UUID of the account that owns the key",
+            "format": "uuid"
+          },
+          "buildingUuid": {
+            "type": "string",
+            "description": "UUID of the building",
+            "format": "uuid"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of key access",
+            "format": "date-time"
+          },
+          "keyType": {
+            "type": "string",
+            "description": "Type of key",
+            "enum": [
+              "DOOR",
+              "ELEVATOR"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the key"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of key access",
+            "format": "date-time"
+          },
+          "uuid": {
+            "type": "string",
+            "description": "Key unique identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "DOOR Key object"
+      },
+      "KeyAccess": {
+        "title": "KeyAccess",
+        "required": [
+          "doors",
+          "granter",
+          "keyUuid",
+          "passcodeType",
+          "shareable",
+          "startTime",
+          "userUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "doors": {
+            "type": "array",
+            "description": "Per-door/key access data",
+            "items": {
+              "$ref": "#/components/schemas/KeyAccessDoor"
+            }
+          },
+          "endTime": {
+            "type": "string",
+            "description": "End time of the access",
+            "format": "date-time"
+          },
+          "granter": {
+            "$ref": "#/components/schemas/AccessGranter"
+          },
+          "keyUuid": {
+            "type": "string",
+            "description": "Key unique identifier",
+            "format": "uuid"
+          },
+          "passcodeType": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "DAILY_SINGLE_USE",
+              "PERMANENT"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "GUEST",
+              "NON_RESIDENT",
+              "RESIDENT",
+              "TOURER"
+            ]
+          },
+          "shareable": {
+            "type": "boolean",
+            "description": "User able to share access to guests",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "description": "Start time of the access",
+            "format": "date-time"
+          },
+          "userUuid": {
+            "type": "string",
+            "description": "User identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "A user's access to a key, with per-door/key data grouped in the doors/keys list"
+      },
+      "KeyAccessDoor": {
+        "title": "KeyAccessDoor",
+        "required": [
+          "sdkDoorUuid"
+        ],
+        "type": "object",
+        "properties": {
+          "doorcode": {
+            "$ref": "#/components/schemas/Doorcode"
+          },
+          "sdkDoorUuid": {
+            "type": "string",
+            "description": "DOOR Door/Key Unique Identifier",
+            "format": "uuid"
+          }
+        },
+        "description": "Door/Key-specific data within a key access"
+      },
+      "KeyAccessesResponse": {
+        "title": "KeyAccessesResponse",
+        "required": [
+          "accesses"
+        ],
+        "type": "object",
+        "properties": {
+          "accesses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyAccess"
+            }
+          }
+        },
+        "description": "Response from the key accesses endpoint"
+      },
+      "KeysResponse": {
+        "title": "KeysResponse",
+        "required": [
+          "keys"
+        ],
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Key"
+            }
+          },
+          "nextPageToken": {
+            "type": "string",
+            "description": "Token to fetch the next page",
+            "example": "1"
+          }
+        },
+        "description": "Response from the keys endpoint"
       },
       "NotFoundError": {
         "title": "NotFoundError",
@@ -1143,12 +1489,11 @@
             "format": "uuid"
           }
         },
-        "description": "Latch Portfolio object"
+        "description": "DOOR Portfolio object"
       },
       "PostUserRequest": {
         "title": "PostUserRequest",
         "required": [
-          "doorUuids",
           "firstName",
           "lastName",
           "passcodeType",
@@ -1170,7 +1515,7 @@
           },
           "endTime": {
             "type": "string",
-            "description": "End time of access to doors",
+            "description": "End time of access to doors/keys",
             "format": "date-time"
           },
           "firstName": {
@@ -1178,6 +1523,13 @@
             "minLength": 1,
             "type": "string",
             "description": "First name of user"
+          },
+          "keyUuids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
           },
           "lastName": {
             "maxLength": 2147483647,
@@ -1200,8 +1552,10 @@
           "role": {
             "type": "string",
             "enum": [
+              "GUEST",
               "NON_RESIDENT",
-              "RESIDENT"
+              "RESIDENT",
+              "TOURER"
             ]
           },
           "shareable": {
@@ -1216,7 +1570,7 @@
           },
           "startTime": {
             "type": "string",
-            "description": "Start time of access to doors",
+            "description": "Start time of access to doors/keys",
             "format": "date-time"
           }
         },
@@ -1232,7 +1586,7 @@
         "properties": {
           "doors": {
             "type": "array",
-            "description": "List of doors user has access to",
+            "description": "List of doors/keys user has access to",
             "items": {
               "$ref": "#/components/schemas/Door"
             }
@@ -1320,7 +1674,7 @@
         "properties": {
           "endTime": {
             "type": "string",
-            "description": "End time of access to door",
+            "description": "End time of access to door/key",
             "format": "date-time"
           },
           "shareable": {
@@ -1329,7 +1683,7 @@
             "example": false
           }
         },
-        "description": "JSON representation of the user's access to the door to update for the patch users door endpoint"
+        "description": "JSON representation of the user's access to the door/key to update for the patch users door/key endpoint"
       },
       "User": {
         "title": "User",
@@ -1370,7 +1724,7 @@
             "format": "uuid"
           }
         },
-        "description": "Latch User object"
+        "description": "DOOR User object"
       },
       "UserAccess": {
         "title": "UserAccess",
@@ -1386,7 +1740,7 @@
         "properties": {
           "doorUuid": {
             "type": "string",
-            "description": "Identifier of the Door related to the access",
+            "description": "Identifier of the Door/Key related to the access",
             "format": "uuid"
           },
           "doorcode": {
@@ -1411,13 +1765,15 @@
           "role": {
             "type": "string",
             "enum": [
+              "GUEST",
               "NON_RESIDENT",
-              "RESIDENT"
+              "RESIDENT",
+              "TOURER"
             ]
           },
           "sdkDoorUuid": {
             "type": "string",
-            "description": "Latch Door Unique Identifier - for SDK use only",
+            "description": "DOOR Door/Key Unique Identifier - for SDK use only",
             "format": "uuid"
           },
           "shareable": {
@@ -1436,7 +1792,7 @@
             "format": "uuid"
           }
         },
-        "description": "Definition of a User's Access to a Door and the metadata associated"
+        "description": "Definition of a User's Access to a Door/Key and the metadata associated"
       },
       "UsersResponse": {
         "title": "UsersResponse",
