@@ -24,9 +24,9 @@ GET https://rest.latchaccess.com/access/sdk/v1/doors
 HTTP Query Parameters
 
 ```
-pageSize: <integer>   (by default returns all doors)
-pageToken: "<string>" (default is "1", first page)
-buildingUuid: "<string>" (for filtering results by the Building UUID)
+pageSize: <integer>   (optional by default returns all doors)
+pageToken: "<string>" (optional default is "1", first page)
+buildingUuid: "<string>" (optional for filtering results by the Building UUID)
 ```
 
 HTTP Headers
