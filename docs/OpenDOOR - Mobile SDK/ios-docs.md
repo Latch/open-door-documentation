@@ -30,7 +30,7 @@ metadata:
 Or you can add the following dependency to your Package.swift:
 
 ```swift iOS
-.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.0.0")
+.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.1.0")
 ```
 
 and add it to your target like this:
@@ -242,7 +242,9 @@ Unlock events from both explicit unlocks and proximity are published through the
         // Use unlock event
          switch unlockEvent {
          case .started:
-              // Unlock process has started
+           // Unlock process has started
+         case .setupSync:
+					 // The lock is being set up
          case .success:
              // Lock is unlocked!
          case .failed:
@@ -269,7 +271,9 @@ Unlock events from both explicit unlocks and proximity are published through the
                     // Use unlock event
                      switch unlockEvent {
                      case .started:
-                        // Unlock process has started
+                       // Unlock process has started
+										 case .setupSync:
+					 						// The lock is being set up
                      case .success:
                         // Lock is unlocked!
                      case .failed:
@@ -307,6 +311,22 @@ The listener is weakly retained by the SDK. Keep a strong reference (for example
  } catch let error as SDKError {
    // Handle SDK errors
  }
+```
+
+<br />
+
+### Cancel unlock
+
+Cancel the active unlock.
+
+```swift iOS
+import OpenDOORCore
+
+ do {
+    try client.cancelUnlock()
+ } catch let error as SDKError {
+    // Handle SDK errors
+ } 
 ```
 
 ## Sync
@@ -445,10 +465,14 @@ To get information for all guests with shared access call `guests`.
 
 ## Log level
 
-To control how much diagnostic information the SDK logs, call `setLogLevel`. It supports two levels:
+To control how much diagnostic information the SDK logs, call `setLogLevel`. It supports 4 levels:
 
-1. `debug` - produce more detailed output.
-2. `error` - restrict logs to important issues only.
+1. `debug` - produce more detailed output. Includes debug, info, warning and error logs.
+2. `info` - Includes info, warning and error logs.
+3. `warning` - Includes warning and error logs.
+4. `error` - restrict logs to important issues only. Includes only error logs.
+
+<br />
 
 Default log level is error.
 
