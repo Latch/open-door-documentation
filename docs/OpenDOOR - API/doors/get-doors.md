@@ -53,7 +53,7 @@ HTTP Response Body
         "name": "<string>",
         "type": "DOOR" | "ELEVATOR",
         "buildingUuid": "<string>",
-        "accessibilityType": "COMMUNAL | "PRIVATE",
+        "accessibilityType": "COMMUNAL" | "PRIVATE",
         "isConnected": <boolean>,
         "device": {
             "serialNumber": "<string>",
