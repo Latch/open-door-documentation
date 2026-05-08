@@ -4,7 +4,7 @@ excerpt: >-
   Step-by-step guide for upgrading existing Latch SDK v1 (OpenKit) integrations
   to OpenDOOR SDK v2 on Android and iOS.
 deprecated: false
-hidden: true
+hidden: false
 metadata:
   robots: index
 ---
