@@ -19,10 +19,19 @@ metadata:
 
 ## Setup
 
-1. Declare SDK as a dependency
-2. Initialize the library
-3. View the locks and select one to unlock
+1. [Declare SDK as a dependency](https://developers.door.com/docs/android-docs#Declare-SDK-as-a-dependency)
+2. [Initialize the library](https://developers.door.com/docs/android-docs#initialize-the-library)
+3. [View the locks and select one to unlock](<https://developers.door.com/docs/android-docs#View-the-locks and-select-one-to-unlock>)
 4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
+5. [Thread Requirements](https://developers.door.com/docs/android-docs#Thread-Requirements)
+6. [View the locks and select one to unlock](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#View-the-locks-and-select-one-to-unlock)
+7. [Unlock](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#unlock)
+8. [Unlock the closest lock that's available](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#Unlock-the-closest-lock-that's-available)
+9. [Sync](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#sync)
+10. [Access Logs](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#access-logs)
+11. [Guest Access](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#guests-access)
+
+<br />
 
 ### Declare SDK as a dependency
 
