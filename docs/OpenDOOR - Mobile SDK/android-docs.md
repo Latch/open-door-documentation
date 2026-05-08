@@ -8,15 +8,13 @@ hidden: false
 metadata:
   robots: index
 ---
-The Android SDK allows you to initialize and unlock a DOOR-supported lock. This tutorial corresponds with version 2.1.1 of the SDK.
-
 ## What's new in SDK 2.1
 
-- **New modern API:** coroutine-first `suspend` functions, Flow listeners, callback listeners, and Activity-based setup for permission and consent UI.
-- **Improved unlock:** explicit and proximity unlocks now share the same unlock event stream, with clearer progress, success, failure, and cancellation events.
-- **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
-- **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt and emits `UnlockEvent.UnlockCanceled`.
-- **Increased proximity unlock range:** proximity unlock now supports a larger BLE trigger range than earlier SDK 2.0 builds while still selecting the closest eligible lock.
+* **New modern API:** coroutine-first `suspend` functions, Flow listeners, callback listeners, and Activity-based setup for permission and consent UI.
+* **Improved unlock:** explicit and proximity unlocks now share the same unlock event stream, with clearer progress, success, failure, and cancellation events.
+* **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
+* **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt and emits `UnlockEvent.UnlockCanceled`.
+* **Increased proximity unlock range:** proximity unlock now supports a larger BLE trigger range than earlier SDK 2.0 builds while still selecting the closest eligible lock.
 
 ## Setup
 
@@ -80,30 +78,33 @@ CoroutineScope(Dispatchers.Main).launch {
 ```
 
 The `includeAllLocks` parameter determines whether to show:
-- `true`: All locks that user can access (partner and non-partner)
-- `false`: Only partner-managed locks
+
+* `true`: All locks that user can access (partner and non-partner)
+* `false`: Only partner-managed locks
 
 ### Thread Requirements
 
 The SDK has specific thread requirements for different operations:
 
 **Must be called from the main thread:**
-- `unlock()`
-- `cancelUnlock()`
-- `sync()`
-- `startProximityUnlock()`
-- `stopProximityUnlock()`
+
+* `unlock()`
+* `cancelUnlock()`
+* `sync()`
+* `startProximityUnlock()`
+* `stopProximityUnlock()`
 
 All BLE operations must be called from the main thread.
 
 **Can be called from any thread:**
-- `fetchLocks()`
-- `getAccessLogs()`
-- `inviteGuests()`
-- `guests()`
-- `revokeGuestAllAccesses()`
-- `revokeGuestAccess()`
-- `setupWithToken()`
+
+* `fetchLocks()`
+* `getAccessLogs()`
+* `inviteGuests()`
+* `guests()`
+* `revokeGuestAllAccesses()`
+* `revokeGuestAccess()`
+* `setupWithToken()`
 
 All examples in this tutorial use `Dispatchers.Main`.
 
@@ -111,9 +112,9 @@ All examples in this tutorial use `Dispatchers.Main`.
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`. These methods have different behaviors:
 
-- **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
+* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
 
-- **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
+* **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
 
 **Option 1: Fetch locks once**
 
