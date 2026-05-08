@@ -26,7 +26,7 @@ metadata:
 ### Add OpenDOOR SDK as a dependency
 
 1. In Xcode, select “File” → “Add Packages...”
-2. Enter [https://github.com/Latch/opendoor-sdk-spm.git](https://github.com/Latch/opendoor-sdk-spm.git) or [git@github.com](mailto:git@github.com):Latch/opendoor-sdk-spm.git
+2. Enter [https://github.com/Latch/opendoor-sdk-spm.git](https://github.com/Latch/opendoor-sdk-spm.git)
 3. Select OpenDOORCore library product
 
 Or you can add the following dependency to your Package.swift:
