@@ -10,16 +10,17 @@ metadata:
 ---
 ## Setup
 
-1. [Add OpenDOOR SDK as a dependency](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#add-opendoor-sdk-as-a-dependency)
-2. [Initialize the library](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#initialize-the-library)
-3. [Sign out](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sign-out)
-4. [Get locks](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#get-locks)
-5. [Unlock](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#unlock)
-6. [Sync](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#sync)
-7. [Access logs](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#access-logs)
-8. [Guest Access](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#guest-access)
-9. [Log level](https://opendoor-uwel.readme.io/docs/opendoor-ios-sdk#log-level)
-10. [API docs](https://refactored-adventure-2q4l4q2.pages.github.io/documentation/opendoorcore/)
+1. [Add OpenDOOR SDK as a dependency](https://developers.door.com/docs/ios-docs#add-opendoor-sdk-as-a-dependency)
+2. [Initialize the library](https://developers.door.com/docs/ios-docs#initialize-the-library)
+3. [Sign out](https://developers.door.com/docs/ios-docs#sign-out)
+4. [Get locks](https://developers.door.com/docs/ios-docs#get-locks)
+5. [Unlock](https://developers.door.com/docs/ios-docs#unlock)
+6. [Sync](https://developers.door.com/docs/ios-docs#sync)
+7. [Access logs](https://developers.door.com/docs/ios-docs#access-logs)
+8. [Guest Access](https://developers.door.com/docs/ios-docs#guest-access)
+9. [Log level](https://developers.door.com/docs/ios-docs#log-level)
+
+<br />
 
 ### Add OpenDOOR SDK as a dependency
 
