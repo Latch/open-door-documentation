@@ -24,12 +24,12 @@ metadata:
 2. [Initialize the library](https://developers.door.com/docs/android-docs#initialize-the-library)
 3. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
 4. [Thread Requirements](https://developers.door.com/docs/android-docs#thread-requirements)
-5. [View the locks and select one to unlock](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#view-the-locks-and-select-one-to-unlock)
-6. [Unlock](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#unlock)
-7. [Unlock the closest lock that's available](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#unlock-the-closest-lock-that's-available)
-8. [Sync](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#sync)
-9. [Access Logs](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#access-logs)
-10. [Guest Access](https://developers.door.com/docs/android-docshttps://developers.door.com/docs/android-docs#guests-access)
+5. [View the locks and select one to unlock](https://developers.door.com/docs/android-docs#view-the-locks-and-select-one-to-unlock)
+6. [Unlock](https://developers.door.com/docs/android-docs#unlock)
+7. [Unlock the closest lock that's available](https://developers.door.com/docs/android-docs#unlock-the-closest-lock-that's-available)
+8. [Sync](https://developers.door.com/docs/android-docs#sync)
+9. [Access Logs](https://developers.door.com/docs/android-docs#access-logs)
+10. [Guest Access](https://developers.door.com/docs/android-docs#guests-access)
 
 <br />
 
