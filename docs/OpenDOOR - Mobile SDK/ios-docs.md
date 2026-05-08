@@ -9,6 +9,15 @@ hidden: false
 metadata:
   robots: index
 ---
+## What's new in SDK 2.1.0
+
+* **New modern API:** Swift concurrency APIs with uniform errors
+  * Lock and unlock events now use stream-based listeners instead of polling. 
+  * Unified unlock event pipeline for both explicit unlock and proximity unlock.
+* **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
+* **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt
+* Finer-grained log levels
+
 ## Setup
 
 1. [Add OpenDOOR SDK as a dependency](https://developers.door.com/docs/ios-docs#add-opendoor-sdk-as-a-dependency)
