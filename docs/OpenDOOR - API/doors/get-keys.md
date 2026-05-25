@@ -21,6 +21,8 @@ A key typically represents access rules to one or more doors in a building. Both
 Partners can fetch the list of keys enabled for them using a **partner-scoped token** from their backend.  
 Results can be filtered by `buildingUuid` and paginated.
 
+Partners can request the list of doors for the key by adding `includeDoors=true`request parameter, by default this information is not retrieved. 
+
 GET request from the Partner BE to the DOOR BE with an empty body request.
 
 ```
@@ -33,6 +35,7 @@ HTTP Query Parameters
 pageSize: <integer>            (optional default returns all keys)
 pageToken: "<string>"          (optional default first page)
 buildingUuid: "<string>"       (optional filter by building UUID)
+includeDoors: true|false			 (optional default false include information about including doors)
 ```
 
 HTTP Headers
@@ -50,7 +53,13 @@ HTTP Response Body
   "keys": [
     {
       "uuid": "<string>",
-      "keyType": "DOOR" | "ELEVATOR",
+      "doorsType": "DOOR" | "ELEVATOR",
+      "keyType": "REGULAR" | "SINGLE",
+      "doors": [{
+					"name": "<string>",
+          "sdkDoorUuid": "<string>",
+          "type": "COMMUNAL" | "ELEVATOR" | "ENTRANCE" | "RESIDENCE" | "SERVICE"
+      }],
       "name": "<string>",
       "buildingUuid": "<string>",
       "accountUuid": "<string>",
