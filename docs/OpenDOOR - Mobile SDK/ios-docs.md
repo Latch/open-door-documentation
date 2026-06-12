@@ -2,8 +2,7 @@
 title: iOS SDK
 excerpt: >-
   The SDK provides APIs to view, unlock and sync DOOR-supported locks and to
-  manage guests accesses. This tutorial corresponds with version 2.1.0 of the
-  SDK.
+  manage guests accesses.
 deprecated: false
 hidden: false
 metadata:
@@ -27,7 +26,6 @@ metadata:
 
 * Skip unnecessary connections during unlock. An unlock no longer opens a BLE connection for setup sync when there is no lock data to sync, avoiding a wasted connection and making those unlocks faster.
 * Faster failure handling. A failed or cancelled BLE operation now resolves immediately instead of waiting on a system timeout, removing a delay of several seconds before the outcome is reported.
-* Improved unlock diagnostics. The SDK now captures more detailed information during an unlock (including SDK version and nearby-lock signals) to aid troubleshooting and support.
 
 **Bug Fixes**
 
@@ -533,3 +531,5 @@ Default log level is error.
  let logLevel = LogLevel.debug
  client.setLogLevel(logLevel)
 ```
+
+<br />
