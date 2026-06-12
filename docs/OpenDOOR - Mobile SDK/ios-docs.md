@@ -19,7 +19,7 @@ metadata:
 
 * Redesigned unlock status reporting. The unlock flow now reports fine-grained, real-time status as an unlock progresses, with more specific success and failure outcomes.
 
-        - now the UnlockEventStatus and UnlockFailureReason types have been reshaped to support this. 
+  * now the UnlockEventStatus and UnlockFailureReason types have been reshaped to support this.
 
 * Consumers observing unlock events will need to update their handling. Bounded timeout for sync downloads during unlock. Sync-package downloads performed as part of an unlock are now bounded by a timeout, so a slow or unresponsive network can no longer stall the unlock.
 
@@ -276,16 +276,24 @@ Unlock events from both explicit unlocks and proximity are published through the
     for await unlockEvent in stream {
         // Use unlock event
          switch unlockEvent {
-         case .started:
-           // Unlock process has started
-         case .setupSync:
-					 // The lock is being set up
-         case .success:
-             // Lock is unlocked!
-         case .failed:
-              // Unlock failed
-         case .canceled:
-             // Unlock was canceled
+          /// Unlock process has started.
+          case started
+          /// BLE connection established for setup sync.
+          case connectForSetupSync(attempt: UnlockAttempt)
+          /// Setup sync task completed (success or failure).
+          case setupSync(attempt: UnlockAttempt)
+          /// Sync package fetched from the network in the recovery flow.
+          case updateSyncPackage
+          /// BLE connection established for unlock.
+          case connectForUnlock(attempt: UnlockAttempt)
+          /// Unlocking task (firts attempt or recovery) in progress.
+          case unlock(attempt: UnlockAttempt)
+          /// Unlock failed.
+          case failed(UnlockFailureReason)
+          /// Unlock was canceled (e.g., when starting unlock for another lock).
+          case canceled
+          /// Lock was successfully unlocked.
+          case success
         }
     }
  } catch let error as SDKError {
@@ -304,18 +312,26 @@ Unlock events from both explicit unlocks and proximity are published through the
                 .receive(on: DispatchQueue.main)
                 .sink { unlockEvent in
                     // Use unlock event
-                     switch unlockEvent {
-                     case .started:
-                       // Unlock process has started
-										 case .setupSync:
-					 						// The lock is being set up
-                     case .success:
-                        // Lock is unlocked!
-                     case .failed:
-                        // Unlock failed
-                     case .canceled:
-                        // Unlock was canceled
-                     }
+                    switch unlockEvent {
+                    /// Unlock process has started.
+                    case started
+                    /// BLE connection established for setup sync.
+                    case connectForSetupSync(attempt: UnlockAttempt)
+                    /// Setup sync task completed (success or failure).
+                    case setupSync(attempt: UnlockAttempt)
+                    /// Sync package fetched from the network in the recovery flow.
+                    case updateSyncPackage
+                    /// BLE connection established for unlock.
+                    case connectForUnlock(attempt: UnlockAttempt)
+                    /// Unlocking task (firts attempt or recovery) in progress.
+                    case unlock(attempt: UnlockAttempt)
+                    /// Unlock failed.
+                    case failed(UnlockFailureReason)
+                    /// Unlock was canceled (e.g., when starting unlock for another lock).
+                    case canceled
+                    /// Lock was successfully unlocked.
+                    case success
+                    }
                 }
 
  } catch let error as SDKError {
