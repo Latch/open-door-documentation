@@ -63,7 +63,7 @@ metadata:
 Or you can add the following dependency to your Package.swift:
 
 ```swift iOS
-.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.1.0")
+.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.2.0")
 ```
 
 and add it to your target like this:
