@@ -9,29 +9,22 @@ hidden: false
 metadata:
   robots: index
 ---
-## What's new in SDK 2.1.1
+The Android SDK allows you to initialize and unlock a DOOR-supported lock. This tutorial corresponds with version 2.2 of the SDK.
 
-* **New modern API:** coroutine-first `suspend` functions, Flow listeners, callback listeners, and Activity-based setup for permission and consent UI.
-* **Improved unlock:** explicit and proximity unlocks now share the same unlock event stream, with clearer progress, success, failure, and cancellation events.
-* **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
-* **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt and emits `UnlockEvent.UnlockCanceled`.
-* **Increased proximity unlock range:** proximity unlock now supports a larger BLE trigger range than earlier SDK 2.0 builds while still selecting the closest eligible lock.
-* **Finer-grained log levels**
+## What's new in SDK 2.1
+
+- **New modern API:** coroutine-first `suspend` functions, Flow listeners, callback listeners, and Activity-based setup for permission and consent UI.
+- **Improved unlock:** explicit and proximity unlocks now share the same unlock event stream, with clearer progress, success, failure, and cancellation events.
+- **Setup sync visibility during unlock:** `UnlockEvent.SetupSync` is emitted when the SDK needs to run setup sync before unlocking, such as the first time a user opens a door and the lock needs access data.
+- **Unlock cancellation:** `cancelUnlock()` cancels the active explicit unlock or the current proximity unlock attempt and emits `UnlockEvent.Canceled`.
+- **Increased proximity unlock range:** proximity unlock now supports a larger BLE trigger range than earlier SDK 2.0 builds while still selecting the closest eligible lock.
 
 ## Setup
 
-1. [Declare SDK as a dependency](https://developers.door.com/docs/android-docs#declare-sdk-as-a-dependency)
-2. [Initialize the library](https://developers.door.com/docs/android-docs#initialize-the-library)
-3. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
-4. [Thread Requirements](https://developers.door.com/docs/android-docs#thread-requirements)
-5. [View the locks and select one to unlock](https://developers.door.com/docs/android-docs#view-the-locks-and-select-one-to-unlock)
-6. [Unlock](https://developers.door.com/docs/android-docs#unlock)
-7. [Unlock the closest lock that's available](https://developers.door.com/docs/android-docs#unlock-the-closest-lock-that's-available)
-8. [Sync](https://developers.door.com/docs/android-docs#sync)
-9. [Access Logs](https://developers.door.com/docs/android-docs#access-logs)
-10. [Guest Access](https://developers.door.com/docs/android-docs#guests-access)
-
-<br />
+1. Declare SDK as a dependency
+2. Initialize the library
+3. View the locks and select one to unlock
+4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
 
 ### Declare SDK as a dependency
 
@@ -44,7 +37,7 @@ repositories {
 }
 
 dependencies {
-  implementation('com.door.opendoor.android:2.1.1')
+  implementation('com.door.opendoor.android:2.2')
   //(...)
 }
 ```
@@ -88,33 +81,30 @@ CoroutineScope(Dispatchers.Main).launch {
 ```
 
 The `includeAllLocks` parameter determines whether to show:
-
-* `true`: All locks that user can access (partner and non-partner)
-* `false`: Only partner-managed locks
+- `true`: All locks that user can access (partner and non-partner)
+- `false`: Only partner-managed locks
 
 ### Thread Requirements
 
 The SDK has specific thread requirements for different operations:
 
 **Must be called from the main thread:**
-
-* `unlock()`
-* `cancelUnlock()`
-* `sync()`
-* `startProximityUnlock()`
-* `stopProximityUnlock()`
+- `unlock()`
+- `cancelUnlock()`
+- `sync()`
+- `startProximityUnlock()`
+- `stopProximityUnlock()`
 
 All BLE operations must be called from the main thread.
 
 **Can be called from any thread:**
-
-* `fetchLocks()`
-* `getAccessLogs()`
-* `inviteGuests()`
-* `guests()`
-* `revokeGuestAllAccesses()`
-* `revokeGuestAccess()`
-* `setupWithToken()`
+- `fetchLocks()`
+- `getAccessLogs()`
+- `inviteGuests()`
+- `guests()`
+- `revokeGuestAllAccesses()`
+- `revokeGuestAccess()`
+- `setupWithToken()`
 
 All examples in this tutorial use `Dispatchers.Main`.
 
@@ -122,9 +112,9 @@ All examples in this tutorial use `Dispatchers.Main`.
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`. These methods have different behaviors:
 
-* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
+- **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call.
 
-* **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
+- **`listenForLocks()`**: Returns cached data immediately, then attempts to refresh from the server in the background. The Flow will emit cached locks first, then emit updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives.
 
 **Option 1: Fetch locks once**
 
@@ -197,21 +187,21 @@ val lockId: UUID = lock.uuid
 CoroutineScope(Dispatchers.Main).launch {
     client.listenForUnlockEvents().collect { event ->
         when (event) {
-            is UnlockEvent.UnlockStarted -> {
+            is UnlockEvent.Started -> {
                 // Unlock process has started
             }
             is UnlockEvent.SetupSync -> {
                 // The lock needs setup sync before unlock.
                 // Show setup/sync progress here if this is the user's first unlock for this door.
             }
-            is UnlockEvent.UnlockSuccess -> {
+            is UnlockEvent.Success -> {
                 // Lock is unlocked! event.lockId contains the lock UUID
             }
-            is UnlockEvent.UnlockFailed -> {
+            is UnlockEvent.Failed -> {
                 // Unlock failed - check event.failReason for details
                 // event.lockId contains the lock UUID
             }
-            is UnlockEvent.UnlockCanceled -> {
+            is UnlockEvent.Canceled -> {
                 // Unlock was canceled
             }
         }
@@ -230,7 +220,7 @@ CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
-To cancel an active explicit unlock attempt, call `cancelUnlock()`. Cancellation is reported through `UnlockEvent.UnlockCanceled`. If no unlock is active, `cancelUnlock()` completes without emitting an event.
+To cancel an active explicit unlock attempt, call `cancelUnlock()`. Cancellation is reported through `UnlockEvent.Canceled`. If no unlock is active, `cancelUnlock()` completes without emitting an event.
 
 ```kotlin
 CoroutineScope(Dispatchers.Main).launch {
@@ -253,19 +243,19 @@ import com.door.opendoor.android.core.api.model.UnlockEvent
 client.listenForUnlockEvents(object : UnlockEventsListener {
     override fun onNewEvent(event: UnlockEvent) {
         when (event) {
-            is UnlockEvent.UnlockStarted -> {
+            is UnlockEvent.Started -> {
                 // Unlock process has started
             }
             is UnlockEvent.SetupSync -> {
                 // The lock needs setup sync before unlock.
             }
-            is UnlockEvent.UnlockSuccess -> {
+            is UnlockEvent.Success -> {
                 // Lock is unlocked!
             }
-            is UnlockEvent.UnlockFailed -> {
+            is UnlockEvent.Failed -> {
                 // Unlock failed
             }
-            is UnlockEvent.UnlockCanceled -> {
+            is UnlockEvent.Canceled -> {
                 // Unlock was canceled
             }
         }
@@ -307,16 +297,16 @@ import com.door.opendoor.android.core.api.model.UnlockEvent
 val unlockJob = CoroutineScope(Dispatchers.Main).launch {
     client.listenForUnlockEvents().collect { event ->
         when (event) {
-            is UnlockEvent.UnlockSuccess -> {
+            is UnlockEvent.Success -> {
                 // The unlocked door can be identified with event.lockId
             }
-            is UnlockEvent.UnlockFailed -> {
+            is UnlockEvent.Failed -> {
                 // Handle unlock failure
             }
-            is UnlockEvent.UnlockCanceled -> {
+            is UnlockEvent.Canceled -> {
                 // Handle unlock cancellation
             }
-            is UnlockEvent.UnlockStarted -> {
+            is UnlockEvent.Started -> {
                 // Unlock process started
             }
             is UnlockEvent.SetupSync -> {
@@ -362,16 +352,16 @@ import com.door.opendoor.android.core.api.model.UnlockEvent
 client.listenForUnlockEvents(object : UnlockEventsListener {
     override fun onNewEvent(event: UnlockEvent) {
         when (event) {
-            is UnlockEvent.UnlockSuccess -> {
+            is UnlockEvent.Success -> {
                 // The unlocked door can be identified with event.lockId
             }
-            is UnlockEvent.UnlockFailed -> {
+            is UnlockEvent.Failed -> {
                 // Handle unlock failure
             }
-            is UnlockEvent.UnlockCanceled -> {
+            is UnlockEvent.Canceled -> {
                 // Handle unlock cancellation
             }
-            is UnlockEvent.UnlockStarted -> {
+            is UnlockEvent.Started -> {
                 // Unlock process started
             }
             is UnlockEvent.SetupSync -> {
