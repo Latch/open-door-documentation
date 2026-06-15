@@ -17,7 +17,7 @@ metadata:
 1. [Declare SDK as a dependency](https://developers.door.com/docs/android-docs#declare-sdk-as-a-dependency)
 2. [Initialize the library](https://developers.door.com/docs/android-docs#initialize-the-library)
 3. [Clear SDK state](https://developers.door.com/docs/android-docs#clear-sdk-state)
-4. Code reference: [Browse the latest API docs](https://opendoor-developer-android.netlify.app/)
+4. Code reference: [https://door.github.io/gemini-sdk/android-sdk/index.html](https://door.github.io/gemini-sdk/android-sdk/index.html)
 5. [Thread Requirements](https://developers.door.com/docs/android-docs#thread-requirements)
 6. [View the locks and select one to unlock](https://developers.door.com/docs/android-docs#view-the-locks-and-select-one-to-unlock)
 7. [Unlock](https://developers.door.com/docs/android-docs#unlock)
@@ -652,6 +652,12 @@ CoroutineScope(Dispatchers.Main).launch {
 ## Log Level
 
 Set the SDK log level to control diagnostic output. `LogLevel.ERROR` is appropriate for most release builds. `LogLevel.DEBUG` can be useful while developing or troubleshooting an integration.
+
+```kotlin
+import com.door.opendoor.android.core.api.model.LogLevel
+
+client.setLogLevel(LogLevel.DEBUG)
+```
 
 ```kotlin
 import com.door.opendoor.android.core.api.model.LogLevel
