@@ -24,6 +24,7 @@ metadata:
 **Bug Fixes**
 
 * Fixed proximity (touch-to-unlock) scanning using a stale set of locks; the scan now stays in sync as the user's accessible locks change
+* Fixed a case where one background lock sync could interrupt another, leaving a sync incomplete.
 
 ## What's new in SDK 2.1.0
 
