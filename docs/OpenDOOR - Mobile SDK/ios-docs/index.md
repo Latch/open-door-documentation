@@ -8,7 +8,7 @@ hidden: false
 metadata:
   robots: index
 ---
-## [Release notes](https://developers.door.com/update/docs/ios-release-notes)
+## [Release notes](https://developers.door.com/docs/ios-release-notes)
 
 ## Setup
 
