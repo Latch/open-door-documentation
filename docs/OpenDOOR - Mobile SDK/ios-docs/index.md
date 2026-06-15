@@ -8,13 +8,7 @@ hidden: false
 metadata:
   robots: index
 ---
-<br />
-
-## Release notes
-
-https://developers.door.com/update/docs/release-notes
-
-<br />
+## [Release notes](https://developers.door.com/update/docs/release-notes)
 
 ## Setup
 
