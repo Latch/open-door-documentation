@@ -12,10 +12,10 @@ The OpenDOOR Web SDK allows your web application to retrieve the doors a user ca
 
 This SDK is **data/API-only**. It does **not** render UI for you. Your application is responsible for:
 
-* Authenticating the user
-* Rendering the user experience
-* Passing a valid JWT access token into the SDK
-* Handling token refresh through your backend
+- Authenticating the user
+- Rendering the user experience
+- Passing a valid JWT access token into the SDK
+- Handling token refresh through your backend
 
 **_PLEASE NOTE:_** Partner domains, where the SDK is used, must be registered with our DevOps to whitelist
 
@@ -36,7 +36,7 @@ At a high level:
 7. When the token expires, the frontend asks your backend for a new access token
 
 ```text
-Frontend -> Your Backend -> Latch Auth
+Frontend -> Your Backend -> DOOR Auth
 Frontend -> OpenDOOR Web SDK -> Configured API Base
 ```
 
@@ -191,18 +191,18 @@ app.post('/api/door/refresh-token', async (req, res) => {
 
 Your backend should:
 
-* Send the OTP
-* Verify the OTP
-* Exchange the OTP for an access token
-* Store the refresh token securely
-* Refresh the access token when needed
-* Return only the access token to the browser
+- Send the OTP
+- Verify the OTP
+- Exchange the OTP for an access token
+- Store the refresh token securely
+- Refresh the access token when needed
+- Return only the access token to the browser
 
 Your backend should **not**:
 
-* Expose `client_secret` in browser code
-* Expose `refresh_token` in browser code
-* Assume the SDK performs authentication for you
+- Expose `client_secret` in browser code
+- Expose `refresh_token` in browser code
+- Assume the SDK performs authentication for you
 
 ***
 
@@ -344,12 +344,12 @@ Each lock returned by the SDK has this shape:
 
 Field details:
 
-* `id`: device UUID
-* `name`: device name
-* `buildingId`: building UUID
-* `startTime`: access window start
-* `endTime`: access window end, or `null` if no end date is available
-* `doorCode`: door code PIN, or `null` if no code is available
+- `id`: device UUID
+- `name`: device name
+- `buildingId`: building UUID
+- `startTime`: access window start
+- `endTime`: access window end, or `null` if no end date is available
+- `doorCode`: door code PIN, or `null` if no code is available
 
 ***
 
@@ -471,18 +471,18 @@ A typical web integration looks like this.
 
 ### Backend
 
-* Send OTP
-* Verify OTP
-* Store refresh token securely
-* Refresh access token when needed
-* Return only access tokens to the frontend
+- Send OTP
+- Verify OTP
+- Store refresh token securely
+- Refresh access token when needed
+- Return only access tokens to the frontend
 
 ### Frontend
 
-* Request an access token from your backend
-* Initialize `OpenDOORClient`
-* Call `getLocks()` or `getLock(lockId)`
-* Provide `onTokenExpired` so the SDK can refresh automatically
+- Request an access token from your backend
+- Initialize `OpenDOORClient`
+- Call `getLocks()` or `getLock(lockId)`
+- Provide `onTokenExpired` so the SDK can refresh automatically
 
 ```javascript
 const tokenResponse = await fetch('/api/door/session', {
@@ -519,12 +519,12 @@ const locks = await client.getLocks();
 
 ## Security Notes
 
-* Do not expose `client_secret` in browser code
-* Do not expose `refresh_token` in browser code
-* Store refresh tokens securely on the backend
-* Return only access tokens to the frontend
-* Treat access tokens as user session credentials
-* Use HTTPS in production
+- Do not expose `client_secret` in browser code
+- Do not expose `refresh_token` in browser code
+- Store refresh tokens securely on the backend
+- Return only access tokens to the frontend
+- Treat access tokens as user session credentials
+- Use HTTPS in production
 
 ***
 
@@ -535,12 +535,16 @@ const locks = await client.getLocks();
 Use this prompt to generate a local mock integration that preserves the real browser/backend architecture required by the OpenDOOR Web SDK.
 
 <Callout icon="💡" theme="info">
+  ###
+
   Use this prompt for local prototyping and architecture exploration. Keep the auth and device flows mocked unless you are intentionally replacing the mock backend with your real partner integration.
 
   The second prompts gives a more robust prototype that includes server side code, with an assumption of close approximation, with actual api calls. Of course, as a prototype, you need to make sure it aligns and meets your due diligence.
 </Callout>
 
 <Callout icon="⚠️" theme="danger">
+  ###
+
   Partner ID and Partner Secret must never be exposed in frontend code, mobile binaries, browser-accessible bundles, client-side configuration, or source control — including private repositories. Store them only on backend systems you control, such as a secrets manager or server-side environment variables, and use them only for server-to-server requests.
 </Callout>
 
@@ -767,12 +771,12 @@ Use this prompt to generate a local mock integration that preserves the real bro
 
     Primary Goal
 
-    A production-ready implementation that a partner can clone, add credentials, and run against real Latch APIs immediately.
+    A production-ready implementation that a partner can clone, add credentials, and run against real DOOR APIs immediately.
 
     Constraints
 
     * No mocks. All auth and device flows hit real APIs.
-    * Backend hits real Latch auth endpoints.
+    * Backend hits real DOOR auth endpoints.
     * Frontend uses real @dooraccess/opendoor-web-sdk package.
     * Do not use or teach baseUrl.
     * Comments should be sparse and useful—only where a partner benefits from understanding integration points or error handling rationale.
@@ -795,8 +799,8 @@ Use this prompt to generate a local mock integration that preserves the real bro
     └────────┴─────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘\
     Error Handling Requirements
 
-    * Validate request body before calling Latch APIs.
-    * Handle Latch API errors: parse response, return meaningful error messages.
+    * Validate request body before calling DOOR APIs.
+    * Handle DOOR API errors: parse response, return meaningful error messages.
     * Handle network failures: timeout, DNS, connection refused.
     * Handle rate limiting: surface retry-after if present.
     * Never expose client\_secret or refresh\_token to browser.
@@ -816,7 +820,7 @@ Use this prompt to generate a local mock integration that preserves the real bro
     * Auth flow UI: email input, send OTP, OTP input, verify
     * On successful auth, initialize OpenDOORClient from @dooraccess/opendoor-web-sdk
     * Wire onTokenExpired to call backend /api/auth/refresh-token
-    * Call client.getLocks() to fetch locks from Latch APIs
+    * Call client.getLocks() to fetch locks from DOOR APIs
     * Render locks with filtering: all / active / expired
     * Handle SDK errors by type:
       * AuthError: logout, return to login
@@ -827,7 +831,7 @@ Use this prompt to generate a local mock integration that preserves the real bro
     Functional Requirements
 
     * User enters email, clicks Send OTP
-    * Backend sends OTP via Latch API
+    * Backend sends OTP via DOOR API
     * User enters OTP, clicks Verify
     * Backend exchanges OTP for tokens, returns access token
     * Frontend initializes OpenDOORClient with token
@@ -906,13 +910,13 @@ Use this prompt to generate a local mock integration that preserves the real bro
     README Requirements
 
     * What this project is
-    * Prerequisites: Node 18+, npm, Latch partner credentials
+    * Prerequisites: Node 18+, npm, DOOR partner credentials
     * Setup: how to create .env with required variables
     * Run: commands for backend and frontend
     * Endpoints: table of available API routes
     * Architecture: brief explanation of browser/backend split and why
     * SDK usage: how frontend initializes and uses OpenDOORClient
-    * Getting credentials: "Contact your Latch partner representative" or relevant portal link if known
+    * Getting credentials: "Contact your DOOR partner representative" or relevant portal link if known
 
     Run It
 
@@ -968,3 +972,5 @@ To integrate the OpenDOOR Web SDK successfully:
 3. Initialize the SDK in the browser
 4. Call the Devices methods to retrieve locks and door codes
 5. Implement automatic token refresh through `onTokenExpired`
+
+<br />
