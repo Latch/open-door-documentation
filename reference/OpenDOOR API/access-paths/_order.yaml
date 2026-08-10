@@ -1,0 +1,4 @@
+- addpathsegments
+- removepathsegments
+- getpathstodirectoryitem
+- getdirectdescendants

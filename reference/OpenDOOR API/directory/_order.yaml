@@ -1,0 +1,8 @@
+- addtag
+- removetag
+- updatetag
+- createdirectoryitem
+- getdirectoryitem
+- updatedirectoryitem
+- getuseritemsbytag
+- getsubtree
