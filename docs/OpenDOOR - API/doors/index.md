@@ -5,7 +5,7 @@ excerpt: >-
   elevators) within a building.
 deprecated: false
 hidden: false
-icon: 🚪
+icon: far fa-door-closed
 metadata:
   robots: index
 ---
