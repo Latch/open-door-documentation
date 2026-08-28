@@ -6,6 +6,7 @@ excerpt: >-
   handling and good user experience.
 deprecated: false
 hidden: false
+icon: far fa-magnifying-glass-waveform
 metadata:
   robots: index
 ---
