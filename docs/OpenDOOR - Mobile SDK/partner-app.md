@@ -3,6 +3,7 @@ title: Partner App
 excerpt: Responsible for hosting the DOOR IOS/ADR SDK.
 deprecated: false
 hidden: false
+icon: far fa-mobile-arrow-down
 metadata:
   robots: index
 ---
