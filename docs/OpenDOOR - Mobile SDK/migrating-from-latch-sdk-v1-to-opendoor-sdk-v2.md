@@ -5,6 +5,7 @@ excerpt: >-
   to OpenDOOR SDK v2 on Android and iOS.
 deprecated: false
 hidden: false
+icon: far fa-arrow-up-z-a
 metadata:
   robots: index
 ---
