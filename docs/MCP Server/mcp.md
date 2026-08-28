@@ -1,6 +1,7 @@
 ---
 title: MCP
 hidden: true
+icon: far fa-microchip-ai
 ---
 The OpenDOOR Model Context Protocol (MCP) server enables AI-powered code editors like Cursor and Windsurf, plus general-purpose tools like Claude Desktop, to interact directly with your OpenDOOR API and documentation.
 
