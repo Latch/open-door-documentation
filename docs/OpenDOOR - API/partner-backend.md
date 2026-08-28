@@ -1,10 +1,11 @@
 ---
-title: Partner Backend
+title: ' Partner Backend'
 excerpt: >-
   DOOR will provide Partners with a unique [Aut0
   App](https://auth0.com/docs/get-started/applications)
 deprecated: false
 hidden: false
+icon: far fa-gear-complex-api
 metadata:
   robots: index
 ---
