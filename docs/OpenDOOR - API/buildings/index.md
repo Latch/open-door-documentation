@@ -5,7 +5,7 @@ excerpt: >-
   doors, residents, and access permissions under a single property.
 deprecated: false
 hidden: false
-icon: 🏢
+icon: far fa-buildings
 metadata:
   robots: index
 ---
