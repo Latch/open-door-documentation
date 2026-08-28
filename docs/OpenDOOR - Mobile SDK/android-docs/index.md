@@ -5,6 +5,7 @@ excerpt: >-
   manage guest access. This tutorial corresponds with version 2.2 of the SDK
 deprecated: false
 hidden: false
+icon: fab fa-android
 metadata:
   robots: index
 ---
