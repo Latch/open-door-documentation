@@ -5,7 +5,7 @@ excerpt: >-
   conditions.
 deprecated: false
 hidden: false
-icon: 🔑
+icon: far fa-user-key
 metadata:
   robots: index
 ---
