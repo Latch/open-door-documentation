@@ -3,7 +3,7 @@ title: Users
 excerpt: Users represent individuals who were granted access to doors.
 deprecated: false
 hidden: false
-icon: 🙍‍♂️
+icon: far fa-user-group
 metadata:
   robots: index
 ---
