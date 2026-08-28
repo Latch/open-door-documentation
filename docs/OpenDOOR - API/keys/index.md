@@ -2,7 +2,7 @@
 title: Keys
 deprecated: false
 hidden: true
-icon: far fa-key-skeleton-left-right
+icon: far fa-key
 metadata:
   robots: index
 ---
