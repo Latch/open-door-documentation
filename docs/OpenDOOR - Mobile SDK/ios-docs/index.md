@@ -383,13 +383,79 @@ Retrieve access logs for a lock.
 
  let lockID = lock.id
  do {
-    try await client.getAccessLogs(lockID: lockID)
+    let accessLogs = try await client.getAccessLogs(lockID: lockID)
  } catch let error as SDKError {
     // Handle SDK errors
  } catch let error as NetworkError {
     // Handle network errors
  }
 ```
+
+The list is returned in a single response. There are no paging or date-filter parameters.
+
+### The AccessLog object
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `UUID` | Unique identifier of the log entry |
+| `epochTimeForEntryAttempt` | `Int64` | Time of the event as a Unix timestamp in **seconds** |
+| `method` | `AccessLogMethod` | How the lock/unlock was performed — see [Method values](#method-values) |
+| `result` | `AccessLogResult` | Outcome of the attempt — see [Result values](#result-values) |
+| `fullName` | `String?` | Display name associated with the credential used |
+| `userFirstName` | `String?` | First name of the user, when the credential maps to a known user |
+| `userLastName` | `String?` | Last name of the user |
+| `userNickname` | `String?` | Nickname of the user, when one is set |
+| `guestUUID` | `UUID?` | Identifier of the guest whose credential was used, when the event was guest-initiated |
+| `lockUUID` | `UUID?` | Identifier of the lock the event occurred on |
+| `photoAvailability` | `String?` | Whether an entry photo exists for the event — see [Photo availability](#photo-availability) |
+| `imageFileName` | `String?` | File name of the entry photo, when one was captured |
+| `imageToken` | `String?` | Token associated with the entry photo |
+
+`id`, `epochTimeForEntryAttempt`, `method` and `result` are always present. Every other field can be `nil` on any entry: machine-generated events (scheduled locks, automatic re-locks) carry no identity fields, and failed attempts with no matching credential carry none either. Parse defensively.
+
+### Method values
+
+| Value | Meaning |
+| --- | --- |
+| `.ble` | Unlock over Bluetooth from a mobile app. Explicit unlock and proximity unlock both record this value — access logs do not distinguish them |
+| `.bleLock` | Lock command over Bluetooth |
+| `.nfc` | Unlock with an NFC credential (iOS) |
+| `.androidNFC` | Unlock with an NFC credential (Android) |
+| `.desfire` | Unlock with a DESFire keycard |
+| `.passcode` | Unlock with a door code on the keypad |
+| `.mko` | Unlock with a mechanical key override |
+| `.tapToLock` | Lock triggered by tapping the keypad |
+| `.mechanicalLock` | Manually/mechanically locked |
+| `.scheduledUnlock` | Unlock triggered by a schedule |
+| `.scheduledLock` | Lock triggered by a schedule |
+| `.unknown` | Any method the SDK does not distinguish — includes manual unlocks at the device, inside-handle unlocks, automatic re-locks, diagnostic events, and methods newer than your SDK version |
+
+### Result values
+
+| Value | Meaning |
+| --- | --- |
+| `.success` | Successful unlock |
+| `.guestSuccess` | Successful unlock using a guest credential |
+| `.lockSuccess` | Successful lock — covers manual, Bluetooth, and automatic re-lock variants |
+| `.incorrect` | Invalid credential (e.g. wrong door code) |
+| `.deadboltApplied` | Entry blocked because the deadbolt/privacy mode was engaged |
+| `.outsideQualifiedAccess` | Attempt outside the credential's allowed access window |
+| `.unknownTimeFailure` | Rejected because the device could not verify the current time |
+| `.nfcFailure` | NFC read/authentication failure |
+| `.unknown` | Any outcome the SDK does not distinguish. This includes several lock-side failure states, so treat it as "outcome unavailable" — do not display it as a success or a failure |
+
+### Photo availability
+
+`photoAvailability` indicates whether an entry photo exists for the event. The SDK does not currently provide an API to download entry photos.
+
+| Value | Meaning |
+| --- | --- |
+| `AVAILABLE` | An entry photo was captured |
+| `UNAVAILABLE` | No photo available |
+| `UNAVAILABLE_SETTINGS` | Photo capture disabled by device/property settings |
+| `UNAVAILABLE_USER_DISABLED` | Photo capture disabled by the user |
+| `UNAVAILABLE_LOW_POWER` | Photo skipped because the device battery was low |
+| `UNAVAILABLE_NFC` | Photo not captured for this NFC interaction |
 
 ## Guest Access
 
