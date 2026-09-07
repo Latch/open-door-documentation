@@ -75,7 +75,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-internal": true
       }
     },
     "/passwordless/start": {
