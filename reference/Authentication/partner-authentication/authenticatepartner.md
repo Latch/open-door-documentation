@@ -2,5 +2,7 @@
 api:
   file: api-docs-opendoor-auth.json
   operationId: authenticatePartner
-hidden: false
+hidden: true
+link:
+  new_tab: false
 ---
