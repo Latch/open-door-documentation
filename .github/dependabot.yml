@@ -20,4 +20,4 @@ updates:
     schedule:
       interval: "weekly"
 
-# secops-dependabot-wake: 2026-09-13
+# secops-dependabot-wake: 2026-09-14
