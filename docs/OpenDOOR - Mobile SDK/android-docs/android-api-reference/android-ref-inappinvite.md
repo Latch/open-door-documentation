@@ -10,7 +10,7 @@ OpenDOOR Android SDK **2.1.1** (2.1 series).
 
 Invite type for in-app access with time-based restrictions.
 
-- **`accessType`** — The type of access granted (Enter or Reach). Only used for Blueprint invites, null for Legacy invites.
+- **`accessType`** — The type of access granted (Enter or Reach). Can be null.
 - **`startTime`** — Start time of the requested access.
 - **`endTime`** — End time of the requested access (nullable). If not set, access will be permanent until revoked.
 - **`showDoorcodes`** — Whether to show doorcodes to the guest.
