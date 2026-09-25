@@ -16,7 +16,7 @@ User-visible lock information
 - **`startTime`** — Start of access window
 - **`endTime`** — End of access window (nullable)
 - **`doorCode`** — Door access code if available
-- **`propertyName`** — Property name. For Blueprint locks, this is the space name. For legacy locks, this is the lock name (same as `name`).
+- **`propertyName`** — Property name. For some locks this is the same as `name`.
 - **`isShareable`** — Indicates if this lock can be shared with guests.
 
 ## Declaration
