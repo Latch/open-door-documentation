@@ -18,7 +18,7 @@ metadata:
 1. [Declare SDK as a dependency](https://developers.door.com/docs/android-docs#declare-sdk-as-a-dependency)
 2. [Initialize the library](https://developers.door.com/docs/android-docs#initialize-the-library)
 3. [Clear SDK state](https://developers.door.com/docs/android-docs#clear-sdk-state)
-4. Code reference: [https://door.github.io/gemini-sdk/android-sdk/index.html](https://door.github.io/gemini-sdk/android-sdk/index.html)
+4. Code reference: [Android API Reference](doc:android-api-reference)
 5. [Thread Requirements](https://developers.door.com/docs/android-docs#thread-requirements)
 6. [View the locks and select one to unlock](https://developers.door.com/docs/android-docs#view-the-locks-and-select-one-to-unlock)
 7. [Unlock](https://developers.door.com/docs/android-docs#unlock)
