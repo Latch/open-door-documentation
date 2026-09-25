@@ -10,7 +10,7 @@ OpenDOOR Android SDK **2.1.1** (2.1 series).
 
 Invite type for temporary doorcode access.
 
-- **`accessType`** — The type of access granted (Enter or Reach). Only used for Blueprint invites, null for Legacy invites.
+- **`accessType`** — The type of access granted (Enter or Reach). Can be null.
 - **`duration`** — Duration of the temporary access (Limit15Minutes or FullDay).
 - **`period`** — Period when the access is valid (Today or Tomorrow).
 
