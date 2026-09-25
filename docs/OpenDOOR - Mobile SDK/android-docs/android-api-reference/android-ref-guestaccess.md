@@ -10,7 +10,7 @@ OpenDOOR Android SDK **2.2** (2.2 release).
 
 Access granted to a guest on a specific lock
 
-- **`invitationId`** — Invitation ID (non-null only for BP buildings - roleAssignmentId)
+- **`invitationId`** — Invitation ID. Can be null.
 - **`lockId`** — Target lock ID
 - **`lockName`** — Lock name resolved from locks list
 - **`inviteType`** — Invite type for this access
