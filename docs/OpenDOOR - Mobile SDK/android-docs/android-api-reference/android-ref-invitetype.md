@@ -10,7 +10,7 @@ OpenDOOR Android SDK **2.1.1** (2.1 series).
 
 Sealed interface for invite types that define how a guest will receive access.
 
-- **`accessType`** — The type of access granted (Enter or Reach). Only used for Blueprint invites, null for Legacy invites.
+- **`accessType`** — The type of access granted (Enter or Reach). Can be null.
 
 ## Declaration
 
