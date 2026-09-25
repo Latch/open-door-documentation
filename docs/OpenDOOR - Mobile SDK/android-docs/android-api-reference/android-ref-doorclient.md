@@ -295,15 +295,9 @@ Makes an API call to fetch the access logs for the given lock.
 
 ## inviteGuest(firstName, lastName, email, phone, lockIds, inviteType)
 
-Shares access to specified locks (and the entire access path if lock is part of a BP building) with a guest using the provided settings.
+Shares access to the specified locks with a guest using the provided settings.
 
-This unified method automatically routes to the appropriate API based on lock type:
-- For legacy locks: uses the legacy guest invite API
-- For Blueprint locks: assigns guest role for the underlying directory item
-
-Note: For Blueprint invites, the firstName parameter should contain the user UUID.
-
-- **`firstName`** — first name of the guest (or user UUID for Blueprint invites).
+- **`firstName`** — first name of the guest.
 - **`lastName`** — last name of the guest.
 - **`email`** — email of the guest (nullable). Required for permanent invites.
 - **`phone`** — phone number of the guest (nullable). At least one of email or phone must be provided for legacy invites.
