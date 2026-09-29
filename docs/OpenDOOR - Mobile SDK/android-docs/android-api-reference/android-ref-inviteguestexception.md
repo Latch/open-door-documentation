@@ -1,14 +1,14 @@
 ---
 title: InviteGuestException
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Exception thrown when inviting a guest fails due to a known business rule.
+Guest invitation business-rule failure.
 
 ## Declaration
 
@@ -25,7 +25,22 @@ class InviteGuestException(
         INVALID_PHONE("Invalid phone number format"),
         INVALID_START_TIME("Invalid start time provided"),
         END_TIME_NOT_SUPPORTED("End time is not supported for this invite type"),
-        USER_CAN_NOT_SHARE("User does not have permission to share access"),
+        USER_CAN_NOT_SHARE(
+            "User does not have permission to share access. " +
+                "Make sure the access was granted by the partner and is shareable.",
+        ),
+        SHAREABLE_ACCESS_REQUIRED(
+            "No active shareable access to this lock. " +
+                "Make sure the user's access is active and shareable.",
+        ),
+        SHARING_NOT_ENABLED(
+            "Sharing is not enabled for this access. " +
+                "Ask the partner to grant the access with sharing enabled.",
+        ),
+        REQUESTED_TIME_OUTSIDE_SHAREABLE_ACCESS(
+            "The requested guest time range is outside the user's shareable access window. " +
+                "Choose a time range the user's access covers.",
+        ),
     }
 }
 ```

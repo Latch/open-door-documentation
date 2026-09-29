@@ -1,21 +1,21 @@
 ---
 title: SDKException
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Base exception for SDK failures
+General SDK access failure.
 
 ## Declaration
 
 ```kotlin
 sealed class SDKException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
 
-    class SDKNotInitializedException(message: String, throwable: Throwable? = null) : SDKException(message, throwable)
+    class SDKNotInitializedException(message: String = "The SDK has not been initialized with setupWithToken", throwable: Throwable? = null) : SDKException(message, throwable)
 
     class InternalException(message: String, throwable: Throwable? = null) : SDKException(message, throwable)
 }

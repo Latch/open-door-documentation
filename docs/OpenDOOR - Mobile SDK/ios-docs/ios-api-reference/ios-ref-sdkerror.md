@@ -1,12 +1,12 @@
 ---
 title: SDKError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-SDK access error
+General SDK access failure.
 
 ## Declaration
 
@@ -37,7 +37,7 @@ Inherited from `CustomStringConvertible.description`.
 case sdkInternalError(String)
 ```
 
-An internal error occurred
+An internal SDK error occurred.
 
 ## SDKError.sdkNotInitialized
 
@@ -45,7 +45,7 @@ An internal error occurred
 case sdkNotInitialized
 ```
 
-The SDK has not been initialized with setupWithToken
+The SDK has not been initialized with setupWithToken.
 
 ## Related types
 

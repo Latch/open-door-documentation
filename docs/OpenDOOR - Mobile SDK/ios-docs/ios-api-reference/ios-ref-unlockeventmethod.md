@@ -1,12 +1,12 @@
 ---
 title: UnlockEventMethod
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Method used for unlock
+Method used for unlock.
 
 ## Declaration
 

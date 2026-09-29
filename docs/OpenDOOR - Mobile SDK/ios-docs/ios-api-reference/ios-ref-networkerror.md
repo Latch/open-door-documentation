@@ -1,12 +1,12 @@
 ---
 title: NetworkError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Network access error
+Network access failure.
 
 ## Declaration
 
@@ -38,7 +38,7 @@ Inherited from `CustomStringConvertible.description`.
 case internalNetworkError(String)
 ```
 
-Internal network error (404, parsing errors, etc)
+Internal network error.
 
 ## NetworkError.invalidToken
 
@@ -46,7 +46,7 @@ Internal network error (404, parsing errors, etc)
 case invalidToken
 ```
 
-The supplied authorization token is invalid and should be refreshed.
+The supplied token is invalid or expired.
 
 ## NetworkError.payloadError(_:)
 
@@ -54,7 +54,7 @@ The supplied authorization token is invalid and should be refreshed.
 case payloadError(String)
 ```
 
-Network error with message from backend
+Backend payload error.
 
 ## Related types
 

@@ -2,7 +2,7 @@
 title: Android SDK
 excerpt: >-
   The SDK provides APIs to view, unlock and sync DOOR-supported locks and to
-  manage guest access. This tutorial corresponds with version 2.2 of the SDK
+  manage guest access. This tutorial corresponds with version 2.3 of the SDK
 deprecated: false
 hidden: false
 icon: fab fa-android
@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.door:opendoor.android:2.2")
+    implementation("com.door:opendoor.android:2.3")
 }
 ```
 
@@ -198,10 +198,6 @@ val locksListener = object : LocksListener {
     override fun onUpdate(locks: List<Lock>) {
         // Use locks list
     }
-
-    override fun onError(error: Throwable) {
-        // Handle listener error
-    }
 }
 
 client.listenForLocks(locksListener)
@@ -219,7 +215,7 @@ To unlock a lock, call `unlock()` and listen for unlock events to track progress
 **Important:** `unlock()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
-import com.door.opendoor.android.core.api.model.UnlockStatus
+import com.door.opendoor.android.core.api.model.UnlockEventStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -229,24 +225,24 @@ import kotlinx.coroutines.launch
 val unlockEventsJob = CoroutineScope(Dispatchers.Main).launch {
     client.listenForUnlockEvents().collect { event ->
         when (val status = event.status) {
-            UnlockStatus.Started -> {
+            UnlockEventStatus.Started -> {
                 // Unlock process has started.
             }
-            UnlockStatus.Success -> {
+            UnlockEventStatus.Success -> {
                 val unlockedLock = event.lock
                 // Lock is unlocked.
             }
-            is UnlockStatus.Failed -> {
+            is UnlockEventStatus.Failed -> {
                 handleUnlockFailure(status.reason)
             }
-            UnlockStatus.Canceled -> {
+            UnlockEventStatus.Canceled -> {
                 // Unlock was canceled.
             }
-            is UnlockStatus.ConnectForSetupSync,
-            is UnlockStatus.SetupSync,
-            UnlockStatus.UpdateSyncPackage,
-            is UnlockStatus.ConnectForUnlock,
-            is UnlockStatus.Unlock -> {
+            is UnlockEventStatus.ConnectForSetupSync,
+            is UnlockEventStatus.SetupSync,
+            UnlockEventStatus.UpdateSyncPackage,
+            is UnlockEventStatus.ConnectForUnlock,
+            is UnlockEventStatus.Unlock -> {
                 // Optional progress status. Retry phases expose attempt.
             }
         }
@@ -254,7 +250,7 @@ val unlockEventsJob = CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
-`UnlockStatus.Failed` carries an `UnlockFailureReason`:
+`UnlockEventStatus.Failed` carries an `UnlockFailureReason`:
 
 ```kotlin
 import com.door.opendoor.android.core.api.model.UnlockFailureReason
@@ -273,11 +269,11 @@ fun handleUnlockFailure(reason: UnlockFailureReason) {
         UnlockFailureReason.ConnectionFailed -> {
             // BLE connection to the lock failed.
         }
-        UnlockFailureReason.AuthFailed -> {
-            // Credentials were rejected or could not be refreshed.
+        is UnlockFailureReason.AuthFailed -> {
+            // Credentials were rejected or could not be refreshed. reason.error has the cause.
         }
         is UnlockFailureReason.Internal -> {
-            // Handle any other SDK failure. reason.code is stable for diagnostics.
+            // Handle any other SDK failure. reason.error.code is stable for diagnostics.
         }
     }
 }
@@ -288,6 +284,7 @@ Then initiate the unlock:
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.BluetoothException
 import com.door.opendoor.android.core.api.exceptions.SDKException
+import com.door.opendoor.android.core.api.exceptions.UnlockException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -300,11 +297,13 @@ CoroutineScope(Dispatchers.Main).launch {
         // Handle SDK errors
     } catch (e: BluetoothException) {
         // Handle Bluetooth errors
+    } catch (e: UnlockException.LockNotFoundException) {
+        // The lock wasn't found before the unlock started
     }
 }
 ```
 
-To cancel an active explicit unlock attempt, call `cancelUnlock()`. Cancellation is reported through `UnlockStatus.Canceled`. If no unlock is active, `cancelUnlock()` completes without emitting an event.
+To cancel an active explicit unlock attempt, call `cancelUnlock()`. Cancellation is reported through `UnlockEventStatus.Canceled`. If no unlock is active, `cancelUnlock()` completes without emitting an event.
 
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.SDKException
@@ -326,18 +325,18 @@ CoroutineScope(Dispatchers.Main).launch {
 ```kotlin
 import com.door.opendoor.android.core.api.listeners.UnlockEventsListener
 import com.door.opendoor.android.core.api.model.UnlockEvent
-import com.door.opendoor.android.core.api.model.UnlockStatus
+import com.door.opendoor.android.core.api.model.UnlockEventStatus
 
 val unlockEventsListener = object : UnlockEventsListener {
     override fun onNewEvent(event: UnlockEvent) {
         when (event.status) {
-            UnlockStatus.Success -> {
+            UnlockEventStatus.Success -> {
                 // Lock is unlocked.
             }
-            is UnlockStatus.Failed -> {
+            is UnlockEventStatus.Failed -> {
                 // Unlock failed. Check event.status.reason.
             }
-            UnlockStatus.Canceled -> {
+            UnlockEventStatus.Canceled -> {
                 // Unlock was canceled.
             }
             else -> {
@@ -368,7 +367,7 @@ First, set up an unlock event listener. Then start proximity unlock, and stop it
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.BluetoothException
 import com.door.opendoor.android.core.api.exceptions.SDKException
-import com.door.opendoor.android.core.api.model.UnlockStatus
+import com.door.opendoor.android.core.api.model.UnlockEventStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -377,14 +376,14 @@ import kotlinx.coroutines.launch
 val proximityEventsJob = CoroutineScope(Dispatchers.Main).launch {
     client.listenForUnlockEvents().collect { event ->
         when (event.status) {
-            UnlockStatus.Success -> {
+            UnlockEventStatus.Success -> {
                 val unlockedLock = event.lock
                 // The closest eligible lock was unlocked.
             }
-            is UnlockStatus.Failed -> {
+            is UnlockEventStatus.Failed -> {
                 // Handle unlock failure.
             }
-            UnlockStatus.Canceled -> {
+            UnlockEventStatus.Canceled -> {
                 // Handle unlock cancellation.
             }
             else -> {
@@ -501,10 +500,8 @@ CoroutineScope(Dispatchers.Main).launch {
             phone = null,
             lockIds = listOf(lock.id),
             inviteType = InAppInvite(
-                accessType = null,
                 startTime = Instant.now(),
-                endTime = null,
-                showDoorcodes = true
+                endTime = null
             )
         )
         // Guest invitation successful.
@@ -523,7 +520,7 @@ CoroutineScope(Dispatchers.Main).launch {
 ```kotlin
 import com.door.opendoor.android.core.api.model.Duration as DoorcodeDuration
 import com.door.opendoor.android.core.api.model.Period
-import com.door.opendoor.android.core.api.model.TempDoorcodeInvite
+import com.door.opendoor.android.core.api.model.TemporaryDoorcodeInvite
 
 CoroutineScope(Dispatchers.Main).launch {
     try {
@@ -533,8 +530,7 @@ CoroutineScope(Dispatchers.Main).launch {
             email = "john@example.com",
             phone = null,
             lockIds = listOf(lock.id),
-            inviteType = TempDoorcodeInvite(
-                accessType = null,
+            inviteType = TemporaryDoorcodeInvite(
                 duration = DoorcodeDuration.FullDay,
                 period = Period.Today
             )
@@ -598,15 +594,10 @@ CoroutineScope(Dispatchers.Main).launch {
         )
 
         val refreshedGuests = client.guests()
+    } catch (e: RevokeGuestException.PasscodeTypeCantBeRevokedException) {
+        // The passcode type cannot be revoked for this guest access.
     } catch (e: RevokeGuestException) {
-        when (e.reason) {
-            RevokeGuestException.Reason.PASSCODE_TYPE_CANT_BE_REVOKED -> {
-                // The passcode type cannot be revoked for this guest access.
-            }
-            else -> {
-                // Handle other revoke failures.
-            }
-        }
+        // Handle other revoke failures.
     } catch (e: SDKException) {
         // Handle SDK errors.
     } catch (e: NetworkException) {
@@ -633,15 +624,10 @@ CoroutineScope(Dispatchers.Main).launch {
         client.revokeGuestAllAccesses(guestId)
 
         val refreshedGuests = client.guests()
+    } catch (e: RevokeGuestException.PasscodeTypeCantBeRevokedException) {
+        // The passcode type cannot be revoked for one or more guest accesses.
     } catch (e: RevokeGuestException) {
-        when (e.reason) {
-            RevokeGuestException.Reason.PASSCODE_TYPE_CANT_BE_REVOKED -> {
-                // The passcode type cannot be revoked for one or more guest accesses.
-            }
-            else -> {
-                // Handle other revoke failures.
-            }
-        }
+        // Handle other revoke failures.
     } catch (e: SDKException) {
         // Handle SDK errors.
     } catch (e: NetworkException) {
@@ -694,15 +680,10 @@ CoroutineScope(Dispatchers.Main).launch {
 
         // Optionally refresh guests after revoke
         val refreshedGuests = client.guests()
+    } catch (e: RevokeGuestException.PasscodeTypeCantBeRevokedException) {
+        // The passcode type can't be revoked for one or more guest accesses
     } catch (e: RevokeGuestException) {
-        when (e.reason) {
-            RevokeGuestException.Reason.PASSCODE_TYPE_CANT_BE_REVOKED -> {
-                // The passcode type can't be revoked for one or more guest accesses
-            }
-            else -> {
-                // Handle other revoke failures
-            }
-        }
+        // Handle other revoke failures
     } catch (e: SDKException) {
         // Handle SDK errors
     } catch (e: NetworkException) {

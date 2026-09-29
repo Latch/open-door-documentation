@@ -1,24 +1,22 @@
 ---
-title: TempDoorcodeInvite
-excerpt: OpenDOOR Android SDK 2.2 API reference
+title: TemporaryDoorcodeInvite
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Invite type for temporary doorcode access.
+Temporary doorcode access.
 
-- **`accessType`** — The type of access granted (Enter or Reach). Can be null.
 - **`duration`** — Duration of the temporary access (Limit15Minutes or FullDay).
 - **`period`** — Period when the access is valid (Today or Tomorrow).
 
 ## Declaration
 
 ```kotlin
-data class TempDoorcodeInvite(
-    override val accessType: AccessType?,
+data class TemporaryDoorcodeInvite(
     val duration: Duration,
     val period: Period,
 ) : InviteType
@@ -26,7 +24,6 @@ data class TempDoorcodeInvite(
 
 ## Related types
 
-- [AccessType](doc:android-ref-accesstype)
 - [Duration](doc:android-ref-duration)
 - [InviteType](doc:android-ref-invitetype)
 - [Period](doc:android-ref-period)

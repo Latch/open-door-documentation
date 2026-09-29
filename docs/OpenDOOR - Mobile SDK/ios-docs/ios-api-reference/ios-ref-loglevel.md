@@ -1,29 +1,27 @@
 ---
 title: LogLevel
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-
+Minimum SDK logging level.
 
 ## Declaration
 
 ```swift
-public enum LogLevel {
+public enum LogLevel : Equatable {
   case debug
-  case error
   case info
   case warning
+  case error
   public static func == (a: LogLevel, b: LogLevel) -> Bool
   public func hash(into hasher: inout Hasher)
   public var hashValue: Int {
     get
   }
 }
-
-extension LogLevel : Equatable {}
 
 extension LogLevel : Hashable {}
 ```

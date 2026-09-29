@@ -1,42 +1,30 @@
 ---
 title: TemporaryDoorcodeInvite
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Invite type for temporary doorcode invite type.
+Temporary doorcode access.
 
 ## Declaration
 
 ```swift
-public struct TemporaryDoorcodeInvite : InviteType {
-  public var accessType: AccessType?
-  public var duration: Duration
-  public var period: Period
-  public init(accessType: AccessType?, duration: Duration, period: Period)
-}
-
-extension TemporaryDoorcodeInvite : Equatable {
+public struct TemporaryDoorcodeInvite : InviteType, Equatable {
+  public let duration: Duration
+  public let period: Period
+  public init(duration: Duration, period: Period)
   public static func == (a: TemporaryDoorcodeInvite, b: TemporaryDoorcodeInvite) -> Bool
 }
 ```
 
-## accessType
+## init(duration:period:)
 
 ```swift
-var accessType: AccessType?
-```
-
-Inherited from `InviteType.accessType`.
-
-## init(accessType:duration:period:)
-
-```swift
-init(accessType: AccessType?, duration: Duration, period: Period)
+init(duration: Duration, period: Period)
 ```
 
 ## Related types
 
-[AccessType](doc:ios-ref-accesstype) · [Duration](doc:ios-ref-duration) · [InviteType](doc:ios-ref-invitetype) · [Period](doc:ios-ref-period)
+[Duration](doc:ios-ref-duration) · [InviteType](doc:ios-ref-invitetype) · [Period](doc:ios-ref-period)

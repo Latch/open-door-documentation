@@ -1,7 +1,6 @@
 - ios-ref-accesslog
 - ios-ref-accesslogmethod
 - ios-ref-accesslogresult
-- ios-ref-accesstype
 - ios-ref-bluetootherror
 - ios-ref-doorclient
 - ios-ref-duration
@@ -31,4 +30,6 @@
 - ios-ref-unlockeventmethod
 - ios-ref-unlockeventslistener
 - ios-ref-unlockeventstatus
+- ios-ref-unlockfailurecode
+- ios-ref-unlockfailureerror
 - ios-ref-unlockfailurereason

@@ -1,37 +1,35 @@
 ---
 title: AccessLogMethod
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Method used during the access attempt
+Method used during an access attempt.
 
 ## Declaration
 
 ```swift
-public enum AccessLogMethod {
-  case mko
-  case ble
-  case passcode
+public enum AccessLogMethod : Equatable {
+  case unknown
   case nfc
-  case androidNFC
+  case passcode
+  case ble
+  case mko
   case desfire
   case scheduledLock
   case scheduledUnlock
-  case mechanical
+  case mechanicalLock
   case tapToLock
   case bleLock
-  case unknown
+  case androidNFC
   public static func == (a: AccessLogMethod, b: AccessLogMethod) -> Bool
   public func hash(into hasher: inout Hasher)
   public var hashValue: Int {
     get
   }
 }
-
-extension AccessLogMethod : Equatable {}
 
 extension AccessLogMethod : Hashable {}
 ```
@@ -68,10 +66,10 @@ case desfire
 
 Keycard unlock
 
-## AccessLogMethod.mechanical
+## AccessLogMethod.mechanicalLock
 
 ```swift
-case mechanical
+case mechanicalLock
 ```
 
 Physical key

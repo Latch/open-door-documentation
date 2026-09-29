@@ -1,14 +1,14 @@
 ---
 title: iOS API Reference
-excerpt: Public OpenDOOR iOS SDK 2.2.0 API reference.
+excerpt: Public OpenDOOR iOS SDK 2.3.0 API reference.
 hidden: false
 ---
 
-This reference describes the public API of **OpenDOOR iOS SDK 2.2.0**, imported as `OpenDOORCore`.
+This reference describes the public API of **OpenDOOR iOS SDK 2.3.0**, imported as `OpenDOORCore`.
 
 Start with [OpenDOOR](doc:ios-ref-opendoor) to obtain a [DOORClient](doc:ios-ref-doorclient), then authenticate with `setupWithToken(token:includeAllLocks:)`.
 
-The declarations below match the [2.2.0 release](https://github.com/Latch/opendoor-sdk-spm/tree/2.2.0). Use the [iOS SDK guide](doc:ios-docs) for installation and integration examples.
+The declarations below match the [2.3.0 release](https://github.com/Latch/opendoor-sdk-spm/tree/2.3.0). Use the [iOS SDK guide](doc:ios-docs) for installation and integration examples.
 
 ## Types
 
@@ -17,7 +17,6 @@ The declarations below match the [2.2.0 release](https://github.com/Latch/opendo
 | [AccessLog](doc:ios-ref-accesslog) | struct |
 | [AccessLogMethod](doc:ios-ref-accesslogmethod) | enum |
 | [AccessLogResult](doc:ios-ref-accesslogresult) | enum |
-| [AccessType](doc:ios-ref-accesstype) | enum |
 | [BluetoothError](doc:ios-ref-bluetootherror) | enum |
 | [DOORClient](doc:ios-ref-doorclient) | protocol |
 | [Duration](doc:ios-ref-duration) | enum |
@@ -47,4 +46,6 @@ The declarations below match the [2.2.0 release](https://github.com/Latch/opendo
 | [UnlockEventMethod](doc:ios-ref-unlockeventmethod) | enum |
 | [UnlockEventsListener](doc:ios-ref-unlockeventslistener) | protocol |
 | [UnlockEventStatus](doc:ios-ref-unlockeventstatus) | enum |
+| [UnlockFailureCode](doc:ios-ref-unlockfailurecode) | enum |
+| [UnlockFailureError](doc:ios-ref-unlockfailureerror) | struct |
 | [UnlockFailureReason](doc:ios-ref-unlockfailurereason) | enum |

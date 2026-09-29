@@ -1,40 +1,40 @@
 ---
 title: UnlockFailureReason
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Reasons why an unlock can fail.
+Canonical reason an in-flight unlock failed.
 
 ## Declaration
 
 ```swift
-public enum UnlockFailureReason : Error, Equatable {
+public enum UnlockFailureReason : Equatable, CustomStringConvertible {
   case bluetoothDisabled
   case outOfSchedule
   case lockNotFound
   case connectionFailed
-  case authFailed
-  case `internal`(String)
+  case authFailed(UnlockFailureError)
+  case `internal`(UnlockFailureError)
   public static func == (a: UnlockFailureReason, b: UnlockFailureReason) -> Bool
 }
 
-extension UnlockFailureReason : CustomStringConvertible {
+extension UnlockFailureReason {
   public var description: String {
     get
   }
 }
 ```
 
-## UnlockFailureReason.authFailed
+## UnlockFailureReason.authFailed(_:)
 
 ```swift
-case authFailed
+case authFailed(UnlockFailureError)
 ```
 
-Recovery sync or download failure.
+The lock rejected the credential, or recovery sync failed. The payload carries the cause.
 
 ## UnlockFailureReason.bluetoothDisabled
 
@@ -42,7 +42,7 @@ Recovery sync or download failure.
 case bluetoothDisabled
 ```
 
-Bluetooth is off OR Bluetooth permission denied.
+Bluetooth is turned off on the device.
 
 ## UnlockFailureReason.connectionFailed
 
@@ -50,7 +50,7 @@ Bluetooth is off OR Bluetooth permission denied.
 case connectionFailed
 ```
 
-BLE connection failed OR timed out.
+The lock was discovered but a connection could not be established.
 
 ## description
 
@@ -63,10 +63,10 @@ Inherited from `CustomStringConvertible.description`.
 ## UnlockFailureReason.internal(_:)
 
 ```swift
-case `internal`(String)
+case `internal`(UnlockFailureError)
 ```
 
-Any other failure — message is a human-readable description.
+A failure with no more specific reason. The payload carries the cause.
 
 ## UnlockFailureReason.lockNotFound
 
@@ -74,7 +74,7 @@ Any other failure — message is a human-readable description.
 case lockNotFound
 ```
 
-BLE scan found no peripheral.
+No lock matching the requested identifier was discovered.
 
 ## UnlockFailureReason.outOfSchedule
 
@@ -82,4 +82,8 @@ BLE scan found no peripheral.
 case outOfSchedule
 ```
 
-Access attempted outside of door access schedule.
+Access was attempted outside the access schedule for the lock.
+
+## Related types
+
+[UnlockFailureError](doc:ios-ref-unlockfailureerror)

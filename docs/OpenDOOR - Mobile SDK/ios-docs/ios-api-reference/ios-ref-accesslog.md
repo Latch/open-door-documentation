@@ -1,30 +1,30 @@
 ---
 title: AccessLog
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Record of an access attempt on a lock
+Record of an access attempt on a lock.
 
 ## Declaration
 
 ```swift
 public struct AccessLog : Equatable {
-  public var id: UUID
-  public var epochTimeForEntryAttempt: Int64
-  public var imageFileName: String?
-  public var imageToken: String?
-  public var guestUUID: UUID?
-  public var fullName: String?
-  public var method: AccessLogMethod
-  public var result: AccessLogResult
-  public var lockUUID: UUID?
-  public var photoAvailability: String?
-  public var userFirstName: String?
-  public var userLastName: String?
-  public var userNickname: String?
+  public let id: UUID
+  public let epochTimeForEntryAttempt: Int64
+  public let imageFileName: String?
+  public let imageToken: String?
+  public let guestUUID: UUID?
+  public let fullName: String?
+  public let method: AccessLogMethod
+  public let result: AccessLogResult
+  public let lockUUID: UUID?
+  public let photoAvailability: String?
+  public let userFirstName: String?
+  public let userLastName: String?
+  public let userNickname: String?
   public init(id: UUID, epochTimeForEntryAttempt: Int64, imageFileName: String?, imageToken: String?, guestUUID: UUID?, fullName: String?, method: AccessLogMethod, result: AccessLogResult, lockUUID: UUID?, photoAvailability: String?, userFirstName: String?, userLastName: String?, userNickname: String?)
   public static func == (a: AccessLog, b: AccessLog) -> Bool
 }
@@ -33,15 +33,15 @@ public struct AccessLog : Equatable {
 ## epochTimeForEntryAttempt
 
 ```swift
-var epochTimeForEntryAttempt: Int64
+let epochTimeForEntryAttempt: Int64
 ```
 
-Timestamp recorded for the entry attempt.
+Attempt timestamp in epoch milliseconds.
 
 ## fullName
 
 ```swift
-var fullName: String?
+let fullName: String?
 ```
 
 Full name of the person who attempted access
@@ -49,7 +49,7 @@ Full name of the person who attempted access
 ## guestUUID
 
 ```swift
-var guestUUID: UUID?
+let guestUUID: UUID?
 ```
 
 [Guest](doc:ios-ref-guest) UUID if applicable
@@ -57,15 +57,15 @@ var guestUUID: UUID?
 ## id
 
 ```swift
-var id: UUID
+let id: UUID
 ```
 
-Unique log identifier
+Unique log identifier.
 
 ## imageFileName
 
 ```swift
-var imageFileName: String?
+let imageFileName: String?
 ```
 
 Image file name if available
@@ -73,7 +73,7 @@ Image file name if available
 ## imageToken
 
 ```swift
-var imageToken: String?
+let imageToken: String?
 ```
 
 Image token if available
@@ -87,7 +87,7 @@ init(id: UUID, epochTimeForEntryAttempt: Int64, imageFileName: String?, imageTok
 ## lockUUID
 
 ```swift
-var lockUUID: UUID?
+let lockUUID: UUID?
 ```
 
 [Lock](doc:ios-ref-lock) UUID for the access attempt
@@ -95,7 +95,7 @@ var lockUUID: UUID?
 ## method
 
 ```swift
-var method: AccessLogMethod
+let method: AccessLogMethod
 ```
 
 Method used to attempt entry
@@ -103,7 +103,7 @@ Method used to attempt entry
 ## photoAvailability
 
 ```swift
-var photoAvailability: String?
+let photoAvailability: String?
 ```
 
 Photo availability status
@@ -111,7 +111,7 @@ Photo availability status
 ## result
 
 ```swift
-var result: AccessLogResult
+let result: AccessLogResult
 ```
 
 Outcome of the attempt
@@ -119,7 +119,7 @@ Outcome of the attempt
 ## userFirstName
 
 ```swift
-var userFirstName: String?
+let userFirstName: String?
 ```
 
 First name of the user
@@ -127,7 +127,7 @@ First name of the user
 ## userLastName
 
 ```swift
-var userLastName: String?
+let userLastName: String?
 ```
 
 Last name of the user
@@ -135,7 +135,7 @@ Last name of the user
 ## userNickname
 
 ```swift
-var userNickname: String?
+let userNickname: String?
 ```
 
 Nickname of the user

@@ -1,35 +1,35 @@
 ---
 title: UnlockEvent
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Events emitted while performing an unlock operation.
+Event emitted during explicit and proximity unlock operations.
 
 ## Declaration
 
 ```swift
 public struct UnlockEvent : Equatable {
-  public var lock: Lock?
-  public var status: UnlockEventStatus
-  public var method: UnlockEventMethod
-  public init(lock: Lock?, status: UnlockEventStatus, method: UnlockEventMethod)
+  public let lock: Lock?
+  public let method: UnlockEventMethod
+  public let status: UnlockEventStatus
+  public init(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)
   public static func == (a: UnlockEvent, b: UnlockEvent) -> Bool
 }
 ```
 
-## init(lock:status:method:)
+## init(lock:method:status:)
 
 ```swift
-init(lock: Lock?, status: UnlockEventStatus, method: UnlockEventMethod)
+init(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)
 ```
 
 ## lock
 
 ```swift
-var lock: Lock?
+let lock: Lock?
 ```
 
 [Lock](doc:ios-ref-lock) being unlocked
@@ -37,7 +37,7 @@ var lock: Lock?
 ## method
 
 ```swift
-var method: UnlockEventMethod
+let method: UnlockEventMethod
 ```
 
 Method used for unlock
@@ -45,7 +45,7 @@ Method used for unlock
 ## status
 
 ```swift
-var status: UnlockEventStatus
+let status: UnlockEventStatus
 ```
 
 Status of the unlock operation

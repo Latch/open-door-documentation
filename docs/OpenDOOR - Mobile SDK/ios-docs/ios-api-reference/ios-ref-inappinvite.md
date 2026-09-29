@@ -1,43 +1,30 @@
 ---
 title: InAppInvite
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Invite type for in-app access with time-based restrictions.
+In-app access with time-based restrictions.
 
 ## Declaration
 
 ```swift
-public struct InAppInvite : InviteType {
-  public var accessType: AccessType?
-  public var startTime: Date
-  public var endTime: Date?
-  public var showDoorcodes: Bool?
-  public init(accessType: AccessType?, startTime: Date, endTime: Date? = nil, showDoorcodes: Bool?)
-}
-
-extension InAppInvite : Equatable {
+public struct InAppInvite : InviteType, Equatable {
+  public let startTime: Date
+  public let endTime: Date?
+  public init(startTime: Date, endTime: Date?)
   public static func == (a: InAppInvite, b: InAppInvite) -> Bool
 }
 ```
 
-## accessType
+## init(startTime:endTime:)
 
 ```swift
-var accessType: AccessType?
-```
-
-Inherited from `InviteType.accessType`.
-
-## init(accessType:startTime:endTime:showDoorcodes:)
-
-```swift
-init(accessType: AccessType?, startTime: Date, endTime: Date? = nil, showDoorcodes: Bool?)
+init(startTime: Date, endTime: Date?)
 ```
 
 ## Related types
 
-[AccessType](doc:ios-ref-accesstype) · [InviteType](doc:ios-ref-invitetype)
+[InviteType](doc:ios-ref-invitetype)

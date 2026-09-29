@@ -1,12 +1,12 @@
 ---
 title: LocksListener
-excerpt: OpenDOOR iOS SDK 2.2.0 protocol reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 protocol reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Listener for lock list updates
+Listener for update-only lock lists.
 
 ## Declaration
 

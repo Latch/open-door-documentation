@@ -1,5 +1,5 @@
 ---
-title: UnlockAttempt
+title: UnlockFailureError
 excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
@@ -8,19 +8,22 @@ hidden: false
 
 OpenDOOR Android SDK **2.3** (2.3 release).
 
-Which pass through the unlock flow produced an event.
+Detail for an unlock failure.
 
 ## Declaration
 
 ```kotlin
-enum class UnlockAttempt {
-    First,
-    Second,
+data class UnlockFailureError(
+    val code: UnlockFailureCode,
+    val message: String,
+    val context: String?,
+) {
+    override fun toString(): String
 }
 ```
 
 ## Related types
 
-- [UnlockEventStatus](doc:android-ref-unlockeventstatus)
+- [UnlockFailureCode](doc:android-ref-unlockfailurecode)
 
 Package: `com.door.opendoor.android.core.api.model`.

@@ -69,7 +69,7 @@ repositories {
     google()
     mavenCentral()
 }
-implementation("com.door:opendoor.android:2.1.1")
+implementation("com.door:opendoor.android:2.3")
 ```
 
 You can also delete the unzipped SDK folder from your repo once the v2 dependency resolves cleanly.
@@ -82,7 +82,7 @@ Remove — v1 install
   then delete the LatchSDK folder you had checked into the repo.
 
 Add — v2 install (Package.swift or Xcode "Add Package")
-  .package(url: "<published v2 SPM repo URL — confirm with the SDK team>", from: "2.1.0")
+  .package(url: "<published v2 SPM repo URL — confirm with the SDK team>", from: "2.3.0")
 ```
 
 If you were on CocoaPods (`pod 'LatchSDK'`), this is your forcing function to switch to SPM — v2 publishes only via SPM.
@@ -194,7 +194,7 @@ Apply the same pattern to proximity unlock — the unified `listenForUnlockEvent
 
 ### Step 5 — Update guest-invite call sites
 
-`PasscodeType` (a v1 enum) is gone. Use one of two top-level types that implement the sealed `InviteType` interface: `InAppInvite` or `TempDoorcodeInvite`. See [§ Guest invitations](#guest-invitations) for the full mapping.
+`PasscodeType` (a v1 enum) is gone. Use one of two top-level types that implement the sealed `InviteType` interface: `InAppInvite` or `TemporaryDoorcodeInvite`. See [§ Guest invitations](#guest-invitations) for the full mapping.
 
 ```kotlin
 // v1
@@ -213,10 +213,8 @@ client.inviteGuest(
     phone     = phone,
     lockIds   = listOf(lockId),
     inviteType = InAppInvite(
-        accessType = null,
-        startTime  = startTime,
-        endTime    = endTime,
-        showDoorcodes = false,
+        startTime = startTime,
+        endTime   = endTime,
     ),
 )
 ```
@@ -332,12 +330,12 @@ Failure cases that stay thrown:
 
 | v1 thrown                       | v2 thrown                                                                                                                                |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `UnlockError.bluetoothDisabled` | `BluetoothException.BluetoothDisabledException` (Android) / `BluetoothError.bluetoothDisabled` (iOS)                                     |
+| `UnlockError.bluetoothDisabled` | `BluetoothException.BluetoothDisabledException` (Android) / `BluetoothError.disabled` (iOS)                                              |
 | `UnlockError.lockNotFound(_)`   | `UnlockError.lockNotFound(_)` (iOS) — Android surfaces this through the unlock event stream as `UnlockFailed(failReason = LockNotFound)` |
 
 Android `UnlockEvent` cases: `UnlockStarted`, `SetupSync`, `UnlockSuccess`, `UnlockFailed`, `UnlockCanceled`. Each carries `lockId: UUID?` and `method: UnlockEventMethod` (`Explicit` or `Proximity`). `UnlockFailed` additionally carries a `failReason: UnlockFailureReason` of `BluetoothDisabled`, `BluetoothError`, `LockNotFound`, `LockNotRecognized`, `OutOfSchedule`, `Timeout`, or `InternalError`. (`SetupSync` is new in SDK 2.1; emit a setup-sync UI state when you receive it. iOS does not expose an equivalent case.)
 
-iOS `UnlockEvent` is a struct: `UnlockEvent(lock: Lock?, status: UnlockEventStatus, method: UnlockEventMethod)`. `status` is an enum of `.started`, `.failed(UnlockFailureReason)`, `.canceled`, `.success`. iOS `UnlockFailureReason` cases: `.bluetoothDisabled`, `.outOfSchedule`, `.timeout`, `.unlockInternalError(String)`.
+iOS `UnlockEvent` is a struct: `UnlockEvent(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)`. `status` is an enum of `.started`, `.failed(UnlockFailureReason)`, `.canceled`, `.success`. iOS `UnlockFailureReason` cases: `.bluetoothDisabled`, `.outOfSchedule`, `.lockNotFound`, `.connectionFailed`, `.authFailed(UnlockFailureError)`, `.internal(UnlockFailureError)`.
 
 ### Proximity unlock
 
@@ -376,10 +374,10 @@ Android `SyncException` cases: `LockNotFoundException`, `CanceledException`, `Un
 
 `PasscodeType` (v1, single enum) splits into two types that implement the sealed `InviteType` interface:
 
-| Use when…                                          | Constructor          | Required fields                                                                           |
-| -------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------- |
-| Guest is in the Door ecosystem and accepts in-app  | `InAppInvite`        | `accessType?`, `startTime`, `endTime?` (null = permanent), `showDoorcodes`                |
-| Guest is _not_ in the ecosystem; one-shot doorcode | `TempDoorcodeInvite` | `accessType?`, `duration` (`Limit15Minutes` / `FullDay`), `period` (`Today` / `Tomorrow`) |
+| Use when…                                          | Constructor               | Required fields                                                         |
+| -------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------- |
+| Guest is in the Door ecosystem and accepts in-app  | `InAppInvite`             | `startTime`, `endTime?` (null = permanent)                              |
+| Guest is _not_ in the ecosystem; one-shot doorcode | `TemporaryDoorcodeInvite` | `duration` (`Limit15Minutes` / `FullDay`), `period` (`Today` / `Tomorrow`) |
 
 Two non-obvious changes beyond the type swap:
 
@@ -433,13 +431,13 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 | -------------------------------------------- | ------------------------------------------------------------------------------------ |
 | `FetchLocksError.invalidToken`               | `NetworkError.invalidToken`                                                          |
 | `FetchLocksError.internalError(_, _)`        | `NetworkError.internalNetworkError(_)`                                               |
-| `UnlockError.bluetoothDisabled`              | `BluetoothError.bluetoothDisabled`                                                   |
+| `UnlockError.bluetoothDisabled`              | `BluetoothError.disabled`                                                            |
 | `UnlockError.concurrentUnlockInProgress`     | `UnlockEvent` with `status = .canceled` (stream)                                     |
 | `UnlockError.lockNotFound(_)`                | `UnlockError.lockNotFound(_)` (still thrown)                                         |
 | `UnlockError.outOfSchedule` / `.timeout`     | `UnlockEvent` with `status = .failed(.outOfSchedule)` / `.failed(.timeout)` (stream) |
 | `DeleteGuestError.passcodeTypeCantBeRevoked` | `RevokeGuestError.passcodeTypeCantBeRevoked`                                         |
 | `DeleteGuestError.deviceNotFound`            | `RevokeGuestError.deviceNotFound`                                                    |
-| `InviteGuestError.*`                         | `InviteGuestError.*` (same 7 cases — name-only)                                      |
+| `InviteGuestError.*`                         | `InviteGuestError.*` (same 7 cases, plus `.shareableAccessRequired`, `.sharingNotEnabled`, `.requestedTimeOutsideShareableAccess`) |
 | `ConsentError.userConsentDenied`             | `SetupError.consentNotGranted`                                                       |
 
 ***

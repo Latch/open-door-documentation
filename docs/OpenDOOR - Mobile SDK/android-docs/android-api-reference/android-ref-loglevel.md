@@ -1,17 +1,14 @@
 ---
 title: LogLevel
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Controls how much diagnostic information the SDK logs.
-
-Higher levels (e.g. `DEBUG`) produce more detailed output; lower levels (e.g. `ERROR`)
-restrict logs to important issues only. Adopters set this via [DoorClient.setLogLevel](doc:android-ref-doorclient).
+Minimum SDK logging level.
 
 ## Declaration
 
@@ -19,6 +16,10 @@ restrict logs to important issues only. Adopters set this via [DoorClient.setLog
 enum class LogLevel {
 
     DEBUG,
+
+    INFO,
+
+    WARNING,
 
     ERROR,
 }

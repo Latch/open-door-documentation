@@ -1,17 +1,17 @@
 ---
 title: Duration
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
 [Duration](doc:ios-ref-duration) for temporary doorcode access.
 
 ## Declaration
 
 ```swift
-public enum Duration {
+public enum Duration : Equatable {
   case limit15Minutes
   case fullDay
   public static func == (a: Duration, b: Duration) -> Bool
@@ -20,8 +20,6 @@ public enum Duration {
     get
   }
 }
-
-extension Duration : Equatable {}
 
 extension Duration : Hashable {}
 ```

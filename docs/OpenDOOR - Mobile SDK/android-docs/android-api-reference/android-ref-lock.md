@@ -1,14 +1,14 @@
 ---
 title: Lock
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-User-visible lock information
+User-visible lock information.
 
 - **`id`** — Unique lock identifier
 - **`name`** — Human-readable lock name
@@ -16,7 +16,6 @@ User-visible lock information
 - **`startTime`** — Start of access window
 - **`endTime`** — End of access window (nullable)
 - **`doorCode`** — Door access code if available
-- **`propertyName`** — Property name. For some locks this is the same as `name`.
 - **`isShareable`** — Indicates if this lock can be shared with guests.
 
 ## Declaration
@@ -29,7 +28,6 @@ data class Lock(
     val startTime: Instant,
     val endTime: Instant?,
     val doorCode: String?,
-    val propertyName: String,
     val isShareable: Boolean,
 )
 ```

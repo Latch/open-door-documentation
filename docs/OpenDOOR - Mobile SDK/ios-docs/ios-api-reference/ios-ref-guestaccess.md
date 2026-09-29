@@ -1,22 +1,24 @@
 ---
 title: GuestAccess
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Access granted to a guest on a specific lock
+Access granted to a guest on a specific lock.
 
 ## Declaration
 
 ```swift
 public struct GuestAccess : Equatable {
-  public var lockID: UUID
-  public var lockName: String
-  public var startTime: Date
-  public var inviteType: any InviteType
-  public init(lockID: UUID, lockName: String, startTime: Date, inviteType: any InviteType)
+  public let lockID: UUID
+  public let lockName: String
+  public let inviteType: any InviteType
+  public let passcodeType: PasscodeType
+  public let startTime: Date
+  public let endTime: Date?
+  public init(lockID: UUID, lockName: String, inviteType: any InviteType, passcodeType: PasscodeType, startTime: Date, endTime: Date?)
 }
 
 extension GuestAccess {
@@ -32,16 +34,16 @@ static func == (lhs: GuestAccess, rhs: GuestAccess) -> Bool
 
 Inherited from `Equatable.==(_:_:)`.
 
-## init(lockID:lockName:startTime:inviteType:)
+## init(lockID:lockName:inviteType:passcodeType:startTime:endTime:)
 
 ```swift
-init(lockID: UUID, lockName: String, startTime: Date, inviteType: any InviteType)
+init(lockID: UUID, lockName: String, inviteType: any InviteType, passcodeType: PasscodeType, startTime: Date, endTime: Date?)
 ```
 
 ## lockID
 
 ```swift
-var lockID: UUID
+let lockID: UUID
 ```
 
 Target lock ID
@@ -49,7 +51,7 @@ Target lock ID
 ## lockName
 
 ```swift
-var lockName: String
+let lockName: String
 ```
 
 Target lock name
@@ -57,11 +59,11 @@ Target lock name
 ## startTime
 
 ```swift
-var startTime: Date
+let startTime: Date
 ```
 
 Start of the allowed window.
 
 ## Related types
 
-[InviteType](doc:ios-ref-invitetype)
+[InviteType](doc:ios-ref-invitetype) · [PasscodeType](doc:ios-ref-passcodetype)

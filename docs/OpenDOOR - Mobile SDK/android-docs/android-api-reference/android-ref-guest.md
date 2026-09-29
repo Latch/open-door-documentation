@@ -1,14 +1,14 @@
 ---
 title: Guest
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Person with shared access to one or more locks
+Person with shared access to one or more locks.
 
 - **`id`** — Unique guest identifier
 - **`firstName`** — Guest's first name

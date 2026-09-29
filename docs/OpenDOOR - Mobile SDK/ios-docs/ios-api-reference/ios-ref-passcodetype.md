@@ -1,36 +1,28 @@
 ---
 title: PasscodeType
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
 Type of access credential granted to a guest.
 
 ## Declaration
 
 ```swift
-public enum PasscodeType : String, CaseIterable {
+public enum PasscodeType : Equatable {
   case permanent
   case daily
   case dailySingleUse
-  public init?(rawValue: String)
-  public typealias AllCases = [PasscodeType]
-  public typealias RawValue = String
-  nonisolated public static var allCases: [PasscodeType] {
-    get
-  }
-  public var rawValue: String {
+  public static func == (a: PasscodeType, b: PasscodeType) -> Bool
+  public func hash(into hasher: inout Hasher)
+  public var hashValue: Int {
     get
   }
 }
 
-extension PasscodeType : Equatable {}
-
 extension PasscodeType : Hashable {}
-
-extension PasscodeType : RawRepresentable {}
 ```
 
 ## PasscodeType.daily
@@ -48,14 +40,6 @@ case dailySingleUse
 ```
 
 A doorcode that works for the entire calendar day set to the timezone of the device, but expires 15 minutes after first use.
-
-## init(rawValue:)
-
-```swift
-init?(rawValue: String)
-```
-
-Inherited from `RawRepresentable.init(rawValue:)`.
 
 ## PasscodeType.permanent
 

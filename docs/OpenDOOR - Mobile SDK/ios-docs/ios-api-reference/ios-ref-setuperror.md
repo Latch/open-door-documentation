@@ -1,12 +1,12 @@
 ---
 title: SetupError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Setup access error
+Setup failure.
 
 ## Declaration
 
@@ -30,7 +30,7 @@ extension SetupError {
 case consentNotGranted
 ```
 
-User consent not granted
+User consent was not granted.
 
 ## description
 
@@ -46,7 +46,7 @@ Inherited from `CustomStringConvertible.description`.
 case invalidToken
 ```
 
-The supplied authorization token is invalid and should be refreshed.
+The supplied token is invalid or expired.
 
 ## SetupError.setupInternalError(_:)
 
@@ -54,7 +54,7 @@ The supplied authorization token is invalid and should be refreshed.
 case setupInternalError(String)
 ```
 
-An internal error occurred
+An internal setup error occurred.
 
 ## Related types
 

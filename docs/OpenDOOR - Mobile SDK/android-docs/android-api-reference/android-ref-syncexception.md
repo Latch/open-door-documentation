@@ -1,25 +1,25 @@
 ---
 title: SyncException
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Base exception for sync failures
+Active sync failure.
 
 ## Declaration
 
 ```kotlin
 sealed class SyncException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
 
-    class LockNotFoundException(message: String, throwable: Throwable? = null) : SyncException(message, throwable)
+    class LockNotFoundException(val identifier: String, message: String = "Lock not found during sync: $identifier", throwable: Throwable? = null) : SyncException(message, throwable)
 
-    class CanceledException(message: String, throwable: Throwable? = null) : SyncException(message, throwable)
+    class CanceledException(message: String = "Sync was canceled", throwable: Throwable? = null) : SyncException(message, throwable)
 
-    class UnlockInProgressException(message: String, throwable: Throwable? = null) : SyncException(message, throwable)
+    class UnlockInProgressException(message: String = "An unlock is already in progress", throwable: Throwable? = null) : SyncException(message, throwable)
 
     class SyncInternalException(message: String, throwable: Throwable? = null) : SyncException(message, throwable)
 }
