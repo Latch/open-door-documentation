@@ -10,6 +10,13 @@ OpenDOOR Android SDK **2.3** (2.3 release).
 
 Cause of an unlock failure that has no more specific reason.
 
+- **`BLUETOOTH_UNAVAILABLE`** — The device has no usable Bluetooth hardware.
+- **`DEVICE_NOT_SUPPORTED`** — The lock model does not support BLE unlock.
+- **`KEY_FETCH_FAILED`** — The signed key could not be fetched before the unlock started.
+- **`SETUP_SYNC_FAILED`** — Setup sync did not complete.
+- **`TRANSPORT_ERROR`** — A Bluetooth operation failed, with no more specific classification.
+- **`UNEXPECTED`** — A failure the SDK does not account for.
+
 ## Declaration
 
 ```kotlin

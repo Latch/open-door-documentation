@@ -10,6 +10,10 @@ OpenDOOR Android SDK **2.3** (2.3 release).
 
 Detail for an unlock failure.
 
+- **`code`** — Cause of the failure.
+- **`message`** — Human-readable description of the failure.
+- **`context`** — Platform error code, such as a lock response code or a GATT status. Can be null.
+
 ## Declaration
 
 ```kotlin

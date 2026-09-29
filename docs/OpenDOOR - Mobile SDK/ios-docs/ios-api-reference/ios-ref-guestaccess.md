@@ -34,11 +34,27 @@ static func == (lhs: GuestAccess, rhs: GuestAccess) -> Bool
 
 Inherited from `Equatable.==(_:_:)`.
 
+## endTime
+
+```swift
+let endTime: Date?
+```
+
+End of the allowed window, or nil.
+
 ## init(lockID:lockName:inviteType:passcodeType:startTime:endTime:)
 
 ```swift
 init(lockID: UUID, lockName: String, inviteType: any InviteType, passcodeType: PasscodeType, startTime: Date, endTime: Date?)
 ```
+
+## inviteType
+
+```swift
+let inviteType: any InviteType
+```
+
+Invite type for this access.
 
 ## lockID
 
@@ -55,6 +71,14 @@ let lockName: String
 ```
 
 Target lock name
+
+## passcodeType
+
+```swift
+let passcodeType: PasscodeType
+```
+
+Credential type granted.
 
 ## startTime
 

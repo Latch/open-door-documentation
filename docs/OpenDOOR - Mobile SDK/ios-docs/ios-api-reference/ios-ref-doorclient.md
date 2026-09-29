@@ -146,7 +146,7 @@ Grants a guest access to the requested locks.
 
 - `email`: Email of the guest; required for permanent invites.
 
-- `phone`: Phone number; legacy invites need email or phone.
+- `phone`: Phone number of the guest; a temporary doorcode invite needs an email or a phone.
 
 - `lockIDs`: Locks to grant access to.
 

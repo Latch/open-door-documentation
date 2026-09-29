@@ -39,11 +39,15 @@ Unlock was canceled (e.g., when starting unlock for another lock).
 case connectForSetupSync(attempt: UnlockAttempt)
 ```
 
+BLE connect phase before the setup sync.
+
 ## UnlockEventStatus.connectForUnlock(attempt:)
 
 ```swift
 case connectForUnlock(attempt: UnlockAttempt)
 ```
+
+BLE connect phase before unlocking.
 
 ## UnlockEventStatus.failed(_:)
 
@@ -58,6 +62,8 @@ Unlock failed.
 ```swift
 case setupSync(attempt: UnlockAttempt)
 ```
+
+Setup sync before unlock.
 
 ## UnlockEventStatus.started
 
@@ -81,11 +87,15 @@ case success
 case unlock(attempt: UnlockAttempt)
 ```
 
+Unlock phase after the BLE connection is established.
+
 ## UnlockEventStatus.updateSyncPackage
 
 ```swift
 case updateSyncPackage
 ```
+
+Sync package download in progress (recovery path).
 
 ## Related types
 

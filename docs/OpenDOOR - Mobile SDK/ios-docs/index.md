@@ -395,7 +395,7 @@ Retrieve access logs for a lock.
 
 ### Invite guests
 
-To share access to the selected list of eligible locks (`isSharable == true`) and to the entire path if the building supports this feature, use `inviteGuest`.
+To share access to the selected list of eligible locks (`isShareable == true`), use `inviteGuest`.
 
 A guest invitation can be created with temporary door code access or in-app access with time-based restrictions.
 
@@ -404,7 +404,7 @@ This operation may partially succeed. See GuestInvitesError for details about an
 ```swift iOS
  import OpenDOORCore
 
- let lockIDs: [UUID] = <array of lock IDs where isSharable == true>
+ let lockIDs: [UUID] = <array of lock IDs where isShareable == true>
  do {
     try await client.inviteGuest(
                     firstName: "John",

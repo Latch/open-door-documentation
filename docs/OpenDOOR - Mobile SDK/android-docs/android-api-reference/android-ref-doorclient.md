@@ -10,6 +10,12 @@ OpenDOOR Android SDK **2.3** (2.3 release).
 
 Public OpenDOOR SDK Core Module.
 
+Setup flow:
+1. Call setupWithToken() with a valid token to authenticate
+2. Use listenForLocks() or fetchLocks() to retrieve lock data
+3. Listen for unlock events, including setup sync progress, while unlocking
+4. Use unlock() or proximity unlock features as needed
+
 ## Declaration
 
 ```kotlin
@@ -186,9 +192,8 @@ through listenForUnlockEvents.
 
 Android convenience overload accepting a current Lock model.
 
-The lock is validated against the cache before Bluetooth work; a stale or unknown
-model emits an unlock failure event. Proximity pause and resume behave as in the
-identifier overload.
+Fails before any Bluetooth work when the model is stale or does not match a known
+lock. Proximity pause and resume behave as in the identifier overload.
 
 - **`lock`** — Current lock model to unlock.
 - **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
@@ -281,7 +286,7 @@ Grants a guest access to the requested locks.
 - **`firstName`** — First name of the guest.
 - **`lastName`** — Last name of the guest.
 - **`email`** — Email of the guest; required for permanent invites.
-- **`phone`** — Phone number; legacy invites need email or phone.
+- **`phone`** — Phone number of the guest; a temporary doorcode invite needs an email or a phone.
 - **`lockIds`** — Locks to grant access to.
 - **`inviteType`** — Invite settings, InAppInvite or TemporaryDoorcodeInvite.
 - **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.

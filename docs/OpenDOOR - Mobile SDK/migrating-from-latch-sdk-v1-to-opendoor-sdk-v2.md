@@ -9,7 +9,7 @@ icon: far fa-arrow-up-z-a
 metadata:
   robots: index
 ---
-This guide is for engineers whose app already integrates Latch SDK v1 (OpenKit) and is upgrading to OpenDOOR SDK v2. If you are building a new integration, use the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) or [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs) instead — they cover install and usage from scratch. Android migrators should keep the 2.1 tutorial open alongside this guide; the tutorial is the current from-scratch reference, and this guide covers the v1-to-v2 deltas.
+This guide is for engineers whose app already integrates Latch SDK v1 (OpenKit) and is upgrading to OpenDOOR SDK v2. If you are building a new integration, use the [Android SDK tutorial](https://developers.door.com/docs/android-docs) or [iOS SDK docs](https://developers.door.com/docs/ios-docs) instead — they cover install and usage from scratch. Android migrators should keep the tutorial open alongside this guide; the tutorial is the current from-scratch reference, and this guide covers the v1-to-v2 deltas.
 
 ***
 
@@ -52,7 +52,7 @@ One recommended order. Each step is a self-contained change — land them sequen
 
 ### Step 1 — Swap the dependency
 
-v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.5.0`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs) and the [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs).
+v1 Android was distributed as a zipped artifact that you unzipped into a local folder (e.g. `com/latch/sdk/1.5.0`) and consumed by adding that folder as a maven repository. v2 is published to Maven Central, so the unzip-and-host-it-yourself step goes away. v1 iOS was distributed as a local Swift Package added via Xcode → File → Add Packages → Add Local; v2 iOS is a remote SPM package. Use the exact current versions from the [Android SDK tutorial](https://developers.door.com/docs/android-docs) and the [iOS SDK docs](https://developers.door.com/docs/ios-docs).
 
 Android (`app/build.gradle.kts`):
 
@@ -82,7 +82,7 @@ Remove — v1 install
   then delete the LatchSDK folder you had checked into the repo.
 
 Add — v2 install (Package.swift or Xcode "Add Package")
-  .package(url: "<published v2 SPM repo URL — confirm with the SDK team>", from: "2.3.0")
+  .package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.3.0")
 ```
 
 If you were on CocoaPods (`pod 'LatchSDK'`), this is your forcing function to switch to SPM — v2 publishes only via SPM.
@@ -247,7 +247,7 @@ Translate your invite-form UI state into an `InviteType` at the boundary (the mo
 | `LatchClient.locks(): Single<LocksResult>` (cache-only)                                            | **Removed.** Use `client.listenForLocks().first()`.                                                 | Removed.                                                        |
 | _(no v1 stream)_                                                                                   | `client.listenForLocks(): Flow<List<Lock>>`                                                         | New.                                                            |
 | `LatchClient.unlock(...): Single<UnlockResult>` (3 overloads)                                      | `client.unlock(lockId: UUID)` and `client.unlock(lock: Lock)` (suspend, throws)                     | **Outcome moved to event stream.**                              |
-| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. Cancel-not-pause behavior change. |
+| `LatchClient.proximityUnlock(): Observable` + `proximityUnlockListener()`                          | `client.startProximityUnlock()` / `client.stopProximityUnlock()` + `client.listenForUnlockEvents()` | Three methods → two + stream. An explicit unlock pauses proximity and resumes it afterwards. |
 | _(no v1 stream)_                                                                                   | `client.listenForUnlockEvents(): Flow<UnlockEvent>`                                                 | New.                                                            |
 | `LatchClient.sync(lockUuid): Single<SyncResult>`                                                   | `client.sync(lockId: UUID)` (suspend, throws `SyncException`)                                       | Dedicated `SyncException`.                                      |
 | `LatchClient.inviteGuests(... passcodeType: PasscodeType): Single<InviteGuestsResult>`             | `client.inviteGuest(..., lockIds: List<UUID>, inviteType: InviteType): Unit`                        | `Guest` no longer returned. Multi-lock in one call.             |
@@ -331,11 +331,11 @@ Failure cases that stay thrown:
 | v1 thrown                       | v2 thrown                                                                                                                                |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `UnlockError.bluetoothDisabled` | `BluetoothException.BluetoothDisabledException` (Android) / `BluetoothError.disabled` (iOS)                                              |
-| `UnlockError.lockNotFound(_)`   | `UnlockError.lockNotFound(_)` (iOS) — Android surfaces this through the unlock event stream as `UnlockFailed(failReason = LockNotFound)` |
+| `UnlockError.lockNotFound(_)`   | `UnlockError.lockNotFound(_)` (iOS) / `UnlockException.LockNotFoundException` (Android), thrown before the unlock starts |
 
 Android `UnlockEvent` cases: `UnlockStarted`, `SetupSync`, `UnlockSuccess`, `UnlockFailed`, `UnlockCanceled`. Each carries `lockId: UUID?` and `method: UnlockEventMethod` (`Explicit` or `Proximity`). `UnlockFailed` additionally carries a `failReason: UnlockFailureReason` of `BluetoothDisabled`, `BluetoothError`, `LockNotFound`, `LockNotRecognized`, `OutOfSchedule`, `Timeout`, or `InternalError`. (`SetupSync` is new in SDK 2.1; emit a setup-sync UI state when you receive it. iOS does not expose an equivalent case.)
 
-iOS `UnlockEvent` is a struct: `UnlockEvent(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)`. `status` is an enum of `.started`, `.failed(UnlockFailureReason)`, `.canceled`, `.success`. iOS `UnlockFailureReason` cases: `.bluetoothDisabled`, `.outOfSchedule`, `.lockNotFound`, `.connectionFailed`, `.authFailed(UnlockFailureError)`, `.internal(UnlockFailureError)`.
+iOS `UnlockEvent` is a struct: `UnlockEvent(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)`. `status` is an enum of `.started`, `.connectForSetupSync(attempt:)`, `.setupSync(attempt:)`, `.updateSyncPackage`, `.connectForUnlock(attempt:)`, `.unlock(attempt:)`, `.failed(UnlockFailureReason)`, `.canceled`, `.success`. iOS `UnlockFailureReason` cases: `.bluetoothDisabled`, `.outOfSchedule`, `.lockNotFound`, `.connectionFailed`, `.authFailed(UnlockFailureError)`, `.internal(UnlockFailureError)`.
 
 ### Proximity unlock
 
@@ -352,7 +352,7 @@ client.stopProximityUnlock()
 // proximity events arrive on listenForUnlockEvents() with method = Proximity
 ```
 
-If your UX relied on proximity resuming after an explicit unlock, call `startProximityUnlock()` again after the explicit unlock finishes.
+An explicit unlock pauses proximity unlock and resumes it when the explicit unlock finishes, as long as the same proximity session is still active. You don't need to call `startProximityUnlock()` again.
 
 ### Sync
 
@@ -434,7 +434,7 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 | `UnlockError.bluetoothDisabled`              | `BluetoothError.disabled`                                                            |
 | `UnlockError.concurrentUnlockInProgress`     | `UnlockEvent` with `status = .canceled` (stream)                                     |
 | `UnlockError.lockNotFound(_)`                | `UnlockError.lockNotFound(_)` (still thrown)                                         |
-| `UnlockError.outOfSchedule` / `.timeout`     | `UnlockEvent` with `status = .failed(.outOfSchedule)` / `.failed(.timeout)` (stream) |
+| `UnlockError.outOfSchedule` / `.timeout`     | `UnlockEvent` with `status = .failed(.outOfSchedule)` / `.failed(.connectionFailed)` (stream) |
 | `DeleteGuestError.passcodeTypeCantBeRevoked` | `RevokeGuestError.passcodeTypeCantBeRevoked`                                         |
 | `DeleteGuestError.deviceNotFound`            | `RevokeGuestError.deviceNotFound`                                                    |
 | `InviteGuestError.*`                         | `InviteGuestError.*` (same 7 cases, plus `.shareableAccessRequired`, `.sharingNotEnabled`, `.requestedTimeOutsideShareableAccess`) |
@@ -458,5 +458,5 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 
 ## See also
 
-* [Android SDK 2.1 tutorial](https://developers.door.com/docs/android-docs)
-* [iOS v2.1 SDK docs](https://developers.door.com/docs/ios-docs)
+* [Android SDK tutorial](https://developers.door.com/docs/android-docs)
+* [iOS SDK docs](https://developers.door.com/docs/ios-docs)
