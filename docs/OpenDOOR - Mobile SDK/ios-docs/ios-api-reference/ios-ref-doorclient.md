@@ -170,7 +170,7 @@ Returns an update-only stream of lock lists.
 
 ### Discussion
 
-Initialization is checked when the stream is created. The stream emits cached state, including an empty list, and subsequent updates, and starts a best-effort refresh. Later refresh and observation failures are logged internally; the stream has no error channel.
+Initialization is checked when the stream is created. The stream emits cached state, including an empty list, and subsequent updates, and starts a best-effort refresh. Later refresh failures aren't reported; the stream has no error channel.
 
 **Throws:**
 
@@ -264,8 +264,6 @@ Revokes one guest access.
 - `lockID`: Identifier of the lock to revoke access to.
 
 ### Discussion
-
-The lock identifier maps to the backend’s device identifier.
 
 **Throws:**
 
@@ -427,7 +425,7 @@ Runs active sync for a lock.
 
 ### Discussion
 
-Synchronizes lock data with the backend and returns when the sync finishes.
+Synchronizes lock data with DOOR and returns when the sync finishes.
 
 **Throws:**
 

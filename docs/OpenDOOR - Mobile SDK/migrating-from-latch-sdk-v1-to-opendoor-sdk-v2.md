@@ -266,7 +266,7 @@ Translate your invite-form UI state into an `InviteType` at the boundary (the mo
 | `LatchClient.guests(): Single<GuestsResult>`                                                       | `client.guests(): List<Guest>`                                                                      | —                                                               |
 | _(no v1 Android revoke)_                                                                           | `client.revokeGuestAllAccesses(guestId)` and `client.revokeGuestAccess(guestId, lockId)`            | New on Android.                                                 |
 | `LatchClient.accessLogs(lockUuid): Single<AccessLogsResult>`                                       | `client.getAccessLogs(lockId): List<AccessLog>`                                                     | —                                                               |
-| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** No replacement.                                                                        | Removed. v2 always uses the production backend.                 |
+| `LatchClient.setEnvironment(...)`                                                                  | **Removed.** No replacement.                                                                        | Removed.                                                        |
 
 ### Method signatures (iOS)
 
@@ -291,7 +291,7 @@ Translate your invite-form UI state into an `InviteType` at the boundary (the mo
 
 ### Setup & teardown
 
-v2 has no separate `initialize(context)` call. `setupWithToken` does both SDK initialization and authentication; the Activity you pass carries the Application reference the SDK needs internally. `clear()` is new — v1 had no logout primitive.
+v2 has no separate `initialize(context)` call. `setupWithToken` does both SDK initialization and authentication, and takes a foreground Activity instead of a Context. `clear()` is new — v1 had no logout primitive.
 
 ```kotlin
 // v1
@@ -463,7 +463,7 @@ iOS `LatchAccessLog` → `AccessLog`. Android signature shape changes from seale
 | Android `proximityUnlockListener()`                   | `client.listenForUnlockEvents(listener)`                                                             |
 | iOS `Latch.proximityUnlockHandler` property           | `client.listenForUnlockEvents()`                                                                     |
 | Android `InitResult` (deprecated in late v1)          | gone — `setupWithToken` either returns or throws                                                     |
-| Runtime environment switching (`setEnvironment(...)`) | None. v2 always uses the production backend.                                                         |
+| Runtime environment switching (`setEnvironment(...)`) | None.                                                                                                |
 | GitHub-repo artifact channel                          | Maven (Android) / SPM (iOS) — see [Step 1](#step-1--swap-the-dependency)                             |
 
 ***

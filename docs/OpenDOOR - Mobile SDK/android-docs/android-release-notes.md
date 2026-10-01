@@ -8,7 +8,7 @@ metadata:
 ---
 ## What's new in SDK 2.3.0
 
-Android and iOS now share the same public API. Both SDKs are generated from one contract, so types, methods, fields and error cases match across platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
+Android and iOS now share the same public API: the same types, methods, fields and error cases on both platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
 
 Breaking Changes
 
@@ -38,13 +38,13 @@ New Features
 
 Improvements
 
-* More reliable lock synchronization. Sync-configuration refresh now retries automatically on transient network errors and also runs whenever you fetch the latest locks, keeping unlock readiness aligned with the server without a separate call.
+* More reliable lock synchronization. The data locks need for unlocking now refreshes automatically after transient network errors and whenever you fetch the latest locks, so unlocks stay ready without a separate call.
 * More precise guest-revocation and access-log results. Revoking a guest now reports a DEVICE_NOT_FOUND reason and preserves the underlying error message instead of collapsing to a generic network error, and the access-log result set gained GUEST_SUCCESS and UNKNOWN_TIME_FAILURE.
 
 Bug Fixes
 
 * In-app guest invites with an expiration time are no longer rejected. Sending an in-app invite with an end time previously failed with a server validation error because it was sent as a recurring (daily) credential. In-app invites are now always issued as a non-recurring credential that accepts an optional end time.
-* Setup no longer crashes on an unreadable encrypted store. If the SDK's encrypted storage could no longer be decrypted (for example after an Android Keystore key was invalidated by a credential reset or device restore), setup crashed. The SDK now detects this, resets and regenerates its encrypted store, and retries automatically.
+* Setup no longer crashes when the SDK's stored data can't be read, for example after a credential reset or device restore. The SDK now resets its stored data and retries automatically.
 * A failed unlock now recovers on its own: an authentication failure or a stale setup transparently triggers a fresh sync-package download and setup, followed by a single retry, before reporting failure. Connection, setup, and unlock stages each have dedicated timeouts so a stalled lock fails fast instead of hanging.
 
 ## What's new in SDK 2.1.1

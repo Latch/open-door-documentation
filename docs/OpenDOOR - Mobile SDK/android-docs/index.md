@@ -115,7 +115,7 @@ CoroutineScope(Dispatchers.Main).launch {
 
 ### Thread Requirements
 
-The SDK doesn't require a specific calling thread. Its `suspend` functions, including setup and BLE operations, switch to a background thread themselves.
+The SDK doesn't require a specific calling thread.
 
 **Can be called from any thread:**
 
@@ -138,7 +138,7 @@ The SDK doesn't require a specific calling thread. Its `suspend` functions, incl
 * `revokeGuestAccess()`
 * `setLogLevel()`
 
-All coroutine examples in this tutorial use `Dispatchers.Main`. `LocksListener` and `UnlockEventsListener` callbacks run on a background SDK thread, so switch to the main thread before you update UI from a callback.
+All coroutine examples in this tutorial use `Dispatchers.Main`. `LocksListener` and `UnlockEventsListener` callbacks can arrive on a background thread, so switch to the main thread before you update UI from a callback.
 
 ### View the locks and select one to unlock
 
@@ -417,7 +417,7 @@ Use `cancelUnlock()` to cancel only the current proximity unlock attempt. Proxim
 
 ## Sync
 
-Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
+Sync lets your mobile app pass data between the lock and DOOR, such as battery level, time and activity logs. When troubleshooting, run a sync to either resolve the issue or give DOOR full information about it.
 
 After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
 

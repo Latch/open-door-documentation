@@ -54,7 +54,7 @@ The supplied token is invalid or expired.
 case payloadError(String)
 ```
 
-Backend payload error.
+The server's response couldn't be processed.
 
 ## Related types
 

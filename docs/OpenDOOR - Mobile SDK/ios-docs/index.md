@@ -369,7 +369,7 @@ import OpenDOORCore
 
 ## Sync
 
-Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
+Sync lets your mobile app pass data between the lock and DOOR, such as battery level, time and activity logs. When troubleshooting, run a sync to either resolve the issue or give DOOR full information about it.
 
 After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data.
 

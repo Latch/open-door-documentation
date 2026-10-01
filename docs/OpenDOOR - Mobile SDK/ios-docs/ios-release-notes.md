@@ -8,7 +8,7 @@ metadata:
 ---
 ## What's new in SDK 2.3.0
 
-Android and iOS now share the same public API. Both SDKs are generated from one contract, so types, methods, fields and error cases match across platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
+Android and iOS now share the same public API: the same types, methods, fields and error cases on both platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
 
 **Breaking Changes**
 

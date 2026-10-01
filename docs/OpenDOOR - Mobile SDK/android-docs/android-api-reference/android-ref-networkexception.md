@@ -29,7 +29,7 @@ The supplied authorization token is invalid and should be refreshed.
 
 ## PayloadError
 
-Network error with message from backend
+Network error with a message from the server.
 
 ## InternalNetworkException
 

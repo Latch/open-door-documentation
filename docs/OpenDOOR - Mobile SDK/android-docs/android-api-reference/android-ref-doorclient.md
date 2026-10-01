@@ -146,8 +146,7 @@ Returns an update-only stream of lock lists.
 
 Initialization is checked when the stream is created. The stream emits cached state,
 including an empty list, and subsequent updates, and starts a best-effort refresh.
-Later refresh and observation failures are logged internally; the stream has no error
-channel.
+Later refresh failures aren't reported; the stream has no error channel.
 
 - **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
@@ -263,7 +262,7 @@ complete.
 
 Runs active sync for a lock.
 
-Synchronizes lock data with the backend and returns when the sync finishes.
+Synchronizes lock data with DOOR and returns when the sync finishes.
 
 - **`lockId`** — Identifier of the lock to sync.
 - **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
@@ -310,8 +309,6 @@ errors. Per-access results are not returned.
 ## revokeGuestAccess(guestId, lockId)
 
 Revokes one guest access.
-
-The lock identifier maps to the backend's device identifier.
 
 - **`guestId`** — Identifier of the guest whose access is revoked.
 - **`lockId`** — Identifier of the lock to revoke access to.

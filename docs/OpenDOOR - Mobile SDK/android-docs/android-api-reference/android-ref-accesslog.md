@@ -11,7 +11,7 @@ OpenDOOR Android SDK **2.3** (2.3 release).
 Record of an access attempt on a lock.
 
 - **`id`** — Unique log identifier
-- **`epochTimeForEntryAttempt`** — Timestamp of the attempt, as returned by the backend.
+- **`epochTimeForEntryAttempt`** — Timestamp of the access attempt.
 - **`imageFileName`** — Image file name if available
 - **`imageToken`** — Image token if available
 - **`guestUuid`** — Guest UUID if applicable
