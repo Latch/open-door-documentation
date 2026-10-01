@@ -68,7 +68,7 @@ Authenticates and initializes the OpenDOOR SDK. Call it on the shared client: `O
 
 * On success returns Void. Otherwise, throws an error.
 
-  All additional SDK functions require that `setupWithToken(...)` has completed with a valid token. If it hasn't, requests to the SDK throw `SDKException.SDKNotInitializedException` (Android) or `SDKError.sdkNotInitialized` (iOS). If the token is invalid or expired, calls such as `fetchLocks()` throw `NetworkException.InvalidTokenException` (Android) or `NetworkError.invalidToken` (iOS). Partner App can receive the error, supply a new token to `setupWithToken(...)`, and then continue to use the SDK functions.
+  All additional SDK functions require that `setupWithToken(...)` has completed with a valid token. If it hasn't, requests to the SDK (except `setLogLevel()`) throw `SDKException.SDKNotInitializedException` (Android) or `SDKError.sdkNotInitialized` (iOS). If the token is invalid or expired, calls such as `fetchLocks()` throw `NetworkException.InvalidTokenException` (Android) or `NetworkError.invalidToken` (iOS). Partner App can receive the error, supply a new token to `setupWithToken(...)`, and then continue to use the SDK functions.
 
   **Errors**
 

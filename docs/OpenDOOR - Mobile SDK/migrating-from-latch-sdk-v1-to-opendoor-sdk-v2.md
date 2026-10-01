@@ -30,7 +30,7 @@ Almost everything else is mechanical search-and-replace once these click.
 |             | v1                                          | v2                     |
 | ----------- | ------------------------------------------- | ---------------------- |
 | **Android** | `Single<T>` (RxJava)                        | `suspend fun … throws` |
-| **iOS**     | completion handlers + ad-hoc `async throws` | `async throws` (stream, listener, cancel and proximity calls are sync `throws`) |
+| **iOS**     | completion handlers + ad-hoc `async throws` | mostly `async throws` (stream, listener, cancel and proximity calls are sync `throws`; `setLogLevel` doesn't throw) |
 
 ### Shift 2 — Outcome model
 
@@ -306,7 +306,7 @@ client.clear()
 
 Throws in v2: `SetupException.{InvalidTokenException, ConsentNotGrantedException, SetupInternalException}`, `NetworkException`, `IllegalArgumentException` (if the supplied Activity can't host UI).
 
-Two gotchas. First, `setupWithToken` requires a live foreground Activity on Android — do not call it from a `Service` or background `WorkManager` worker. Second, the token is held in memory only and is not persisted across process restart. If your app needs cross-launch persistence, store it yourself and call `setupWithToken` on launch.
+Two gotchas. First, `setupWithToken` requires a live foreground Activity on Android — do not call it from a `Service` or background `WorkManager` worker. Second, setup doesn't survive a process restart, so keep the token in your app and call `setupWithToken` on every launch.
 
 ### Locks list
 
