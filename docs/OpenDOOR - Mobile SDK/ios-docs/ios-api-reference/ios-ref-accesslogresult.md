@@ -1,34 +1,32 @@
 ---
 title: AccessLogResult
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Result of an access attempt
+Result of an access attempt.
 
 ## Declaration
 
 ```swift
-public enum AccessLogResult {
+public enum AccessLogResult : Equatable {
+  case unknown
   case success
-  case lockSuccess
   case guestSuccess
+  case lockSuccess
   case outsideQualifiedAccess
   case unknownTimeFailure
   case nfcFailure
-  case incorrect
   case deadboltApplied
-  case unknown
+  case incorrect
   public static func == (a: AccessLogResult, b: AccessLogResult) -> Bool
   public func hash(into hasher: inout Hasher)
   public var hashValue: Int {
     get
   }
 }
-
-extension AccessLogResult : Equatable {}
 
 extension AccessLogResult : Hashable {}
 ```

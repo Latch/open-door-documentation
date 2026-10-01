@@ -1,12 +1,12 @@
 ---
 title: GuestInvitesError
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-An error that represents a partial or complete failure when inviting a guest to multiple locks. Use this error to inspect which locks succeeded and which failed.
+Partial or complete guest-invitation failure.
 
 ## Declaration
 
@@ -17,9 +17,7 @@ public struct GuestInvitesError : OpenDOORSDKError {
   public var failedLockIDs: [UUID] {
     get
   }
-}
-
-extension GuestInvitesError {
+  public init(failedLockErrors: [LockActionError], successfulLockIDs: [UUID])
   public var description: String {
     get
   }
@@ -49,6 +47,12 @@ var failedLockIDs: [UUID] { get }
 ```
 
 Convenience accessor for the IDs of locks that failed.
+
+## init(failedLockErrors:successfulLockIDs:)
+
+```swift
+init(failedLockErrors: [LockActionError], successfulLockIDs: [UUID])
+```
 
 ## successfulLockIDs
 

@@ -1,12 +1,12 @@
 ---
 title: DoorClient
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
 Public OpenDOOR SDK Core Module.
 
@@ -21,11 +21,11 @@ Setup flow:
 ```kotlin
 interface DoorClient {
 
-    @Throws(IllegalArgumentException::class, SetupException::class, NetworkException::class)
+    @Throws(SetupException::class, NetworkException::class, IllegalArgumentException::class)
     suspend fun setupWithToken(
         activity: Activity,
         token: String,
-        includeAllLocks: Boolean = false,
+        includeAllLocks: Boolean,
     ): Unit
 
     @Throws(SDKException::class)
@@ -43,10 +43,10 @@ interface DoorClient {
     @Throws(SDKException::class)
     fun stopListenForLocks(listener: LocksListener): Unit
 
-    @Throws(SDKException::class, BluetoothException::class)
+    @Throws(SDKException::class, BluetoothException::class, UnlockException::class)
     suspend fun unlock(lockId: UUID): Unit
 
-    @Throws(SDKException::class, BluetoothException::class)
+    @Throws(SDKException::class, BluetoothException::class, UnlockException::class)
     suspend fun unlock(lock: Lock): Unit
 
     @Throws(SDKException::class)
@@ -78,8 +78,7 @@ interface DoorClient {
     @Throws(SDKException::class, NetworkException::class)
     suspend fun getAccessLogs(lockId: UUID): List<AccessLog>
 
-    @Throws(SDKException::class, NetworkException.InvalidTokenException::class,
-        GuestInvitesException::class)
+    @Throws(SDKException::class, NetworkException::class, GuestInvitesException::class)
     suspend fun inviteGuest(
         firstName: String,
         lastName: String,
@@ -107,246 +106,234 @@ interface DoorClient {
 
 ## setupWithToken(activity, token, includeAllLocks)
 
-Authenticates the SDK with the provided token and initializes services.
+Authenticates and initializes the SDK.
 
-First part initializes the SDK (database, https clients, etc).
-If the user from token is different from stored user, all cached data is deleted.
-The token is stored in memory only (never persisted).
-The includeAllLocks flag is stored and used when retrieving locks.
+Initializes storage and network clients, then authenticates with the token. If the
+token's user differs from the stored user, all cached data is deleted first. The token
+is kept in memory only and never persisted. The includeAllLocks flag is stored and
+applied whenever locks are retrieved.
 
-- **`activity`** — live foreground Activity for any setup UI and permission/consent flows
-- **`token`** — the user authentication token.
-- **`includeAllLocks`** — if true, include all locks; otherwise only partner locks.
-- **Returns:** Completes when authentication and setup finishes.
-- **Throws:** `IllegalArgumentException` if [activity] cannot host setup UI
-- **Throws:** [SetupException](doc:android-ref-setupexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
+- **`activity`** — Foreground Activity that can host setup UI.
+- **`token`** — User authentication token.
+- **`includeAllLocks`** — Whether non-partner locks are included.
+- **Throws:** [SetupException](doc:android-ref-setupexception) if the token is invalid, consent is not granted, or setup fails internally.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if no user is stored and the configuration cannot be fetched.
+- **Throws:** `IllegalArgumentException` if the Activity cannot host setup UI.
 
 ## clear()
 
-Performs logout by clearing database and saved token.
+Clears SDK state and authentication.
 
-This method clears all cached data and removes the authentication token.
-After calling clear(), the client must be set up again with setupWithToken().
+Deletes cached data and removes the stored token. After clear the client must be set
+up again with setupWithToken.
 
-- **Returns:** Completes when all data has been cleared.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if clearing state fails internally.
 
 ## fetchLocks()
 
-Retrieves the locks of the current user.
+Fetches the current user's locks.
 
-Makes an API call to fetch the latest locks and updates the database.
-Returns locks from the database (API results or cached values if API fails).
+Refreshes locks from the network and updates the cache. An invalid or expired token
+always fails, even when cached locks exist. Other network failures return cached locks
+when available and fail only when the cache is empty.
 
-- **Returns:** List of locks available to the user.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the token is invalid or expired, and on other network failures only when the cache is empty.
 
 ## listenForLocks()
 
-Returns a stream of lock list updates.
+Returns an update-only stream of lock lists.
 
-Connects to the database and emits updates whenever locks change.
-Makes an initial API call to fetch locks and update the database.
-As long as the listener is connected, will receive all lock updates.
-The stream does not emit errors.
+Initialization is checked when the stream is created. The stream emits cached state,
+including an empty list, and subsequent updates, and starts a best-effort refresh.
+Later refresh and observation failures are logged internally; the stream has no error
+channel.
 
-- **Returns:** a Flow of lock list updates.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## listenForLocks(listener)
 
-Callback-based variant of listenForLocks.
+Callback variant of listenForLocks.
 
-- **`listener`** — Callback to receive `List<Lock>` updates
-- **Returns:** Unit
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+Initialization is checked before the listener is registered. Cached state, including
+an empty list, and subsequent updates are delivered through the listener; no error
+callback is provided.
+
+- **`listener`** — Listener receiving lock updates.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## stopListenForLocks(listener)
 
-Stops delivering lock updates to the provided listener.
+Stops delivering lock updates to the listener.
 
-Synchronous: the listener is detached from the registry before this method returns.
-No-op when called with a listener that is not currently registered.
+The listener is detached before this method returns; calling with an unregistered
+listener is a no-op. One in-flight update that began before detachment may still
+complete.
 
-Note: cancellation of the underlying collector is cooperative. A single in-flight `onUpdate`
-callback that began before cancellation propagated may still complete.
-
-- **`listener`** — The listener to detach.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **`listener`** — Listener to detach.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## unlock(lockId)
 
-Starts an explicit unlock for a given lock.
+Starts an explicit unlock for the lock with the given identifier.
 
-Note: when running an explicit unlock, if proximity unlock is active,
-it will be paused and resumed after the explicit unlock completes.
-If the lock needs setup sync before unlock, a [UnlockEvent](doc:android-ref-unlockevent) with status
-[UnlockStatus.SetupSync](doc:android-ref-unlockstatus) is
-emitted through `listenForUnlockEvents`.
+Fails before any Bluetooth work when the identifier does not match a known lock. If
+proximity unlock is active, its current attempt and scan are paused; scanning resumes
+after this unlock finishes only while the same proximity session is still active. If
+the lock needs a setup sync first, an UnlockEvent with status SetupSync is emitted
+through listenForUnlockEvents.
 
-- **`lockId`** — the ID of the lock to unlock.
-- **Returns:** Completes when the unlock request is initiated.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception)
+- **`lockId`** — Identifier of the lock to unlock.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception) if Bluetooth is disabled or permissions are missing.
+- **Throws:** [UnlockException](doc:android-ref-unlockexception) if the identifier does not match a known lock.
 
 ## unlock(lock)
 
-Starts an explicit unlock for a given lock model.
+Android convenience overload accepting a current Lock model.
 
-The SDK validates the supplied lock against its current cache before starting BLE work.
-If the model is stale or not present in cache, an unlock failure event is emitted with
-[UnlockFailureReason.Internal](doc:android-ref-unlockfailurereason) (code `LOCK_NOT_RECOGNIZED`).
+Fails before any Bluetooth work when the model is stale or does not match a known
+lock. Proximity pause and resume behave as in the identifier overload.
 
-- **`lock`** — the lock model to unlock.
-- **Returns:** Completes when the unlock request is initiated.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception)
+- **`lock`** — Current lock model to unlock.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception) if Bluetooth is disabled or permissions are missing.
+- **Throws:** [UnlockException](doc:android-ref-unlockexception) if the lock is not recognized.
 
 ## cancelUnlock()
 
 Cancels the active unlock attempt, if any.
 
-Cancels an in-flight explicit unlock or proximity unlock attempt and emits a
-[UnlockEvent](doc:android-ref-unlockevent) with status [UnlockStatus.Canceled](doc:android-ref-unlockstatus).
-If no unlock attempt is active, this method completes without emitting an event.
+Emits an UnlockEvent with status Canceled for an in-flight attempt and completes
+silently otherwise. Proximity mode stays enabled; use stopProximityUnlock to disable
+it.
 
-This does not disable proximity unlock mode. Use `stopProximityUnlock` to stop
-proximity unlock scanning.
-
-- **Returns:** Completes when cancellation has been requested.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## startProximityUnlock()
 
-Starts the proximity unlock process.
+Starts proximity unlock scanning.
 
-Begins scanning for nearby locks and will automatically unlock
-the closest eligible lock found within the SDK's BLE range threshold.
+Scans for nearby locks and automatically unlocks the closest eligible lock within the
+SDK's BLE range threshold.
 
-- **Returns:** Completes when proximity unlock scanning starts.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception) if Bluetooth is disabled or permissions are missing.
 
 ## stopProximityUnlock()
 
-Stops the proximity unlock process.
+Stops proximity unlock scanning.
 
-- **Returns:** Completes when proximity unlock is stopped.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+If an explicit unlock has paused scanning, that unlock keeps running and scanning does
+not resume after it finishes.
+
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## listenForUnlockEvents()
 
-Returns a stream of unlock events from both explicit and proximity unlocks.
+Returns unlock lifecycle events from explicit and proximity unlocks.
 
-The stream contains progress and result events for all unlock operations.
-Apps should handle status [UnlockStatus.SetupSync](doc:android-ref-unlockstatus)
-to show progress when first-time setup sync is required before a door can unlock, and
-[UnlockStatus.Canceled](doc:android-ref-unlockstatus) to react to `cancelUnlock()`.
+Carries progress and result events for every unlock operation. Handle status
+SetupSync to show progress when a first-time setup sync is required, and Canceled to
+react to cancelUnlock.
 
-- **Returns:** a Flow of unlock events.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## listenForUnlockEvents(listener)
 
-Callback-based variant of listenForUnlockEvents.
+Callback variant of listenForUnlockEvents.
 
-- **`listener`** — Callback to receive UnlockEvent updates
-- **Returns:** Unit
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+Events are delivered through the listener; no error callback is provided.
+
+- **`listener`** — Listener receiving unlock events.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## stopListenForUnlockEvents(listener)
 
-Stops delivering unlock events to the provided listener.
+Stops delivering unlock events to the listener.
 
-Synchronous: the listener is detached from the registry before this method returns.
-No-op when called with a listener that is not currently registered.
+The listener is detached before this method returns; calling with an unregistered
+listener is a no-op. One in-flight event that began before detachment may still
+complete.
 
-Note: cancellation of the underlying collector is cooperative. A single in-flight `onNewEvent`
-callback that began before cancellation propagated may still complete.
-
-- **`listener`** — The listener to detach.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
+- **`listener`** — Listener to detach.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
 
 ## sync(lockId)
 
-Starts the active sync process for a lock.
+Runs active sync for a lock.
 
-Synchronizes lock data with the backend and returns when complete.
+Synchronizes lock data with the backend and returns when the sync finishes.
 
-- **`lockId`** — ID of the lock to sync.
-- **Returns:** Completes when synchronization finishes.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
-- **Throws:** [SyncException](doc:android-ref-syncexception)
+- **`lockId`** — Identifier of the lock to sync.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [BluetoothException](doc:android-ref-bluetoothexception) if Bluetooth is disabled or permissions are missing.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the sync packages cannot be fetched.
+- **Throws:** [SyncException](doc:android-ref-syncexception) if the sync is canceled, an unlock is in progress, or syncing fails internally.
 
 ## getAccessLogs(lockId)
 
-Retrieves access logs for a specific lock.
+Retrieves access logs for a lock.
 
-Makes an API call to fetch the access logs for the given lock.
-
-- **`lockId`** — ID of the lock.
-- **Returns:** List of access log entries for the lock.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
+- **`lockId`** — Identifier of the lock.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the request fails or the token is invalid.
 
 ## inviteGuest(firstName, lastName, email, phone, lockIds, inviteType)
 
-Shares access to the specified locks with a guest using the provided settings.
+Grants a guest access to the requested locks.
 
-- **`firstName`** — first name of the guest.
-- **`lastName`** — last name of the guest.
-- **`email`** — email of the guest (nullable). Required for permanent invites.
-- **`phone`** — phone number of the guest (nullable). At least one of email or phone must be provided for legacy invites.
-- **`lockIds`** — list of lock UUIDs to grant access to.
-- **`inviteType`** — type of invite (InAppInvite or TempDoorcodeInvite) with access settings.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException.InvalidTokenException](doc:android-ref-networkexception)
-- **Throws:** [GuestInvitesException](doc:android-ref-guestinvitesexception)
+- **`firstName`** — First name of the guest.
+- **`lastName`** — Last name of the guest.
+- **`email`** — Email of the guest; required for permanent invites.
+- **`phone`** — Phone number of the guest; a temporary doorcode invite needs an email or a phone.
+- **`lockIds`** — Locks to grant access to.
+- **`inviteType`** — Invite settings, InAppInvite or TemporaryDoorcodeInvite.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the token is invalid or expired.
+- **Throws:** [GuestInvitesException](doc:android-ref-guestinvitesexception) with per-lock results when any invite operation fails.
 
 ## revokeGuestAllAccesses(guestId)
 
-Revokes all accesses for a given guest.
+Revokes every access of a guest.
 
-- **`guestId`** — UUID of the guest whose accesses should be revoked.
-- **Returns:** Completes when all accesses have been revoked.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
-- **Throws:** [RevokeGuestException](doc:android-ref-revokeguestexception)
+Attempts every applicable revocation.
+Cancellation stops immediately; otherwise every operation is attempted and the first
+selected failure is reported, preferring invalid-token, revoke, network, then internal
+errors. Per-access results are not returned.
+
+- **`guestId`** — Identifier of the guest whose accesses are revoked.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the token is invalid or expired.
+- **Throws:** [RevokeGuestException](doc:android-ref-revokeguestexception) if the passcode type cannot be revoked or a revocation fails.
 
 ## revokeGuestAccess(guestId, lockId)
 
-Revokes a guest's access to a specific lock.
+Revokes one guest access.
 
-Note: `lockId` maps to the backend's `deviceUuid` path parameter.
+The lock identifier maps to the backend's device identifier.
 
-- **`guestId`** — UUID of the guest whose access should be revoked.
-- **`lockId`** — UUID of the lock/device to revoke access to.
-- **Returns:** Completes when the access has been revoked.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
-- **Throws:** [RevokeGuestException](doc:android-ref-revokeguestexception)
+- **`guestId`** — Identifier of the guest whose access is revoked.
+- **`lockId`** — Identifier of the lock to revoke access to.
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if the request fails or the token is invalid.
+- **Throws:** [RevokeGuestException](doc:android-ref-revokeguestexception) if the passcode type cannot be revoked or the revocation fails.
 
 ## guests()
 
-Gets information for all guests with shared access.
+Retrieves all guests with shared access.
 
-- **Returns:** List of all guests with shared access.
-- **Throws:** [SDKException](doc:android-ref-sdkexception)
-- **Throws:** [NetworkException](doc:android-ref-networkexception)
+- **Throws:** [SDKException](doc:android-ref-sdkexception) if the SDK is not initialized.
+- **Throws:** [NetworkException](doc:android-ref-networkexception) if fetching guests fails.
 
 ## setLogLevel(level)
 
-Sets the logging verbosity.
+Sets the minimum SDK logging level.
 
-Higher levels (e.g. [LogLevel.DEBUG](doc:android-ref-loglevel)) produce more detailed output, while lower
-levels (e.g. [LogLevel.ERROR](doc:android-ref-loglevel)) restrict logs to important issues only. Safe to call
-before or after `setupWithToken`; useful for tracing setup itself.
+DEBUG produces detailed output; ERROR restricts logs to important issues. Safe to
+call before setupWithToken.
 
-- **`level`** — The minimum log level that should be recorded.
+- **`level`** — Minimum log level that is recorded.
 
 ## Related types
 
@@ -366,10 +353,11 @@ before or after `setupWithToken`; useful for tracing setup itself.
 - [SDKException](doc:android-ref-sdkexception)
 - [SetupException](doc:android-ref-setupexception)
 - [SyncException](doc:android-ref-syncexception)
-- [TempDoorcodeInvite](doc:android-ref-tempdoorcodeinvite)
+- [TemporaryDoorcodeInvite](doc:android-ref-temporarydoorcodeinvite)
 - [UnlockEvent](doc:android-ref-unlockevent)
 - [UnlockEventsListener](doc:android-ref-unlockeventslistener)
+- [UnlockEventStatus](doc:android-ref-unlockeventstatus)
+- [UnlockException](doc:android-ref-unlockexception)
 - [UnlockFailureReason](doc:android-ref-unlockfailurereason)
-- [UnlockStatus](doc:android-ref-unlockstatus)
 
 Package: `com.door.opendoor.android.core.api`.

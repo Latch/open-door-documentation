@@ -1,12 +1,12 @@
 ---
 title: InviteGuestError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-
+[Guest](doc:ios-ref-guest) invitation business-rule failure.
 
 ## Declaration
 
@@ -19,6 +19,9 @@ public enum InviteGuestError : String, OpenDOORSDKError {
   case invalidStartTime
   case endTimeNotSupported
   case userCanNotShare
+  case shareableAccessRequired
+  case sharingNotEnabled
+  case requestedTimeOutsideShareableAccess
   public init?(rawValue: String)
   public typealias RawValue = String
   public var rawValue: String {
@@ -53,7 +56,7 @@ Inherited from `CustomStringConvertible.description`.
 case emailAndPhoneProvided
 ```
 
-Both an email and phone was provided for the temporary guest.
+Both an email and phone were provided for the temporary guest.
 
 ## InviteGuestError.emailOrPhoneRequired
 
@@ -103,13 +106,37 @@ case invalidStartTime
 
 The start time is either in the past or too far in the future.
 
+## InviteGuestError.requestedTimeOutsideShareableAccess
+
+```swift
+case requestedTimeOutsideShareableAccess
+```
+
+The requested guest window falls outside the user’s own shareable access window.
+
+## InviteGuestError.shareableAccessRequired
+
+```swift
+case shareableAccessRequired
+```
+
+The user holds no active shareable access to this lock.
+
+## InviteGuestError.sharingNotEnabled
+
+```swift
+case sharingNotEnabled
+```
+
+The access exists but was granted without sharing enabled.
+
 ## InviteGuestError.userCanNotShare
 
 ```swift
 case userCanNotShare
 ```
 
-The user does not have sharable access to the devices provided.
+The user may not share access at all.
 
 ## Related types
 

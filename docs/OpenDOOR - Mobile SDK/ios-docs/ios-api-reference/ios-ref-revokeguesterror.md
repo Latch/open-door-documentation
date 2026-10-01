@@ -1,12 +1,12 @@
 ---
 title: RevokeGuestError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-
+[Guest](doc:ios-ref-guest)-access revocation failure.
 
 ## Declaration
 
@@ -38,7 +38,7 @@ Inherited from `CustomStringConvertible.description`.
 case deviceNotFound
 ```
 
-Failed to find a device
+Device was not found.
 
 ## RevokeGuestError.internal(_:)
 
@@ -46,7 +46,7 @@ Failed to find a device
 case `internal`(String)
 ```
 
-An unexpected error occured.
+Internal revocation error.
 
 ## RevokeGuestError.passcodeTypeCantBeRevoked
 
@@ -54,7 +54,7 @@ An unexpected error occured.
 case passcodeTypeCantBeRevoked
 ```
 
-The [Guest](doc:ios-ref-guest) must have only PERMANENT Passcode Type access to this Device (aka App Access) to be able to revoke access
+This passcode type cannot be revoked.
 
 ## Related types
 

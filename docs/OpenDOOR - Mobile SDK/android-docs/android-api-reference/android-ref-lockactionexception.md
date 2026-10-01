@@ -1,24 +1,23 @@
 ---
 title: LockActionException
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Exception thrown when an action against a specific lock fails. Carries the lock UUID
-and the underlying cause; the default message embeds both for easier diagnostics.
+Failure while acting on one lock.
 
 ## Declaration
 
 ```kotlin
 class LockActionException(
     val lockId: UUID,
-    cause: Throwable,
-    message: String = "Lock action failed for $lockId: ${cause.message.orEmpty()}",
-) : Exception(message, cause)
+    val error: Exception,
+    message: String = "Lock action failed for $lockId: ${error.message.orEmpty()}",
+) : Exception(message, error)
 ```
 
 ## Related types

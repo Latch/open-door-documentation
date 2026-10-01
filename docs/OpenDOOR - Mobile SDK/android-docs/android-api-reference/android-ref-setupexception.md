@@ -1,23 +1,23 @@
 ---
 title: SetupException
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Base exception for setup failures
+Setup failure.
 
 ## Declaration
 
 ```kotlin
 sealed class SetupException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
 
-    class InvalidTokenException(message: String, throwable: Throwable? = null) : SetupException(message, throwable)
+    class InvalidTokenException(message: String = "The supplied token is invalid or expired", throwable: Throwable? = null) : SetupException(message, throwable)
 
-    class ConsentNotGrantedException(message: String, throwable: Throwable? = null) : SetupException(message, throwable)
+    class ConsentNotGrantedException(message: String = "User consent was not granted", throwable: Throwable? = null) : SetupException(message, throwable)
 
     class SetupInternalException(message: String, throwable: Throwable? = null) : SetupException(message, throwable)
 }

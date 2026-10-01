@@ -1,23 +1,23 @@
 ---
 title: Guest
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Person with shared access to one or more locks
+Person with shared access to one or more locks.
 
 ## Declaration
 
 ```swift
 public struct Guest : Equatable {
-  public var id: UUID
-  public var firstName: String
-  public var lastName: String?
-  public var email: String?
-  public var phone: String?
-  public var guestAccesses: [GuestAccess]
+  public let id: UUID
+  public let firstName: String
+  public let lastName: String?
+  public let email: String?
+  public let phone: String?
+  public let guestAccesses: [GuestAccess]
   public init(id: UUID, firstName: String, lastName: String?, email: String?, phone: String?, guestAccesses: [GuestAccess])
   public static func == (a: Guest, b: Guest) -> Bool
 }
@@ -26,7 +26,7 @@ public struct Guest : Equatable {
 ## email
 
 ```swift
-var email: String?
+let email: String?
 ```
 
 [Guest](doc:ios-ref-guest)’s email address
@@ -34,7 +34,7 @@ var email: String?
 ## firstName
 
 ```swift
-var firstName: String
+let firstName: String
 ```
 
 [Guest](doc:ios-ref-guest)’s first name
@@ -42,7 +42,7 @@ var firstName: String
 ## guestAccesses
 
 ```swift
-var guestAccesses: [GuestAccess]
+let guestAccesses: [GuestAccess]
 ```
 
 [Lock](doc:ios-ref-lock)-specific access entries
@@ -50,7 +50,7 @@ var guestAccesses: [GuestAccess]
 ## id
 
 ```swift
-var id: UUID
+let id: UUID
 ```
 
 Unique guest identifier
@@ -64,7 +64,7 @@ init(id: UUID, firstName: String, lastName: String?, email: String?, phone: Stri
 ## lastName
 
 ```swift
-var lastName: String?
+let lastName: String?
 ```
 
 [Guest](doc:ios-ref-guest)’s last name
@@ -72,7 +72,7 @@ var lastName: String?
 ## phone
 
 ```swift
-var phone: String?
+let phone: String?
 ```
 
 [Guest](doc:ios-ref-guest)’s phone number

@@ -1,10 +1,10 @@
 ---
 title: DOORClient
-excerpt: OpenDOOR iOS SDK 2.2.0 protocol reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 protocol reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
 Public [OpenDOOR](doc:ios-ref-opendoor) SDK Core Module.
 
@@ -15,8 +15,6 @@ Setup flow:
 1. Call setupWithToken() with a valid token to authenticate
 2. Use listenForLocks() or fetchLocks() to retrieve lock data
 3. Use unlock() or proximity unlock features as needed
-
-
 
 ## Declaration
 
@@ -53,11 +51,15 @@ public protocol DOORClient {
 func cancelUnlock() throws
 ```
 
-Cancel the active unlock
+Cancels the active unlock attempt, if any.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+Emits an [UnlockEvent](doc:ios-ref-unlockevent) with status Canceled for an in-flight attempt and completes silently otherwise. Proximity mode stays enabled; use stopProximityUnlock to disable it.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## clear()
 
@@ -65,13 +67,15 @@ Cancel the active unlock
 func clear() async throws
 ```
 
-Performs logout by clearing database and saved token.
+Clears SDK state and authentication.
 
 ### Discussion
 
-This method clears all cached data and removes the authentication token. After calling clear(), the client must be set up again with setupWithToken().
+Deletes cached data and removes the stored token. After clear the client must be set up again with setupWithToken.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if clearing state fails internally.
 
 ## fetchLocks()
 
@@ -79,18 +83,16 @@ This method clears all cached data and removes the authentication token. After c
 func fetchLocks() async throws -> [Lock]
 ```
 
-Retrieves the locks of the current user.
-
-### Return Value
-
-List of locks available to the user.
-
+Fetches the current user’s locks.
 
 ### Discussion
 
-Makes an API call to fetch the latest locks and updates the database. Returns locks from the database (API results or cached values if API fails).
+Refreshes locks from the network and updates the cache. An invalid or expired token always fails, even when cached locks exist. Other network failures return cached locks when available and fail only when the cache is empty.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if the token is invalid or expired, and on other network failures only when the cache is empty.
 
 ## getAccessLogs(lockID:)
 
@@ -98,23 +100,19 @@ Makes an API call to fetch the latest locks and updates the database. Returns lo
 func getAccessLogs(lockID: UUID) async throws -> [AccessLog]
 ```
 
-Retrieves access logs for a specific lock.
+Retrieves access logs for a lock.
 
 ### Parameters
 
 
-- `lockID`: ID of the lock.
-
-### Return Value
-
-List of access log entries for the lock.
-
+- `lockID`: Identifier of the lock.
 
 ### Discussion
 
-Makes an API call to fetch the access logs for the given lock.
+**Throws:**
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror)
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if the request fails or the token is invalid.
 
 ## guests()
 
@@ -122,24 +120,22 @@ Makes an API call to fetch the access logs for the given lock.
 func guests() async throws -> [Guest]
 ```
 
-Gets information for all guests with shared access.
-
-### Return Value
-
-List of all guests with shared access.
-
+Retrieves all guests with shared access.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if fetching guests fails.
 
 ## inviteGuest(firstName:lastName:email:phone:lockIDs:inviteType:)
 
 ```swift
-func inviteGuest(firstName: String, lastName: String, email: String?, phone: String?, lockIDs: [UUID], inviteType: InviteType) async throws
+func inviteGuest(firstName: String, lastName: String, email: String?, phone: String?, lockIDs: [UUID], inviteType: any InviteType) async throws
 ```
 
-Shares access to selected locks and to the entire path if building support this feature with a guest using the provided settings.
+Grants a guest access to the requested locks.
 
 ### Parameters
 
@@ -148,19 +144,21 @@ Shares access to selected locks and to the entire path if building support this 
 
 - `lastName`: Last name of the guest.
 
-- `email`: Email of the guest (optional). At least one of `email` or `phone` must be provided.
+- `email`: Email of the guest; required for permanent invites.
 
-- `phone`: Phone number of the guest (optional). At least one of `email` or `phone` must be provided.
+- `phone`: Phone number of the guest; a temporary doorcode invite needs an email or a phone.
 
-- `lockIDs`: UUIDs of the DOOR locks to add to the guest’s access.
+- `lockIDs`: Locks to grant access to.
 
-- `inviteType`: Type of invite (e.g., `InAppInvite` or `TemporaryDoorcodeInvite`) with access settings.
+- `inviteType`: Invite settings, [InAppInvite](doc:ios-ref-inappinvite) or [TemporaryDoorcodeInvite](doc:ios-ref-temporarydoorcodeinvite).
 
 ### Discussion
 
-Note: For email and phone parameters, at least one must be provided. If both are `nil`, a network error will be returned. This operation may partially succeed. See [GuestInvitesError](doc:ios-ref-guestinviteserror) for details about any locks that failed.
+**Throws:**
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror), [GuestInvitesError](doc:ios-ref-guestinviteserror)
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if the token is invalid or expired.
+- [GuestInvitesError](doc:ios-ref-guestinviteserror) with per-lock results when any invite operation fails.
 
 ## listenForLocks()
 
@@ -168,18 +166,15 @@ Note: For email and phone parameters, at least one must be provided. If both are
 func listenForLocks() throws -> AsyncStream<[Lock]>
 ```
 
-Returns a stream of lock list updates.
-
-### Return Value
-
-A AsyncStream of lock list updates.
-
+Returns an update-only stream of lock lists.
 
 ### Discussion
 
-Connects to the database and emits updates whenever locks change. Makes an initial API call to fetch locks and update the database. As long as the listener is connected, will receive all lock updates. The stream does not emit errors.
+Initialization is checked when the stream is created. The stream emits cached state, including an empty list, and subsequent updates, and starts a best-effort refresh. Later refresh and observation failures are logged internally; the stream has no error channel.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## listenForLocks(listener:)
 
@@ -187,16 +182,20 @@ Connects to the database and emits updates whenever locks change. Makes an initi
 func listenForLocks(listener: LocksListener) throws
 ```
 
-Callback-based variant of listenForLocks
+Callback variant of listenForLocks.
 
 ### Parameters
 
 
-- `listener`: Callback to receive [[Lock](doc:ios-ref-lock)] updates
+- `listener`: Listener receiving lock updates.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+Initialization is checked before the listener is registered. Cached state, including an empty list, and subsequent updates are delivered through the listener; no error callback is provided.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## listenForLocksPublisher()
 
@@ -204,16 +203,13 @@ Callback-based variant of listenForLocks
 func listenForLocksPublisher() throws -> AnyPublisher<[Lock], Never>
 ```
 
-Combine variant of listenForLocks
-
-### Return Value
-
-A Publisher of lock list updates.
-
+Combine publisher variant of listenForLocks.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## listenForUnlockEvents()
 
@@ -221,18 +217,15 @@ A Publisher of lock list updates.
 func listenForUnlockEvents() throws -> AsyncStream<UnlockEvent>
 ```
 
-Returns a stream of unlock events from both explicit and proximity unlocks.
-
-### Return Value
-
-A AsyncStream of unlock events.
-
+Returns unlock lifecycle events from explicit and proximity unlocks.
 
 ### Discussion
 
-The stream will contain progress and result events for all unlock operations.
+Carries progress and result events for every unlock operation. Handle status SetupSync to show progress when a first-time setup sync is required, and Canceled to react to cancelUnlock.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## listenForUnlockEvents(listener:)
 
@@ -240,11 +233,20 @@ The stream will contain progress and result events for all unlock operations.
 func listenForUnlockEvents(listener: UnlockEventsListener) throws
 ```
 
-Callback-based variant of listenForUnlockEvents
+Callback variant of listenForUnlockEvents.
+
+### Parameters
+
+
+- `listener`: Listener receiving unlock events.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+Events are delivered through the listener; no error callback is provided.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## revokeGuestAccess(guestID:lockID:)
 
@@ -252,20 +254,24 @@ Callback-based variant of listenForUnlockEvents
 func revokeGuestAccess(guestID: UUID, lockID: UUID) async throws
 ```
 
-Revokes a guest’s access to a specific lock.
+Revokes one guest access.
 
 ### Parameters
 
 
-- `guestID`: UUID of the guest whose accesses will be revoked.
+- `guestID`: Identifier of the guest whose access is revoked.
 
-- `lockID`: UUID of the lock to revoke access to.
+- `lockID`: Identifier of the lock to revoke access to.
 
 ### Discussion
 
-Use this to remove access to a single lock without affecting other locks the guest may have access to.
+The lock identifier maps to the backend’s device identifier.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror), [RevokeGuestError](doc:ios-ref-revokeguesterror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if the request fails or the token is invalid.
+- [RevokeGuestError](doc:ios-ref-revokeguesterror) if the passcode type cannot be revoked or the revocation fails.
 
 ## revokeGuestAllAccesses(guestID:)
 
@@ -273,20 +279,22 @@ Use this to remove access to a single lock without affecting other locks the gue
 func revokeGuestAllAccesses(guestID: UUID) async throws
 ```
 
-Revokes all accesses of a guest.
+Revokes every access of a guest.
 
 ### Parameters
 
 
-- `guestID`: UUID of the guest whose accesses will be revoked.
+- `guestID`: Identifier of the guest whose accesses are revoked.
 
 ### Discussion
 
-Use this to remove a guest’s ability to unlock any DOOR locks they previously had access to.
+Attempts every applicable revocation. Cancellation stops immediately; otherwise every operation is attempted and the first selected failure is reported, preferring invalid-token, revoke, network, then internal errors. Per-access results are not returned.
 
-This operation may partially succeed.
+**Throws:**
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [NetworkError](doc:ios-ref-networkerror), [RevokeGuestError](doc:ios-ref-revokeguesterror)
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [NetworkError](doc:ios-ref-networkerror) if the token is invalid or expired.
+- [RevokeGuestError](doc:ios-ref-revokeguesterror) if the passcode type cannot be revoked or a revocation fails.
 
 ## setLogLevel(_:)
 
@@ -294,16 +302,16 @@ This operation may partially succeed.
 func setLogLevel(_ level: LogLevel)
 ```
 
-Sets the logging verbosity
+Sets the minimum SDK logging level.
 
 ### Parameters
 
 
-- `level`: The minimum log level that should be recorded. Defaults to `.info`.
+- `level`: Minimum log level that is recorded.
 
 ### Discussion
 
-Use this to control how much diagnostic information the SDK logs. Higher levels (e.g. `.debug`) produce more detailed output, while lower levels (e.g. `.error`) restrict logs to important issues only.
+DEBUG produces detailed output; ERROR restricts logs to important issues. Safe to call before setupWithToken.
 
 ## setupWithToken(token:includeAllLocks:)
 
@@ -311,20 +319,23 @@ Use this to control how much diagnostic information the SDK logs. Higher levels 
 func setupWithToken(token: String, includeAllLocks: Bool) async throws
 ```
 
-Authenticates the SDK with the provided token and initializes services.
+Authenticates and initializes the SDK.
 
 ### Parameters
 
 
-- `token`: The user authentication token.
+- `token`: User authentication token.
 
-- `includeAllLocks`: If true, include all locks; otherwise only partner locks.
+- `includeAllLocks`: Whether non-partner locks are included.
 
 ### Discussion
 
-First part initializes the SDK (database, https clients, etc). If the user from token is different from stored user, all cached data is deleted. The token is stored in memory only (never persisted). The includeAllLocks flag is stored and used when retrieving locks.
+Initializes storage and network clients, then authenticates with the token. If the token’s user differs from the stored user, all cached data is deleted first. The token is kept in memory only and never persisted. The includeAllLocks flag is stored and applied whenever locks are retrieved.
 
-**Throws:** [SetupError](doc:ios-ref-setuperror), [NetworkError](doc:ios-ref-networkerror)
+**Throws:**
+
+- [SetupError](doc:ios-ref-setuperror) if the token is invalid, consent is not granted, or setup fails internally.
+- [NetworkError](doc:ios-ref-networkerror) if no user is stored and the configuration cannot be fetched.
 
 ## startProximityUnlock()
 
@@ -332,13 +343,16 @@ First part initializes the SDK (database, https clients, etc). If the user from 
 func startProximityUnlock() throws
 ```
 
-Starts the proximity unlock process.
+Starts proximity unlock scanning.
 
 ### Discussion
 
-Begins scanning for nearby locks and will automatically unlock the first eligible lock found within range.
+Scans for nearby locks and automatically unlocks the closest eligible lock within the SDK’s BLE range threshold.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [BluetoothError](doc:ios-ref-bluetootherror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [BluetoothError](doc:ios-ref-bluetootherror) if Bluetooth is disabled or permissions are missing.
 
 ## stopListenForLocks(listener:)
 
@@ -346,11 +360,20 @@ Begins scanning for nearby locks and will automatically unlock the first eligibl
 func stopListenForLocks(listener: LocksListener) throws
 ```
 
-Stops delivering lock updates to the provided listener.
+Stops delivering lock updates to the listener.
+
+### Parameters
+
+
+- `listener`: Listener to detach.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+The listener is detached before this method returns; calling with an unregistered listener is a no-op. One in-flight update that began before detachment may still complete.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## stopListenForUnlockEvents(listener:)
 
@@ -358,11 +381,20 @@ Stops delivering lock updates to the provided listener.
 func stopListenForUnlockEvents(listener: UnlockEventsListener) throws
 ```
 
-Stops delivering unlock events to the provided listener.
+Stops delivering unlock events to the listener.
+
+### Parameters
+
+
+- `listener`: Listener to detach.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+The listener is detached before this method returns; calling with an unregistered listener is a no-op. One in-flight event that began before detachment may still complete.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## stopProximityUnlock()
 
@@ -370,11 +402,15 @@ Stops delivering unlock events to the provided listener.
 func stopProximityUnlock() throws
 ```
 
-Stops the proximity unlock process.
+Stops proximity unlock scanning.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+If an explicit unlock has paused scanning, that unlock keeps running and scanning does not resume after it finishes.
+
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## sync(lockID:)
 
@@ -382,18 +418,23 @@ Stops the proximity unlock process.
 func sync(lockID: UUID) async throws
 ```
 
-Starts the active sync process for a lock.
+Runs active sync for a lock.
 
 ### Parameters
 
 
-- `lockID`: ID of the lock to sync.
+- `lockID`: Identifier of the lock to sync.
 
 ### Discussion
 
-Synchronizes lock data with the backend and returns when complete.
+Synchronizes lock data with the backend and returns when the sync finishes.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [BluetoothError](doc:ios-ref-bluetootherror), [NetworkError](doc:ios-ref-networkerror), [SyncError](doc:ios-ref-syncerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [BluetoothError](doc:ios-ref-bluetootherror) if Bluetooth is disabled or permissions are missing.
+- [NetworkError](doc:ios-ref-networkerror) if the sync packages cannot be fetched.
+- [SyncError](doc:ios-ref-syncerror) if the sync is canceled, an unlock is in progress, or syncing fails internally.
 
 ## unlock(lockID:)
 
@@ -401,18 +442,22 @@ Synchronizes lock data with the backend and returns when complete.
 func unlock(lockID: UUID) async throws
 ```
 
-Starts an explicit unlock for a given lock.
+Starts an explicit unlock for the lock with the given identifier.
 
 ### Parameters
 
 
-- `lockID`: The ID of the lock to unlock.
+- `lockID`: Identifier of the lock to unlock.
 
 ### Discussion
 
-Note: when running an explicit unlock, if proximity unlock is active, it will be cancelled. Unlock status is published through the unlock event stream APIs: listenForUnlockEvents, unlockEventsPublisher, and the callback-based listenForUnlockEvents.
+Fails before any Bluetooth work when the identifier does not match a known lock. If proximity unlock is active, its current attempt and scan are paused; scanning resumes after this unlock finishes only while the same proximity session is still active. If the lock needs a setup sync first, an [UnlockEvent](doc:ios-ref-unlockevent) with status SetupSync is emitted through listenForUnlockEvents.
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror), [BluetoothError](doc:ios-ref-bluetootherror), [UnlockError](doc:ios-ref-unlockerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
+- [BluetoothError](doc:ios-ref-bluetootherror) if Bluetooth is disabled or permissions are missing.
+- [UnlockError](doc:ios-ref-unlockerror) if the identifier does not match a known lock.
 
 ## unlockEventsPublisher()
 
@@ -420,16 +465,13 @@ Note: when running an explicit unlock, if proximity unlock is active, it will be
 func unlockEventsPublisher() throws -> AnyPublisher<UnlockEvent, Never>
 ```
 
-Combine variant of listenForUnlockEvents
-
-### Return Value
-
-A Publisher of unlock events.
-
+Combine publisher variant of listenForUnlockEvents.
 
 ### Discussion
 
-**Throws:** [SDKError](doc:ios-ref-sdkerror)
+**Throws:**
+
+- [SDKError](doc:ios-ref-sdkerror) if the SDK is not initialized.
 
 ## Related types
 

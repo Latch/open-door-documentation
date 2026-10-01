@@ -1,12 +1,12 @@
 ---
 title: UnlockEventStatus
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Events emitted during unlock operations.
+Lifecycle status carried by an unlock event.
 
 ## Declaration
 
@@ -39,7 +39,7 @@ Unlock was canceled (e.g., when starting unlock for another lock).
 case connectForSetupSync(attempt: UnlockAttempt)
 ```
 
-BLE connection established for setup sync.
+BLE connect phase before the setup sync.
 
 ## UnlockEventStatus.connectForUnlock(attempt:)
 
@@ -47,7 +47,7 @@ BLE connection established for setup sync.
 case connectForUnlock(attempt: UnlockAttempt)
 ```
 
-BLE connection established for unlock.
+BLE connect phase before unlocking.
 
 ## UnlockEventStatus.failed(_:)
 
@@ -63,7 +63,7 @@ Unlock failed.
 case setupSync(attempt: UnlockAttempt)
 ```
 
-Setup sync task completed (success or failure).
+Setup sync before unlock.
 
 ## UnlockEventStatus.started
 
@@ -87,7 +87,7 @@ case success
 case unlock(attempt: UnlockAttempt)
 ```
 
-Unlock task completed (success or failure).
+Unlock phase after the BLE connection is established.
 
 ## UnlockEventStatus.updateSyncPackage
 
@@ -95,7 +95,7 @@ Unlock task completed (success or failure).
 case updateSyncPackage
 ```
 
-Sync package fetched from the network in the recovery flow.
+Sync package download in progress (recovery path).
 
 ## Related types
 

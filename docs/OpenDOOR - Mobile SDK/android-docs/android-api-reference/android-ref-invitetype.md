@@ -1,27 +1,19 @@
 ---
 title: InviteType
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Sealed interface for invite types that define how a guest will receive access.
-
-- **`accessType`** — The type of access granted (Enter or Reach). Can be null.
+Invite types that define how a guest receives access.
 
 ## Declaration
 
 ```kotlin
-sealed interface InviteType {
-    val accessType: AccessType?
-}
+sealed interface InviteType
 ```
-
-## Related types
-
-- [AccessType](doc:android-ref-accesstype)
 
 Package: `com.door.opendoor.android.core.api.model`.

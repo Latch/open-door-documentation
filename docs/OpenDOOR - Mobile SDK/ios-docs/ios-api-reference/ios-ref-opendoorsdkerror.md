@@ -1,12 +1,12 @@
 ---
 title: OpenDOORSDKError
-excerpt: OpenDOOR iOS SDK 2.2.0 protocol reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 protocol reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-A protocol that defines user-presentable errors produced by the [OpenDOOR](doc:ios-ref-opendoor) SDK.
+Common protocol for errors exposed by the [OpenDOOR](doc:ios-ref-opendoor) SDK.
 
 ### Overview
 

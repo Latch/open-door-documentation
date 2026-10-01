@@ -1,12 +1,12 @@
 ---
 title: SyncError
-excerpt: OpenDOOR iOS SDK 2.2.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-Sync access error
+Active sync failure.
 
 ## Declaration
 
@@ -31,7 +31,7 @@ extension SyncError {
 case canceled
 ```
 
-Sync operation was canceled
+Sync was canceled.
 
 ## description
 
@@ -47,7 +47,7 @@ Inherited from `CustomStringConvertible.description`.
 case lockNotFound(String)
 ```
 
-[Lock](doc:ios-ref-lock) not found during sync
+[Lock](doc:ios-ref-lock) not found during sync.
 
 ## SyncError.syncInternalError(_:)
 
@@ -55,7 +55,7 @@ case lockNotFound(String)
 case syncInternalError(String)
 ```
 
-An internal error occurred
+Internal sync error.
 
 ## SyncError.unlockInProgress
 
@@ -63,7 +63,7 @@ An internal error occurred
 case unlockInProgress
 ```
 
-Unlock operation is in progress
+An unlock is already in progress.
 
 ## Related types
 

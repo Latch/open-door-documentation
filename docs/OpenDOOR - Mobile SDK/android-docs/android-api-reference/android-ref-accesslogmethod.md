@@ -1,14 +1,14 @@
 ---
 title: AccessLogMethod
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Method used during the access attempt
+Method used during an access attempt.
 
 ## Declaration
 

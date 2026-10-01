@@ -1,16 +1,15 @@
 ---
 title: GuestAccess
-excerpt: OpenDOOR Android SDK 2.2 API reference
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Access granted to a guest on a specific lock
+Access granted to a guest on a specific lock.
 
-- **`invitationId`** — Invitation ID. Can be null.
 - **`lockId`** — Target lock ID
 - **`lockName`** — Lock name resolved from locks list
 - **`inviteType`** — Invite type for this access
@@ -22,10 +21,9 @@ Access granted to a guest on a specific lock
 
 ```kotlin
 data class GuestAccess(
-    val invitationId: UUID?,
     val lockId: UUID,
     val lockName: String,
-    val inviteType: InviteType?,
+    val inviteType: InviteType,
     val passcodeType: PasscodeType,
     val startTime: Instant,
     val endTime: Instant?

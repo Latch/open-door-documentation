@@ -34,14 +34,14 @@ metadata:
 Or you can add the following dependency to your Package.swift:
 
 ```swift iOS
-.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.2.0")
+.package(url: "https://github.com/Latch/opendoor-sdk-spm.git", from: "2.3.0")
 ```
 
 and add it to your target like this:
 
 ```swift iOS
 dependencies: [
-  .product(name: "OpenDOORCore", package: "OpenDOORSDK")
+  .product(name: "OpenDOORCore", package: "opendoor-sdk-spm")
 ]
 ```
 
@@ -69,7 +69,7 @@ includeAllLocks - determines whether we should load all locks that user can acce
 
 Note:
 
-1. Attempting to call any OpenDOOR SDK function before initialization will throw SDKError.sdkNotInitialized.
+1. Attempting to call any OpenDOOR SDK function before initialization, except `setLogLevel()`, will throw SDKError.sdkNotInitialized.
 
 2. All OpenDOOR SDK APIs are not guaranteed to return on the main thread. If you use the result to update UI, you are responsible for dispatching back to the main thread.
 
@@ -95,7 +95,7 @@ To clear all cached data and remove authentication token call `clear()`. After c
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()` variants. These methods have different behaviors:
 
-* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results or cached values if API fails. If the API request fails with token expired, an error will be thrown even if there is cached data.
+* **`fetchLocks()`**: Waits for the server call to complete before returning. Does not return until the network request finishes (or fails). Use this when you need fresh data and can wait for the network call. Returns API results, or cached values if the API fails and the cache is not empty. If the API request fails with token expired, an error will be thrown even if there is cached data.
 
 * **`listenForLocks`**: Returns cached data immediately, then attempts to refresh from the server in the background. Cached locks are emitted first, then updated locks when the server refresh completes. Use this when you want to show data quickly and update it when fresh data arrives. `listenForLocks` variants do not emit errors from the stream, but the call itself can throw (e.g., SDK not initialized). They can be used to work offline.
 
@@ -135,6 +135,8 @@ Whenever locks are retrieved from the server, configuration data is also synchro
 **Option 3: Listen for locks updates (Combine Publisher)**
 
 ```swift iOS
+ import Combine
+ import Foundation
  import OpenDOORCore
 
  do {
@@ -160,7 +162,13 @@ The listener is weakly retained by the SDK. Keep a strong reference (for example
 ```swift iOS
  import OpenDOORCore
 
- let listener = LockStreamListener()
+ final class MyLocksListener: LocksListener {
+     func onUpdate(locks: [Lock]) {
+         // Use locks list
+     }
+ }
+
+ let listener = MyLocksListener()
  do {
     try client.listenForLocks(listener: listener)
  } catch let error as SDKError {
@@ -211,7 +219,7 @@ This is intended for close-range unlocks, typically when the phone is within a f
  import OpenDOORCore
  
  do {
-    try await client.startProximityUnlock()
+    try client.startProximityUnlock()
  } catch let error as SDKError {
     // Handle SDK errors
  } catch let error as BluetoothError {
@@ -225,7 +233,7 @@ Proximity unlock scanning can be stopped when needed by calling `stopProximityUn
  import OpenDOORCore
 
  do {
-    try await client.stopProximityUnlock()
+    try client.stopProximityUnlock()
  } catch let error as SDKError {
     // Handle SDK errors
  }
@@ -244,25 +252,26 @@ Unlock events from both explicit unlocks and proximity are published through the
     let stream = try client.listenForUnlockEvents()
     for await unlockEvent in stream {
         // Use unlock event
-         switch unlockEvent {
+         switch unlockEvent.status {
           /// Unlock process has started.
-          case started
-          /// BLE connection established for setup sync.
-          case connectForSetupSync(attempt: UnlockAttempt)
-          /// Setup sync task completed (success or failure).
-          case setupSync(attempt: UnlockAttempt)
-          /// Sync package fetched from the network in the recovery flow.
-          case updateSyncPackage
-          /// BLE connection established for unlock.
-          case connectForUnlock(attempt: UnlockAttempt)
-          /// Unlocking task (firts attempt or recovery) in progress.
-          case unlock(attempt: UnlockAttempt)
+          case .started: break
+          /// Connecting to the lock for setup sync.
+          case .connectForSetupSync(let attempt): break
+          /// BLE connection established, setup sync in progress.
+          case .setupSync(let attempt): break
+          /// Sync package is being fetched from the network in the recovery flow.
+          case .updateSyncPackage: break
+          /// Connecting to the lock for unlock.
+          case .connectForUnlock(let attempt): break
+          /// Unlocking task (first attempt or recovery) in progress.
+          case .unlock(let attempt): break
           /// Unlock failed.
-          case failed(UnlockFailureReason)
+          case .failed(let reason): break
           /// Unlock was canceled (e.g., when starting unlock for another lock).
-          case canceled
+          case .canceled: break
           /// Lock was successfully unlocked.
-          case success
+          case .success: break
+          @unknown default: break
         }
     }
  } catch let error as SDKError {
@@ -273,6 +282,8 @@ Unlock events from both explicit unlocks and proximity are published through the
 **Option 2: Listen for unlock events (Combine Publisher)**
 
 ```swift iOS
+ import Combine
+ import Foundation
  import OpenDOORCore
 
  do {
@@ -281,25 +292,26 @@ Unlock events from both explicit unlocks and proximity are published through the
                 .receive(on: DispatchQueue.main)
                 .sink { unlockEvent in
                     // Use unlock event
-                    switch unlockEvent {
+                    switch unlockEvent.status {
                     /// Unlock process has started.
-                    case started
-                    /// BLE connection established for setup sync.
-                    case connectForSetupSync(attempt: UnlockAttempt)
-                    /// Setup sync task completed (success or failure).
-                    case setupSync(attempt: UnlockAttempt)
-                    /// Sync package fetched from the network in the recovery flow.
-                    case updateSyncPackage
-                    /// BLE connection established for unlock.
-                    case connectForUnlock(attempt: UnlockAttempt)
-                    /// Unlocking task (firts attempt or recovery) in progress.
-                    case unlock(attempt: UnlockAttempt)
+                    case .started: break
+                    /// Connecting to the lock for setup sync.
+                    case .connectForSetupSync(let attempt): break
+                    /// BLE connection established, setup sync in progress.
+                    case .setupSync(let attempt): break
+                    /// Sync package is being fetched from the network in the recovery flow.
+                    case .updateSyncPackage: break
+                    /// Connecting to the lock for unlock.
+                    case .connectForUnlock(let attempt): break
+                    /// Unlocking task (first attempt or recovery) in progress.
+                    case .unlock(let attempt): break
                     /// Unlock failed.
-                    case failed(UnlockFailureReason)
+                    case .failed(let reason): break
                     /// Unlock was canceled (e.g., when starting unlock for another lock).
-                    case canceled
+                    case .canceled: break
                     /// Lock was successfully unlocked.
-                    case success
+                    case .success: break
+                    @unknown default: break
                     }
                 }
 
@@ -317,7 +329,13 @@ The listener is weakly retained by the SDK. Keep a strong reference (for example
 ```swift iOS
  import OpenDOORCore
 
- let listener = UnlockEventListener()
+ final class MyUnlockEventsListener: UnlockEventsListener {
+     func onNewEvent(event: UnlockEvent) {
+         // Use unlock event
+     }
+ }
+
+ let listener = MyUnlockEventsListener()
  
  do {
     try client.listenForUnlockEvents(listener: listener)
@@ -395,16 +413,17 @@ Retrieve access logs for a lock.
 
 ### Invite guests
 
-To share access to the selected list of eligible locks (`isSharable == true`) and to the entire path if the building supports this feature, use `inviteGuest`.
+To share access to the selected list of eligible locks (`isShareable == true`), use `inviteGuest`.
 
-A guest invitation can be created with temporary door code access or in-app access with time-based restrictions.
+A guest invitation can be created with temporary door code access (`TemporaryDoorcodeInvite`) or in-app access with time-based restrictions (`InAppInvite`).
 
 This operation may partially succeed. See GuestInvitesError for details about any locks that failed.
 
 ```swift iOS
+ import Foundation
  import OpenDOORCore
 
- let lockIDs: [UUID] = <array of lock IDs where isSharable == true>
+ let lockIDs: [UUID] = <array of lock IDs where isShareable == true>
  do {
     try await client.inviteGuest(
                     firstName: "John",
@@ -412,7 +431,7 @@ This operation may partially succeed. See GuestInvitesError for details about an
                     email: "john@example.com",
                     phone: "+1234567890",
                     lockIDs: lockIDs,
-                    inviteType: inviteType
+                    inviteType: InAppInvite(startTime: Date(), endTime: nil)
                 )
  } catch let error as SDKError {
     // Handle SDK errors
@@ -436,7 +455,7 @@ To remove access to a single lock, without affecting other locks the guest may h
  let guestID = guest.id
  let lockID = lock.id
  do {
-    let guests = try await client.revokeGuestAccess(guestID: guestID, lockID: lockID)
+    try await client.revokeGuestAccess(guestID: guestID, lockID: lockID)
  } catch let error as SDKError {
     // Handle SDK errors
  } catch let error as NetworkError {
@@ -457,7 +476,7 @@ This method performs a best-effort operation. If some revocations fail, the oper
 
  let guestID = guest.id
  do {
-    let guests = try await client.revokeGuestAllAccesses(guestID: guestID)
+    try await client.revokeGuestAllAccesses(guestID: guestID)
  } catch let error as SDKError {
     // Handle SDK errors
  } catch let error as NetworkError {
@@ -494,7 +513,7 @@ To control how much diagnostic information the SDK logs, call `setLogLevel`. It 
 
 <br />
 
-Default log level is error.
+Default log level is info.
 
 ```swift iOS
  import OpenDOORCore

@@ -1,25 +1,25 @@
 ---
 title: Lock
-excerpt: OpenDOOR iOS SDK 2.2.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.2.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
 
-User-visible lock information
+User-visible lock information.
 
 ## Declaration
 
 ```swift
 public struct Lock : Equatable {
-  public var id: UUID
-  public var name: String
-  public var buildingID: UUID
-  public var isShareable: Bool
-  public var startTime: Date
-  public var endTime: Date?
-  public var doorCode: String?
-  public init(id: UUID, name: String, buildingID: UUID, isShareable: Bool, startTime: Date, endTime: Date?, doorCode: String?)
+  public let id: UUID
+  public let name: String
+  public let buildingID: UUID
+  public let startTime: Date
+  public let endTime: Date?
+  public let doorCode: String?
+  public let isShareable: Bool
+  public init(id: UUID, name: String, buildingID: UUID, startTime: Date, endTime: Date?, doorCode: String?, isShareable: Bool)
   public static func == (a: Lock, b: Lock) -> Bool
 }
 ```
@@ -27,7 +27,7 @@ public struct Lock : Equatable {
 ## buildingID
 
 ```swift
-var buildingID: UUID
+let buildingID: UUID
 ```
 
 Building identifier
@@ -35,7 +35,7 @@ Building identifier
 ## doorCode
 
 ```swift
-var doorCode: String?
+let doorCode: String?
 ```
 
 Door access code if available
@@ -43,7 +43,7 @@ Door access code if available
 ## endTime
 
 ```swift
-var endTime: Date?
+let endTime: Date?
 ```
 
 End of access window
@@ -51,21 +51,21 @@ End of access window
 ## id
 
 ```swift
-var id: UUID
+let id: UUID
 ```
 
 Unique lock identifier
 
-## init(id:name:buildingID:isShareable:startTime:endTime:doorCode:)
+## init(id:name:buildingID:startTime:endTime:doorCode:isShareable:)
 
 ```swift
-init(id: UUID, name: String, buildingID: UUID, isShareable: Bool, startTime: Date, endTime: Date?, doorCode: String?)
+init(id: UUID, name: String, buildingID: UUID, startTime: Date, endTime: Date?, doorCode: String?, isShareable: Bool)
 ```
 
 ## isShareable
 
 ```swift
-var isShareable: Bool
+let isShareable: Bool
 ```
 
 Indicates whether this lock can be shared with guests
@@ -73,7 +73,7 @@ Indicates whether this lock can be shared with guests
 ## name
 
 ```swift
-var name: String
+let name: String
 ```
 
 Human-readable lock name
@@ -81,7 +81,7 @@ Human-readable lock name
 ## startTime
 
 ```swift
-var startTime: Date
+let startTime: Date
 ```
 
 Start of access window

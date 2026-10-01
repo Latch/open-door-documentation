@@ -1,42 +1,37 @@
 ---
-title: UnlockStatus
-excerpt: OpenDOOR Android SDK 2.2 API reference
+title: UnlockEventStatus
+excerpt: OpenDOOR Android SDK 2.3 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.2** (2.2 release).
+OpenDOOR Android SDK **2.3** (2.3 release).
 
-Lifecycle status carried by [UnlockEvent.status](doc:android-ref-unlockevent).
-
-Conforms to the OpenDOOR SDK spec: the SDK emits a stream of statuses as it
-progresses through the unlock pipeline (started → setup-sync → connect →
-unlock → terminal). Phased statuses carry [UnlockAttempt](doc:android-ref-unlockattempt) to distinguish the
-first pass from the second-attempt recovery pass.
+Lifecycle status carried by an unlock event.
 
 ## Declaration
 
 ```kotlin
-sealed class UnlockStatus {
+sealed class UnlockEventStatus {
 
-    data object Started : UnlockStatus()
+    data object Started : UnlockEventStatus()
 
-    data class ConnectForSetupSync(val attempt: UnlockAttempt) : UnlockStatus()
+    data class ConnectForSetupSync(val attempt: UnlockAttempt) : UnlockEventStatus()
 
-    data class SetupSync(val attempt: UnlockAttempt) : UnlockStatus()
+    data class SetupSync(val attempt: UnlockAttempt) : UnlockEventStatus()
 
-    data object UpdateSyncPackage : UnlockStatus()
+    data object UpdateSyncPackage : UnlockEventStatus()
 
-    data class ConnectForUnlock(val attempt: UnlockAttempt) : UnlockStatus()
+    data class ConnectForUnlock(val attempt: UnlockAttempt) : UnlockEventStatus()
 
-    data class Unlock(val attempt: UnlockAttempt) : UnlockStatus()
+    data class Unlock(val attempt: UnlockAttempt) : UnlockEventStatus()
 
-    data class Failed(val reason: UnlockFailureReason) : UnlockStatus()
+    data class Failed(val reason: UnlockFailureReason) : UnlockEventStatus()
 
-    data object Canceled : UnlockStatus()
+    data object Canceled : UnlockEventStatus()
 
-    data object Success : UnlockStatus()
+    data object Success : UnlockEventStatus()
 }
 ```
 
@@ -70,7 +65,7 @@ only ever occurs on the second-attempt recovery pass.
 
 Emitted when the SDK enters the BLE connection phase before unlocking.
 
-May follow [ConnectForSetupSync](doc:android-ref-unlockstatus) + [SetupSync](doc:android-ref-unlockstatus), or be the first connect
+May follow [ConnectForSetupSync](doc:android-ref-unlockeventstatus) + [SetupSync](doc:android-ref-unlockeventstatus), or be the first connect
 when no setup sync is required.
 
 ## Unlock
@@ -78,7 +73,7 @@ when no setup sync is required.
 Unlock phase after the BLE connection is established.
 
 Emitted after the BLE connection is established, before the unlock
-operation is transmitted and before the terminal [Success](doc:android-ref-unlockstatus) / [Failed](doc:android-ref-unlockstatus) is known.
+operation is transmitted and before the terminal [Success](doc:android-ref-unlockeventstatus) / [Failed](doc:android-ref-unlockeventstatus) is known.
 
 ## Failed
 
@@ -96,7 +91,6 @@ Lock was successfully unlocked.
 ## Related types
 
 - [Lock](doc:android-ref-lock)
-- [OpenDOOR](doc:android-ref-opendoor)
 - [UnlockAttempt](doc:android-ref-unlockattempt)
 - [UnlockEvent](doc:android-ref-unlockevent)
 - [UnlockFailureReason](doc:android-ref-unlockfailurereason)
