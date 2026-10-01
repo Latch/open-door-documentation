@@ -9,30 +9,36 @@ metadata:
 ---
 [**Cache first strategy**]()
 
-Our mobile SDK is designed for offline first scenario, therefore the integration application can take advantage of this by using a `cache first - network after` data strategy. This means usage of data from the SDK cache via the `locks` function and in the background get the new locks via the `fetchLocks` function.
+Our mobile SDK is designed for offline first scenario, therefore the integration application can take advantage of this by using a `cache first - network after` data strategy. This means listening for locks via the `listenForLocks` function: it emits the cached locks right away, refreshes them from the network in the background, and then emits the new locks. The stream doesn't report errors, so also call the `fetchLocks` function: it refreshes the locks from the network and fails on an invalid or expired token, even when cached locks exist.
 
 #### iOS code snippet
 
 ```swift
 let token = /* token fetched from Auth0 */
+let client = await OpenDOOR.getInstance()
 do {
-  let latch = try await Latch.initialize(withToken: token)
-  
-  let cachedLocks = await latch.locks()
-  // display cachedLocks on UI
+  try await client.setupWithToken(token: token, includeAllLocks: true)
+
+  // emits the cached locks first, then the refreshed locks
+  let locksStream = try client.listenForLocks()
+  Task {
+    for await locks in locksStream {
+      // display locks on UI
+    }
+  }
 
   do {
-    let fetchedLocks = try await latch.fetchLocks()
+    let fetchedLocks = try await client.fetchLocks()
     // display fetchedLocks on UI
   } catch {
     // show error
     // if error is 401, user should be logged out
-    // FetchLocksError.invalidToken is the 401 error
+    // NetworkError.invalidToken is the 401 error
   }
 } catch {
   // show error
   // if error is 401, user should be logged out
-  // 401 errors: NetworkError.invalidToken, FetchLocksError.invalidToken
+  // 401 errors: SetupError.invalidToken, NetworkError.invalidToken
 }
 ```
 
@@ -40,23 +46,30 @@ do {
 
 ```kotlin
 val token: String = /* token fetched from Auth0 */
-try {
-  val latch = Latch.initialize(token)
-	
-  val cachedLocks = latch.locks()
-  // display cachedLocks on UI
-
+val client = OpenDOOR.instance
+CoroutineScope(Dispatchers.Main).launch {
   try {
-    val fetchedLocks = latch.fetchLocks()
-    // display fetchedLocks on UI  (note: fetchedLocks, not cachedLocks)
+    client.setupWithToken(activity, token, includeAllLocks = true)
+
+    // emits the cached locks first, then the refreshed locks
+    launch {
+      client.listenForLocks().collect { locks ->
+        // display locks on UI
+      }
+    }
+
+    try {
+      val fetchedLocks = client.fetchLocks()
+      // display fetchedLocks on UI
+    } catch (e: Exception) {
+      // show error
+      // if error is 401, user should be logged out
+      // NetworkException.InvalidTokenException is the 401 error
+    }
   } catch (e: Exception) {
     // show error
     // if error is 401, user should be logged out
-    // LocksResult.Error will contain 401
+    // 401 errors: SetupException.InvalidTokenException, NetworkException.InvalidTokenException
   }
-} catch (e: Exception) {
-  // show error
-  // if error is 401, user should be logged out
-  // 401 errors: SetupResult.InvalidToken, LocksResult.Error will contain 401
 }
 ```

@@ -32,14 +32,18 @@ metadata:
 
 ### Declare SDK as a dependency
 
-Add **Maven Central** to your repositories (if not already present), then declare the dependency in your **application module's** `build.gradle.kts`:
+Add **Maven Central** to the repositories in your `settings.gradle.kts` (if not already present), then declare the dependency in your **application module's** `build.gradle.kts`:
 
 ```kotlin
-repositories {
-    google()
-    mavenCentral()
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
+// Application module build.gradle.kts
 dependencies {
     implementation("com.door:opendoor.android:2.3")
 }
@@ -51,7 +55,7 @@ Use your Auth0 token retrieved from DOOR's Auth endpoint, then call `setupWithTo
 
 The OpenDOOR SDK uses Kotlin coroutines to perform actions asynchronously. SDK operations are exposed as `suspend` functions, `Flow` streams, or callback listeners depending on the use case.
 
-**Important:** `setupWithToken()` must be called from the main thread because it takes a live `Activity` for permission and consent UI.
+**Important:** `setupWithToken()` takes a live `Activity` because it may show permission and consent UI.
 
 Note that `activity` must be a foreground `Activity`, not the `applicationContext`.
 
@@ -79,6 +83,8 @@ CoroutineScope(Dispatchers.Main).launch {
         // Handle other setup errors
     } catch (e: NetworkException) {
         // Handle network errors
+    } catch (e: IllegalArgumentException) {
+        // The Activity can't host setup UI
     }
 }
 ```
@@ -90,7 +96,7 @@ The `includeAllLocks` parameter determines whether the SDK loads:
 
 ### Clear SDK state
 
-To sign out, clear cached SDK data, and remove the current in-memory token, call `clear()`. After calling `clear()`, call `setupWithToken()` again before using other SDK APIs.
+To sign out, clear cached SDK data, and remove the stored token, call `clear()`. After calling `clear()`, call `setupWithToken()` again before using other SDK APIs.
 
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.SDKException
@@ -109,19 +115,17 @@ CoroutineScope(Dispatchers.Main).launch {
 
 ### Thread Requirements
 
-The SDK has specific thread requirements for BLE and setup operations.
+The SDK doesn't require a specific calling thread. Its `suspend` functions, including setup and BLE operations, switch to a background thread themselves.
 
-**Must be called from the main thread:**
+**Can be called from any thread:**
 
 * `setupWithToken()`
+* `clear()`
 * `unlock()`
 * `cancelUnlock()`
 * `sync()`
 * `startProximityUnlock()`
 * `stopProximityUnlock()`
-
-**Can be called from any thread:**
-
 * `fetchLocks()`
 * `listenForLocks()`
 * `stopListenForLocks()`
@@ -134,13 +138,13 @@ The SDK has specific thread requirements for BLE and setup operations.
 * `revokeGuestAccess()`
 * `setLogLevel()`
 
-All examples in this tutorial use `Dispatchers.Main`.
+All coroutine examples in this tutorial use `Dispatchers.Main`. `LocksListener` and `UnlockEventsListener` callbacks run on a background SDK thread, so switch to the main thread before you update UI from a callback.
 
 ### View the locks and select one to unlock
 
 You can retrieve locks in two ways: fetch them once with `fetchLocks()`, or listen for continuous updates with `listenForLocks()`.
 
-* **`fetchLocks()`** waits for the server request to complete before returning. Use this when you need fresh data and can wait for the network request.
+* **`fetchLocks()`** waits for the server request to complete before returning. Use this when you need fresh data and can wait for the network request. If the request fails with a network error other than an invalid or expired token, `fetchLocks()` returns cached locks when there are any.
 * **`listenForLocks()`** emits cached data immediately, then refreshes from the server in the background. Use this when you want to show available locks quickly and update the list when fresh data arrives.
 
 **Option 1: Fetch locks once**
@@ -211,8 +215,6 @@ With the locks retrieved, call `unlock()` to unlock a DOOR lock.
 ## Unlock
 
 To unlock a lock, call `unlock()` and listen for unlock events to track progress and the final result.
-
-**Important:** `unlock()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
 import com.door.opendoor.android.core.api.model.UnlockEventStatus
@@ -329,12 +331,12 @@ import com.door.opendoor.android.core.api.model.UnlockEventStatus
 
 val unlockEventsListener = object : UnlockEventsListener {
     override fun onNewEvent(event: UnlockEvent) {
-        when (event.status) {
+        when (val status = event.status) {
             UnlockEventStatus.Success -> {
                 // Lock is unlocked.
             }
             is UnlockEventStatus.Failed -> {
-                // Unlock failed. Check event.status.reason.
+                // Unlock failed. Check status.reason.
             }
             UnlockEventStatus.Canceled -> {
                 // Unlock was canceled.
@@ -359,8 +361,6 @@ Your DOOR lock should be unlocked now.
 Another way to unlock is through proximity unlock. Proximity unlock continuously scans for nearby locks and unlocks the closest eligible lock when it is within the SDK's BLE range threshold.
 
 Real-world range depends on phone model, lock type, installation, and local BLE conditions, so use unlock events to drive UI state instead of assuming a fixed distance.
-
-**Important:** `startProximityUnlock()` and `stopProximityUnlock()` must be called from the main thread as they perform BLE operations.
 
 First, set up an unlock event listener. Then start proximity unlock, and stop it when needed.
 
@@ -420,8 +420,6 @@ Use `cancelUnlock()` to cancel only the current proximity unlock attempt. Proxim
 Sync allows your mobile client to act as a bridge to the DOOR backend for uplink and downlink data requests, including battery, timestamp, activity logs, and engineering logs. In times of troubleshooting, a sync is recommended to either resolve the issue or provide DOOR with full information around the issue.
 
 After each unlock, the SDK will passively sync data with the DOOR ecosystem to keep user data as up to date as possible. Explicitly calling `sync()` will initiate a longer sync operation that attempts to sync all critical data, including the data synced after unlock, along with non-critical data. The `sync()` operation takes about 10 seconds on average and will cancel any passive sync operations initiated after the unlock operation.
-
-**Important:** `sync()` must be called from the main thread as it performs BLE operations.
 
 ```kotlin
 import com.door.opendoor.android.core.api.exceptions.BluetoothException
@@ -518,9 +516,15 @@ CoroutineScope(Dispatchers.Main).launch {
 **Temporary doorcode access**
 
 ```kotlin
+import com.door.opendoor.android.core.api.exceptions.GuestInvitesException
+import com.door.opendoor.android.core.api.exceptions.NetworkException
+import com.door.opendoor.android.core.api.exceptions.SDKException
 import com.door.opendoor.android.core.api.model.Duration as DoorcodeDuration
 import com.door.opendoor.android.core.api.model.Period
 import com.door.opendoor.android.core.api.model.TemporaryDoorcodeInvite
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 CoroutineScope(Dispatchers.Main).launch {
     try {
@@ -644,50 +648,4 @@ Set the SDK log level to control diagnostic output. `LogLevel.ERROR` is appropri
 import com.door.opendoor.android.core.api.model.LogLevel
 
 client.setLogLevel(LogLevel.DEBUG)
-```
-
-```kotlin
-import com.door.opendoor.android.core.api.model.LogLevel
-
-client.setLogLevel(LogLevel.DEBUG)
-```
-
-```kotlin
-import com.door.opendoor.android.core.api.model.LogLevel
-
-client.setLogLevel(LogLevel.DEBUG)
-```
-
-Set the SDK log level to control diagnostic output. `LogLevel.ERROR` is appropriate for most release builds. `LogLevel.DEBUG` can be useful while developing or troubleshooting an integration.
-
-```kotlin
-import com.door.opendoor.android.core.api.model.LogLevel
-
-client.setLogLevel(LogLevel.DEBUG)
-```
-
-```kotlin
-import com.door.opendoor.android.core.api.exceptions.NetworkException
-import com.door.opendoor.android.core.api.exceptions.RevokeGuestException
-import com.door.opendoor.android.core.api.exceptions.SDKException
-
-CoroutineScope(Dispatchers.Main).launch {
-    try {
-        val guestList = client.guests()
-        val guestId = guestList.first().id
-
-        client.revokeGuestAllAccesses(guestId)
-
-        // Optionally refresh guests after revoke
-        val refreshedGuests = client.guests()
-    } catch (e: RevokeGuestException.PasscodeTypeCantBeRevokedException) {
-        // The passcode type can't be revoked for one or more guest accesses
-    } catch (e: RevokeGuestException) {
-        // Handle other revoke failures
-    } catch (e: SDKException) {
-        // Handle SDK errors
-    } catch (e: NetworkException) {
-        // Handle network errors
-    }
-}
 ```

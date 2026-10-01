@@ -11,7 +11,7 @@ metadata:
 
 To utilize DOOR Services, all users must adhere to and accept DOOR Terms of Service and Privacy Policies. This applies to users of the DOOR App on all platforms including users of any Partner App that utilizes the DOOR SDK.
 
-The OpenDOOR SDK will display a system-level dialog requesting the user’s consent to the DOOR [Terms of Service](https://www.door.com/terms-of-service)  and [Privacy Policy](https://www.door.com/privacy-policy) . The dialog will provide links to [door.com](http://door.com/)  where the user can review the Terms of Service and Privacy Policy. The user will have the opportunity to Agree or Disagree with the DOOR terms. If the user agrees to the terms the SDK will continue to function as intended and provide the ability to Unlock.
+During setup, the OpenDOOR SDK will display its own dialog requesting the user’s consent to the DOOR [Terms of Service](https://www.door.com/terms-of-service)  and [Privacy Policy](https://www.door.com/privacy-policy) . The dialog will provide links to [door.com](http://door.com/)  where the user can review the Terms of Service and Privacy Policy. The user will have the opportunity to Agree or Disagree with the DOOR terms. If the user agrees to the terms the SDK will continue to function as intended and provide the ability to Unlock. If the user disagrees, `setupWithToken` throws `SetupException.ConsentNotGrantedException` (Android) or `SetupError.consentNotGranted` (iOS).
 
 The user’s acceptance will be needed by the OpenDOOR SDK where it will be securely stored and transmitted to the DOOR BE for permanent persistence. The SDK will look for the user’s acceptance and consent either locally or from the DOOR BE and will not fulfill any requests from the Partner App until the User Acceptance has been provided or retrieved from persistence.
 
@@ -42,7 +42,7 @@ The Partner App however will need to ensure users have granted appropriate permi
 
 ## Permissions
 
-The OpenDOOR SDK requires specific permissions from the user in order to function properly. The SDK will ask for these permissions upon initialization. As an example, if the user chooses to disable the BLE permission, the SDK will throw a BlePermissionNotGranted error for the App to handle when the user attempts to unlock a door. At this point, the App can choose to reinitialize the SDK so permissions can be requested by the SDK.
+The OpenDOOR SDK requires specific permissions from the user in order to function properly. The SDK will ask for these permissions upon initialization. On Android it asks during `setupWithToken`. On iOS the system shows the Bluetooth prompt when the App first calls `OpenDOOR.getInstance()`. As an example, if the user denies the Bluetooth permission, `unlock` throws `BluetoothException.BluetoothPermissionDeniedException` (Android) or `BluetoothError.permissionDenied` (iOS) for the App to handle. At this point, on Android the App can call `setupWithToken` again so permissions can be requested by the SDK. On iOS the system asks only once, so the user has to allow Bluetooth for the App in Settings.
 
 The following are a list of permissions that the SDK requests from the user:
 
@@ -52,40 +52,49 @@ The following are a list of permissions that the SDK requests from the user:
 ## Setup and Initialization
 
 ```
-initialize(token)
+setupWithToken(activity, token, includeAllLocks)   // Android
+setupWithToken(token:includeAllLocks:)             // iOS
 ```
 
-Initializes the OpenDOOR SDK. The OpenDOOR SDK requires the current user to agree to DOOR's Terms & Conditions and Privacy Policy. If the current user has not granted permission, a modal system alert will be presented to request permission.
+Authenticates and initializes the OpenDOOR SDK. Call it on the shared client: `OpenDOOR.instance` on Android, `await OpenDOOR.getInstance()` on iOS. The OpenDOOR SDK requires the current user to agree to DOOR's Terms & Conditions and Privacy Policy. If the current user hasn't agreed yet, the SDK presents its own consent dialog.
 
 **Parameters**
 
+* `activity` (Android only): Foreground `Activity` that can host the setup UI.
 * `token`: Authorization token for the current user.
+* `includeAllLocks`: `true` loads all locks the user can access, partner and non-partner. `false` loads only partner-managed locks.
 
 **Returns**
 
 * On success returns Void. Otherwise, throws an error.
 
-  All additional SDK functions require that `initialize(...)` has been invoked with a valid token. If the SDK hasn’t been properly initialized, then requests to the SDK will return an `unauthenticated` error. Partner App can receive the error, supply a new token, and then continue to use the SDK functions.
+  All additional SDK functions require that `setupWithToken(...)` has completed with a valid token. If it hasn't, requests to the SDK throw `SDKException.SDKNotInitializedException` (Android) or `SDKError.sdkNotInitialized` (iOS). If the token is invalid or expired, calls such as `fetchLocks()` throw `NetworkException.InvalidTokenException` (Android) or `NetworkError.invalidToken` (iOS). Partner App can receive the error, supply a new token to `setupWithToken(...)`, and then continue to use the SDK functions.
 
   **Errors**
 
-  | Code                          | Description                                                          |
-  | ----------------------------- | -------------------------------------------------------------------- |
-  | `LatchError.invalidToken`     | The supplied authorization token is invalid and should be refreshed. |
-  | `LatchError.permissionDenied` | The current user hasn't granted the app access to use the Latch SDK. |
-  | `Error`                       | An unexpected error occured                                          |
+  | Android                                     | iOS                             | Description                                                          |
+  | ------------------------------------------- | ------------------------------- | -------------------------------------------------------------------- |
+  | `SetupException.InvalidTokenException`      | `SetupError.invalidToken`       | The supplied authorization token is invalid and should be refreshed. |
+  | `SetupException.ConsentNotGrantedException` | `SetupError.consentNotGranted`  | The current user didn't agree to DOOR's terms.                       |
+  | `SetupException.SetupInternalException`     | `SetupError.setupInternalError` | Setup failed internally.                                             |
+  | `NetworkException`                          | `NetworkError`                  | No user is stored yet and the configuration can't be fetched.        |
+  | `IllegalArgumentException`                  | n/a                             | Android only: the `activity` can't host the setup UI.                |
 
 ## Doors and Locks
 
 ```
-locks()
+fetchLocks()
+listenForLocks()
 ```
 
 Retrieve all locks accessible to the current user. This list can be used to build out a UI/UX flow however the Partner deems necessary.
 
+* `fetchLocks()` refreshes the locks from the network and updates the cache. An invalid or expired token always fails. Other network failures return the cached locks, and fail only when the cache is empty.
+* `listenForLocks()` emits the cached locks first, even an empty list, then every update, and starts a refresh in the background. The stream has no error channel. Both platforms also have a listener variant, and iOS has `listenForLocksPublisher()` for Combine.
+
 **Returns**
 
-* On success returns a collection of `Lock`. Otherwise, throws an error.
+* On success `fetchLocks()` returns a collection of `Lock`. Otherwise, throws an error. `listenForLocks()` returns a stream of `Lock` collections (`Flow` on Android, `AsyncStream` on iOS).
 
   `Lock`
 
@@ -96,14 +105,17 @@ Retrieve all locks accessible to the current user. This list can be used to buil
 
 **Errors**
 
-| Code    | Description                 |
-| ------- | --------------------------- |
-| `Error` | An unexpected error occured |
+| Android                                   | iOS                          | Description                                                                         |
+| ----------------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------- |
+| `SDKException.SDKNotInitializedException` | `SDKError.sdkNotInitialized` | `setupWithToken(...)` hasn't completed.                                             |
+| `NetworkException.InvalidTokenException`  | `NetworkError.invalidToken`  | `fetchLocks()` only: the token is invalid or expired, even when cached locks exist. |
+| `NetworkException`                        | `NetworkError`               | `fetchLocks()` only: any other network failure while the cache is empty.            |
 
 ## Unlock
 
 ```
-unlock(uuid)
+unlock(lockId)    // Android, also unlock(lock)
+unlock(lockID:)   // iOS
 ```
 
 Use BLE to scan for a specific DOOR device and explicitly unlock the device.
@@ -112,23 +124,36 @@ Performing BLE operations requires the user to grant the app permission to use n
 
 **Parameters**
 
-* `uuid`: The uuid of the Lock (device) to start scanning for and Unlock.
+* `lockId` (iOS: `lockID`): The `id` of the Lock (device) to start scanning for and Unlock.
 
 **Returns**
 
-Either a success or failure.
+Nothing. Progress and the result arrive as unlock events from `listenForUnlockEvents()`, so start listening before you call `unlock`. The result is reported in the event `status`: `Success`, `Failed` with an `UnlockFailureReason`, or `Canceled` (iOS: `.success`, `.failed`, `.canceled`).
 
 **Remarks**
 
-`Unlock(lock)` has been deprecated.
+On Android, `unlock(lock)` also accepts the current `Lock` model. iOS has only `unlock(lockID:)`.
+
+Only one unlock runs at a time. A new `unlock` call cancels the one in progress.
 
 **Errors**
 
-| Code                                    | Description                                                                |
-| --------------------------------------- | -------------------------------------------------------------------------- |
-| `LatchError.bluetoothDisabled`          | The current device does not have Bluetooth enabled.                        |
-| `LatchError.permissionDenied`           | User denied OpenDOOR SDK access to use the device's Bluetooth.                |
-| `LatchError.concurrentUnlockInProgress` | Only one unlock operation is allowed at a time.                            |
-| `LatchError.lockNotFound`               | Failed to find a lock with a unique identifier matching the given lock ID. |
-| `LatchError.timeout`                    | Unlock failed to complete in a reasonable amount of time.                  |
-| `Error`                                 | An unexpected error occured                                                |
+Thrown by `unlock`:
+
+| Android                                                 | iOS                               | Description                                                                |
+| ------------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------- |
+| `SDKException.SDKNotInitializedException`               | `SDKError.sdkNotInitialized`      | `setupWithToken(...)` hasn't completed.                                    |
+| `BluetoothException.BluetoothDisabledException`         | `BluetoothError.disabled`         | The current device does not have Bluetooth enabled.                        |
+| `BluetoothException.BluetoothPermissionDeniedException` | `BluetoothError.permissionDenied` | User denied OpenDOOR SDK access to use the device's Bluetooth.             |
+| `UnlockException.LockNotFoundException`                 | `UnlockError.lockNotFound`        | Failed to find a lock with a unique identifier matching the given lock ID. |
+
+Reported on the unlock event stream as the `Failed` reason:
+
+| Android             | iOS                  | Description                                                       |
+| ------------------- | -------------------- | ----------------------------------------------------------------- |
+| `BluetoothDisabled` | `.bluetoothDisabled` | Bluetooth is turned off on the device.                            |
+| `OutOfSchedule`     | `.outOfSchedule`     | Access was attempted outside the lock's access schedule.          |
+| `LockNotFound`      | `.lockNotFound`      | No lock matching the requested ID was discovered.                 |
+| `ConnectionFailed`  | `.connectionFailed`  | The lock was discovered but a connection couldn't be established. |
+| `AuthFailed(error)` | `.authFailed(error)` | The lock rejected the credential, or recovery sync failed.        |
+| `Internal(error)`   | `.internal(error)`   | Any other failure. `error.code` gives the cause.                  |
