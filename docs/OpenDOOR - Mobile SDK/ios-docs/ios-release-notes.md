@@ -6,6 +6,20 @@ hidden: false
 metadata:
   robots: index
 ---
+## What's new in SDK 2.3.0
+
+Android and iOS now share the same public API. Both SDKs are generated from one contract, so types, methods, fields and error cases match across platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
+
+**Breaking Changes**
+
+* `AccessType` is removed, along with `accessType` on `InviteType`, `InAppInvite` and `TemporaryDoorcodeInvite`, and `InAppInvite.showDoorcodes`. Use `InAppInvite(startTime:endTime:)` and `TemporaryDoorcodeInvite(duration:period:)`. `endTime` no longer has a default value, so pass `nil` for an invite with no end time.
+* `BluetoothError.bluetoothDisabled` is renamed to `.disabled`, and `.bluetoothPermissionDenied` to `.permissionDenied`.
+* `AccessLogMethod.mechanical` is renamed to `.mechanicalLock`.
+* `UnlockFailureReason.authFailed` and `.internal` now carry an `UnlockFailureError` with `code`, `message` and `context`. `.internal` no longer has a string payload, and `UnlockFailureReason` no longer conforms to `Error`.
+* `PasscodeType` no longer has string raw values or `allCases`.
+* Model properties on `Lock`, `Guest`, `GuestAccess`, `AccessLog`, `UnlockEvent`, `InAppInvite` and `TemporaryDoorcodeInvite` are now `let`. The initializers changed order to `UnlockEvent(lock:method:status:)`, `Lock(id:name:buildingID:startTime:endTime:doorCode:isShareable:)` and `GuestAccess(lockID:lockName:inviteType:passcodeType:startTime:endTime:)`.
+* `InviteGuestError` adds `.shareableAccessRequired`, `.sharingNotEnabled` and `.requestedTimeOutsideShareableAccess`. Update exhaustive `switch` statements.
+
 ## What's new in SDK 2.2.0
 
 **New Features**

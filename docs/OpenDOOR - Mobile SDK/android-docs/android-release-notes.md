@@ -6,6 +6,25 @@ hidden: false
 metadata:
   robots: index
 ---
+## What's new in SDK 2.3.0
+
+Android and iOS now share the same public API. Both SDKs are generated from one contract, so types, methods, fields and error cases match across platforms. Only platform conventions differ: coroutines and `Flow` on Android, async/await and Combine on iOS, the `Activity` that Android setup takes, Android's `unlock(lock)` overload, and each platform's naming and error types.
+
+Breaking Changes
+
+* `UnlockStatus` is renamed to `UnlockEventStatus`, with the same cases. `UnlockEvent.status` uses the new type.
+* `TempDoorcodeInvite` is renamed to `TemporaryDoorcodeInvite` and is created with `TemporaryDoorcodeInvite(duration, period)`.
+* `AccessType` is removed, along with `InviteType.accessType`. `InAppInvite` no longer takes `accessType` or `showDoorcodes`; use `InAppInvite(startTime, endTime)`.
+* `GuestAccess.invitationId` and `Lock.propertyName` are removed.
+* `AccessLog.uuid` is renamed to `AccessLog.id`.
+* `LocksListener.onError` is removed. Lock listeners only receive updates; call `fetchLocks()` when a refresh must report failures.
+* `RevokeGuestException` is now a sealed class. Catch `PasscodeTypeCantBeRevokedException`, `DeviceNotFoundException` or `InternalException` instead of reading `reason`.
+* `GuestInvitesException.failedLocks` is renamed to `failedLockErrors`, and `successfulLocks` to `successfulLockIds`.
+* `UnlockFailureReason.AuthFailed` and `UnlockFailureReason.Internal` now carry an `UnlockFailureError` with `code`, `message` and `context`. `Internal` no longer has a `code` string.
+* `unlock()` now throws `UnlockException.LockNotFoundException` when the ID doesn't match a known lock.
+* `InviteGuestException.Reason` adds `SHAREABLE_ACCESS_REQUIRED`, `SHARING_NOT_ENABLED` and `REQUESTED_TIME_OUTSIDE_SHAREABLE_ACCESS`, and `LogLevel` adds `INFO` and `WARNING`. Update exhaustive `when` expressions.
+* The top-level `PayloadError` class is removed. Catch `NetworkException.PayloadError` instead.
+
 ## What's new in SDK 2.2.0
 
 New Features
