@@ -1,8 +1,10 @@
 ---
 title: Keys
 deprecated: false
-hidden: true
+hidden: false
 icon: far fa-key
+link:
+  new_tab: false
 metadata:
   robots: index
 ---
