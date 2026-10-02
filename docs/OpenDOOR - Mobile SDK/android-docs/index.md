@@ -474,6 +474,72 @@ CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
+The list is returned in a single response. There are no paging or date-filter parameters.
+
+### The AccessLog object
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `UUID` | Unique identifier of the log entry |
+| `epochTimeForEntryAttempt` | `Long` | Time of the event as a Unix timestamp in **seconds** |
+| `method` | `AccessLogMethod` | How the lock/unlock was performed — see [Method values](#method-values) |
+| `result` | `AccessLogResult` | Outcome of the attempt — see [Result values](#result-values) |
+| `fullName` | `String?` | Display name associated with the credential used |
+| `userFirstName` | `String?` | First name of the user, when the credential maps to a known user |
+| `userLastName` | `String?` | Last name of the user |
+| `userNickname` | `String?` | Nickname of the user, when one is set |
+| `guestUuid` | `UUID?` | Identifier of the guest whose credential was used, when the event was guest-initiated |
+| `lockUuid` | `UUID?` | Identifier of the lock the event occurred on |
+| `photoAvailability` | `String?` | Whether an entry photo exists for the event — see [Photo availability](#photo-availability) |
+| `imageFileName` | `String?` | File name of the entry photo, when one was captured |
+| `imageToken` | `String?` | Token associated with the entry photo |
+
+`id`, `epochTimeForEntryAttempt`, `method` and `result` are always present. Every other field can be `null` on any entry: machine-generated events (scheduled locks, automatic re-locks) carry no identity fields, and failed attempts with no matching credential carry none either. Parse defensively.
+
+### Method values
+
+| Value | Meaning |
+| --- | --- |
+| `BLE` | Unlock over Bluetooth from a mobile app. Explicit unlock and proximity unlock both record this value — access logs do not distinguish them |
+| `BLE_LOCK` | Lock command over Bluetooth |
+| `NFC` | Unlock with an NFC credential (iOS) |
+| `ANDROID_NFC` | Unlock with an NFC credential (Android) |
+| `DESFIRE` | Unlock with a DESFire keycard |
+| `PASSCODE` | Unlock with a door code on the keypad |
+| `MKO` | Unlock with a mechanical key override |
+| `TAP_TO_LOCK` | Lock triggered by tapping the keypad |
+| `MECHANICAL_LOCK` | Manually/mechanically locked |
+| `SCHEDULED_UNLOCK` | Unlock triggered by a schedule |
+| `SCHEDULED_LOCK` | Lock triggered by a schedule |
+| `UNKNOWN` | Any method the SDK does not distinguish — includes manual unlocks at the device, inside-handle unlocks, automatic re-locks, diagnostic events, and methods newer than your SDK version |
+
+### Result values
+
+| Value | Meaning |
+| --- | --- |
+| `SUCCESS` | Successful unlock |
+| `GUEST_SUCCESS` | Successful unlock using a guest credential |
+| `LOCK_SUCCESS` | Successful lock — covers manual, Bluetooth, and automatic re-lock variants |
+| `INCORRECT` | Invalid credential (e.g. wrong door code) |
+| `DEADBOLT_APPLIED` | Entry blocked because the deadbolt/privacy mode was engaged |
+| `OUTSIDE_QUALIFIED_ACCESS` | Attempt outside the credential's allowed access window |
+| `UNKNOWN_TIME_FAILURE` | Rejected because the device could not verify the current time |
+| `NFC_FAILURE` | NFC read/authentication failure |
+| `UNKNOWN` | Any outcome the SDK does not distinguish. This includes several lock-side failure states, so treat it as "outcome unavailable" — do not display it as a success or a failure |
+
+### Photo availability
+
+`photoAvailability` indicates whether an entry photo exists for the event. The SDK does not currently provide an API to download entry photos.
+
+| Value | Meaning |
+| --- | --- |
+| `AVAILABLE` | An entry photo was captured |
+| `UNAVAILABLE` | No photo available |
+| `UNAVAILABLE_SETTINGS` | Photo capture disabled by device/property settings |
+| `UNAVAILABLE_USER_DISABLED` | Photo capture disabled by the user |
+| `UNAVAILABLE_LOW_POWER` | Photo skipped because the device battery was low |
+| `UNAVAILABLE_NFC` | Photo not captured for this NFC interaction |
+
 ## Guest Access
 
 ### Invite guests
