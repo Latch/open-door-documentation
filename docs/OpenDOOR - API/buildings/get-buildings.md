@@ -50,7 +50,8 @@ HTTP Response Body
              "uuid": "<string>",
              "name": "<string>"
            },
-           "timezone": "<string>"
+           "timezone": "<string>",
+           "epmsBuildingIds": ["<string>"]
          }
       },
       ...
@@ -66,6 +67,7 @@ If the request was successful, the Partner BE will receive an HTTP 200 with the 
   * `address`: Location the building is located.
   * `portfolio`: Includes the name and uuid of the portfolio the building is part of.
   * `timezone`: Timezone the building is in. Format is "Area/Location" (e.g. "America/New_York") based on the TZ identifier from [https://en.wikipedia.org/wiki/List_of_tz_database_time_zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+  * `epmsBuildingIds`: Identifiers of the ePMS (property management system) buildings mapped to this building. For each mapping, this is the PMS building-level id when the PMS stores one, otherwise the PMS property or site id. Always present; an empty array (`[]`) when the building has no ePMS mapping.
 
 In case of an error, the API will return the following error responses:
 
