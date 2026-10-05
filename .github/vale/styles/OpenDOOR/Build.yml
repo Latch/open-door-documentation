@@ -1,0 +1,8 @@
+extends: existence
+message: "Public docs describe behavior, not how the SDK is built or threads its work ('%s')."
+level: error
+ignorecase: true
+tokens:
+  - generated from
+  - code generation
+  - 'switch(?:es)? to a background thread'
