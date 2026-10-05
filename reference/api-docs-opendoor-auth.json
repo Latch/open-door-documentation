@@ -76,7 +76,7 @@
             "description": "Not Found"
           }
         },
-        "x-internal": true
+        "x-internal": false
       }
     },
     "/passwordless/start": {
