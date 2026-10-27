@@ -16,3 +16,5 @@ Use the Doors endpoints to:
 * Map doors to your own system (e.g., units, amenities, entry points)
 
 Door IDs are required when creating or managing access permissions.
+
+Doors endpoint does not return provisioned accesses.
