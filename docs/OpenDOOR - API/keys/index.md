@@ -9,3 +9,11 @@ link:
 metadata:
   robots: index
 ---
+Use the Keys endpoints to:
+
+* Retrieve available keys within a building
+* Identify which access points can be controlled programmatically
+
+Key IDs are required when creating or managing access permissions.
+
+Keys endpoint does not return provisioned accesses.
