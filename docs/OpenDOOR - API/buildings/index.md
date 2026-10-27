@@ -6,6 +6,8 @@ excerpt: >-
 deprecated: false
 hidden: false
 icon: far fa-building
+link:
+  new_tab: false
 metadata:
   robots: index
 ---
@@ -15,4 +17,4 @@ Use the Buildings endpoints to:
 * Identify where doors and users belong
 * Sync your system with the correct property structure
 
-Most integrations start by fetching buildings and using their IDs to scope subsequent requests.
+Most integrations start by fetching buildings and using their IDs to scope subsequent requests.<br /><br />Buildings endpoint does not return provisioned accesses.
