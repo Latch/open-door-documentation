@@ -27,7 +27,7 @@ metadata:
 - **More predictable Lock listening.** `listenForLocks` emits cached state first, including an empty list, then refreshes in the background. Refresh failures are logged and are not delivered to your listener.
 - **Clearer guest invite errors.** Sharing failures now say what to do, for example "User does not have permission to share access. Make sure the access was granted by the partner and is shareable." The new `SHAREABLE_ACCESS_REQUIRED`, `SHARING_NOT_ENABLED` and `REQUESTED_TIME_OUTSIDE_SHAREABLE_ACCESS` reasons on `InviteGuestException` describe why an invite was rejected. Guest invite and Lock action errors also include the lock IDs, counts and causes in their messages.
 - **Safer proximity and explicit unlock handling.** An explicit unlock pauses proximity scanning. Scanning resumes afterward only if the same proximity session is still active. Calling `stopProximityUnlock` during an explicit unlock leaves the unlock running and keeps scanning stopped. Proximity unlock targets the closest eligible Lock within the SDK's range threshold, which was increased in 2.1.
-- **Lock refresh also refreshes sync configuration,** and retries failed refreshes.
+- **Lock refresh also refreshes the data locks need for unlocking,** and retries failed refreshes.
 - **Guest revocation** attempts every applicable revocation before reporting a single failure.
 - **Dependency changes.** The SDK no longer bundles Datadog, and RxJava, RxAndroid and Koin are no longer exposed through the SDK's public dependencies. Add them to your app if you relied on them. Release builds no longer log HTTP request or response bodies, and the `Authorization` header is redacted in debug logs.
 

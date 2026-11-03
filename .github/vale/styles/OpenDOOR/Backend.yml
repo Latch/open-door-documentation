@@ -1,0 +1,9 @@
+extends: existence
+message: "Public docs say DOOR or the server, not '%s'."
+level: error
+ignorecase: true
+tokens:
+  - '(?:the|DOOR) backend'
+  - "backend's"
+  - from backend
+  - backend payload

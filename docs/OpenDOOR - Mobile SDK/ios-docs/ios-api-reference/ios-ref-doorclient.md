@@ -328,7 +328,7 @@ Authenticates and initializes the SDK.
 
 ### Discussion
 
-Initializes storage and network clients, then authenticates with the token. If the token’s user differs from the stored user, all cached data is deleted first. The token is kept in memory only and never persisted. The includeAllLocks flag is stored and applied whenever locks are retrieved.
+Authenticates with the token and prepares the SDK. If the token belongs to a different user than the last one, cached data is deleted first. The SDK stores the token on the device. Call `setupWithToken` on every app launch. The includeAllLocks flag is stored and applied whenever locks are retrieved.
 
 **Throws:**
 

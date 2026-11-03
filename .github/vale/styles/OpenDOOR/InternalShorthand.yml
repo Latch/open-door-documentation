@@ -1,0 +1,6 @@
+extends: existence
+message: "'%s' is internal shorthand."
+level: error
+tokens:
+  - BP
+  - DOOR BE

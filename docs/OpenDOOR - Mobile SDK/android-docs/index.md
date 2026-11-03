@@ -471,6 +471,13 @@ CoroutineScope(Dispatchers.Main).launch {
 }
 ```
 
+Each entry is an [AccessLog](doc:android-ref-accesslog). `id`, `epochTimeForEntryAttempt`, `method` and `result` are always set. Any other field can be `null`.
+
+- `epochTimeForEntryAttempt` is a Unix timestamp in seconds.
+- `method`: an explicit unlock and a proximity unlock both log as `BLE`. A method the SDK doesn't distinguish, including one added after your SDK version, arrives as `UNKNOWN`.
+- `result`: `UNKNOWN` also covers lock-side failures the SDK doesn't distinguish. Don't show it as a success or a failure.
+- `photoAvailability` is `AVAILABLE` when the lock took an entry photo. `AVAILABLE_CORRUPT_PHOTO`, `UNAVAILABLE`, `UNAVAILABLE_LOW_POWER`, `UNAVAILABLE_NFC`, `UNAVAILABLE_SETTINGS` and `UNAVAILABLE_USER_DISABLED` mean there's no usable photo. The SDK has no API to download entry photos.
+
 ## Guest Access
 
 ### Invite guests

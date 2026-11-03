@@ -13,7 +13,7 @@ To utilize DOOR Services, all users must adhere to and accept DOOR Terms of Serv
 
 During setup, the OpenDOOR SDK will display its own dialog requesting the user’s consent to the DOOR [Terms of Service](https://www.door.com/terms-of-service)  and [Privacy Policy](https://www.door.com/privacy-policy) . The dialog will provide links to [door.com](http://door.com/)  where the user can review the Terms of Service and Privacy Policy. The user will have the opportunity to Agree or Disagree with the DOOR terms. If the user agrees to the terms the SDK will continue to function as intended and provide the ability to Unlock. If the user disagrees, `setupWithToken` throws `SetupException.ConsentNotGrantedException` (Android) or `SetupError.consentNotGranted` (iOS).
 
-The user’s acceptance will be needed by the OpenDOOR SDK where it will be securely stored and transmitted to the DOOR BE for permanent persistence. The SDK will look for the user’s acceptance and consent either locally or from the DOOR BE and will not fulfill any requests from the Partner App until the User Acceptance has been provided or retrieved from persistence.
+The SDK records the user’s acceptance with DOOR and won’t fulfill any requests from the Partner App until the user has accepted.
 
 > The consent will be gathered only once from the End User, not per device.
 
@@ -32,7 +32,7 @@ The OpenDOOR SDKs will support the following versions of IOS and Android. Post t
 
 ## Communications
 
-The DOOR  SDK will execute its own communication protocol with DOOR services and fetch the relevant information to allow Partner Apps to build a list of Doors and Locks. All fetched information will be directly stored in the mobile storage. The OpenDOOR SDK will internally manage its own encrypted database storage. Typical storage needs for the OpenDOOR SDK should not exceed 10MB.
+The DOOR  SDK will execute its own communication protocol with DOOR services and fetch the relevant information to allow Partner Apps to build a list of Doors and Locks. All fetched information is stored on the device.
 
 ## Bluetooth
 
