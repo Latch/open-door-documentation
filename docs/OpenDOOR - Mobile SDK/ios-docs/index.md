@@ -409,6 +409,13 @@ Retrieve access logs for a lock.
  }
 ```
 
+Each entry is an [AccessLog](doc:ios-ref-accesslog). `id`, `epochTimeForEntryAttempt`, `method` and `result` are always set. Any other property can be `nil`.
+
+- `epochTimeForEntryAttempt` is a Unix timestamp in seconds.
+- `method`: an explicit unlock and a proximity unlock both log as `.ble`. A method the SDK doesn't distinguish, including one added after your SDK version, arrives as `.unknown`.
+- `result`: `.unknown` also covers lock-side failures the SDK doesn't distinguish. Don't show it as a success or a failure.
+- `photoAvailability` is `AVAILABLE` when the lock took an entry photo. `AVAILABLE_CORRUPT_PHOTO`, `UNAVAILABLE`, `UNAVAILABLE_LOW_POWER`, `UNAVAILABLE_NFC`, `UNAVAILABLE_SETTINGS` and `UNAVAILABLE_USER_DISABLED` mean there's no usable photo. The SDK has no API to download entry photos.
+
 ## Guest Access
 
 ### Invite guests
