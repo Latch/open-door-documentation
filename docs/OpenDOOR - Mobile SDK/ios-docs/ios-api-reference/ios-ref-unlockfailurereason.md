@@ -1,30 +1,25 @@
 ---
 title: UnlockFailureReason
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Canonical reason an in-flight unlock failed.
 
 ## Declaration
 
 ```swift
-public enum UnlockFailureReason : Equatable, CustomStringConvertible {
+public enum UnlockFailureReason : Swift::Equatable, Swift::CustomStringConvertible {
   case bluetoothDisabled
   case outOfSchedule
   case lockNotFound
   case connectionFailed
-  case authFailed(UnlockFailureError)
-  case `internal`(UnlockFailureError)
-  public static func == (a: UnlockFailureReason, b: UnlockFailureReason) -> Bool
-}
-
-extension UnlockFailureReason {
-  public var description: String {
-    get
-  }
+  case authFailed(OpenDOORCore::UnlockFailureError)
+  case `internal`(OpenDOORCore::UnlockFailureError)
+  case remoteUnlockNotAllowed
+  public static func == (a: OpenDOORCore::UnlockFailureReason, b: OpenDOORCore::UnlockFailureReason) -> Swift::Bool
 }
 ```
 
@@ -52,14 +47,6 @@ case connectionFailed
 
 The lock was discovered but a connection could not be established.
 
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
-
 ## UnlockFailureReason.internal(_:)
 
 ```swift
@@ -83,6 +70,14 @@ case outOfSchedule
 ```
 
 Access was attempted outside the access schedule for the lock.
+
+## UnlockFailureReason.remoteUnlockNotAllowed
+
+```swift
+case remoteUnlockNotAllowed
+```
+
+The user can’t unlock this door remotely.
 
 ## Related types
 

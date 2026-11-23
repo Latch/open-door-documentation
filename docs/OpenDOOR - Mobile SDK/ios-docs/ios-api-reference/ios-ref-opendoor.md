@@ -1,18 +1,18 @@
 ---
 title: OpenDOOR
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
-
+Entry point for the shared OpenDOOR client.
 
 ## Declaration
 
 ```swift
 public enum OpenDOOR {
-  public static func getInstance() async -> any DOORClient
+  public static func getInstance() async -> any OpenDOORCore::DOORClient
 }
 ```
 

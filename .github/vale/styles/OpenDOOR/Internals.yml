@@ -1,0 +1,10 @@
+extends: existence
+message: "Public docs describe behavior, not internal logging or sync mechanics ('%s')."
+level: error
+ignorecase: true
+tokens:
+  - logged internally
+  - uplink
+  - downlink
+  - 'engineering logs?'
+  - 'sync[ -]configuration'

@@ -1,35 +1,21 @@
 ---
 title: SDKError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 General SDK access failure.
 
 ## Declaration
 
 ```swift
-public enum SDKError : OpenDOORSDKError {
+public enum SDKError : OpenDOORCore::OpenDOORSDKError {
   case sdkNotInitialized
-  case sdkInternalError(String)
-}
-
-extension SDKError {
-  public var description: String {
-    get
-  }
+  case sdkInternalError(Swift::String)
 }
 ```
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## SDKError.sdkInternalError(_:)
 

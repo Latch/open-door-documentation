@@ -1,0 +1,26 @@
+name: Docs wording
+
+# The Mobile SDK docs are partner-facing, so they describe behavior only, never how the SDK
+# works inside. Vale checks every pull request against the rules in .github/vale.
+
+on:
+  pull_request:
+
+jobs:
+  vale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vale
+        env:
+          VALE_VERSION: "3.24.0"
+        run: |
+          base="https://github.com/errata-ai/vale/releases/download/v$VALE_VERSION"
+          curl --fail --silent --show-error --location --remote-name "$base/vale_${VALE_VERSION}_Linux_64-bit.tar.gz"
+          curl --fail --silent --show-error --location --remote-name "$base/vale_${VALE_VERSION}_checksums.txt"
+          grep "vale_${VALE_VERSION}_Linux_64-bit.tar.gz" "vale_${VALE_VERSION}_checksums.txt" | sha256sum --check
+          tar -xzf "vale_${VALE_VERSION}_Linux_64-bit.tar.gz" vale
+
+      - name: Check the Mobile SDK docs
+        run: ./vale --config .github/vale/vale.ini "docs/OpenDOOR - Mobile SDK"

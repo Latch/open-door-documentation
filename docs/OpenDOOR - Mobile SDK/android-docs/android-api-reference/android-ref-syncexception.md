@@ -1,45 +1,41 @@
 ---
 title: SyncException
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Active sync failure.
 
 ## Declaration
 
 ```kotlin
-sealed class SyncException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
-
-    class LockNotFoundException(val identifier: String, message: String = "Lock not found during sync: $identifier", throwable: Throwable? = null) : SyncException(message, throwable)
-
-    class CanceledException(message: String = "Sync was canceled", throwable: Throwable? = null) : SyncException(message, throwable)
-
-    class UnlockInProgressException(message: String = "An unlock is already in progress", throwable: Throwable? = null) : SyncException(message, throwable)
-
-    class SyncInternalException(message: String, throwable: Throwable? = null) : SyncException(message, throwable)
+sealed class SyncException(message: String, throwable: Throwable? = null) : Exception {
+    class CanceledException(message: String = "Sync was canceled", throwable: Throwable? = null) : SyncException
+    class LockNotFoundException(val identifier: String, message: String = "Lock not found during sync: ", throwable: Throwable? = null) : SyncException
+    class SyncInternalException(message: String, throwable: Throwable? = null) : SyncException
+    class UnlockInProgressException(message: String = "An unlock is already in progress", throwable: Throwable? = null) : SyncException
 }
 ```
 
-## LockNotFoundException
-
-Lock not found during sync
-
 ## CanceledException
 
-Sync operation was canceled
+Sync was canceled.
 
-## UnlockInProgressException
+## LockNotFoundException
 
-Unlock operation is in progress
+Lock not found during sync.
 
 ## SyncInternalException
 
-An internal error occurred
+Internal sync error.
+
+## UnlockInProgressException
+
+An unlock is already in progress.
 
 ## Related types
 

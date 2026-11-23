@@ -8,6 +8,9 @@
 - ios-ref-guestaccess
 - ios-ref-guestinviteserror
 - ios-ref-inappinvite
+- ios-ref-intercomcontactpreference
+- ios-ref-intercomsettings
+- ios-ref-intercomsettingserror
 - ios-ref-inviteguesterror
 - ios-ref-invitetype
 - ios-ref-lock
@@ -19,6 +22,7 @@
 - ios-ref-opendoorsdkerror
 - ios-ref-passcodetype
 - ios-ref-period
+- ios-ref-remoteunlockmethod
 - ios-ref-revokeguesterror
 - ios-ref-sdkerror
 - ios-ref-setuperror

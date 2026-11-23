@@ -1,36 +1,22 @@
 ---
 title: RevokeGuestError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
-[Guest](doc:ios-ref-guest)-access revocation failure.
+Guest-access revocation failure.
 
 ## Declaration
 
 ```swift
-public enum RevokeGuestError : OpenDOORSDKError {
+public enum RevokeGuestError : OpenDOORCore::OpenDOORSDKError {
   case passcodeTypeCantBeRevoked
   case deviceNotFound
-  case `internal`(String)
-}
-
-extension RevokeGuestError {
-  public var description: String {
-    get
-  }
+  case `internal`(Swift::String)
 }
 ```
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## RevokeGuestError.deviceNotFound
 

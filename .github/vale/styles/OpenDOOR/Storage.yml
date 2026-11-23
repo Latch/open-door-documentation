@@ -1,0 +1,14 @@
+extends: existence
+message: "Public docs describe behavior, not how data is stored ('%s')."
+level: error
+ignorecase: true
+tokens:
+  - memory only
+  - never persisted
+  - permanent persistence
+  - database
+  - 'encrypted (?:storage|store)'
+  - keystore
+  - keychain
+  - storage and network
+  - 'https? clients'

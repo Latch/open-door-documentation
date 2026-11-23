@@ -1,17 +1,17 @@
 ---
 title: InviteGuestError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
-[Guest](doc:ios-ref-guest) invitation business-rule failure.
+Guest invitation business-rule failure.
 
 ## Declaration
 
 ```swift
-public enum InviteGuestError : String, OpenDOORSDKError {
+public enum InviteGuestError : Swift::String, OpenDOORCore::OpenDOORSDKError {
   case emailRequired
   case emailOrPhoneRequired
   case emailAndPhoneProvided
@@ -22,33 +22,21 @@ public enum InviteGuestError : String, OpenDOORSDKError {
   case shareableAccessRequired
   case sharingNotEnabled
   case requestedTimeOutsideShareableAccess
-  public init?(rawValue: String)
-  public typealias RawValue = String
-  public var rawValue: String {
+  public init?(rawValue: Swift::String)
+  public typealias RawValue = Swift::String
+  public var rawValue: Swift::String {
     get
   }
 }
-
-extension InviteGuestError {
-  public var description: String {
-    get
-  }
-}
-
-extension InviteGuestError : Equatable {}
-
-extension InviteGuestError : Hashable {}
-
-extension InviteGuestError : RawRepresentable {}
 ```
 
-## description
+## init(rawValue:)
 
 ```swift
-var description: String { get }
+init?(rawValue: String)
 ```
 
-Inherited from `CustomStringConvertible.description`.
+Inherited from `RawRepresentable.init(rawValue:)`.
 
 ## InviteGuestError.emailAndPhoneProvided
 
@@ -81,14 +69,6 @@ case endTimeNotSupported
 ```
 
 The end time is prior to the start time or too far in the future.
-
-## init(rawValue:)
-
-```swift
-init?(rawValue: String)
-```
-
-Inherited from `RawRepresentable.init(rawValue:)`.
 
 ## InviteGuestError.invalidPhone
 

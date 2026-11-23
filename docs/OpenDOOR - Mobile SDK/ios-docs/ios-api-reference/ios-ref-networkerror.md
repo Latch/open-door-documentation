@@ -1,36 +1,22 @@
 ---
 title: NetworkError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Network access failure.
 
 ## Declaration
 
 ```swift
-public enum NetworkError : OpenDOORSDKError {
+public enum NetworkError : OpenDOORCore::OpenDOORSDKError {
   case invalidToken
-  case payloadError(String)
-  case internalNetworkError(String)
-}
-
-extension NetworkError {
-  public var description: String {
-    get
-  }
+  case payloadError(Swift::String)
+  case internalNetworkError(Swift::String)
 }
 ```
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## NetworkError.internalNetworkError(_:)
 
@@ -54,7 +40,7 @@ The supplied token is invalid or expired.
 case payloadError(String)
 ```
 
-The server's response couldn't be processed.
+Network error with a message from the server.
 
 ## Related types
 
