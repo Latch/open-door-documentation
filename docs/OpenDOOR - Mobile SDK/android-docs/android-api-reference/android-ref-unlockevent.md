@@ -1,18 +1,18 @@
 ---
 title: UnlockEvent
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
-Event emitted during explicit and proximity unlock operations.
+Event emitted during explicit, proximity and remote unlock operations.
 
-- **`lock`** — Lock the event relates to (null if not yet bound to a specific lock). The SDK resolves the full lock from its cache, so consumers never have to supply or trust a caller-provided identifier.
-- **`method`** — Method used for this unlock attempt
-- **`status`** — Current lifecycle status of the unlock operation
+- **`lock`** — Lock the event relates to, if known. The SDK resolves the full lock from its own lock data, so consumers never have to supply or trust a caller-provided identifier.
+- **`method`** — Method used for this unlock attempt.
+- **`status`** — Current lifecycle status of the unlock operation.
 
 ## Declaration
 

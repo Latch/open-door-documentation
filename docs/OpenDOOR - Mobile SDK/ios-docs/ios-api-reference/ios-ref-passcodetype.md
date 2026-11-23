@@ -1,28 +1,26 @@
 ---
 title: PasscodeType
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Type of access credential granted to a guest.
 
 ## Declaration
 
 ```swift
-public enum PasscodeType : Equatable {
+public enum PasscodeType : Swift::Equatable {
   case permanent
   case daily
   case dailySingleUse
-  public static func == (a: PasscodeType, b: PasscodeType) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::PasscodeType, b: OpenDOORCore::PasscodeType) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension PasscodeType : Hashable {}
 ```
 
 ## PasscodeType.daily
@@ -31,7 +29,7 @@ extension PasscodeType : Hashable {}
 case daily
 ```
 
-A doorcode that works for the entire calendar day set to the timezone of the device.
+A doorcode that works for the entire calendar day in the lock’s timezone.
 
 ## PasscodeType.dailySingleUse
 
@@ -39,7 +37,7 @@ A doorcode that works for the entire calendar day set to the timezone of the dev
 case dailySingleUse
 ```
 
-A doorcode that works for the entire calendar day set to the timezone of the device, but expires 15 minutes after first use.
+A doorcode that works for the entire calendar day in the lock’s timezone, but expires 15 minutes after first use.
 
 ## PasscodeType.permanent
 
@@ -47,4 +45,4 @@ A doorcode that works for the entire calendar day set to the timezone of the dev
 case permanent
 ```
 
-Access partner app via [OpenDOOR](doc:ios-ref-opendoor) SDK
+Access through the partner app, using the OpenDOOR SDK.

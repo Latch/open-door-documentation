@@ -1,27 +1,25 @@
 ---
 title: UnlockAttempt
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Which pass through the unlock flow produced an event.
 
 ## Declaration
 
 ```swift
-public enum UnlockAttempt : Equatable {
+public enum UnlockAttempt : Swift::Equatable {
   case first
   case second
-  public static func == (a: UnlockAttempt, b: UnlockAttempt) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::UnlockAttempt, b: OpenDOORCore::UnlockAttempt) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension UnlockAttempt : Hashable {}
 ```
 
 ## UnlockAttempt.first
@@ -30,7 +28,7 @@ extension UnlockAttempt : Hashable {}
 case first
 ```
 
-First attempt.
+First attempt: an optional setup sync from cached data, then the unlock.
 
 ## UnlockAttempt.second
 
@@ -38,4 +36,4 @@ First attempt.
 case second
 ```
 
-Recovery attempt that runs after the first attempt fails.
+Recovery attempt that runs after the first attempt fails: a setup sync when needed, then a second unlock.

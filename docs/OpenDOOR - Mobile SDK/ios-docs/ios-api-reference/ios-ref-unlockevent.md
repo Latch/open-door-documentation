@@ -1,22 +1,22 @@
 ---
 title: UnlockEvent
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
-Event emitted during explicit and proximity unlock operations.
+Event emitted during explicit, proximity and remote unlock operations.
 
 ## Declaration
 
 ```swift
-public struct UnlockEvent : Equatable {
-  public let lock: Lock?
-  public let method: UnlockEventMethod
-  public let status: UnlockEventStatus
-  public init(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)
-  public static func == (a: UnlockEvent, b: UnlockEvent) -> Bool
+public struct UnlockEvent : Swift::Equatable {
+  public let lock: OpenDOORCore::Lock?
+  public let method: OpenDOORCore::UnlockEventMethod
+  public let status: OpenDOORCore::UnlockEventStatus
+  public init(lock: OpenDOORCore::Lock?, method: OpenDOORCore::UnlockEventMethod, status: OpenDOORCore::UnlockEventStatus)
+  public static func == (a: OpenDOORCore::UnlockEvent, b: OpenDOORCore::UnlockEvent) -> Swift::Bool
 }
 ```
 
@@ -32,7 +32,7 @@ init(lock: Lock?, method: UnlockEventMethod, status: UnlockEventStatus)
 let lock: Lock?
 ```
 
-[Lock](doc:ios-ref-lock) being unlocked
+Lock the event relates to, if known. The SDK resolves the full lock from its own lock data, so consumers never have to supply or trust a caller-provided identifier.
 
 ## method
 
@@ -40,7 +40,7 @@ let lock: Lock?
 let method: UnlockEventMethod
 ```
 
-Method used for unlock
+Method used for this unlock attempt.
 
 ## status
 
@@ -48,7 +48,7 @@ Method used for unlock
 let status: UnlockEventStatus
 ```
 
-Status of the unlock operation
+Current lifecycle status of the unlock operation.
 
 ## Related types
 

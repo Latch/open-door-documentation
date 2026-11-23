@@ -1,17 +1,17 @@
 ---
 title: AccessLogMethod
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Method used during an access attempt.
 
 ## Declaration
 
 ```swift
-public enum AccessLogMethod : Equatable {
+public enum AccessLogMethod : Swift::Equatable {
   case unknown
   case nfc
   case passcode
@@ -24,14 +24,12 @@ public enum AccessLogMethod : Equatable {
   case tapToLock
   case bleLock
   case androidNFC
-  public static func == (a: AccessLogMethod, b: AccessLogMethod) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::AccessLogMethod, b: OpenDOORCore::AccessLogMethod) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension AccessLogMethod : Hashable {}
 ```
 
 ## AccessLogMethod.androidNFC
@@ -40,7 +38,7 @@ extension AccessLogMethod : Hashable {}
 case androidNFC
 ```
 
-NFC unlock
+NFC unlock from an Android phone.
 
 ## AccessLogMethod.ble
 
@@ -48,7 +46,7 @@ NFC unlock
 case ble
 ```
 
-Smartphone unlock
+Smartphone unlock over Bluetooth.
 
 ## AccessLogMethod.bleLock
 
@@ -56,7 +54,7 @@ Smartphone unlock
 case bleLock
 ```
 
-Smartphone lock
+Smartphone lock over Bluetooth.
 
 ## AccessLogMethod.desfire
 
@@ -64,7 +62,7 @@ Smartphone lock
 case desfire
 ```
 
-Keycard unlock
+Keycard unlock with a DESFire card.
 
 ## AccessLogMethod.mechanicalLock
 
@@ -72,7 +70,7 @@ Keycard unlock
 case mechanicalLock
 ```
 
-Physical key
+Mechanical lock.
 
 ## AccessLogMethod.mko
 
@@ -80,7 +78,7 @@ Physical key
 case mko
 ```
 
-Physical key
+Physical key unlock.
 
 ## AccessLogMethod.nfc
 
@@ -88,7 +86,7 @@ Physical key
 case nfc
 ```
 
-Keycard unlock
+Keycard unlock over NFC.
 
 ## AccessLogMethod.passcode
 
@@ -96,7 +94,7 @@ Keycard unlock
 case passcode
 ```
 
-Doorcode unlock
+Doorcode unlock.
 
 ## AccessLogMethod.scheduledLock
 
@@ -104,7 +102,7 @@ Doorcode unlock
 case scheduledLock
 ```
 
-Scheduled lock
+Scheduled lock.
 
 ## AccessLogMethod.scheduledUnlock
 
@@ -112,7 +110,7 @@ Scheduled lock
 case scheduledUnlock
 ```
 
-Scheduled unlock
+Scheduled unlock.
 
 ## AccessLogMethod.tapToLock
 
@@ -120,7 +118,7 @@ Scheduled unlock
 case tapToLock
 ```
 
-Tap to lock
+Tap to lock.
 
 ## AccessLogMethod.unknown
 
@@ -128,4 +126,4 @@ Tap to lock
 case unknown
 ```
 
-Unknown method
+Unknown method.

@@ -1,44 +1,26 @@
 ---
 title: BluetoothError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Bluetooth access failure.
 
 ## Declaration
 
 ```swift
-public enum BluetoothError : OpenDOORSDKError {
+public enum BluetoothError : OpenDOORCore::OpenDOORSDKError {
   case disabled
   case permissionDenied
-  public static func == (a: BluetoothError, b: BluetoothError) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::BluetoothError, b: OpenDOORCore::BluetoothError) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension BluetoothError {
-  public var description: String {
-    get
-  }
-}
-
-extension BluetoothError : Equatable {}
-
-extension BluetoothError : Hashable {}
 ```
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## BluetoothError.disabled
 

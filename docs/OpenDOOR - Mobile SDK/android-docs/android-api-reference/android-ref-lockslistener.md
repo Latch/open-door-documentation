@@ -1,12 +1,12 @@
 ---
 title: LocksListener
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Listener for update-only lock lists.
 
@@ -14,16 +14,15 @@ Listener for update-only lock lists.
 
 ```kotlin
 interface LocksListener {
-
     fun onUpdate(locks: List<Lock>)
 }
 ```
 
 ## onUpdate(locks)
 
+Called with the updated list of locks.
 
-
-- **`locks`** — Updated list of locks
+- **`locks`** — Updated list of locks.
 
 ## Related types
 

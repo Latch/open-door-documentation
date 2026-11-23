@@ -1,12 +1,12 @@
 ---
 title: AccessLogMethod
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Method used during an access attempt.
 
@@ -16,81 +16,66 @@ Method used during an access attempt.
 enum class AccessLogMethod {
 
     UNKNOWN,
-
     NFC,
-
     PASSCODE,
-
     BLE,
-
     MKO,
-
     DESFIRE,
-
     SCHEDULED_LOCK,
-
     SCHEDULED_UNLOCK,
-
     MECHANICAL_LOCK,
-
     TAP_TO_LOCK,
-
     BLE_LOCK,
-
     ANDROID_NFC,
 }
 ```
 
 ## UNKNOWN
 
-Unknown method
+Unknown method.
 
 ## NFC
 
-NFC Tag Unlock
+Keycard unlock over NFC.
 
 ## PASSCODE
 
-Passcode Unlock for Guests
+Doorcode unlock.
 
 ## BLE
 
-Bluetooth Unlock
+Smartphone unlock over Bluetooth.
 
 ## MKO
 
-Physical Key Unlock
+Physical key unlock.
 
 ## DESFIRE
 
-Desfire
+Keycard unlock with a DESFire card.
 
 ## SCHEDULED_LOCK
 
-Scheduled Lock
+Scheduled lock.
 
 ## SCHEDULED_UNLOCK
 
-Scheduled Unlock
+Scheduled unlock.
 
 ## MECHANICAL_LOCK
 
-Mechanical Lock
+Mechanical lock.
 
 ## TAP_TO_LOCK
 
-Tap to Lock
+Tap to lock.
 
 ## BLE_LOCK
 
-BLE Lock
+Smartphone lock over Bluetooth.
 
 ## ANDROID_NFC
 
-Android NFC
-
-## Related types
-
-- [Lock](doc:android-ref-lock)
+NFC unlock from an Android phone.
 
 Package: `com.door.opendoor.android.core.api.model`.

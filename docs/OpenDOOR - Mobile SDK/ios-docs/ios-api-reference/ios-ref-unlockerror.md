@@ -1,34 +1,21 @@
 ---
 title: UnlockError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Explicit unlock request failure before an attempt starts.
 
 ## Declaration
 
 ```swift
-public enum UnlockError : OpenDOORSDKError {
-  case lockNotFound(String)
-}
-
-extension UnlockError {
-  public var description: String {
-    get
-  }
+public enum UnlockError : OpenDOORCore::OpenDOORSDKError {
+  case lockNotFound(Swift::String)
+  case remoteUnlockNotSupported(Swift::String)
 }
 ```
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## UnlockError.lockNotFound(_:)
 
@@ -36,7 +23,15 @@ Inherited from `CustomStringConvertible.description`.
 case lockNotFound(String)
 ```
 
-[Lock](doc:ios-ref-lock) not found before unlock starts.
+Lock not found before unlock starts.
+
+## UnlockError.remoteUnlockNotSupported(_:)
+
+```swift
+case remoteUnlockNotSupported(String)
+```
+
+The lock does not support the requested remote unlock method.
 
 ## Related types
 

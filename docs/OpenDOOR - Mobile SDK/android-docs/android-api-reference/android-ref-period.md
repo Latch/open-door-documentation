@@ -1,12 +1,12 @@
 ---
 title: Period
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Period for temporary doorcode access.
 
@@ -16,7 +16,6 @@ Period for temporary doorcode access.
 enum class Period {
 
     Today,
-
     Tomorrow,
 }
 ```

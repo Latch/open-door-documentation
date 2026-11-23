@@ -1,27 +1,25 @@
 ---
 title: Period
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
-[Period](doc:ios-ref-period) for temporary doorcode access.
+Period for temporary doorcode access.
 
 ## Declaration
 
 ```swift
-public enum Period : Equatable {
+public enum Period : Swift::Equatable {
   case today
   case tomorrow
-  public static func == (a: Period, b: Period) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::Period, b: OpenDOORCore::Period) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension Period : Hashable {}
 ```
 
 ## Period.today

@@ -1,21 +1,21 @@
 ---
 title: LockActionError
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Failure while acting on one lock.
 
 ## Declaration
 
 ```swift
-public struct LockActionError : OpenDOORSDKError {
-  public let lockID: UUID
-  public let error: any OpenDOORSDKError
-  public init(lockID: UUID, error: any OpenDOORSDKError)
-  public var description: String {
+public struct LockActionError : OpenDOORCore::OpenDOORSDKError {
+  public let lockID: Foundation::UUID
+  public let error: any OpenDOORCore::OpenDOORSDKError
+  public init(lockID: Foundation::UUID, error: any OpenDOORCore::OpenDOORSDKError)
+  public var description: Swift::String {
     get
   }
 }
@@ -35,7 +35,7 @@ Inherited from `CustomStringConvertible.description`.
 let error: any OpenDOORSDKError
 ```
 
-The underlying error that caused the action to fail.
+Underlying error that caused the action to fail.
 
 ## init(lockID:error:)
 
@@ -49,7 +49,7 @@ init(lockID: UUID, error: any OpenDOORSDKError)
 let lockID: UUID
 ```
 
-The unique identifier of the lock on which the action failed.
+Identifier of the lock on which the action failed.
 
 ## Related types
 

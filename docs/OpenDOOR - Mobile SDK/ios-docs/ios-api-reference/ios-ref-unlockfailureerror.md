@@ -1,28 +1,22 @@
 ---
 title: UnlockFailureError
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Detail for an unlock failure.
 
 ## Declaration
 
 ```swift
-public struct UnlockFailureError : Equatable, CustomStringConvertible {
-  public let code: UnlockFailureCode
-  public let message: String
-  public let context: String?
-  public init(code: UnlockFailureCode, message: String, context: String?)
-  public static func == (a: UnlockFailureError, b: UnlockFailureError) -> Bool
-}
-
-extension UnlockFailureError {
-  public var description: String {
-    get
-  }
+public struct UnlockFailureError : Swift::Equatable, Swift::CustomStringConvertible {
+  public let code: OpenDOORCore::UnlockFailureCode
+  public let message: Swift::String
+  public let context: Swift::String?
+  public init(code: OpenDOORCore::UnlockFailureCode, message: Swift::String, context: Swift::String?)
+  public static func == (a: OpenDOORCore::UnlockFailureError, b: OpenDOORCore::UnlockFailureError) -> Swift::Bool
 }
 ```
 
@@ -40,15 +34,7 @@ Cause of the failure.
 let context: String?
 ```
 
-Platform error code, such as a lock response code or a GATT status.
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
+Platform error code, such as a lock response code, a GATT status or an HTTP status.
 
 ## init(code:message:context:)
 

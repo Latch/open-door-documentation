@@ -1,38 +1,26 @@
 ---
 title: GuestAccess
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Access granted to a guest on a specific lock.
 
 ## Declaration
 
 ```swift
-public struct GuestAccess : Equatable {
-  public let lockID: UUID
-  public let lockName: String
-  public let inviteType: any InviteType
-  public let passcodeType: PasscodeType
-  public let startTime: Date
-  public let endTime: Date?
-  public init(lockID: UUID, lockName: String, inviteType: any InviteType, passcodeType: PasscodeType, startTime: Date, endTime: Date?)
-}
-
-extension GuestAccess {
-  public static func == (lhs: GuestAccess, rhs: GuestAccess) -> Bool
+public struct GuestAccess : Swift::Equatable {
+  public let lockID: Foundation::UUID
+  public let lockName: Swift::String
+  public let inviteType: any OpenDOORCore::InviteType
+  public let passcodeType: OpenDOORCore::PasscodeType
+  public let startTime: Foundation::Date
+  public let endTime: Foundation::Date?
+  public init(lockID: Foundation::UUID, lockName: Swift::String, inviteType: any OpenDOORCore::InviteType, passcodeType: OpenDOORCore::PasscodeType, startTime: Foundation::Date, endTime: Foundation::Date?)
 }
 ```
-
-## ==(_:_:)
-
-```swift
-static func == (lhs: GuestAccess, rhs: GuestAccess) -> Bool
-```
-
-Inherited from `Equatable.==(_:_:)`.
 
 ## endTime
 
@@ -40,7 +28,7 @@ Inherited from `Equatable.==(_:_:)`.
 let endTime: Date?
 ```
 
-End of the allowed window, or nil.
+End of the allowed window.
 
 ## init(lockID:lockName:inviteType:passcodeType:startTime:endTime:)
 
@@ -62,7 +50,7 @@ Invite type for this access.
 let lockID: UUID
 ```
 
-Target lock ID
+Target lock ID.
 
 ## lockName
 
@@ -70,7 +58,7 @@ Target lock ID
 let lockName: String
 ```
 
-Target lock name
+Target lock name.
 
 ## passcodeType
 
