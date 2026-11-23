@@ -13,6 +13,7 @@ metadata:
 - ⚠️ **Breaking change:** The SDK now requires iOS 16 or later. SDK 2.3.0 supported iOS 13.
   - Set your app's minimum deployment target to iOS 16 before you update.
 - The Swift package still has no dependencies of its own, so updating adds nothing new to resolve.
+- SDK 2.3.1 is built with Xcode 27 (Swift 6.4).
 
 **New Features**
 
@@ -65,7 +66,7 @@ metadata:
 
 - **More predictable Lock fetching.** `fetchLocks` now throws for an invalid or expired token. For other network failures it returns cached Locks when available, and throws the mapped network error when the cache is empty. Cancellation is preserved.
 - **Clearer guest invite errors.** Sharing failures now say what to do: "User does not have permission to share access. Make sure the access was granted by the partner and is shareable." The new `shareableAccessRequired`, `sharingNotEnabled` and `requestedTimeOutsideShareableAccess` cases on `InviteGuestError` describe why an invite was rejected.
-- **Remote logging backend changed.** The SDK no longer depends on Datadog. Diagnostic logs are sent over OpenTelemetry (OTLP/HTTP), with credentials, tokens and phone numbers scrubbed and log size capped. Consumers' dependency graphs drop the Datadog packages and gain `opentelemetry-swift` and `swift-protobuf`.
+- **Remote logging backend changed.** The SDK no longer depends on Datadog. Diagnostic logs are sent over OpenTelemetry (OTLP/HTTP), with credentials, tokens and phone numbers scrubbed and log size capped. Your app's dependencies don't change: the Swift package has no dependencies of its own.
 
 **Bug Fixes**
 
