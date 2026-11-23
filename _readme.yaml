@@ -1,0 +1,21 @@
+navigation:
+  - kind: home
+    name: Home
+  - kind: version
+    name: Version
+  - kind: guide
+    directory: docs
+    name: Guides
+  - kind: recipes
+    directory: recipes
+    name: Recipes
+    hidden: true
+  - kind: reference
+    directory: reference
+    name: API Reference
+  - kind: changelog
+    name: Changelog
+    hidden: true
+  - kind: discuss
+    name: Discussions
+    hidden: true
