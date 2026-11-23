@@ -1,12 +1,12 @@
 ---
 title: PasscodeType
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Type of access credential granted to a guest.
 
@@ -16,27 +16,21 @@ Type of access credential granted to a guest.
 enum class PasscodeType {
 
     Permanent,
-
     Daily,
-
-    DailySingleUse
+    DailySingleUse,
 }
 ```
 
 ## Permanent
 
-Access partner app via OpenDOOR SDK
+Access through the partner app, using the OpenDOOR SDK.
 
 ## Daily
 
-A doorcode that works for the entire calendar day set to the timezone of the device.
+A doorcode that works for the entire calendar day in the lock's timezone.
 
 ## DailySingleUse
 
-A doorcode that works for the entire calendar day set to the timezone of the device, but expires 15 minutes after first use.
-
-## Related types
-
-- [OpenDOOR](doc:android-ref-opendoor)
+A doorcode that works for the entire calendar day in the lock's timezone, but expires 15 minutes after first use.
 
 Package: `com.door.opendoor.android.core.api.model`.

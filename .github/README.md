@@ -23,7 +23,7 @@ How a release gets its pages:
 
 To change what a reference page says, fix the SDK doc comment and ship it in a release, then regenerate. Edits made to the pages directly, in git or in the ReadMe editor, are lost on the next run.
 
-The 2.1, 2.2 and 2.3 pages predate this and were written by hand.
+The 2.1 and 2.2 pages predate this and were written by hand.
 
 ## Wording check
 

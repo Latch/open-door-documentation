@@ -1,38 +1,35 @@
 ---
 title: SetupException
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Setup failure.
 
 ## Declaration
 
 ```kotlin
-sealed class SetupException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
-
-    class InvalidTokenException(message: String = "The supplied token is invalid or expired", throwable: Throwable? = null) : SetupException(message, throwable)
-
-    class ConsentNotGrantedException(message: String = "User consent was not granted", throwable: Throwable? = null) : SetupException(message, throwable)
-
-    class SetupInternalException(message: String, throwable: Throwable? = null) : SetupException(message, throwable)
+sealed class SetupException(message: String, throwable: Throwable? = null) : Exception {
+    class ConsentNotGrantedException(message: String = "User consent was not granted", throwable: Throwable? = null) : SetupException
+    class InvalidTokenException(message: String = "The supplied token is invalid or expired", throwable: Throwable? = null) : SetupException
+    class SetupInternalException(message: String, throwable: Throwable? = null) : SetupException
 }
 ```
 
-## InvalidTokenException
-
-The supplied authorization token is invalid and should be refreshed.
-
 ## ConsentNotGrantedException
 
-User consent not granted
+User consent was not granted.
+
+## InvalidTokenException
+
+The supplied token is invalid or expired.
 
 ## SetupInternalException
 
-An internal error occurred
+An internal setup error occurred.
 
 Package: `com.door.opendoor.android.core.api.exceptions`.

@@ -1,14 +1,14 @@
 ---
 title: iOS API Reference
-excerpt: Public OpenDOOR iOS SDK 2.3.0 API reference.
+excerpt: Public OpenDOOR iOS SDK 2.3.1 API reference.
 hidden: false
 ---
 
-This reference describes the public API of **OpenDOOR iOS SDK 2.3.0**, imported as `OpenDOORCore`.
+This reference describes the public API of **OpenDOOR iOS SDK 2.3.1**, imported as `OpenDOORCore`.
 
 Start with [OpenDOOR](doc:ios-ref-opendoor) to obtain a [DOORClient](doc:ios-ref-doorclient), then authenticate with `setupWithToken(token:includeAllLocks:)`.
 
-The declarations below match the [2.3.0 release](https://github.com/Latch/opendoor-sdk-spm/tree/2.3.0). Use the [iOS SDK guide](doc:ios-docs) for installation and integration examples.
+The declarations below match the [2.3.1 release](https://github.com/Latch/opendoor-sdk-spm/tree/2.3.1). Use the [iOS SDK guide](doc:ios-docs) for installation and integration examples.
 
 ## Types
 
@@ -24,6 +24,9 @@ The declarations below match the [2.3.0 release](https://github.com/Latch/opendo
 | [GuestAccess](doc:ios-ref-guestaccess) | struct |
 | [GuestInvitesError](doc:ios-ref-guestinviteserror) | struct |
 | [InAppInvite](doc:ios-ref-inappinvite) | struct |
+| [IntercomContactPreference](doc:ios-ref-intercomcontactpreference) | enum |
+| [IntercomSettings](doc:ios-ref-intercomsettings) | struct |
+| [IntercomSettingsError](doc:ios-ref-intercomsettingserror) | enum |
 | [InviteGuestError](doc:ios-ref-inviteguesterror) | enum |
 | [InviteType](doc:ios-ref-invitetype) | protocol |
 | [Lock](doc:ios-ref-lock) | struct |
@@ -35,6 +38,7 @@ The declarations below match the [2.3.0 release](https://github.com/Latch/opendo
 | [OpenDOORSDKError](doc:ios-ref-opendoorsdkerror) | protocol |
 | [PasscodeType](doc:ios-ref-passcodetype) | enum |
 | [Period](doc:ios-ref-period) | enum |
+| [RemoteUnlockMethod](doc:ios-ref-remoteunlockmethod) | enum |
 | [RevokeGuestError](doc:ios-ref-revokeguesterror) | enum |
 | [SDKError](doc:ios-ref-sdkerror) | enum |
 | [SetupError](doc:ios-ref-setuperror) | enum |

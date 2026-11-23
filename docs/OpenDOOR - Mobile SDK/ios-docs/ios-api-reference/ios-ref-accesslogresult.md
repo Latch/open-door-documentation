@@ -1,17 +1,17 @@
 ---
 title: AccessLogResult
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Result of an access attempt.
 
 ## Declaration
 
 ```swift
-public enum AccessLogResult : Equatable {
+public enum AccessLogResult : Swift::Equatable {
   case unknown
   case success
   case guestSuccess
@@ -21,14 +21,12 @@ public enum AccessLogResult : Equatable {
   case nfcFailure
   case deadboltApplied
   case incorrect
-  public static func == (a: AccessLogResult, b: AccessLogResult) -> Bool
-  public func hash(into hasher: inout Hasher)
-  public var hashValue: Int {
+  public static func == (a: OpenDOORCore::AccessLogResult, b: OpenDOORCore::AccessLogResult) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
     get
   }
 }
-
-extension AccessLogResult : Hashable {}
 ```
 
 ## AccessLogResult.deadboltApplied
@@ -37,7 +35,7 @@ extension AccessLogResult : Hashable {}
 case deadboltApplied
 ```
 
-Deadbolt was applied
+Deadbolt was applied.
 
 ## AccessLogResult.guestSuccess
 
@@ -45,7 +43,7 @@ Deadbolt was applied
 case guestSuccess
 ```
 
-[Guest](doc:ios-ref-guest) access was successful
+Guest access was successful.
 
 ## AccessLogResult.incorrect
 
@@ -53,7 +51,7 @@ case guestSuccess
 case incorrect
 ```
 
-Access was incorrect
+Access was incorrect.
 
 ## AccessLogResult.lockSuccess
 
@@ -61,7 +59,7 @@ Access was incorrect
 case lockSuccess
 ```
 
-[Lock](doc:ios-ref-lock) was successful
+Lock action was successful.
 
 ## AccessLogResult.nfcFailure
 
@@ -69,7 +67,7 @@ case lockSuccess
 case nfcFailure
 ```
 
-NFC attempt failed
+NFC attempt failed.
 
 ## AccessLogResult.outsideQualifiedAccess
 
@@ -77,7 +75,7 @@ NFC attempt failed
 case outsideQualifiedAccess
 ```
 
-Access was out of schedule
+Access was outside the allowed schedule.
 
 ## AccessLogResult.success
 
@@ -85,7 +83,7 @@ Access was out of schedule
 case success
 ```
 
-Access was successful
+Access was successful.
 
 ## AccessLogResult.unknown
 
@@ -93,7 +91,7 @@ Access was successful
 case unknown
 ```
 
-Unknown access result
+Unknown access result.
 
 ## AccessLogResult.unknownTimeFailure
 
@@ -101,4 +99,4 @@ Unknown access result
 case unknownTimeFailure
 ```
 
-Access failed due to unknown time
+Access failed due to unknown time.

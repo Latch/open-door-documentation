@@ -1,12 +1,12 @@
 ---
 title: Duration
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Duration for temporary doorcode access.
 
@@ -16,17 +16,16 @@ Duration for temporary doorcode access.
 enum class Duration {
 
     Limit15Minutes,
-
     FullDay,
 }
 ```
 
 ## Limit15Minutes
 
-Access limited to 15 minutes.
+A doorcode that works for the chosen day and expires 15 minutes after its first use.
 
 ## FullDay
 
-Access for the full day.
+A doorcode that works for the whole chosen day.
 
 Package: `com.door.opendoor.android.core.api.model`.

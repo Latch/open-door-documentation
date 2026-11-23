@@ -1,10 +1,10 @@
 ---
 title: LocksListener
-excerpt: OpenDOOR iOS SDK 2.3.0 protocol reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 protocol reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Listener for update-only lock lists.
 
@@ -12,7 +12,7 @@ Listener for update-only lock lists.
 
 ```swift
 public protocol LocksListener : AnyObject {
-  func onUpdate(locks: [Lock])
+  func onUpdate(locks: [OpenDOORCore::Lock])
 }
 ```
 
@@ -22,10 +22,11 @@ public protocol LocksListener : AnyObject {
 func onUpdate(locks: [Lock])
 ```
 
+Called with the updated list of locks.
+
 ### Parameters
 
-
-- `locks`: Updated list of locks
+- `locks`: Updated list of locks.
 
 ## Related types
 

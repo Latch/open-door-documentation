@@ -1,38 +1,35 @@
 ---
 title: NetworkException
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Network access failure.
 
 ## Declaration
 
 ```kotlin
-sealed class NetworkException(message: String, throwable: Throwable? = null) : Exception(message, throwable) {
-
-    class InvalidTokenException(message: String = "The supplied token is invalid or expired", throwable: Throwable? = null) : NetworkException(message, throwable)
-
-    class PayloadError(message: String, throwable: Throwable? = null) : NetworkException(message, throwable)
-
-    class InternalNetworkException(message: String, throwable: Throwable? = null) : NetworkException(message, throwable)
+sealed class NetworkException(message: String, throwable: Throwable? = null) : Exception {
+    class InternalNetworkException(message: String, throwable: Throwable? = null) : NetworkException
+    class InvalidTokenException(message: String = "The supplied token is invalid or expired", throwable: Throwable? = null) : NetworkException
+    class PayloadError(message: String, throwable: Throwable? = null) : NetworkException
 }
 ```
 
+## InternalNetworkException
+
+Internal network error.
+
 ## InvalidTokenException
 
-The supplied authorization token is invalid and should be refreshed.
+The supplied token is invalid or expired.
 
 ## PayloadError
 
 Network error with a message from the server.
-
-## InternalNetworkException
-
-Internal network error (404, parsing errors, etc)
 
 Package: `com.door.opendoor.android.core.api.exceptions`.

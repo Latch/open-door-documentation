@@ -1,12 +1,12 @@
 ---
 title: AccessLogResult
-excerpt: OpenDOOR Android SDK 2.3 API reference
+excerpt: OpenDOOR Android SDK 2.3.1 API reference
 hidden: false
 ---
 
 [Android API Reference](doc:android-api-reference)
 
-OpenDOOR Android SDK **2.3** (2.3 release).
+OpenDOOR Android SDK **2.3.1** (2.3.1 release).
 
 Result of an access attempt.
 
@@ -16,64 +16,51 @@ Result of an access attempt.
 enum class AccessLogResult {
 
     UNKNOWN,
-
     SUCCESS,
-
     GUEST_SUCCESS,
-
     LOCK_SUCCESS,
-
     OUTSIDE_QUALIFIED_ACCESS,
-
     UNKNOWN_TIME_FAILURE,
-
     NFC_FAILURE,
-
     DEADBOLT_APPLIED,
-
     INCORRECT,
 }
 ```
 
 ## UNKNOWN
 
-Access result was unknown
+Unknown access result.
 
 ## SUCCESS
 
-Access was successful
+Access was successful.
 
 ## GUEST_SUCCESS
 
-Guest access was successful
+Guest access was successful.
 
 ## LOCK_SUCCESS
 
-Lock was successful
+Lock action was successful.
 
 ## OUTSIDE_QUALIFIED_ACCESS
 
-Access was outside qualified time
+Access was outside the allowed schedule.
 
 ## UNKNOWN_TIME_FAILURE
 
-Access failed due to unknown time
+Access failed due to unknown time.
 
 ## NFC_FAILURE
 
-NFC access failed
+NFC attempt failed.
 
 ## DEADBOLT_APPLIED
 
-Deadbolt was applied
+Deadbolt was applied.
 
 ## INCORRECT
 
-Access was incorrect
-
-## Related types
-
-- [Guest](doc:android-ref-guest)
-- [Lock](doc:android-ref-lock)
+Access was incorrect.
 
 Package: `com.door.opendoor.android.core.api.model`.

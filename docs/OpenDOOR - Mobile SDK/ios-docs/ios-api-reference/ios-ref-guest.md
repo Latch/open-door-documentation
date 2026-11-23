@@ -1,25 +1,25 @@
 ---
 title: Guest
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Person with shared access to one or more locks.
 
 ## Declaration
 
 ```swift
-public struct Guest : Equatable {
-  public let id: UUID
-  public let firstName: String
-  public let lastName: String?
-  public let email: String?
-  public let phone: String?
-  public let guestAccesses: [GuestAccess]
-  public init(id: UUID, firstName: String, lastName: String?, email: String?, phone: String?, guestAccesses: [GuestAccess])
-  public static func == (a: Guest, b: Guest) -> Bool
+public struct Guest : Swift::Equatable {
+  public let id: Foundation::UUID
+  public let firstName: Swift::String
+  public let lastName: Swift::String?
+  public let email: Swift::String?
+  public let phone: Swift::String?
+  public let guestAccesses: [OpenDOORCore::GuestAccess]
+  public init(id: Foundation::UUID, firstName: Swift::String, lastName: Swift::String?, email: Swift::String?, phone: Swift::String?, guestAccesses: [OpenDOORCore::GuestAccess])
+  public static func == (a: OpenDOORCore::Guest, b: OpenDOORCore::Guest) -> Swift::Bool
 }
 ```
 
@@ -29,7 +29,7 @@ public struct Guest : Equatable {
 let email: String?
 ```
 
-[Guest](doc:ios-ref-guest)’s email address
+Guest’s email address.
 
 ## firstName
 
@@ -37,7 +37,7 @@ let email: String?
 let firstName: String
 ```
 
-[Guest](doc:ios-ref-guest)’s first name
+Guest’s first name.
 
 ## guestAccesses
 
@@ -45,7 +45,7 @@ let firstName: String
 let guestAccesses: [GuestAccess]
 ```
 
-[Lock](doc:ios-ref-lock)-specific access entries
+Lock-specific access entries.
 
 ## id
 
@@ -53,7 +53,7 @@ let guestAccesses: [GuestAccess]
 let id: UUID
 ```
 
-Unique guest identifier
+Unique guest identifier.
 
 ## init(id:firstName:lastName:email:phone:guestAccesses:)
 
@@ -67,7 +67,7 @@ init(id: UUID, firstName: String, lastName: String?, email: String?, phone: Stri
 let lastName: String?
 ```
 
-[Guest](doc:ios-ref-guest)’s last name
+Guest’s last name.
 
 ## phone
 
@@ -75,7 +75,7 @@ let lastName: String?
 let phone: String?
 ```
 
-[Guest](doc:ios-ref-guest)’s phone number
+Guest’s phone number.
 
 ## Related types
 

@@ -1,24 +1,24 @@
 ---
 title: GuestInvitesError
-excerpt: OpenDOOR iOS SDK 2.3.0 struct reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 struct reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Partial or complete guest-invitation failure.
 
 ## Declaration
 
 ```swift
-public struct GuestInvitesError : OpenDOORSDKError {
-  public let failedLockErrors: [LockActionError]
-  public let successfulLockIDs: [UUID]
-  public var failedLockIDs: [UUID] {
+public struct GuestInvitesError : OpenDOORCore::OpenDOORSDKError {
+  public let failedLockErrors: [OpenDOORCore::LockActionError]
+  public let successfulLockIDs: [Foundation::UUID]
+  public var failedLockIDs: [Foundation::UUID] {
     get
   }
-  public init(failedLockErrors: [LockActionError], successfulLockIDs: [UUID])
-  public var description: String {
+  public init(failedLockErrors: [OpenDOORCore::LockActionError], successfulLockIDs: [Foundation::UUID])
+  public var description: Swift::String {
     get
   }
 }
@@ -38,7 +38,7 @@ Inherited from `CustomStringConvertible.description`.
 let failedLockErrors: [LockActionError]
 ```
 
-Errors encountered for each lock that failed.
+One error for each lock that failed.
 
 ## failedLockIDs
 
@@ -46,7 +46,7 @@ Errors encountered for each lock that failed.
 var failedLockIDs: [UUID] { get }
 ```
 
-Convenience accessor for the IDs of locks that failed.
+Identifiers of the locks that failed, taken from failedLockErrors.
 
 ## init(failedLockErrors:successfulLockIDs:)
 
@@ -60,7 +60,7 @@ init(failedLockErrors: [LockActionError], successfulLockIDs: [UUID])
 let successfulLockIDs: [UUID]
 ```
 
-IDs of locks where the guest invite succeeded.
+Identifiers of the locks where the guest invite succeeded.
 
 ## Related types
 

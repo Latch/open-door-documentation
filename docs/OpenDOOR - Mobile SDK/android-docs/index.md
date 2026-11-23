@@ -45,7 +45,7 @@ dependencyResolutionManagement {
 
 // Application module build.gradle.kts
 dependencies {
-    implementation("com.door:opendoor.android:2.3")
+    implementation("com.door:opendoor.android:2.3.1")
 }
 ```
 

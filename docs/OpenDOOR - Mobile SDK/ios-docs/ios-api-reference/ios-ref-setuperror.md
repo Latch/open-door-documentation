@@ -1,26 +1,20 @@
 ---
 title: SetupError
-excerpt: OpenDOOR iOS SDK 2.3.0 enum reference.
+excerpt: OpenDOOR iOS SDK 2.3.1 enum reference.
 hidden: false
 ---
 
-[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.0** (`OpenDOORCore`)
+[iOS API Reference](doc:ios-api-reference) · OpenDOOR iOS SDK **2.3.1** (`OpenDOORCore`)
 
 Setup failure.
 
 ## Declaration
 
 ```swift
-public enum SetupError : OpenDOORSDKError {
+public enum SetupError : OpenDOORCore::OpenDOORSDKError {
   case invalidToken
   case consentNotGranted
-  case setupInternalError(String)
-}
-
-extension SetupError {
-  public var description: String {
-    get
-  }
+  case setupInternalError(Swift::String)
 }
 ```
 
@@ -31,14 +25,6 @@ case consentNotGranted
 ```
 
 User consent was not granted.
-
-## description
-
-```swift
-var description: String { get }
-```
-
-Inherited from `CustomStringConvertible.description`.
 
 ## SetupError.invalidToken
 

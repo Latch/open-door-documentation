@@ -27,7 +27,7 @@ The OpenDOOR SDKs will support the following versions of IOS and Android. Post t
 
 | Platform | SDK Beta          |
 | -------- | ----------------- |
-| iOS      | Current to iOS 13 |
+| iOS      | Current to iOS 16 |
 | Android  | Current to ADR 8  |
 
 ## Communications
